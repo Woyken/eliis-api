@@ -1,0 +1,2802 @@
+[
+  {
+    "operationId": "InsertWorkSchedule",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/work-schedule",
+    "tag": "WorkSchedules",
+    "summary": "Insert work schedule",
+    "source": {
+      "functionId": 26547,
+      "functionName": "insertWorkSchedule",
+      "line": 1030614
+    },
+    "evidence": "Function #26547 (insertWorkSchedule) calls Axios default.post with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26547 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "The POST call forwards a function argument as request data; its construction is not present in this function.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetWorkSchedule",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/work-schedule",
+    "tag": "WorkSchedules",
+    "summary": "Get work schedule",
+    "source": {
+      "functionId": 26549,
+      "functionName": "getWorkSchedule",
+      "line": 1030651
+    },
+    "evidence": "Function #26549 (getWorkSchedule) calls Axios default.get with the URL assembled from the bytecode string fragments. Parameter 2 is placed unchanged in Axios config.params.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26549 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "UpdateWorkSchedule",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/work-schedule/{scheduleId}",
+    "tag": "WorkSchedules",
+    "summary": "Update work schedule",
+    "source": {
+      "functionId": 26551,
+      "functionName": "updateWorkSchedule",
+      "line": 1030690
+    },
+    "evidence": "Function #26551 (updateWorkSchedule) calls Axios default.put with the URL assembled from the bytecode string fragments. It extracts parameter 2's id for the URL; updateWorkSchedule also forwards parameter 2 as PUT data, while deleteWorkSchedule passes parameter 2 as the DELETE config's params value.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26551 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "scheduleId",
+        "type": "string",
+        "evidence": "Function #26551 reads .id from parameter 2 and concatenates that value into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "The PUT call forwards a function argument as request data; its construction is not present in this function.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "DeleteWorkSchedule",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/work-schedule/{scheduleId}",
+    "tag": "WorkSchedules",
+    "summary": "Delete work schedule",
+    "source": {
+      "functionId": 26553,
+      "functionName": "deleteWorkSchedule",
+      "line": 1030728
+    },
+    "evidence": "Function #26553 (deleteWorkSchedule) calls Axios default.delete with the URL assembled from the bytecode string fragments. It extracts parameter 2's id for the URL; updateWorkSchedule also forwards parameter 2 as PUT data, while deleteWorkSchedule passes parameter 2 as the DELETE config's params value. The same parameter-2 object supplies the URL id and config.params.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26553 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "scheduleId",
+        "type": "string",
+        "evidence": "Function #26553 reads .id from parameter 2 and concatenates that value into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "GetWorkScheduleTypes",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/work-schedule/types",
+    "tag": "WorkSchedules",
+    "summary": "Get work schedule types",
+    "source": {
+      "functionId": 26555,
+      "functionName": "getWorkScheduleTypes",
+      "line": 1030768
+    },
+    "evidence": "Function #26555 (getWorkScheduleTypes) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26555 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "AddWorkScheduleType",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/work-schedule/types",
+    "tag": "WorkSchedules",
+    "summary": "Add work schedule type",
+    "source": {
+      "functionId": 26557,
+      "functionName": "addWorkScheduleType",
+      "line": 1030804
+    },
+    "evidence": "Function #26557 (addWorkScheduleType) calls Axios default.post with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26557 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "The POST call forwards a function argument as request data; its construction is not present in this function.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateWorkScheduleType",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/work-schedule/types/{typeId}",
+    "tag": "WorkSchedules",
+    "summary": "Update work schedule type",
+    "source": {
+      "functionId": 26559,
+      "functionName": "updateWorkScheduleType",
+      "line": 1030841
+    },
+    "evidence": "Function #26559 (updateWorkScheduleType) calls Axios default.put with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26559 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "typeId",
+        "type": "string",
+        "evidence": "Function #26559 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "The PUT call forwards a function argument as request data; its construction is not present in this function.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetWorkScheduleSettings",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/work-schedule/settings",
+    "tag": "WorkSchedules",
+    "summary": "Get work schedule settings",
+    "source": {
+      "functionId": 26561,
+      "functionName": "getWorkScheduleSettings",
+      "line": 1030879
+    },
+    "evidence": "Function #26561 (getWorkScheduleSettings) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26561 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateWorkScheduleSettings",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/work-schedule/settings",
+    "tag": "WorkSchedules",
+    "summary": "Update work schedule settings",
+    "source": {
+      "functionId": 26563,
+      "functionName": "updateWorkScheduleSettings",
+      "line": 1030915
+    },
+    "evidence": "Function #26563 (updateWorkScheduleSettings) calls Axios default.post with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26563 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "The POST call forwards a function argument as request data; its construction is not present in this function.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "Filters",
+    "method": "get",
+    "path": "/api/shop/filters",
+    "tag": "Shop",
+    "summary": "Filters",
+    "source": {
+      "functionId": 26703,
+      "functionName": "filters",
+      "line": 1035778
+    },
+    "evidence": "Function #26703 (filters) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "Categories",
+    "method": "get",
+    "path": "/api/shop/categories",
+    "tag": "Shop",
+    "summary": "Categories",
+    "source": {
+      "functionId": 26705,
+      "functionName": "categories",
+      "line": 1035808
+    },
+    "evidence": "Function #26705 (categories) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetSuppliers",
+    "method": "get",
+    "path": "/api/shop/suppliers",
+    "tag": "Shop",
+    "summary": "Get suppliers",
+    "source": {
+      "functionId": 26707,
+      "functionName": "getSuppliers",
+      "line": 1035838
+    },
+    "evidence": "Function #26707 (getSuppliers) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetSupplierInfo",
+    "method": "get",
+    "path": "/api/shop/suppliers/{supplierId}",
+    "tag": "Shop",
+    "summary": "Get supplier info",
+    "source": {
+      "functionId": 26709,
+      "functionName": "getSupplierInfo",
+      "line": 1035868
+    },
+    "evidence": "Function #26709 (getSupplierInfo) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "supplierId",
+        "type": "string",
+        "evidence": "Function #26709 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetSupplierProducts",
+    "method": "get",
+    "path": "/api/shop/suppliers/{supplierId}/products",
+    "tag": "Shop",
+    "summary": "Get supplier products",
+    "source": {
+      "functionId": 26711,
+      "functionName": "getSupplierProducts",
+      "line": 1035903
+    },
+    "evidence": "Function #26711 (getSupplierProducts) calls Axios default.get with the URL assembled from the bytecode string fragments. URL branches on parameter 2.price truthiness: with truthy price it serializes price then filters into ?price=...&filters=...; otherwise it serializes filters into ?filters=.... It then passes parameter 2.query as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "supplierId",
+        "type": "string",
+        "evidence": "Function #26711 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [
+      {
+        "name": "filters",
+        "type": "unknown",
+        "encoding": "JSON.stringify",
+        "evidence": "Parameter 2.filters is JSON.stringify-serialized and embedded in the URL in both observed branches."
+      },
+      {
+        "name": "price",
+        "type": "unknown",
+        "optional": true,
+        "encoding": "JSON.stringify",
+        "evidence": "Parameter 2.price is tested for truthiness; if truthy, JSON.stringify serialization is embedded before filters in the URL."
+      }
+    ],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved.",
+      "The filters and conditional price values are interpolated into the URL itself; query contains no claim about server validation or accepted filter structure."
+    ]
+  },
+  {
+    "operationId": "KindergartenGetSupplierProducts",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/shop/suppliers/{supplierId}/products",
+    "tag": "Shop",
+    "summary": "Kindergarten get supplier products",
+    "source": {
+      "functionId": 26713,
+      "functionName": "kindergartenGetSupplierProducts",
+      "line": 1035963
+    },
+    "evidence": "Function #26713 (kindergartenGetSupplierProducts) calls Axios default.get with the URL assembled from the bytecode string fragments. URL branches on parameter 3.price truthiness: with truthy price it serializes price then filters into ?price=...&filters=...; otherwise it serializes filters into ?filters=.... URL argument order is kindergarten (parameter 1), supplier (parameter 2); parameter 3.query is Axios config.params.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26713 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "supplierId",
+        "type": "string",
+        "evidence": "Function #26713 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [
+      {
+        "name": "filters",
+        "type": "unknown",
+        "encoding": "JSON.stringify",
+        "evidence": "Parameter 3.filters is JSON.stringify-serialized and embedded in the URL in both observed branches."
+      },
+      {
+        "name": "price",
+        "type": "unknown",
+        "optional": true,
+        "encoding": "JSON.stringify",
+        "evidence": "Parameter 3.price is tested for truthiness; if truthy, JSON.stringify serialization is embedded before filters in the URL."
+      }
+    ],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved.",
+      "The filters and conditional price values are interpolated into the URL itself; query contains no claim about server validation or accepted filter structure."
+    ]
+  },
+  {
+    "operationId": "GetSupplierServices",
+    "method": "get",
+    "path": "/api/shop/suppliers/{supplierId}/services",
+    "tag": "Shop",
+    "summary": "Get supplier services",
+    "source": {
+      "functionId": 26715,
+      "functionName": "getSupplierServices",
+      "line": 1036029
+    },
+    "evidence": "Function #26715 (getSupplierServices) calls Axios default.get with the URL assembled from the bytecode string fragments. URL branches on parameter 2.price truthiness: with truthy price it serializes price then filters into ?price=...&filters=...; otherwise it serializes filters into ?filters=.... It then passes parameter 2.query as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "supplierId",
+        "type": "string",
+        "evidence": "Function #26715 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [
+      {
+        "name": "filters",
+        "type": "unknown",
+        "encoding": "JSON.stringify",
+        "evidence": "Parameter 2.filters is JSON.stringify-serialized and embedded in the URL in both observed branches."
+      },
+      {
+        "name": "price",
+        "type": "unknown",
+        "optional": true,
+        "encoding": "JSON.stringify",
+        "evidence": "Parameter 2.price is tested for truthiness; if truthy, JSON.stringify serialization is embedded before filters in the URL."
+      }
+    ],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved.",
+      "The filters and conditional price values are interpolated into the URL itself; query contains no claim about server validation or accepted filter structure."
+    ]
+  },
+  {
+    "operationId": "KindergartenGetSupplierServices",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/shop/suppliers/{supplierId}/services",
+    "tag": "Shop",
+    "summary": "Kindergarten get supplier services",
+    "source": {
+      "functionId": 26717,
+      "functionName": "kindergartenGetSupplierServices",
+      "line": 1036089
+    },
+    "evidence": "Function #26717 (kindergartenGetSupplierServices) calls Axios default.get with the URL assembled from the bytecode string fragments. URL branches on parameter 3.price truthiness: with truthy price it serializes price then filters into ?price=...&filters=...; otherwise it serializes filters into ?filters=.... URL argument order is kindergarten (parameter 1), supplier (parameter 2); parameter 3.query is Axios config.params.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26717 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "supplierId",
+        "type": "string",
+        "evidence": "Function #26717 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [
+      {
+        "name": "filters",
+        "type": "unknown",
+        "encoding": "JSON.stringify",
+        "evidence": "Parameter 3.filters is JSON.stringify-serialized and embedded in the URL in both observed branches."
+      },
+      {
+        "name": "price",
+        "type": "unknown",
+        "optional": true,
+        "encoding": "JSON.stringify",
+        "evidence": "Parameter 3.price is tested for truthiness; if truthy, JSON.stringify serialization is embedded before filters in the URL."
+      }
+    ],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved.",
+      "The filters and conditional price values are interpolated into the URL itself; query contains no claim about server validation or accepted filter structure."
+    ]
+  },
+  {
+    "operationId": "PopularShopItems",
+    "method": "get",
+    "path": "/api/shop/popular",
+    "tag": "Shop",
+    "summary": "Popular shop items",
+    "source": {
+      "functionId": 26719,
+      "functionName": "popularShopItems",
+      "line": 1036155
+    },
+    "evidence": "Function #26719 (popularShopItems) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "PopularKindergartenShopItems",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/shop/popular",
+    "tag": "Shop",
+    "summary": "Popular kindergarten shop items",
+    "source": {
+      "functionId": 26721,
+      "functionName": "popularKindergartenShopItems",
+      "line": 1036185
+    },
+    "evidence": "Function #26721 (popularKindergartenShopItems) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26721 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "CategoryProducts",
+    "method": "get",
+    "path": "/api/shop/categories/{categoryId}/products",
+    "tag": "Shop",
+    "summary": "Category products",
+    "source": {
+      "functionId": 26723,
+      "functionName": "categoryProducts",
+      "line": 1036221
+    },
+    "evidence": "Function #26723 (categoryProducts) calls Axios default.get with the URL assembled from the bytecode string fragments. The final function argument is wrapped as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "categoryId",
+        "type": "string",
+        "evidence": "Function #26723 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "CategoryServices",
+    "method": "get",
+    "path": "/api/shop/categories/{categoryId}/services",
+    "tag": "Shop",
+    "summary": "Category services",
+    "source": {
+      "functionId": 26725,
+      "functionName": "categoryServices",
+      "line": 1036260
+    },
+    "evidence": "Function #26725 (categoryServices) calls Axios default.get with the URL assembled from the bytecode string fragments. The final function argument is wrapped as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "categoryId",
+        "type": "string",
+        "evidence": "Function #26725 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "KindergartenCategoryProducts",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/shop/categories/{categoryId}/products",
+    "tag": "Shop",
+    "summary": "Kindergarten category products",
+    "source": {
+      "functionId": 26727,
+      "functionName": "kindergartenCategoryProducts",
+      "line": 1036299
+    },
+    "evidence": "Function #26727 (kindergartenCategoryProducts) calls Axios default.get with the URL assembled from the bytecode string fragments. The final function argument is wrapped as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26727 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "categoryId",
+        "type": "string",
+        "evidence": "Function #26727 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "KindergartenCategoryServices",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/shop/categories/{categoryId}/services",
+    "tag": "Shop",
+    "summary": "Kindergarten category services",
+    "source": {
+      "functionId": 26729,
+      "functionName": "kindergartenCategoryServices",
+      "line": 1036340
+    },
+    "evidence": "Function #26729 (kindergartenCategoryServices) calls Axios default.get with the URL assembled from the bytecode string fragments. The final function argument is wrapped as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26729 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "categoryId",
+        "type": "string",
+        "evidence": "Function #26729 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "Product",
+    "method": "get",
+    "path": "/api/shop/products/{productId}/show",
+    "tag": "Shop",
+    "summary": "Product",
+    "source": {
+      "functionId": 26731,
+      "functionName": "product",
+      "line": 1036381
+    },
+    "evidence": "Function #26731 (product) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "productId",
+        "type": "string",
+        "evidence": "Function #26731 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "KindergartenProduct",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/shop/products/{productId}/show",
+    "tag": "Shop",
+    "summary": "Kindergarten product",
+    "source": {
+      "functionId": 26733,
+      "functionName": "kindergartenProduct",
+      "line": 1036417
+    },
+    "evidence": "Function #26733 (kindergartenProduct) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26733 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "productId",
+        "type": "string",
+        "evidence": "Function #26733 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "Service",
+    "method": "get",
+    "path": "/api/shop/services/{serviceId}/show",
+    "tag": "Shop",
+    "summary": "Service",
+    "source": {
+      "functionId": 26735,
+      "functionName": "service",
+      "line": 1036455
+    },
+    "evidence": "Function #26735 (service) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "serviceId",
+        "type": "string",
+        "evidence": "Function #26735 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "KindergartenService",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/shop/services/{serviceId}/show",
+    "tag": "Shop",
+    "summary": "Kindergarten service",
+    "source": {
+      "functionId": 26737,
+      "functionName": "kindergartenService",
+      "line": 1036491
+    },
+    "evidence": "Function #26737 (kindergartenService) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26737 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "serviceId",
+        "type": "string",
+        "evidence": "Function #26737 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "ProductSearch",
+    "method": "get",
+    "path": "/api/shop/products/search",
+    "tag": "Shop",
+    "summary": "Product search",
+    "source": {
+      "functionId": 26739,
+      "functionName": "productSearch",
+      "line": 1036529
+    },
+    "evidence": "Function #26739 (productSearch) calls Axios default.get with the URL assembled from the bytecode string fragments. It conditionally JSON.stringify's truthy filters and price properties of parameter 1, writes those serialized values back to that object, then passes the object as Axios config.params.",
+    "pathParams": [],
+    "query": [
+      {
+        "name": "filters",
+        "type": "unknown",
+        "optional": true,
+        "encoding": "JSON.stringify",
+        "evidence": "Read from the caller params object and JSON.stringify called only when truthy; serialized string is written back."
+      },
+      {
+        "name": "price",
+        "type": "unknown",
+        "optional": true,
+        "encoding": "JSON.stringify",
+        "evidence": "Read from the caller params object and JSON.stringify called only when truthy; serialized string is written back."
+      }
+    ],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved.",
+      "Truthiness controls local JSON serialization; no server-side type, requiredness, or semantics are asserted."
+    ]
+  },
+  {
+    "operationId": "KindergartenProductSearch",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/shop/products/search",
+    "tag": "Shop",
+    "summary": "Kindergarten product search",
+    "source": {
+      "functionId": 26741,
+      "functionName": "kindergartenProductSearch",
+      "line": 1036578
+    },
+    "evidence": "Function #26741 (kindergartenProductSearch) calls Axios default.get with the URL assembled from the bytecode string fragments. It conditionally JSON.stringify's truthy filters and price properties of parameter 2, writes those serialized values back to that object, then passes the object as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26741 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [
+      {
+        "name": "filters",
+        "type": "unknown",
+        "optional": true,
+        "encoding": "JSON.stringify",
+        "evidence": "Read from the caller params object and JSON.stringify called only when truthy; serialized string is written back."
+      },
+      {
+        "name": "price",
+        "type": "unknown",
+        "optional": true,
+        "encoding": "JSON.stringify",
+        "evidence": "Read from the caller params object and JSON.stringify called only when truthy; serialized string is written back."
+      }
+    ],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved.",
+      "Truthiness controls local JSON serialization; no server-side type, requiredness, or semantics are asserted."
+    ]
+  },
+  {
+    "operationId": "ServiceSearch",
+    "method": "get",
+    "path": "/api/shop/services/search",
+    "tag": "Shop",
+    "summary": "Service search",
+    "source": {
+      "functionId": 26743,
+      "functionName": "serviceSearch",
+      "line": 1036633
+    },
+    "evidence": "Function #26743 (serviceSearch) calls Axios default.get with the URL assembled from the bytecode string fragments. It conditionally JSON.stringify's truthy filters and price properties of parameter 1, writes those serialized values back to that object, then passes the object as Axios config.params.",
+    "pathParams": [],
+    "query": [
+      {
+        "name": "filters",
+        "type": "unknown",
+        "optional": true,
+        "encoding": "JSON.stringify",
+        "evidence": "Read from the caller params object and JSON.stringify called only when truthy; serialized string is written back."
+      },
+      {
+        "name": "price",
+        "type": "unknown",
+        "optional": true,
+        "encoding": "JSON.stringify",
+        "evidence": "Read from the caller params object and JSON.stringify called only when truthy; serialized string is written back."
+      }
+    ],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved.",
+      "Truthiness controls local JSON serialization; no server-side type, requiredness, or semantics are asserted."
+    ]
+  },
+  {
+    "operationId": "KindergartenServiceSearch",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/shop/services/search",
+    "tag": "Shop",
+    "summary": "Kindergarten service search",
+    "source": {
+      "functionId": 26745,
+      "functionName": "kindergartenServiceSearch",
+      "line": 1036682
+    },
+    "evidence": "Function #26745 (kindergartenServiceSearch) calls Axios default.get with the URL assembled from the bytecode string fragments. It conditionally JSON.stringify's truthy filters and price properties of parameter 2, writes those serialized values back to that object, then passes the object as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26745 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [
+      {
+        "name": "filters",
+        "type": "unknown",
+        "optional": true,
+        "encoding": "JSON.stringify",
+        "evidence": "Read from the caller params object and JSON.stringify called only when truthy; serialized string is written back."
+      },
+      {
+        "name": "price",
+        "type": "unknown",
+        "optional": true,
+        "encoding": "JSON.stringify",
+        "evidence": "Read from the caller params object and JSON.stringify called only when truthy; serialized string is written back."
+      }
+    ],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved.",
+      "Truthiness controls local JSON serialization; no server-side type, requiredness, or semantics are asserted."
+    ]
+  },
+  {
+    "operationId": "RateProduct",
+    "method": "post",
+    "path": "/api/shop/products/{productId}/rate",
+    "tag": "Shop",
+    "summary": "Rate product",
+    "source": {
+      "functionId": 26747,
+      "functionName": "rateProduct",
+      "line": 1036737
+    },
+    "evidence": "Function #26747 (rateProduct) calls Axios default.post with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "productId",
+        "type": "string",
+        "evidence": "Function #26747 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "rating",
+          "type": "unknown",
+          "evidence": "Function assigns parameter 2 to the locally constructed request body property rating."
+        }
+      ],
+      "evidence": "Locally constructs an object containing rating from parameter 2.",
+      "complete": true
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "RateService",
+    "method": "post",
+    "path": "/api/shop/services/{serviceId}/rate",
+    "tag": "Shop",
+    "summary": "Rate service",
+    "source": {
+      "functionId": 26749,
+      "functionName": "rateService",
+      "line": 1036776
+    },
+    "evidence": "Function #26749 (rateService) calls Axios default.post with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "serviceId",
+        "type": "string",
+        "evidence": "Function #26749 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "rating",
+          "type": "unknown",
+          "evidence": "Function assigns parameter 2 to the locally constructed request body property rating."
+        }
+      ],
+      "evidence": "Locally constructs an object containing rating from parameter 2.",
+      "complete": true
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "AddProductComment",
+    "method": "post",
+    "path": "/api/shop/products/{productId}/comment",
+    "tag": "Shop",
+    "summary": "Add product comment",
+    "source": {
+      "functionId": 26751,
+      "functionName": "addProductComment",
+      "line": 1036815
+    },
+    "evidence": "Function #26751 (addProductComment) calls Axios default.post with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "productId",
+        "type": "string",
+        "evidence": "Function #26751 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "comment",
+          "type": "unknown",
+          "evidence": "Function assigns the last data argument to the locally constructed request body property comment."
+        }
+      ],
+      "evidence": "Locally constructs an object containing comment from the corresponding function argument.",
+      "complete": true
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "AddKindergartenProductComment",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/shop/products/{productId}/comment",
+    "tag": "Shop",
+    "summary": "Add kindergarten product comment",
+    "source": {
+      "functionId": 26753,
+      "functionName": "addKindergartenProductComment",
+      "line": 1036854
+    },
+    "evidence": "Function #26753 (addKindergartenProductComment) calls Axios default.post with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26753 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "productId",
+        "type": "string",
+        "evidence": "Function #26753 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "comment",
+          "type": "unknown",
+          "evidence": "Function assigns the last data argument to the locally constructed request body property comment."
+        }
+      ],
+      "evidence": "Locally constructs an object containing comment from the corresponding function argument.",
+      "complete": true
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetProductComments",
+    "method": "get",
+    "path": "/api/shop/products/{productId}/comments",
+    "tag": "Shop",
+    "summary": "Get product comments",
+    "source": {
+      "functionId": 26755,
+      "functionName": "getProductComments",
+      "line": 1036895
+    },
+    "evidence": "Function #26755 (getProductComments) calls Axios default.get with the URL assembled from the bytecode string fragments. The final function argument is wrapped as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "productId",
+        "type": "string",
+        "evidence": "Function #26755 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "GetKindergartenProductComments",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/shop/products/{productId}/comments",
+    "tag": "Shop",
+    "summary": "Get kindergarten product comments",
+    "source": {
+      "functionId": 26757,
+      "functionName": "getKindergartenProductComments",
+      "line": 1036934
+    },
+    "evidence": "Function #26757 (getKindergartenProductComments) calls Axios default.get with the URL assembled from the bytecode string fragments. The final function argument is wrapped as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26757 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "productId",
+        "type": "string",
+        "evidence": "Function #26757 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "AddServiceComment",
+    "method": "post",
+    "path": "/api/shop/services/{serviceId}/comment",
+    "tag": "Shop",
+    "summary": "Add service comment",
+    "source": {
+      "functionId": 26759,
+      "functionName": "addServiceComment",
+      "line": 1036975
+    },
+    "evidence": "Function #26759 (addServiceComment) calls Axios default.post with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "serviceId",
+        "type": "string",
+        "evidence": "Function #26759 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "comment",
+          "type": "unknown",
+          "evidence": "Function assigns the last data argument to the locally constructed request body property comment."
+        }
+      ],
+      "evidence": "Locally constructs an object containing comment from the corresponding function argument.",
+      "complete": true
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "AddKindergartenServiceComment",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/shop/services/{serviceId}/comment",
+    "tag": "Shop",
+    "summary": "Add kindergarten service comment",
+    "source": {
+      "functionId": 26761,
+      "functionName": "addKindergartenServiceComment",
+      "line": 1037014
+    },
+    "evidence": "Function #26761 (addKindergartenServiceComment) calls Axios default.post with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26761 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "serviceId",
+        "type": "string",
+        "evidence": "Function #26761 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "comment",
+          "type": "unknown",
+          "evidence": "Function assigns the last data argument to the locally constructed request body property comment."
+        }
+      ],
+      "evidence": "Locally constructs an object containing comment from the corresponding function argument.",
+      "complete": true
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetServiceComments",
+    "method": "get",
+    "path": "/api/shop/services/{serviceId}/comments",
+    "tag": "Shop",
+    "summary": "Get service comments",
+    "source": {
+      "functionId": 26763,
+      "functionName": "getServiceComments",
+      "line": 1037055
+    },
+    "evidence": "Function #26763 (getServiceComments) calls Axios default.get with the URL assembled from the bytecode string fragments. The final function argument is wrapped as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "serviceId",
+        "type": "string",
+        "evidence": "Function #26763 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "GetKindergartenServiceComments",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/shop/services/{serviceId}/comments",
+    "tag": "Shop",
+    "summary": "Get kindergarten service comments",
+    "source": {
+      "functionId": 26765,
+      "functionName": "getKindergartenServiceComments",
+      "line": 1037094
+    },
+    "evidence": "Function #26765 (getKindergartenServiceComments) calls Axios default.get with the URL assembled from the bytecode string fragments. The final function argument is wrapped as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26765 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "serviceId",
+        "type": "string",
+        "evidence": "Function #26765 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "AddToCart",
+    "clientRequestVariants": [{"variantId":"AddShopItemToCart","constructor":{"functionId":40014,"line":1613825,"bytecodeOffset":"0x00"},"targetSourceFunctionId":26767,"provenFieldPaths":["qty","course_period_id","product_id","service_id"],"branches":["item.type === 'product' adds product_id; otherwise service_id"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#0 M4149 dependency 26=M2293; #40014 +0x69 sends fresh body via exported #26652/#26653 (slot 0=M2294, #26601 +0x1b8-0x1c9). #26701 +0x2fd-0x30a installs #26767, +0x19 POST forwards data unchanged. Exactly one item identifier per branch; qty unresolved, final course_period_id=null."}],
+    "method": "post",
+    "path": "/api/shop/cart",
+    "tag": "Shop",
+    "summary": "Add to cart",
+    "source": {
+      "functionId": 26767,
+      "functionName": "addToCart",
+      "line": 1037135
+    },
+    "evidence": "Function #26767 (addToCart) calls Axios default.post with the URL assembled from the bytecode string fragments.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {"name":"qty","type":"unknown","evidence":"#40014 +0x05-0x09 copies captured quantity into fresh object r3."},
+        {"name":"course_period_id","type":"unknown","value":null,"evidence":"#40014 +0x0e-0x10 assigns final null; no later overwrite. Client value only."},
+        {"name":"product_id","type":"unknown","optional":true,"evidence":"#40014 +0x22 jumps to +0x37 iff item.type === 'product'; +0x3b-0x40 assigns item.id to product_id."},
+        {"name":"service_id","type":"unknown","optional":true,"evidence":"#40014 +0x22 falls through iff item.type !== 'product'; +0x2a-0x2f assigns item.id to service_id."}
+      ],
+      "evidence": "The POST call forwards a function argument as request data; construction is not in helper #26767. Verified caller #40014 +0x00-0x40 builds these keys; M4149 dependency 26=M2293 -> exported #26652/#26653 -> M2294 installed #26767. Known caller fields are partial endpoint evidence; arbitrary remainder unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UserCart",
+    "method": "get",
+    "path": "/api/shop/cart",
+    "tag": "Shop",
+    "summary": "User cart",
+    "source": {
+      "functionId": 26769,
+      "functionName": "userCart",
+      "line": 1037166
+    },
+    "evidence": "Function #26769 (userCart) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "EditCartItem",
+    "method": "put",
+    "path": "/api/shop/cart/{cartItemId}/update",
+    "tag": "Shop",
+    "summary": "Edit cart item",
+    "source": {
+      "functionId": 26771,
+      "functionName": "editCartItem",
+      "line": 1037196
+    },
+    "evidence": "Function #26771 (editCartItem) calls Axios default.put with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "cartItemId",
+        "type": "string",
+        "evidence": "Function #26771 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "The PUT call forwards a function argument as request data; its construction is not present in this function.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "RemoveFromCart",
+    "method": "delete",
+    "path": "/api/shop/cart/{cartItemId}/delete",
+    "tag": "Shop",
+    "summary": "Remove from cart",
+    "source": {
+      "functionId": 26773,
+      "functionName": "removeFromCart",
+      "line": 1037233
+    },
+    "evidence": "Function #26773 (removeFromCart) calls Axios default.delete with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "cartItemId",
+        "type": "string",
+        "evidence": "Function #26773 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "StoreUserOrder",
+    "clientRequestVariants": [{"variantId":"SubmitShopOrderNonWishlist","constructor":{"functionId":40448,"line":1635833,"bytecodeOffset":"0x3a"},"targetSourceFunctionId":26775,"branch":"captured isWishlist falsy","provenFieldPaths":["supplier_id","reg_number","email","phone","address","delivery_contacts","delivery_customer_name","delivery_reg_number","delivery_email","delivery_phone","delivery_address","notes","conditions_accept","items"],"constructionComplete":true,"nestedItemsConstruction":"unresolved; captured slot 10 forwarded unchanged at +0x19, no mapper","callsiteCoverage":"partial","evidence":"M4183 dependency 22=M2293; #40448 +0x14b sends fresh body to myCartOrder. #26601 +0x3fd-0x402 exports #26666 -> #26667 +0x22 uses slot 0=M2294 (dependency 1 +0x1b8-0x1c9); #26701 +0x359-0x366 installs storeUserOrder=#26775. POST data unchanged +0x19. delivery_customer_name tests customer_name; other four delivery fields test delivery_contacts."}],
+    "method": "post",
+    "path": "/api/shop/orders",
+    "tag": "Shop",
+    "summary": "Store user order",
+    "source": {
+      "functionId": 26775,
+      "functionName": "storeUserOrder",
+      "line": 1037269
+    },
+    "evidence": "Function #26775 (storeUserOrder) calls Axios default.post with the URL assembled from the bytecode string fragments.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {"name":"supplier_id","type":"unknown","evidence":"#40448 +0x3c-0x45 copies captured supplier.id."},
+        {"name":"reg_number","type":"unknown","evidence":"#40448 +0x4a-0x50 copies submitted reg_number."},
+        {"name":"email","type":"unknown","evidence":"#40448 +0x55-0x5b renames submitted e_mail to email."},
+        {"name":"phone","type":"unknown","evidence":"#40448 +0x60-0x66 copies submitted phone."},
+        {"name":"address","type":"unknown","evidence":"#40448 +0x6b-0x71 forwards submitted address; no nested construction."},
+        {"name":"delivery_contacts","type":"unknown","evidence":"#40448 +0x76-0x7c copies submitted delivery_contacts."},
+        {"name":"delivery_customer_name","type":"unknown","evidence":"#40448 +0x81-0x97 assigns truthy submitted customer_name or ''; does NOT test delivery_contacts."},
+        {"name":"delivery_reg_number","type":"unknown","evidence":"#40448 +0x9c-0xae assigns submitted delivery_reg_number when delivery_contacts truthy, otherwise ''."},
+        {"name":"delivery_email","type":"unknown","evidence":"#40448 +0xb3-0xc5 renames delivery_e_mail when delivery_contacts truthy, otherwise ''."},
+        {"name":"delivery_phone","type":"unknown","evidence":"#40448 +0xca-0xdc copies delivery_phone when delivery_contacts truthy, otherwise ''."},
+        {"name":"delivery_address","type":"unknown","evidence":"#40448 +0xe1-0xf0 copies delivery_address when delivery_contacts truthy, otherwise ''."},
+        {"name":"notes","type":"unknown","evidence":"#40448 +0xf5-0xfb renames submitted order_notes to notes."},
+        {"name":"conditions_accept","type":"unknown","evidence":"#40448 +0x100-0x106 copies submitted conditions_accept; no boolean conversion."},
+        {"name":"items","type":"unknown","evidence":"#40448 +0x16-0x1c NON-wishlist branch forwards captured slot 10 unchanged; +0x10b assigns items. Mapper #40449 does not run for this target."}
+      ],
+      "evidence": "The POST call forwards a function argument as request data; its construction is not in helper #26775. #40448 non-wishlist branch -> #26666/#26667 -> M2294 installed #26775 establishes these 14 own keys, not complete endpoint/all-callsite coverage. Nested items and arbitrary remainder unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "CancelUserOrder",
+    "method": "put",
+    "path": "/api/shop/orders/{orderId}",
+    "tag": "Shop",
+    "summary": "Cancel user order",
+    "source": {
+      "functionId": 26777,
+      "functionName": "cancelUserOrder",
+      "line": 1037300
+    },
+    "evidence": "Function #26777 (cancelUserOrder) calls Axios default.put with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "orderId",
+        "type": "string",
+        "evidence": "Function #26777 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "The PUT call forwards a function argument as request data; its construction is not present in this function.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UserOrders",
+    "method": "get",
+    "path": "/api/shop/orders",
+    "tag": "Shop",
+    "summary": "User orders",
+    "source": {
+      "functionId": 26779,
+      "functionName": "userOrders",
+      "line": 1037336
+    },
+    "evidence": "Function #26779 (userOrders) calls Axios default.get with the URL assembled from the bytecode string fragments. Parameter 1 is passed as Axios config.params.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "GetUserOrder",
+    "method": "get",
+    "path": "/api/shop/orders/{orderId}",
+    "tag": "Shop",
+    "summary": "Get user order",
+    "source": {
+      "functionId": 26781,
+      "functionName": "getUserOrder",
+      "line": 1037369
+    },
+    "evidence": "Function #26781 (getUserOrder) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "orderId",
+        "type": "string",
+        "evidence": "Function #26781 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "KindergartenOrders",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/shop/orders",
+    "tag": "Shop",
+    "summary": "Kindergarten orders",
+    "source": {
+      "functionId": 26783,
+      "functionName": "kindergartenOrders",
+      "line": 1037404
+    },
+    "evidence": "Function #26783 (kindergartenOrders) calls Axios default.get with the URL assembled from the bytecode string fragments. Parameter 2 is passed as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26783 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "GetKindergartenOrder",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/shop/orders/{orderId}",
+    "tag": "Shop",
+    "summary": "Get kindergarten order",
+    "source": {
+      "functionId": 26785,
+      "functionName": "getKindergartenOrder",
+      "line": 1037443
+    },
+    "evidence": "Function #26785 (getKindergartenOrder) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26785 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "orderId",
+        "type": "string",
+        "evidence": "Function #26785 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "StoreKindergartenOrder",
+    "clientRequestVariants": [
+      {"variantId":"SubmitShopOrderWishlistMapped","constructor":{"functionId":40448,"line":1635833,"bytecodeOffset":"0x3a"},"nestedConstructor":{"functionId":40449,"line":1635935,"bytecodeOffset":"0x03"},"targetSourceFunctionId":26787,"branch":"captured isWishlist truthy AND captured collection truthy","provenFieldPaths":["supplier_id","reg_number","email","phone","address","delivery_contacts","delivery_customer_name","delivery_reg_number","delivery_email","delivery_phone","delivery_address","notes","conditions_accept","items","items[].id","items[].qty","items[].product_id","items[].service_id","items[].comment"],"constructionComplete":true,"callsiteCoverage":"partial","fields":[{"name":"items","type":"unknown[]","fields":[{"name":"id","type":"unknown","evidence":"#40449 +0x05-0x0a copies item.id."},{"name":"qty","type":"unknown","evidence":"#40449 +0x0e-0x14 copies item.qty."},{"name":"product_id","type":"unknown","optional":true,"evidence":"#40449 +0x19-0x28 copies only truthy source product_id."},{"name":"service_id","type":"unknown","optional":true,"evidence":"#40449 +0x2e-0x3d copies only truthy source service_id."},{"name":"comment","type":"unknown","evidence":"#40449 +0x43-0x59 sets course.name unless course == null (null or undefined), then undefined; JSON may omit."}],"evidence":"#40448 +0x21-0x32 maps truthy wishlist collection using #40449, +0x10b assigns mapped result; branch-scoped array evidence only."}],"evidence":"#0 M4183 dependency 22=M2293; #40448 +0x17b sends body to exported #26687 -> #26688 +0x35 -> M2294 installed #26787 (#26701 +0x3e3-0x3f0). Data unchanged at +0x33; kindergarten from state is separate URL argument. Mapped items apply ONLY to this branch; no server-complete model."},
+      {"variantId":"SubmitShopOrderWishlistFalsyItems","constructor":{"functionId":40448,"line":1635833,"bytecodeOffset":"0x3a"},"targetSourceFunctionId":26787,"branch":"isWishlist truthy AND captured collection falsy","provenFieldPaths":["supplier_id","reg_number","email","phone","address","delivery_contacts","delivery_customer_name","delivery_reg_number","delivery_email","delivery_phone","delivery_address","notes","conditions_accept","items"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#40448 +0x21 jumps to +0x37 preserving falsy captured collection, +0x10b assigns it unchanged to items. Same #26687/#26688/M2294/#26787 routing; no mapper, array element schema, or final items constant established."}
+    ],
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/shop/orders",
+    "tag": "Shop",
+    "summary": "Store kindergarten order",
+    "source": {
+      "functionId": 26787,
+      "functionName": "storeKindergartenOrder",
+      "line": 1037480
+    },
+    "evidence": "Function #26787 (storeKindergartenOrder) calls Axios default.post with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26787 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {"name":"supplier_id","type":"unknown","evidence":"#40448 +0x3c-0x45 copies captured supplier.id."},
+        {"name":"reg_number","type":"unknown","evidence":"#40448 +0x4a-0x50 copies submitted reg_number."},
+        {"name":"email","type":"unknown","evidence":"#40448 +0x55-0x5b renames submitted e_mail to email."},
+        {"name":"phone","type":"unknown","evidence":"#40448 +0x60-0x66 copies submitted phone."},
+        {"name":"address","type":"unknown","evidence":"#40448 +0x6b-0x71 forwards submitted address."},
+        {"name":"delivery_contacts","type":"unknown","evidence":"#40448 +0x76-0x7c copies submitted delivery_contacts."},
+        {"name":"delivery_customer_name","type":"unknown","evidence":"#40448 +0x81-0x97 assigns truthy submitted customer_name or ''; independent of delivery_contacts."},
+        {"name":"delivery_reg_number","type":"unknown","evidence":"#40448 +0x9c-0xae tests delivery_contacts, then submitted delivery_reg_number or ''."},
+        {"name":"delivery_email","type":"unknown","evidence":"#40448 +0xb3-0xc5 tests delivery_contacts, renames delivery_e_mail or assigns ''."},
+        {"name":"delivery_phone","type":"unknown","evidence":"#40448 +0xca-0xdc tests delivery_contacts, copies delivery_phone or assigns ''."},
+        {"name":"delivery_address","type":"unknown","evidence":"#40448 +0xe1-0xf0 tests delivery_contacts, copies delivery_address or assigns ''."},
+        {"name":"notes","type":"unknown","evidence":"#40448 +0xf5-0xfb renames order_notes to notes."},
+        {"name":"conditions_accept","type":"unknown","evidence":"#40448 +0x100-0x106 copies conditions_accept; no boolean conversion."},
+        {"name":"items","type":"unknown","evidence":"#40448 +0x0c-0x3a wishlist branch maps #40449 only for truthy captured collection; falsy value passes through; +0x10b assigns both. Branch-specific nested named item fields retained in clientRequestVariants, not an unconditional array type."}
+      ],
+      "evidence": "The POST call forwards a function argument as request data; construction is not in helper #26787. #40448 wishlist -> #26687/#26688 -> M2294 installed #26787 proves 14 outer keys. Known union is partial; nested items may be mapped array or falsy passthrough and other endpoint inputs remain unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "CancelKindergartenOrder",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/shop/orders/{orderId}",
+    "tag": "Shop",
+    "summary": "Cancel kindergarten order",
+    "source": {
+      "functionId": 26789,
+      "functionName": "cancelKindergartenOrder",
+      "line": 1037517
+    },
+    "evidence": "Function #26789 (cancelKindergartenOrder) calls Axios default.put with the URL assembled from the bytecode string fragments. Parameter 3 is wrapped as {reason: parameter3} and passed as PUT data.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26789 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "orderId",
+        "type": "string",
+        "evidence": "Function #26789 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "reason",
+          "type": "unknown",
+          "evidence": "Function assigns parameter 3 to the locally constructed request body property reason."
+        }
+      ],
+      "evidence": "Locally constructs an object containing reason from parameter 3.",
+      "complete": true
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "AddToKindergartenWishlist",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/shop/kindergarten-wishlist",
+    "tag": "Shop",
+    "summary": "Add to kindergarten wishlist",
+    "source": {
+      "functionId": 26791,
+      "functionName": "addToKindergartenWishlist",
+      "line": 1037557
+    },
+    "evidence": "Function #26791 (addToKindergartenWishlist) calls Axios default.post with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26791 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "The POST call forwards a function argument as request data; its construction is not present in this function.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "Wishlist",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/shop/wishlist",
+    "tag": "Shop",
+    "summary": "Wishlist",
+    "source": {
+      "functionId": 26793,
+      "functionName": "wishlist",
+      "line": 1037594
+    },
+    "evidence": "Function #26793 (wishlist) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26793 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "RemoveFromWishlist",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/shop/wishlist/{wishlistItemId}/delete",
+    "tag": "Shop",
+    "summary": "Remove from wishlist",
+    "source": {
+      "functionId": 26795,
+      "functionName": "removeFromWishlist",
+      "line": 1037633
+    },
+    "evidence": "Function #26795 (removeFromWishlist) calls Axios default.delete with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26795 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "wishlistItemId",
+        "type": "string",
+        "evidence": "Function #26795 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "EditWishlistItem",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/shop/wishlist/{wishlistItemId}/update",
+    "tag": "Shop",
+    "summary": "Edit wishlist item",
+    "source": {
+      "functionId": 26797,
+      "functionName": "editWishlistItem",
+      "line": 1037671
+    },
+    "evidence": "Function #26797 (editWishlistItem) calls Axios default.put with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26797 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "wishlistItemId",
+        "type": "string",
+        "evidence": "Function #26797 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "The PUT call forwards a function argument as request data; its construction is not present in this function.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "CdmSettings",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/child-dev/settings",
+    "tag": "ChildDevelopment",
+    "summary": "Cdm settings",
+    "source": {
+      "functionId": 26844,
+      "functionName": "cdmSettings",
+      "line": 1039171
+    },
+    "evidence": "Function #26844 (cdmSettings) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26844 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "CategoriesForChild",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/child-dev/{childId}/categories",
+    "tag": "ChildDevelopment",
+    "summary": "Categories for child",
+    "source": {
+      "functionId": 26846,
+      "functionName": "categoriesForChild",
+      "line": 1039207
+    },
+    "evidence": "Function #26846 (categoriesForChild) calls Axios default.get with the URL assembled from the bytecode string fragments. The final function argument is wrapped as Axios config.params. An optional third function argument is used unchanged as config.params; if omitted, a new empty object is used.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26846 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Function #26846 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved.",
+      "When the optional third argument is absent, the function creates an empty params object."
+    ]
+  },
+  {
+    "operationId": "GetChildGoalsFile",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/child-dev/{childId}/print",
+    "tag": "ChildDevelopment",
+    "summary": "Get child goals file",
+    "source": {
+      "functionId": 26848,
+      "functionName": "getChildGoalsFile",
+      "line": 1039257
+    },
+    "evidence": "Function #26848 (getChildGoalsFile) calls Axios default.get with the URL assembled from the bytecode string fragments. The final function argument is wrapped as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26848 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Function #26848 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Callback #26849, offsets 0x00–0x03, returns the whole Axios response unchanged. The server response body shape and completeness are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "Evaluate",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/child-dev/{childId}/evaluate",
+    "tag": "ChildDevelopment",
+    "summary": "Evaluate",
+    "source": {
+      "functionId": 26850,
+      "functionName": "evaluate",
+      "line": 1039297
+    },
+    "evidence": "Function #26850 (evaluate) calls Axios default.put with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26850 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Function #26850 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "The PUT call forwards a function argument as request data; its construction is not present in this function.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "StoreComment",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/child-dev/{childId}/comments/store",
+    "tag": "ChildDevelopment",
+    "summary": "Store comment",
+    "source": {
+      "functionId": 26852,
+      "functionName": "storeComment",
+      "line": 1039336
+    },
+    "evidence": "Function #26852 (storeComment) calls Axios default.post with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26852 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Function #26852 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "The POST call forwards a function argument as request data; its construction is not present in this function.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateComment",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/child-dev/comments/{commentId}/update",
+    "tag": "ChildDevelopment",
+    "summary": "Update comment",
+    "source": {
+      "functionId": 26854,
+      "functionName": "updateComment",
+      "line": 1039375
+    },
+    "evidence": "Function #26854 (updateComment) calls Axios default.put with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26854 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "commentId",
+        "type": "string",
+        "evidence": "Function #26854 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "The PUT call forwards a function argument as request data; its construction is not present in this function.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "DestroyComment",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/child-dev/comments/{commentId}/destroy",
+    "tag": "ChildDevelopment",
+    "summary": "Destroy comment",
+    "source": {
+      "functionId": 26856,
+      "functionName": "destroyComment",
+      "line": 1039414
+    },
+    "evidence": "Function #26856 (destroyComment) calls Axios default.delete with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26856 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "commentId",
+        "type": "string",
+        "evidence": "Function #26856 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "SubmitDashboardPoll",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/polls/{pollId}/dashboard",
+    "tag": "Polls",
+    "summary": "Submit dashboard poll",
+    "source": {
+      "functionId": 26886,
+      "functionName": "submitDashboardPoll",
+      "line": 1040591
+    },
+    "evidence": "Function #26886 (submitDashboardPoll) calls Axios default.post with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26886 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "pollId",
+        "type": "string",
+        "evidence": "Function #26886 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "The POST call forwards a function argument as request data; its construction is not present in this function.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetEmployeeMeals",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/reports/employee-meals",
+    "tag": "Reports",
+    "summary": "Get employee meals",
+    "source": {
+      "functionId": 26908,
+      "functionName": "getEmployeeMeals",
+      "line": 1041206
+    },
+    "evidence": "Function #26908 (getEmployeeMeals) calls Axios default.get with the URL assembled from the bytecode string fragments. The final function argument is wrapped as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26908 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "Meals",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/reports/todaysmeals",
+    "tag": "Reports",
+    "summary": "Meals",
+    "source": {
+      "functionId": 26910,
+      "functionName": "meals",
+      "line": 1041245
+    },
+    "evidence": "Function #26910 (meals) calls Axios default.get with the URL assembled from the bytecode string fragments. The final function argument is wrapped as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26910 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "MealsPerCourse",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/reports/todaysmeals-per-course",
+    "tag": "Reports",
+    "summary": "Meals per course",
+    "source": {
+      "functionId": 26912,
+      "functionName": "mealsPerCourse",
+      "line": 1041284
+    },
+    "evidence": "Function #26912 (mealsPerCourse) calls Axios default.get with the URL assembled from the bytecode string fragments. The final function argument is wrapped as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26912 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "GetCoursePlanTypes",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/plans/types/{typeId}",
+    "tag": "Plans",
+    "summary": "Get course plan types",
+    "source": {
+      "functionId": 26938,
+      "functionName": "getCoursePlanTypes",
+      "line": 1041995
+    },
+    "evidence": "Function #26938 (getCoursePlanTypes) calls Axios default.get with the URL assembled from the bytecode string fragments. Parameter 3 is put in a locally constructed {type: ...} Axios config.params object.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26938 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "typeId",
+        "type": "string",
+        "evidence": "Function #26938 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [
+      {
+        "name": "type",
+        "type": "unknown",
+        "evidence": "Parameter 3 assigned to the type property of a locally constructed Axios config.params object."
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetCoursePlans",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/plans/course/{courseType}",
+    "tag": "Plans",
+    "summary": "Get course plans",
+    "source": {
+      "functionId": 26940,
+      "functionName": "getCoursePlans",
+      "line": 1042037
+    },
+    "evidence": "Function #26940 (getCoursePlans) calls Axios default.get with the URL assembled from the bytecode string fragments. Parameters 3 and 4 are put in a locally constructed {type: ..., year: ...} Axios config.params object.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26940 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "courseType",
+        "type": "string",
+        "evidence": "Function #26940 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [
+      {
+        "name": "type",
+        "type": "unknown",
+        "evidence": "Parameter 3 assigned to the type property of a locally constructed Axios config.params object."
+      },
+      {
+        "name": "year",
+        "type": "unknown",
+        "evidence": "Parameter 4 assigned to the year property of a locally constructed Axios config.params object."
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetPlanSettings",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/plans/settings",
+    "tag": "Plans",
+    "summary": "Get plan settings",
+    "source": {
+      "functionId": 26942,
+      "functionName": "getPlanSettings",
+      "line": 1042081
+    },
+    "evidence": "Function #26942 (getPlanSettings) calls Axios default.get with the URL assembled from the bytecode string fragments. The final function argument is wrapped as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26942 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "GetPlan",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/plans/show",
+    "tag": "Plans",
+    "summary": "Get plan",
+    "source": {
+      "functionId": 26944,
+      "functionName": "getPlan",
+      "line": 1042120
+    },
+    "evidence": "Function #26944 (getPlan) calls Axios default.get with the URL assembled from the bytecode string fragments. The final function argument is wrapped as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26944 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "GetCoursePlansOverView",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/plans/course/{courseType}/overview",
+    "tag": "Plans",
+    "summary": "Get course plans over view",
+    "source": {
+      "functionId": 26946,
+      "functionName": "getCoursePlansOverView",
+      "line": 1042159
+    },
+    "evidence": "Function #26946 (getCoursePlansOverView) calls Axios default.get with the URL assembled from the bytecode string fragments. Parameter 3 is put in a locally constructed {type: ...} Axios config.params object.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26946 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "courseType",
+        "type": "string",
+        "evidence": "Function #26946 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [
+      {
+        "name": "type",
+        "type": "unknown",
+        "evidence": "Parameter 3 assigned to the type property of a locally constructed Axios config.params object."
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetProjectPlans",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/plans/project/{projectType}",
+    "tag": "Plans",
+    "summary": "Get project plans",
+    "source": {
+      "functionId": 26948,
+      "functionName": "getProjectPlans",
+      "line": 1042202
+    },
+    "evidence": "Function #26948 (getProjectPlans) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26948 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "projectType",
+        "type": "string",
+        "evidence": "Function #26948 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetProjectPlan",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/plans/project/{projectId}/show",
+    "tag": "Plans",
+    "summary": "Get project plan",
+    "source": {
+      "functionId": 26950,
+      "functionName": "getProjectPlan",
+      "line": 1042239
+    },
+    "evidence": "Function #26950 (getProjectPlan) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26950 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "projectId",
+        "type": "string",
+        "evidence": "Function #26950 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetYearPlan",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/plans/year/{yearPlanId}/show",
+    "tag": "Plans",
+    "summary": "Get year plan",
+    "source": {
+      "functionId": 26952,
+      "functionName": "getYearPlan",
+      "line": 1042277
+    },
+    "evidence": "Function #26952 (getYearPlan) calls Axios default.get with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #26952 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "yearPlanId",
+        "type": "string",
+        "evidence": "Function #26952 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateSettings",
+    "method": "put",
+    "path": "/api/organizations/{organizationId}/officials/{officialId}/settings",
+    "tag": "OrganizationOfficials",
+    "summary": "Update settings",
+    "source": {
+      "functionId": 41029,
+      "functionName": "updateSettings",
+      "line": 1664209
+    },
+    "evidence": "Function #41029 (updateSettings) calls Axios default.put with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "organizationId",
+        "type": "string",
+        "evidence": "Function #41029 concatenates parameter 1 into this URL segment"
+      },
+      {
+        "name": "officialId",
+        "type": "string",
+        "evidence": "Function #41029 concatenates parameter 2 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "The PUT call forwards a function argument as request data; its construction is not present in this function.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetCourseAccessCode",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/course-children/access-code",
+    "tag": "CourseAccessCodes",
+    "summary": "Get course access code",
+    "source": {
+      "functionId": 43832,
+      "functionName": "getCourseAccessCode",
+      "line": 1787234
+    },
+    "evidence": "Function #43832 (getCourseAccessCode) calls Axios default.get with the URL assembled from the bytecode string fragments. The final function argument is wrapped as Axios config.params.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #43832 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "A caller-provided query/config params object is forwarded; fields beyond those individually evidenced here remain unresolved."
+    ]
+  },
+  {
+    "operationId": "GenerateCourseAccessCode",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/course-children/access-code",
+    "tag": "CourseAccessCodes",
+    "summary": "Generate course access code",
+    "source": {
+      "functionId": 43834,
+      "functionName": "generateCourseAccessCode",
+      "line": 1787273
+    },
+    "evidence": "Function #43834 (generateCourseAccessCode) calls Axios default.post with the URL assembled from the bytecode string fragments.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #43834 concatenates parameter 1 into this URL segment"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "The POST call forwards a function argument as request data; its construction is not present in this function.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "The attached then callback returns response.data; completeness and shape are not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  }
+]

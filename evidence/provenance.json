@@ -1,0 +1,27 @@
+{
+  "application": {
+    "package": "com.eliis",
+    "versionName": "2.69",
+    "versionCode": "33012366",
+    "artifactName": "Eliis_2.69_APKPure.xapk",
+    "xapkSha256": "9c8fd9b798d7861d1fe23cecc91098469150b68dcdbc1dc901e9b64169a81772",
+    "baseApkSha256": "9b583200327b13e61078f6b9880b24ace6b22b9680be5b0d6de748721ef73879",
+    "hermesBundleSha256": "4a08cf83fd735df118f2874ad07748b0781fdf23de4afdae59bce6ac82c91c6d",
+    "hermesBytecodeVersion": 96
+  },
+  "tools": {
+    "jadx": {"version": "1.5.6", "result": "Android-layer output produced with 90 errors and 261 warnings; not the source of truth for Hermes API contracts"},
+    "hermesDec": {
+      "repository": "https://github.com/P1sec/hermes-dec",
+      "commit": "a0f18f97ab661eb8ed659c8c683a0d21ea619e69",
+      "command": "PYTHONPATH=<hermes-dec checkout>/src python3 -m hermes_dec.disassembly.hbc_disassembler <extracted assets/index.android.bundle> eliis.hasm"
+    }
+  },
+  "scope": {
+    "clientObservedOnly": true,
+    "serverCompleteContract": false,
+    "authenticatedTestingPerformed": false,
+    "writeRequestsPerformed": false,
+    "rawApkAndFullThirdPartySourceIncluded": false
+  }
+}

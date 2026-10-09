@@ -1,0 +1,30 @@
+{
+  "observedOn": "2026-10-09",
+  "request": {
+    "method": "GET",
+    "url": "https://api.eliis.eu/api/lang/languages",
+    "headers": {"Accept": "application/json", "App-version": "2.69"},
+    "credentialsUsed": false
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "body": {
+      "langs": {
+        "et": "Eesti", "ru": "Русский", "en": "English", "lv": "Latviešu",
+        "lt": "Lietuvių", "fi": "Suomi", "de": "Deutsch", "ja": "日本語",
+        "pl": "Polski", "uk": "Українська", "ar": "العربية", "ro": "Română",
+        "tr": "Türkçe", "az": "Azərbaycan", "cs": "Čeština", "no": "Norsk", "sv": "Svenska"
+      },
+      "lang": "lt",
+      "country": "lt",
+      "domain": "lt",
+      "countryLanguages": {"ee": ["et"], "lv": ["lv"], "lt": ["lt"], "pl": ["pl"]}
+    }
+  },
+  "limits": [
+    "One public unauthenticated response, not proof of every possible response field or value.",
+    "Locale/country selection may depend on request context; sample values and language keys are not closed enums.",
+    "No private records were retrieved and no mutation requests were sent."
+  ]
+}

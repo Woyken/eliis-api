@@ -1,0 +1,25 @@
+{
+  "name": "eliis-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Evidence-backed description of the Eliis 2.69 Android client's HTTP behavior",
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "build": "npm run generate && tsp compile . && node scripts/normalize-openapi.mjs",
+    "check": "npm run build && node scripts/check.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "overrides": {
+    "@scalar/json-magic": {
+      "undici": "7.29.1"
+    }
+  },
+  "devDependencies": {
+    "@typespec/compiler": "1.17.0",
+    "@typespec/http": "1.17.0",
+    "@typespec/openapi": "1.17.0",
+    "@typespec/openapi3": "1.17.0",
+    "yaml": "2.9.1"
+  }
+}

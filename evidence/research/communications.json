@@ -1,0 +1,2285 @@
+[
+  {
+    "operationId": "GetReceivedMessages",
+    "method": "get",
+    "path": "/api/common/messages/received",
+    "tag": "Messages",
+    "summary": "Get received messages",
+    "source": {
+      "functionId": 25218,
+      "functionName": "messages",
+      "line": 990212
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1-25 (function #25218 messages): Axios GET call and URL construction traced there. The first function argument is placed unchanged in Axios config.params; its query shape is unresolved.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+    ]
+  },
+  {
+    "operationId": "GetRecentMessages",
+    "method": "get",
+    "path": "/api/common/messages/recent",
+    "tag": "Messages",
+    "summary": "Get recent messages",
+    "source": {
+      "functionId": 25221,
+      "functionName": "getRecentMessages",
+      "line": 990258
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:26-44 (function #25221 getRecentMessages): Axios GET call and URL construction traced there.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetSentMessages",
+    "method": "get",
+    "path": "/api/common/messages/sent",
+    "tag": "Messages",
+    "summary": "Get sent messages",
+    "source": {
+      "functionId": 25223,
+      "functionName": "sentMessages",
+      "line": 990288
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:45-66 (function #25223 sentMessages): Axios GET call and URL construction traced there. The first argument is placed unchanged in Axios config.params; query shape unresolved.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+    ]
+  },
+  {
+    "operationId": "GetDeletedMessages",
+    "method": "get",
+    "path": "/api/common/messages/deleted",
+    "tag": "Messages",
+    "summary": "Get deleted messages",
+    "source": {
+      "functionId": 25225,
+      "functionName": "deletedMessages",
+      "line": 990321
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:67-88 (function #25225 deletedMessages): Axios GET call and URL construction traced there. The first argument is placed unchanged in Axios config.params; query shape unresolved.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+    ]
+  },
+  {
+    "operationId": "UpdateMessage",
+    "method": "put",
+    "path": "/api/common/messages/{messageId}",
+    "tag": "Messages",
+    "summary": "Update a message",
+    "source": {
+      "functionId": 25227,
+      "functionName": "update",
+      "line": 990354
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:89-113 (function #25227 update): Axios PUT call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "messageId",
+        "type": "string",
+        "evidence": "Function parameter 1 property id is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put(url, function parameter 1); the same forwarded object supplies property id for the URL and is sent as request data. Its complete construction is not established.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "DeleteMessage",
+    "method": "delete",
+    "path": "/api/common/messages/{messageId}",
+    "tag": "Messages",
+    "summary": "Delete a message",
+    "source": {
+      "functionId": 25229,
+      "functionName": "_delete",
+      "line": 990390
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:114-137 (function #25229 _delete): Axios DELETE call and URL construction traced there. Axios delete is called with URL only (no config/body argument).",
+    "pathParams": [
+      {
+        "name": "messageId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetMessageTargetGroups",
+    "method": "get",
+    "path": "/api/common/messages/groups",
+    "tag": "Messages",
+    "summary": "Get message target groups",
+    "source": {
+      "functionId": 25231,
+      "functionName": "getUserTargetGroups",
+      "line": 990425
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:138-156 (function #25231 getUserTargetGroups): Axios GET call and URL construction traced there.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "SendMessage",
+    "clientRequestVariants": [{"variantId":"SendOldMessageForm","constructor":{"functionId":32555,"line":1275086,"bytecodeOffset":"0x00"},"nestedConstructors":[{"functionId":32556,"line":1275202,"bytecodeOffset":"0x00"},{"functionId":32557,"line":1275224,"bytecodeOffset":"0x00"}],"targetSourceFunctionId":25233,"placement":"multipart","fields":[{"name":"subject","type":"unknown","evidence":"#32555 +0x2f-0x3f appends submitted subject."},{"name":"body","type":"unknown","evidence":"#32555 +0x45-0x77 appends convertNewlinesToHTML(submitted body); return type unresolved."},{"name":"type","type":"string","value":"message","evidence":"#32555 +0x7d-0x8b appends literal string message; client constant only."}],"provenFieldPaths":["subject","body","type"],"dynamicParts":[{"namePattern":"files[{index}]","type":"unknown","optional":true,"evidence":"#32555 +0x9d-0xfb loops files; +0xd6-0xf0 constructs native descriptor, +0xf5 appends unknown file value under generated files[index]; empty collection emits none."},{"namePattern":"forwardedFiles[{index}]","type":"unknown","optional":true,"evidence":"#32555 +0x131-0x135 loads indexed item, +0x150 reads item.id, +0x155 appends that unknown ID (not descriptor); empty collection emits none."},{"namePattern":"targetGroups[{index}][{key}]","type":"unknown","optional":true,"evidence":"#32555 +0x16b-0x181 nullish-checks receivers and forEach(#32556); #32556 +0x02-0x0c captures element/index, +0x12-0x2c enumerates Object.keys(element). #32557 +0x13-0x33 builds pattern; +0x37-0x3f appends element[key]. Nullish/empty collection or empty keys emit none; key/value domains unresolved."}],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#0 M3401 dependency 28=M2217; #32555 sends FormData via #25172/#25173 (export #25148 +0x356-0x35b). M2217 slot 2=dependency 3/M2218 (#25148 +0x1b3-0x1c4); #25216 +0xbe-0xcb installs #25233; +0x39-0x3c config.data=p2, HTTP POST. Descriptor name/type/uri are native file transport metadata, not API properties."}],
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/messages",
+    "tag": "Messages",
+    "summary": "Send a message",
+    "source": {
+      "functionId": 25233,
+      "functionName": "sendMessage",
+      "line": 990455
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:157-191 (function #25233 sendMessage): Axios POST call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated between /api/kindergartens/ and /messages"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "multipart",
+      "fields": [{"name":"subject","type":"unknown","evidence":"#32555 +0x2f-0x3f appends literal subject from submitted subject."},{"name":"body","type":"unknown","evidence":"#32555 +0x45-0x77 appends literal body from convertNewlinesToHTML(submitted body); return type unresolved."},{"name":"type","type":"string","value":"message","evidence":"#32555 +0x7d-0x8b appends literal string type=message; client constant only."}],
+      "evidence": "#32555 -> #25172/#25173 -> installed #25233 forwards FormData as config.data=p2, HTTP POST. Three proved literal parts; generated families only in clientRequestVariants.dynamicParts. Other callers/endpoint remainder unknown.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Service forwards multipart data; the named SendOldMessageForm proves three literal parts plus three dynamic families in clientRequestVariants. Other callers/endpoint remainder remain unknown; native file metadata is not nested API fields."
+    ]
+  },
+  {
+    "operationId": "SendMessageDraft",
+    "method": "post",
+    "path": "/api/{scope}/messages/{messageId}",
+    "tag": "Messages",
+    "summary": "Send a message draft",
+    "source": {
+      "functionId": 25235,
+      "functionName": "sendMessageDraft",
+      "line": 990501
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:192-220 (function #25235 sendMessageDraft): Axios POST call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "scope",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated after /api/"
+      },
+      {
+        "name": "messageId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated after /messages/"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "draft",
+          "type": "unknown",
+          "evidence": "Locally constructed body has property draft assigned function parameter 3."
+        }
+      ],
+      "evidence": "Axios post(url, locally constructed {draft: function parameter 3}); this describes client construction, not server requiredness.",
+      "complete": true
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "The first path segment is an arbitrary scope argument; this function itself provides no fixed scope literal or branch set."
+    ]
+  },
+  {
+    "operationId": "GetMessageDrafts",
+    "method": "get",
+    "path": "/api/common/messages/drafts",
+    "tag": "Messages",
+    "summary": "Get message drafts",
+    "source": {
+      "functionId": 25237,
+      "functionName": "getMessageDrafts",
+      "line": 990541
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:221-242 (function #25237 getMessageDrafts): Axios GET call and URL construction traced there. First argument is assigned to Axios config.params; arbitrary query shape unresolved.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+    ]
+  },
+  {
+    "operationId": "GetMessageDraftById",
+    "method": "get",
+    "path": "/api/common/messages/draft/{draftId}",
+    "tag": "Messages",
+    "summary": "Get a message draft by id",
+    "source": {
+      "functionId": 25239,
+      "functionName": "getMessageDraft",
+      "line": 990574
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:243-266 (function #25239 getMessageDraft): Axios GET call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "draftId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetDraftById",
+    "method": "get",
+    "path": "/api/common/messages/drafts/{draftId}",
+    "tag": "Messages",
+    "summary": "Get a draft by id",
+    "source": {
+      "functionId": 25241,
+      "functionName": "getDraft",
+      "line": 990609
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:267-290 (function #25241 getDraft): Axios GET call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "draftId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "CreateDraft",
+    "method": "post",
+    "path": "/api/common/messages/drafts",
+    "tag": "Messages",
+    "summary": "Create a message draft",
+    "source": {
+      "functionId": 25243,
+      "functionName": "createDraft",
+      "line": 990644
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:291-310 (function #25243 createDraft): Axios POST call and URL construction traced there.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios post(url, function parameter 1); arbitrary forwarded request data, construction not established.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "SaveDraft",
+    "method": "put",
+    "path": "/api/common/messages/drafts/{draftId}",
+    "tag": "Messages",
+    "summary": "Save a message draft",
+    "source": {
+      "functionId": 25245,
+      "functionName": "saveDraft",
+      "line": 990675
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:311-335 (function #25245 saveDraft): Axios PUT call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "draftId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put(url, function parameter 2); arbitrary forwarded request data, construction not established.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "DeleteDraft",
+    "method": "delete",
+    "path": "/api/common/messages/drafts/{draftId}",
+    "tag": "Messages",
+    "summary": "Delete a message draft",
+    "source": {
+      "functionId": 25247,
+      "functionName": "deleteDraft",
+      "line": 990711
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:336-362 (function #25247 deleteDraft): Axios DELETE call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "draftId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios delete(url, {data: function parameter 2}); function parameter 2 is forwarded as config.data without further construction.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UploadDraftAttachment",
+    "clientRequestVariants": [{"variantId":"PendingDraftAttachment","constructor":{"functionId":32712,"line":1281040,"bytecodeOffset":"0x00"},"targetSourceFunctionId":25249,"placement":"multipart","branch":"item.status === 'pending'","fields":[{"name":"file","type":"unknown","evidence":"#32712 +0x9e appends original pending item as literal file; properties are not extra parts."},{"name":"type","type":"unknown","evidence":"#32712 +0xb3 appends item.type under literal type."},{"name":"uploaded_at","type":"unknown","evidence":"#32712 +0xeb appends UTC formatter result under literal uploaded_at."}],"provenFieldPaths":["file","type","uploaded_at"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"M3411 dependency 17=M2217; #32712 calls #25199/#25200 (export #25148 +0x3b9-0x3be), forwarding {id,data}. Thunk builds route scope kindergartens/ + selected kindergarten; M2218 installer #25216 +0x176-0x183 binds #25249, +0x46-0x49 POST data=p3. Pending-item request gate does not establish server validation."},{"variantId":"SelectedDraftAttachment","constructor":{"functionId":32720,"line":1281304,"bytecodeOffset":"0x00"},"targetSourceFunctionId":25249,"placement":"multipart","fields":[{"name":"file","type":"unknown","evidence":"#32720 +0x3b-0x57 builds native descriptor name=input.name, type=input.mime, uri=input.path (no filename fallback); +0x67 appends file."},{"name":"type","type":"unknown","evidence":"#32720 +0x73-0x7d appends input.mime under literal type."},{"name":"uploaded_at","type":"unknown","evidence":"#32720 +0x83-0xb5 appends UTC formatter result under literal uploaded_at."}],"provenFieldPaths":["file","type","uploaded_at"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#32720 +0xc7-0xea imports M3411 dependency 17=M2217, calls uploadDraftAttachment with {id,data}; #25199/#25200 -> M2218 installed #25249, +0x46-0x49 POST data=p3. Descriptor members are native transport metadata, not nested API fields."}],
+    "method": "post",
+    "path": "/api/{scope}/messages/{messageId}/upload",
+    "tag": "Messages",
+    "summary": "Upload a draft attachment",
+    "source": {
+      "functionId": 25249,
+      "functionName": "uploadDraftAttachment",
+      "line": 990749
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:363-395 (function #25249 uploadDraftAttachment): Axios POST call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "scope",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated after /api/"
+      },
+      {
+        "name": "messageId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated after /messages/"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "multipart",
+      "fields": [{"name":"file","type":"unknown","evidence":"#32712 +0x9e appends original pending item; #32720 +0x63-0x67 appends native descriptor name=input.name, type=input.mime, uri=input.path. Literal file; unknown part value, no nested API properties."},{"name":"type","type":"unknown","evidence":"#32712 +0xb3 appends item.type; #32720 +0x73-0x7d appends input.mime under literal type; value type unresolved."},{"name":"uploaded_at","type":"unknown","evidence":"#32712 +0xeb / #32720 +0x83-0xb5 append UTC formatter result under literal uploaded_at; return type/server interpretation unresolved."}],
+      "evidence": "#32712/#32720 -> #25199/#25200 -> installed #25249 POST data=p3. Three literal parts in two named variants; all other endpoint/caller inputs remain open.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "The first path segment is an arbitrary scope argument; this function itself provides no fixed scope literal or branch set.",
+      "Service forwards multipart data; two named draft-attachment constructors prove file/type/uploaded_at. Other callers/endpoint remainder remain unknown; native file metadata is not nested API fields."
+    ]
+  },
+  {
+    "operationId": "DeleteDraftAttachment",
+    "method": "delete",
+    "path": "/api/common/messages/drafts/{draftId}/file",
+    "tag": "Messages",
+    "summary": "Delete a draft attachment",
+    "source": {
+      "functionId": 25251,
+      "functionName": "deleteDraftAttachment",
+      "line": 990793
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:396-425 (function #25251 deleteDraftAttachment): Axios DELETE call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "draftId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "filename",
+          "type": "unknown",
+          "evidence": "Axios delete config.data is locally constructed as {filename: function parameter 2}."
+        }
+      ],
+      "evidence": "Axios delete(url, {data: {filename: function parameter 2}}). The property construction is traced; value type/server semantics are not.",
+      "complete": true
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateSentMessage",
+    "clientRequestVariants": [{"variantId":"SentMessageEditForm","constructor":{"functionId":34032,"line":1331160,"bytecodeOffset":"0x00"},"nestedConstructors":[{"functionId":34033,"line":1331229,"bytecodeOffset":"0x00"},{"functionId":34034,"line":1331258,"bytecodeOffset":"0x00"}],"targetSourceFunctionId":25253,"placement":"multipart","fields":[{"name":"_method","type":"string","value":"put","evidence":"#34032 +0x49-0x57 appends literal string put; HTTP remains POST."},{"name":"body","type":"unknown","evidence":"#34032 +0x5d-0x8f appends convertNewlinesToHTML(submitted body); result type unresolved."}],"provenFieldPaths":["_method","body"],"dynamicParts":[{"namePattern":"files[{index}]","type":"unknown","optional":true,"evidence":"#34033 +0x0a-0x4d constructs indexed name and appends active file with native name/type/uri metadata. Empty forEach collection emits none; each part unknown."},{"namePattern":"removedFiles[{index}]","type":"string","optional":true,"evidence":"#34034 +0x2b-0x3b builds indexed name and appends String(item), conversion +0x36. Each member string; empty forEach collection emits none."}],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#0 M3513 dependency 34=M2217; #34032 calls updateSentMessage({id,data}) via export #25206/#25207 (#25148 +0x3da-0x3df), forwarding to M2218; #25216 +0x1a4-0x1b1 installs #25253; +0x3c-0x3f POST data=p2. Descriptor members are native transport metadata, not API properties."}],
+    "method": "post",
+    "path": "/api/common/messages/sent/{messageId}",
+    "tag": "Messages",
+    "summary": "Update a sent message",
+    "source": {
+      "functionId": 25253,
+      "functionName": "updateSentMessage",
+      "line": 990834
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:426-455 (function #25253 updateSentMessage): Axios POST call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "messageId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "multipart",
+      "fields": [{"name":"_method","type":"string","value":"put","evidence":"#34032 +0x49-0x57 appends literal string _method=put; client override part only, not HTTP verb or server enum."},{"name":"body","type":"unknown","evidence":"#34032 +0x5d-0x8f appends literal body from convertNewlinesToHTML(submitted body); return type unresolved."}],
+      "evidence": "#34032 -> #25206/#25207 -> installed #25253 POST data=p2 proves two literal parts; indexed file/removed-file families are only dynamicParts metadata. Other endpoint/caller inputs remain unknown.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Service forwards multipart data; SentMessageEditForm proves _method/body plus two dynamic families. Transport remains POST despite client _method='put'; other callers/endpoint remainder remain unknown."
+    ]
+  },
+  {
+    "operationId": "DeleteSentMessage",
+    "method": "delete",
+    "path": "/api/common/messages/sent/{messageId}",
+    "tag": "Messages",
+    "summary": "Delete a sent message",
+    "source": {
+      "functionId": 25255,
+      "functionName": "deleteSentMessage",
+      "line": 990875
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:456-479 (function #25255 deleteSentMessage): Axios DELETE call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "messageId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "RecallSentMessage",
+    "method": "delete",
+    "path": "/api/common/messages/recall/{messageId}",
+    "tag": "Messages",
+    "summary": "Recall a sent message",
+    "source": {
+      "functionId": 25257,
+      "functionName": "recallSentMessage",
+      "line": 990910
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:480-503 (function #25257 recallSentMessage): Axios DELETE call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "messageId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetUserApplications",
+    "method": "get",
+    "path": "/api/common/applications",
+    "tag": "Applications",
+    "summary": "Get user applications",
+    "source": {
+      "functionId": 25292,
+      "functionName": "userApplications",
+      "line": 991904
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:504-522 (function #25292 userApplications): Axios GET call and URL construction traced there.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "StoreApplication",
+    "method": "post",
+    "path": "/api/common/applications/store",
+    "tag": "Applications",
+    "summary": "Store an application",
+    "source": {
+      "functionId": 25294,
+      "functionName": "store",
+      "line": 991934
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:523-542 (function #25294 store): Axios POST call and URL construction traced there.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios post(url, function parameter 1); arbitrary forwarded request data, construction not established.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetKindergartenApplications",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/applications",
+    "tag": "Applications",
+    "summary": "Get kindergarten applications",
+    "source": {
+      "functionId": 25296,
+      "functionName": "kindergartenApplications",
+      "line": 991965
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:543-570 (function #25296 kindergartenApplications): Axios GET call and URL construction traced there. Function parameter 2 is assigned unchanged to Axios config.params; query shape unresolved.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+    ]
+  },
+  {
+    "operationId": "GetApplication",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/applications/{applicationId}/show",
+    "tag": "Applications",
+    "summary": "Get an application",
+    "source": {
+      "functionId": 25298,
+      "functionName": "getApplication",
+      "line": 992004
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:571-597 (function #25298 getApplication): Axios GET call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "applicationId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "RejectApplication",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/applications/{applicationId}/reject",
+    "tag": "Applications",
+    "summary": "Reject an application",
+    "source": {
+      "functionId": 25300,
+      "functionName": "reject",
+      "line": 992042
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:598-625 (function #25300 reject): Axios PUT call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "applicationId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put(url, function parameter 3); arbitrary forwarded request data, construction not established.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "ConfirmApplication",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/applications/{applicationId}/confirm",
+    "tag": "Applications",
+    "summary": "Confirm an application",
+    "source": {
+      "functionId": 25302,
+      "functionName": "confirm",
+      "line": 992081
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:626-653 (function #25302 confirm): Axios PUT call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "applicationId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put(url, function parameter 3); arbitrary forwarded request data, construction not established.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "AddOrRemoveApplicationChild",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/applications/{applicationId}/add-remove-child",
+    "tag": "Applications",
+    "summary": "Add or remove a child on an application",
+    "source": {
+      "functionId": 25304,
+      "functionName": "addOrRemoveChild",
+      "line": 992120
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:654-681 (function #25304 addOrRemoveChild): Axios PUT call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "applicationId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put(url, function parameter 3); arbitrary forwarded request data, construction not established.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetReceivedAnnouncements",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/announcements",
+    "tag": "Announcements",
+    "summary": "Get received announcements",
+    "source": {
+      "functionId": 25330,
+      "functionName": "getReceivedAnnouncements",
+      "line": 992941
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:682-709 (function #25330 getReceivedAnnouncements): Axios GET call and URL construction traced there. Function parameter 2 is assigned unchanged to Axios config.params; query shape unresolved.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+    ]
+  },
+  {
+    "operationId": "GetSentAnnouncements",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/announcements/sent",
+    "tag": "Announcements",
+    "summary": "Get sent announcements",
+    "source": {
+      "functionId": 25332,
+      "functionName": "getSentAnnouncements",
+      "line": 992980
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:710-737 (function #25332 getSentAnnouncements): Axios GET call and URL construction traced there. Function parameter 2 is assigned unchanged to Axios config.params; query shape unresolved.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+    ]
+  },
+  {
+    "operationId": "MarkAnnouncementRead",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/announcements/{announcementId}/read",
+    "tag": "Announcements",
+    "summary": "Mark an announcement as read",
+    "source": {
+      "functionId": 25334,
+      "functionName": "updateAnnouncementAsRead",
+      "line": 993019
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:738-764 (function #25334 updateAnnouncementAsRead): Axios PUT call and URL construction traced there. Axios put is called with URL only; no data argument is supplied.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "announcementId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetAnnouncementTargetGroups",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/announcements/groups",
+    "tag": "Announcements",
+    "summary": "Get announcement target groups",
+    "source": {
+      "functionId": 25336,
+      "functionName": "getAnnouncementsTargetGroups",
+      "line": 993057
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:765-789 (function #25336 getAnnouncementsTargetGroups): Axios GET call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "SendAnnouncement",
+    "clientRequestVariants": [{"variantId":"NewAnnouncementForm","constructor":{"functionId":42237,"line":1712780,"bytecodeOffset":"0x07"},"nestedConstructors":[{"functionId":42238,"line":1712841,"bytecodeOffset":"0x02"},{"functionId":42239,"line":1712863,"bytecodeOffset":"0x13"}],"targetSourceFunctionId":25338,"placement":"multipart","fields":[{"name":"subject","type":"unknown","evidence":"#42237 +0x2b-0x35 appends submitted subject."},{"name":"body","type":"unknown","evidence":"#42237 +0x60-0x6f appends convertNewlinesToHTML(submitted body); return type unresolved."},{"name":"type","type":"string","value":"announcement","evidence":"#42237 +0x7b-0x83 appends literal string announcement; client constant only."}],"provenFieldPaths":["subject","body","type"],"dynamicParts":[{"namePattern":"targetGroups[{index}][{key}]","type":"unknown","evidence":"#42237 +0x89-0x99 calls submitted targetGroups.forEach(#42238). #42238 +0x02-0x0c captures element and outer index; +0x12-0x2c Object.keys(element).forEach(#42239). #42239 +0x13-0x33 builds indexed name; +0x37-0x3f appends element[key]. No fixed index/key set; zero generated parts possible."}],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#0 M4335 dependency 16=M2223; #42237 +0xc2 sends constructed FormData to exported #25321/#25322 (#25309 +0x14d-0x152). Thunk +0x1a slot 0=dependency 1=M2224, +0x35 forwards FormData p2. #25328 +0x79-0x86 installs exact #25338; +0x3b-0x3e config.data=p2, +0x53 direct Axios call. Whole local construction includes dynamic callbacks; endpoint coverage remains partial. Dynamic pattern is metadata, never a literal targetGroups[] property."}],
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/announcements",
+    "tag": "Announcements",
+    "summary": "Send an announcement",
+    "source": {
+      "functionId": 25338,
+      "functionName": "sendAnnouncement",
+      "line": 993093
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:790-827 (function #25338 sendAnnouncement): Axios POST call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "multipart",
+      "fields": [
+        {"name":"subject","type":"unknown","evidence":"#42237 +0x2b-0x35 appends literal part subject from submitted subject."},
+        {"name":"body","type":"unknown","evidence":"#42237 +0x60-0x6f appends literal body part from convertNewlinesToHTML(submitted body); conversion result type unresolved."},
+        {"name":"type","type":"string","value":"announcement","evidence":"#42237 +0x7b-0x83 appends literal part type='announcement'; client value only."}
+      ],
+      "evidence": "The Axios client is called directly with config method=\"post\", url, data=function parameter 2, and Content-Type=\"multipart/form-data\". Verified #42237 -> #25321/#25322 -> M2224 installed #25338 proves three literal caller parts. Further targetGroups[{index}][{key}] parts are dynamic metadata in clientRequestVariants, not fixed named fields; coverage partial and remaining parts unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Service forwards multipart data; existing NewAnnouncementForm proves subject/body/type and dynamic targetGroups[index][key] parts. No phantom fixed targetGroups property; other callers/endpoint remainder remain unknown."
+    ]
+  },
+  {
+    "operationId": "DeleteAnnouncement",
+    "method": "delete",
+    "path": "/api/common/announcements/{announcementId}",
+    "tag": "Announcements",
+    "summary": "Delete an announcement",
+    "source": {
+      "functionId": 25341,
+      "functionName": "_delete",
+      "line": 993152
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:828-851 (function #25341 _delete): Axios DELETE call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "announcementId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetRecentEvents",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/events/recent",
+    "tag": "Events",
+    "summary": "Get recent events",
+    "source": {
+      "functionId": 25401,
+      "functionName": "getRecentEvents",
+      "line": 995306
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:852-876 (function #25401 getRecentEvents): Axios GET call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetEvents",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/events",
+    "tag": "Events",
+    "summary": "Get events",
+    "source": {
+      "functionId": 25403,
+      "functionName": "getEvents",
+      "line": 995342
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:877-917 (function #25403 getEvents): Axios GET call and URL construction traced there. If second positional argument is undefined or omitted, creates empty params {}; otherwise Object.assign({}, argument) and passes it as Axios config.params. Arbitrary copied query shape unresolved.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+    ]
+  },
+  {
+    "operationId": "CreateEvent",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/events",
+    "tag": "Events",
+    "summary": "Create an event",
+    "source": {
+      "functionId": 25405,
+      "functionName": "createEvent",
+      "line": 995394
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:918-943 (function #25405 createEvent): Axios POST call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios post(url, function parameter 2); arbitrary forwarded request data, construction not established.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateEvent",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/events/{eventId}",
+    "tag": "Events",
+    "summary": "Update an event",
+    "source": {
+      "functionId": 25407,
+      "functionName": "updateEvent",
+      "line": 995431
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:944-970 (function #25407 updateEvent): Axios PUT call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "function parameter 1 property kindergarten_id is concatenated into URL"
+      },
+      {
+        "name": "eventId",
+        "type": "string",
+        "evidence": "function parameter 1 property id is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put(url, function parameter 1); the same forwarded object supplies kindergarten_id and id for the URL and is sent as request data. Its complete construction is not established.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Path value names reflect source object property access, not proven server-side identifier semantics."
+    ]
+  },
+  {
+    "operationId": "DeleteEvent",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/events/{eventId}",
+    "tag": "Events",
+    "summary": "Delete an event",
+    "source": {
+      "functionId": 25409,
+      "functionName": "deleteEvent",
+      "line": 995469
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:971-1004 (function #25409 deleteEvent): Axios DELETE call and URL construction traced there. The Axios delete call has a config argument: {params:{change_mode: arg.change_mode, date: arg.date}}.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "function parameter 1 property kindergarten_id is concatenated into URL"
+      },
+      {
+        "name": "eventId",
+        "type": "string",
+        "evidence": "function parameter 1 property id is concatenated into URL"
+      }
+    ],
+    "query": [
+      {
+        "name": "change_mode",
+        "type": "unknown",
+        "evidence": "Axios config.params.change_mode is copied from function parameter 1 property change_mode"
+      },
+      {
+        "name": "date",
+        "type": "unknown",
+        "evidence": "Axios config.params.date is copied from function parameter 1 property date"
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query values are copied from properties of the argument object; their client-side value types are not established.",
+      "Path value names reflect source object property access, not proven server-side identifier semantics."
+    ]
+  },
+  {
+    "operationId": "GetKindergartenContacts",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/contacts/kindergarten",
+    "tag": "Contacts",
+    "summary": "Get kindergarten contacts",
+    "source": {
+      "functionId": 26039,
+      "functionName": "getKindergartenView",
+      "line": 1015514
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1005-1029 (function #26039 getKindergartenView): Axios GET call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetEmployeeContacts",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/contacts/employees",
+    "tag": "Contacts",
+    "summary": "Get employee contacts",
+    "source": {
+      "functionId": 26041,
+      "functionName": "getEmployeeContacts",
+      "line": 1015550
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1030-1057 (function #26041 getEmployeeContacts): Axios GET call and URL construction traced there. Function parameter 2 is assigned unchanged to Axios config.params; query shape unresolved.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+    ]
+  },
+  {
+    "operationId": "GetGuardianContacts",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/contacts/guardians",
+    "tag": "Contacts",
+    "summary": "Get guardian contacts",
+    "source": {
+      "functionId": 26043,
+      "functionName": "getGuardianContacts",
+      "line": 1015589
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1058-1085 (function #26043 getGuardianContacts): Axios GET call and URL construction traced there. Function parameter 2 is assigned unchanged to Axios config.params; query shape unresolved.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+    ]
+  },
+  {
+    "operationId": "GetCourseGuardianContacts",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/contacts/course/{courseId}/guardians",
+    "tag": "Contacts",
+    "summary": "Get course guardian contacts",
+    "source": {
+      "functionId": 26045,
+      "functionName": "getContactsCourseGuardians",
+      "line": 1015628
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1086-1112 (function #26045 getContactsCourseGuardians): Axios GET call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "courseId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetCourseEmployeeContacts",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/contacts/course/{courseId}/employees",
+    "tag": "Contacts",
+    "summary": "Get course employee contacts",
+    "source": {
+      "functionId": 26047,
+      "functionName": "getContactsCourseEmployees",
+      "line": 1015666
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1113-1139 (function #26047 getContactsCourseEmployees): Axios GET call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "courseId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetRecentNotifications",
+    "method": "get",
+    "path": "/api/common/notifications/recent",
+    "tag": "Notifications",
+    "summary": "Get recent notifications",
+    "source": {
+      "functionId": 26069,
+      "functionName": "getRecentNotifications",
+      "line": 1016283
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1140-1158 (function #26069 getRecentNotifications): Axios GET call and URL construction traced there.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetNotifications",
+    "method": "get",
+    "path": "/api/common/notifications",
+    "tag": "Notifications",
+    "summary": "Get notifications",
+    "source": {
+      "functionId": 26071,
+      "functionName": "getNotifications",
+      "line": 1016313
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1159-1180 (function #26071 getNotifications): Axios GET call and URL construction traced there. Function parameter 1 is assigned unchanged to Axios config.params; query shape unresolved.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+    ]
+  },
+  {
+    "operationId": "GetUnseenNotificationCount",
+    "method": "get",
+    "path": "/api/common/notifications/unseen",
+    "tag": "Notifications",
+    "summary": "Get unseen notification count",
+    "source": {
+      "functionId": 26073,
+      "functionName": "getUnseenCount",
+      "line": 1016346
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1181-1199 (function #26073 getUnseenCount): Axios GET call and URL construction traced there.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "DeleteIdea",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/idea/{ideaId}",
+    "tag": "Ideas",
+    "summary": "Delete an idea",
+    "source": {
+      "functionId": 26363,
+      "functionName": "deleteIdea",
+      "line": 1024691
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1200-1225 (function #26363 deleteIdea): Axios DELETE call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "ideaId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "DeleteIdeaComment",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/idea/{ideaId}/comment/{commentId}",
+    "tag": "Ideas",
+    "summary": "Delete an idea comment",
+    "source": {
+      "functionId": 26365,
+      "functionName": "deleteIdeaComment",
+      "line": 1024728
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1226-1253 (function #26365 deleteIdeaComment): Axios DELETE call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "ideaId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      },
+      {
+        "name": "commentId",
+        "type": "string",
+        "evidence": "Function parameter 3 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "DeleteIdeaImage",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/files/idea/{fileId}",
+    "tag": "Ideas",
+    "summary": "Delete an idea image",
+    "source": {
+      "functionId": 26367,
+      "functionName": "deleteIdeaImage",
+      "line": 1024767
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1254-1279 (function #26367 deleteIdeaImage): Axios DELETE call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "fileId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetIdea",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/idea/{ideaId}",
+    "tag": "Ideas",
+    "summary": "Get an idea",
+    "source": {
+      "functionId": 26369,
+      "functionName": "getIdea",
+      "line": 1024804
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1280-1305 (function #26369 getIdea): Axios GET call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "ideaId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetIdeas",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/ideas/",
+    "tag": "Ideas",
+    "summary": "Get ideas",
+    "source": {
+      "functionId": 26371,
+      "functionName": "getIdeas",
+      "line": 1024841
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1306-1333 (function #26371 getIdeas): Axios GET call and URL construction traced there. Function parameter 2 is assigned unchanged to Axios config.params; query shape unresolved. The trailing slash is present in the literal URL.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+    ]
+  },
+  {
+    "operationId": "GetIdeaAgeGroups",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/idea/age-groups",
+    "tag": "Ideas",
+    "summary": "Get idea age groups",
+    "source": {
+      "functionId": 26373,
+      "functionName": "getIdeaAgeGroups",
+      "line": 1024880
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1334-1361 (function #26373 getIdeaAgeGroups): Axios GET call and URL construction traced there. Function parameter 2 is assigned unchanged to Axios config.params; query shape unresolved.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+    ]
+  },
+  {
+    "operationId": "GetIdeaCategories",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/idea/categories",
+    "tag": "Ideas",
+    "summary": "Get idea categories",
+    "source": {
+      "functionId": 26375,
+      "functionName": "getIdeaCategories",
+      "line": 1024919
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1362-1389 (function #26375 getIdeaCategories): Axios GET call and URL construction traced there. Function parameter 2 is assigned unchanged to Axios config.params; query shape unresolved.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+    ]
+  },
+  {
+    "operationId": "GetIdeaComments",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/idea/{ideaId}/comments",
+    "tag": "Ideas",
+    "summary": "Get idea comments",
+    "source": {
+      "functionId": 26377,
+      "functionName": "getIdeaComments",
+      "line": 1024958
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1390-1419 (function #26377 getIdeaComments): Axios GET call and URL construction traced there. Function parameter 3 is assigned unchanged to Axios config.params; query shape unresolved.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "ideaId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+    ]
+  },
+  {
+    "operationId": "SaveIdeaComment",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/idea/{ideaId}/comment",
+    "tag": "Ideas",
+    "summary": "Save an idea comment",
+    "source": {
+      "functionId": 26379,
+      "functionName": "saveIdeaComment",
+      "line": 1024999
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1420-1447 (function #26379 saveIdeaComment): Axios POST call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "ideaId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios post(url, function parameter 3); arbitrary forwarded request data, construction not established.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "AddIdeaToFavorites",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/idea/{ideaId}/favorite",
+    "tag": "Ideas",
+    "summary": "Add an idea to favorites",
+    "source": {
+      "functionId": 26381,
+      "functionName": "addIdeaToFavorites",
+      "line": 1025038
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1448-1474 (function #26381 addIdeaToFavorites): Axios POST call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "ideaId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "LikeIdea",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/idea/{ideaId}/like",
+    "tag": "Ideas",
+    "summary": "Like an idea",
+    "source": {
+      "functionId": 26383,
+      "functionName": "likeIdea",
+      "line": 1025076
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1475-1501 (function #26383 likeIdea): Axios POST call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "ideaId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "StoreIdea",
+    "clientRequestVariants": [{"variantId":"NewIdeaForm","constructor":{"functionId":38749,"line":1557034,"bytecodeOffset":"0x00"},"targetSourceFunctionId":26385,"placement":"multipart","branch":"captured existing-idea flag falsy; client count/size request gates pass","fields":[
+      {"name":"header","type":"unknown","evidence":"#38749 +0x25-0x35 appends submitted header."},
+      {"name":"contents","type":"unknown","evidence":"#38749 +0x3b-0x4b appends submitted contents."},
+      {"name":"keywords","type":"unknown","evidence":"#38749 +0x51-0x61 appends submitted keywords."},
+      {"name":"youtube","type":"unknown","evidence":"#38749 +0x67-0x77 appends submitted youtube."},
+      {"name":"google_drive","type":"unknown","evidence":"#38749 +0x7d-0x8d appends submitted googleDrive as google_drive."},
+      {"name":"vimeo","type":"string","value":"","evidence":"#38749 +0x93-0xa1 appends literal empty string; client constant only."},
+      {"name":"is_public","type":"unknown","evidence":"#38749 +0xa7-0xb8 appends captured slot 29."},
+      {"name":"categories[]","type":"unknown[]","optional":true,"evidence":"#38749 +0xbe-0x115 nullish/length-checks categories and appends each item +0xf5 under literal categories[]. Empty/nullish emits none; array type describes repeated unknown-valued parts, not JSON encoding."},
+      {"name":"age_groups[]","type":"unknown[]","optional":true,"evidence":"#38749 +0x119-0x16a nullish/length-checks groups and appends each item +0x14a under literal age_groups[]. Empty/nullish emits none; repeated unknown-valued parts, not JSON encoding."},
+      {"name":"files[]","type":"unknown[]","optional":true,"evidence":"#38749 +0x1a0 literal files[]; +0x1ad-0x210 appends each fileUploadList entry +0x1f8. Empty emits none; repeated unknown file parts, not JSON arrays or nested descriptor API properties. Request gates below."}
+    ],"provenFieldPaths":["header","contents","keywords","youtube","google_drive","vimeo","is_public","categories[]","age_groups[]","files[]"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#0 M4085 dependency 30=M2275; #38749 +0x249-0x252 selects storeIdea(FormData). Export #26315/#26316 (#26314 +0x17d-0x182), slot 0=dependency 1/M2276 (+0xe6-0xf7); #26361 +0x11a-0x127 installs #26385; +0x41-0x44 POST data=p2. Complete ten literal-name append set only; repeated names are not generated indices or JSON body arrays. Native name/size/type/uri are file transport facts, not API properties.","clientRequestGates":["#38738 +0x46e-0x47b stores 10/200000000 in slots 41/42. #38749 +0x17b count>10 bypasses file appends AND submission; +0x1ad-0x210 otherwise appends every entry. +0x214-0x218 total size>200000000 rejects submission AFTER loop. Empty list emits no files[]; client gates, not server/schema limits."]}],
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/idea",
+    "tag": "Ideas",
+    "summary": "Create an idea",
+    "source": {
+      "functionId": 26385,
+      "functionName": "storeIdea",
+      "line": 1025114
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1502-1532 (function #26385 storeIdea): Axios POST call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "multipart",
+      "fields": [
+        {"name":"header","type":"unknown","evidence":"#38749 +0x25-0x35 appends submitted header under literal header; value type unresolved."},
+        {"name":"contents","type":"unknown","evidence":"#38749 +0x3b-0x4b appends submitted contents under literal contents; value type unresolved."},
+        {"name":"keywords","type":"unknown","evidence":"#38749 +0x51-0x61 appends submitted keywords under literal keywords; value type unresolved."},
+        {"name":"youtube","type":"unknown","evidence":"#38749 +0x67-0x77 appends submitted youtube under literal youtube; value type unresolved."},
+        {"name":"google_drive","type":"unknown","evidence":"#38749 +0x7d-0x8d appends submitted googleDrive under literal google_drive; value type unresolved."},
+        {"name":"vimeo","type":"string","value":"","evidence":"#38749 +0x93-0xa1 appends literal empty string under vimeo; client constant only."},
+        {"name":"is_public","type":"unknown","evidence":"#38749 +0xa7-0xb8 appends captured slot 29 under literal is_public; value type unresolved."},
+        {"name":"categories[]","type":"unknown[]","optional":true,"evidence":"#38749 +0xbe-0x115 nullish/length checks submitted categories, loads literal categories[] +0xdc and appends each indexed item +0xf5. Empty/nullish collection emits none. unknown[] denotes repeated unknown-valued occurrences, not a JSON part/body array."},
+        {"name":"age_groups[]","type":"unknown[]","optional":true,"evidence":"#38749 +0x119-0x16a nullish/length checks submitted groups, loads literal age_groups[] +0x131 and appends each indexed item +0x14a. Empty/nullish collection emits none. unknown[] denotes repeated unknown-valued occurrences, not JSON array encoding."},
+        {"name":"files[]","type":"unknown[]","optional":true,"evidence":"#38749 +0x1a0 loads literal files[]; +0x1ad-0x210 appends every fileUploadList entry +0x1f8 with native name/size/type-or-mime/uri metadata, not nested API fields. Empty list emits none; unknown[] denotes repeated unknown file-valued parts, not JSON array encoding. +0x17b count>10 prevents appends/submission; +0x214-0x218 total>200000000 rejects AFTER loop, client gates only (#38738 +0x46e-0x47b constants)."}
+      ],
+      "evidence": "#38749 store branch -> #26315/#26316 -> installed #26385 POST data=p2 proves ten literal part names, including repeated bracket names. Partial endpoint model; exact client variants/gates retained separately; other callers remain unknown.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Service forwards multipart data; NewIdeaForm proves ten literal names including repeated categories[]/age_groups[]/files[]. Repetition means multiple parts, not JSON body arrays. Count/size gates are client-only, not server/schema constraints; other callers remain unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateIdea",
+    "clientRequestVariants": [{"variantId":"ExistingIdeaForm","constructor":{"functionId":38749,"line":1557034,"bytecodeOffset":"0x00"},"targetSourceFunctionId":26387,"placement":"multipart","branch":"captured existing-idea flag truthy; client count/size request gates pass","fields":[
+      {"name":"header","type":"unknown","evidence":"#38749 +0x25-0x35 appends submitted header."},
+      {"name":"contents","type":"unknown","evidence":"#38749 +0x3b-0x4b appends submitted contents."},
+      {"name":"keywords","type":"unknown","evidence":"#38749 +0x51-0x61 appends submitted keywords."},
+      {"name":"youtube","type":"unknown","evidence":"#38749 +0x67-0x77 appends submitted youtube."},
+      {"name":"google_drive","type":"unknown","evidence":"#38749 +0x7d-0x8d appends submitted googleDrive as google_drive."},
+      {"name":"vimeo","type":"string","value":"","evidence":"#38749 +0x93-0xa1 appends literal empty string; client constant only."},
+      {"name":"is_public","type":"unknown","evidence":"#38749 +0xa7-0xb8 appends captured slot 29."},
+      {"name":"categories[]","type":"unknown[]","optional":true,"evidence":"#38749 +0xbe-0x115 nullish/length-checks categories and appends each item +0xf5 under literal categories[]. Empty/nullish emits none; array type describes repeated unknown-valued parts, not JSON encoding."},
+      {"name":"age_groups[]","type":"unknown[]","optional":true,"evidence":"#38749 +0x119-0x16a nullish/length-checks groups and appends each item +0x14a under literal age_groups[]. Empty/nullish emits none; repeated unknown-valued parts, not JSON encoding."},
+      {"name":"files[]","type":"unknown[]","optional":true,"evidence":"#38749 +0x1a0 literal files[]; +0x1ad-0x210 appends each fileUploadList entry +0x1f8. Empty emits none; repeated unknown file parts, not JSON arrays or nested descriptor API properties. Request gates below."}
+    ],"provenFieldPaths":["header","contents","keywords","youtube","google_drive","vimeo","is_public","categories[]","age_groups[]","files[]"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#0 M4085 dependency 30=M2275; #38749 +0x27c-0x286 selects updateIdea(separate ideaId,FormData). Export #26318/#26319; slot 0=dependency 1/M2276 (#26314 +0xe6-0xf7); #26361 +0x131-0x13e installs #26387; +0x45-0x48 POST data=p3. Same ten literal-name append set as store branch; no _method, routing ID, removed-file field or JSON body array. Native descriptor members are transport facts, not API properties.","clientRequestGates":["#38738 +0x46e-0x47b stores 10/200000000 in slots 41/42. #38749 +0x17b count>10 bypasses file appends AND submission; +0x1ad-0x210 otherwise appends every entry. +0x214-0x218 total size>200000000 rejects submission AFTER loop. Empty list emits no files[]; client gates, not server/schema limits."]}],
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/idea/{ideaId}",
+    "tag": "Ideas",
+    "summary": "Update an idea",
+    "source": {
+      "functionId": 26387,
+      "functionName": "updateIdea",
+      "line": 1025156
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1533-1564 (function #26387 updateIdea): Axios POST call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "ideaId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "multipart",
+      "fields": [
+        {"name":"header","type":"unknown","evidence":"#38749 +0x25-0x35 appends submitted header under literal header; value type unresolved."},
+        {"name":"contents","type":"unknown","evidence":"#38749 +0x3b-0x4b appends submitted contents under literal contents; value type unresolved."},
+        {"name":"keywords","type":"unknown","evidence":"#38749 +0x51-0x61 appends submitted keywords under literal keywords; value type unresolved."},
+        {"name":"youtube","type":"unknown","evidence":"#38749 +0x67-0x77 appends submitted youtube under literal youtube; value type unresolved."},
+        {"name":"google_drive","type":"unknown","evidence":"#38749 +0x7d-0x8d appends submitted googleDrive under literal google_drive; value type unresolved."},
+        {"name":"vimeo","type":"string","value":"","evidence":"#38749 +0x93-0xa1 appends literal empty string under vimeo; client constant only."},
+        {"name":"is_public","type":"unknown","evidence":"#38749 +0xa7-0xb8 appends captured slot 29 under literal is_public; value type unresolved."},
+        {"name":"categories[]","type":"unknown[]","optional":true,"evidence":"#38749 +0xbe-0x115 nullish/length checks submitted categories, loads literal categories[] +0xdc and appends each indexed item +0xf5. Empty/nullish collection emits none. unknown[] denotes repeated unknown-valued occurrences, not a JSON part/body array."},
+        {"name":"age_groups[]","type":"unknown[]","optional":true,"evidence":"#38749 +0x119-0x16a nullish/length checks submitted groups, loads literal age_groups[] +0x131 and appends each indexed item +0x14a. Empty/nullish collection emits none. unknown[] denotes repeated unknown-valued occurrences, not JSON array encoding."},
+        {"name":"files[]","type":"unknown[]","optional":true,"evidence":"#38749 +0x1a0 loads literal files[]; +0x1ad-0x210 appends every fileUploadList entry +0x1f8 with native name/size/type-or-mime/uri metadata, not nested API fields. Empty list emits none; unknown[] denotes repeated unknown file-valued parts, not JSON array encoding. +0x17b count>10 prevents appends/submission; +0x214-0x218 total>200000000 rejects AFTER loop, client gates only (#38738 +0x46e-0x47b constants)."}
+      ],
+      "evidence": "#38749 update branch -> #26318/#26319 -> installed #26387 POST data=p3 proves ten literal part names, including repeated bracket names; ideaId is URL routing only. Partial endpoint model; other callers remain unknown.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Service forwards multipart data; ExistingIdeaForm proves the same ten literal names including repeated categories[]/age_groups[]/files[]. No route ID or _method part in this constructor; client gates are not server/schema constraints. Other callers remain unknown."
+    ]
+  },
+  {
+    "operationId": "GetPollById",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/polls/{pollId}",
+    "tag": "Polls",
+    "summary": "Get a poll by id",
+    "source": {
+      "functionId": 26454,
+      "functionName": "?anon_0_",
+      "line": 1027492
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1565-1599 (function #26454 ?anon_0_): Axios GET call and URL construction traced there. The generator uses user parameters 1 and 2 in the URL, calls Axios get(url) with no config, and returns awaited response.data.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "pollId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetPolls",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/polls",
+    "tag": "Polls",
+    "summary": "Get polls",
+    "source": {
+      "functionId": 26455,
+      "functionName": "getPolls",
+      "line": 1027527
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1600-1627 (function #26455 getPolls): Axios GET call and URL construction traced there. Function parameter 2 is assigned unchanged to Axios config.params; query shape unresolved.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+    ]
+  },
+  {
+    "operationId": "FillPollQuestion",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/polls/{pollId}",
+    "tag": "Polls",
+    "summary": "Fill a poll question",
+    "source": {
+      "functionId": 26457,
+      "functionName": "fillPollQuestion",
+      "line": 1027566
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1628-1654 (function #26457 fillPollQuestion): Axios POST call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "pollId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios post(url, function parameter 3); arbitrary forwarded request data, construction not established.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetQuestionnaires",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/questionnaires",
+    "tag": "Questionnaires",
+    "summary": "Get questionnaires",
+    "source": {
+      "functionId": 26488,
+      "functionName": "getQuestionnaires",
+      "line": 1028671
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1655-1682 (function #26488 getQuestionnaires): Axios GET call and URL construction traced there. Function parameter 2 is assigned unchanged to Axios config.params; query shape unresolved.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+    ]
+  },
+  {
+    "operationId": "GetQuestionnaire",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/questionnaires/{questionnaireId}",
+    "tag": "Questionnaires",
+    "summary": "Get a questionnaire",
+    "source": {
+      "functionId": 26490,
+      "functionName": "getQuestionnaire",
+      "line": 1028710
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1683-1708 (function #26490 getQuestionnaire): Axios GET call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "questionnaireId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetQuestionnaireQuestions",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/questionnaires/{questionnaireId}/questions",
+    "tag": "Questionnaires",
+    "summary": "Get questionnaire questions",
+    "source": {
+      "functionId": 26492,
+      "functionName": "getQuestionnaireQuestions",
+      "line": 1028747
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1709-1738 (function #26492 getQuestionnaireQuestions): Axios GET call and URL construction traced there. Function parameter 3 is assigned unchanged to Axios config.params; query shape unresolved.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "questionnaireId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+    ]
+  },
+  {
+    "operationId": "FillQuestionnaireQuestion",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/questionnaires/{questionnaireId}/answer/{questionId}",
+    "tag": "Questionnaires",
+    "summary": "Fill a questionnaire question",
+    "source": {
+      "functionId": 26494,
+      "functionName": "fillQuestionnaireQuestion",
+      "line": 1028788
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1739-1767 (function #26494 fillQuestionnaireQuestion): Axios POST call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "questionnaireId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      },
+      {
+        "name": "questionId",
+        "type": "string",
+        "evidence": "Function parameter 3 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios post(url, function parameter 4); arbitrary forwarded request data, construction not established.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "SubmitQuestionnaire",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/questionnaires/{questionnaireId}/submit",
+    "tag": "Questionnaires",
+    "summary": "Submit a questionnaire",
+    "source": {
+      "functionId": 26496,
+      "functionName": "submitQuestionnaire",
+      "line": 1028828
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1768-1794 (function #26496 submitQuestionnaire): Axios PUT call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "questionnaireId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UnsubmitQuestionnaire",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/questionnaires/{questionnaireId}/unsubmit",
+    "tag": "Questionnaires",
+    "summary": "Unsubmit a questionnaire",
+    "source": {
+      "functionId": 26498,
+      "functionName": "unsubmitQuestionnaire",
+      "line": 1028866
+    },
+    "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1795-1820 (function #26498 unsubmitQuestionnaire): Axios PUT call and URL construction traced there.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function parameter 1 is concatenated into URL"
+      },
+      {
+        "name": "questionnaireId",
+        "type": "string",
+        "evidence": "Function parameter 2 is concatenated into URL"
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  }
+]

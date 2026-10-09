@@ -1,0 +1,1716 @@
+{
+  "apk": {
+    "package": "com.eliis",
+    "versionName": "2.69",
+    "versionCode": "33012366"
+  },
+  "hermesVersion": 96,
+  "inputs": {
+    "input/com.eliis.apk": {
+      "sha256": "9b583200327b13e61078f6b9880b24ace6b22b9680be5b0d6de748721ef73879"
+    },
+    "input/index.android.bundle.hbc": {
+      "sha256": "4a08cf83fd735df118f2874ad07748b0781fdf23de4afdae59bce6ac82c91c6d"
+    }
+  },
+  "candidateFunctions": [
+    {
+      "domain": "auth-common",
+      "functionId": 12709,
+      "functionName": "getLanguages",
+      "line": 509969
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 12711,
+      "functionName": "getTranslations",
+      "line": 509999
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16308,
+      "functionName": "login",
+      "line": 648612
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16309,
+      "functionName": "login2FA",
+      "line": 648644
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16311,
+      "functionName": "socialLogin",
+      "line": 648684
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16314,
+      "functionName": "socialRegister",
+      "line": 648760
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16317,
+      "functionName": "registerUser",
+      "line": 648836
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16319,
+      "functionName": "resendEmailVerification",
+      "line": 648872
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16321,
+      "functionName": "requestForgotPassword",
+      "line": 648903
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16323,
+      "functionName": "logout",
+      "line": 648934
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16335,
+      "functionName": "verifyTwoFactorAuthKey",
+      "line": 649120
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16337,
+      "functionName": "recoverAccount",
+      "line": 649151
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16344,
+      "functionName": "getUserData",
+      "line": 649457
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16346,
+      "functionName": "getUserProfile",
+      "line": 649508
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16348,
+      "functionName": "getUserPermissions",
+      "line": 649538
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16351,
+      "functionName": "getUserMenu",
+      "line": 649587
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16354,
+      "functionName": "getUserKindergartenMenu",
+      "line": 649631
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16357,
+      "functionName": "updateUser",
+      "line": 649681
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16359,
+      "functionName": "updateUserName",
+      "line": 649712
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16361,
+      "functionName": "uploadUserPicture",
+      "line": 649743
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16363,
+      "functionName": "deleteUserPicture",
+      "line": 649779
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16365,
+      "functionName": "deactivateUser",
+      "line": 649809
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16367,
+      "functionName": "getUserSettings",
+      "line": 649839
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16369,
+      "functionName": "getUserTargetGroups",
+      "line": 649869
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16371,
+      "functionName": "requestEmailChange",
+      "line": 649905
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16373,
+      "functionName": "getUser2FAProvider",
+      "line": 649942
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16375,
+      "functionName": "generateTwoFactorAuthSecret",
+      "line": 649972
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16377,
+      "functionName": "enableTwoFactorAuth",
+      "line": 650005
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16379,
+      "functionName": "disableTwoFactorAuth",
+      "line": 650036
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16381,
+      "functionName": "verifyPassword",
+      "line": 650074
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16386,
+      "functionName": "getKindergartenActivity",
+      "line": 650195
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16391,
+      "functionName": "getUserBanners",
+      "line": 650321
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 24587,
+      "functionName": "searchByName",
+      "line": 967298
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 24589,
+      "functionName": "getEnabledLanguages",
+      "line": 967333
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 24591,
+      "functionName": "getKindergartenChildrenList",
+      "line": 967369
+    },
+    {
+      "domain": "communications",
+      "functionId": 25218,
+      "functionName": "messages",
+      "line": 990212
+    },
+    {
+      "domain": "communications",
+      "functionId": 25221,
+      "functionName": "getRecentMessages",
+      "line": 990258
+    },
+    {
+      "domain": "communications",
+      "functionId": 25223,
+      "functionName": "sentMessages",
+      "line": 990288
+    },
+    {
+      "domain": "communications",
+      "functionId": 25225,
+      "functionName": "deletedMessages",
+      "line": 990321
+    },
+    {
+      "domain": "communications",
+      "functionId": 25227,
+      "functionName": "update",
+      "line": 990354
+    },
+    {
+      "domain": "communications",
+      "functionId": 25229,
+      "functionName": "_delete",
+      "line": 990390
+    },
+    {
+      "domain": "communications",
+      "functionId": 25231,
+      "functionName": "getUserTargetGroups",
+      "line": 990425
+    },
+    {
+      "domain": "communications",
+      "functionId": 25233,
+      "functionName": "sendMessage",
+      "line": 990455
+    },
+    {
+      "domain": "communications",
+      "functionId": 25235,
+      "functionName": "sendMessageDraft",
+      "line": 990501
+    },
+    {
+      "domain": "communications",
+      "functionId": 25237,
+      "functionName": "getMessageDrafts",
+      "line": 990541
+    },
+    {
+      "domain": "communications",
+      "functionId": 25239,
+      "functionName": "getMessageDraft",
+      "line": 990574
+    },
+    {
+      "domain": "communications",
+      "functionId": 25241,
+      "functionName": "getDraft",
+      "line": 990609
+    },
+    {
+      "domain": "communications",
+      "functionId": 25243,
+      "functionName": "createDraft",
+      "line": 990644
+    },
+    {
+      "domain": "communications",
+      "functionId": 25245,
+      "functionName": "saveDraft",
+      "line": 990675
+    },
+    {
+      "domain": "communications",
+      "functionId": 25247,
+      "functionName": "deleteDraft",
+      "line": 990711
+    },
+    {
+      "domain": "communications",
+      "functionId": 25249,
+      "functionName": "uploadDraftAttachment",
+      "line": 990749
+    },
+    {
+      "domain": "communications",
+      "functionId": 25251,
+      "functionName": "deleteDraftAttachment",
+      "line": 990793
+    },
+    {
+      "domain": "communications",
+      "functionId": 25253,
+      "functionName": "updateSentMessage",
+      "line": 990834
+    },
+    {
+      "domain": "communications",
+      "functionId": 25255,
+      "functionName": "deleteSentMessage",
+      "line": 990875
+    },
+    {
+      "domain": "communications",
+      "functionId": 25257,
+      "functionName": "recallSentMessage",
+      "line": 990910
+    },
+    {
+      "domain": "communications",
+      "functionId": 25292,
+      "functionName": "userApplications",
+      "line": 991904
+    },
+    {
+      "domain": "communications",
+      "functionId": 25294,
+      "functionName": "store",
+      "line": 991934
+    },
+    {
+      "domain": "communications",
+      "functionId": 25296,
+      "functionName": "kindergartenApplications",
+      "line": 991965
+    },
+    {
+      "domain": "communications",
+      "functionId": 25298,
+      "functionName": "getApplication",
+      "line": 992004
+    },
+    {
+      "domain": "communications",
+      "functionId": 25300,
+      "functionName": "reject",
+      "line": 992042
+    },
+    {
+      "domain": "communications",
+      "functionId": 25302,
+      "functionName": "confirm",
+      "line": 992081
+    },
+    {
+      "domain": "communications",
+      "functionId": 25304,
+      "functionName": "addOrRemoveChild",
+      "line": 992120
+    },
+    {
+      "domain": "communications",
+      "functionId": 25330,
+      "functionName": "getReceivedAnnouncements",
+      "line": 992941
+    },
+    {
+      "domain": "communications",
+      "functionId": 25332,
+      "functionName": "getSentAnnouncements",
+      "line": 992980
+    },
+    {
+      "domain": "communications",
+      "functionId": 25334,
+      "functionName": "updateAnnouncementAsRead",
+      "line": 993019
+    },
+    {
+      "domain": "communications",
+      "functionId": 25336,
+      "functionName": "getAnnouncementsTargetGroups",
+      "line": 993057
+    },
+    {
+      "domain": "communications",
+      "functionId": 25338,
+      "functionName": "sendAnnouncement",
+      "line": 993093
+    },
+    {
+      "domain": "communications",
+      "functionId": 25341,
+      "functionName": "_delete",
+      "line": 993152
+    },
+    {
+      "domain": "communications",
+      "functionId": 25401,
+      "functionName": "getRecentEvents",
+      "line": 995306
+    },
+    {
+      "domain": "communications",
+      "functionId": 25403,
+      "functionName": "getEvents",
+      "line": 995342
+    },
+    {
+      "domain": "communications",
+      "functionId": 25405,
+      "functionName": "createEvent",
+      "line": 995394
+    },
+    {
+      "domain": "communications",
+      "functionId": 25407,
+      "functionName": "updateEvent",
+      "line": 995431
+    },
+    {
+      "domain": "communications",
+      "functionId": 25409,
+      "functionName": "deleteEvent",
+      "line": 995469
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25485,
+      "functionName": "updateSettings",
+      "line": 998999
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25487,
+      "functionName": "store",
+      "line": 999038
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25489,
+      "functionName": "update",
+      "line": 999077
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25491,
+      "functionName": "detach",
+      "line": 999117
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25493,
+      "functionName": "_delete",
+      "line": 999157
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25611,
+      "functionName": "getMap",
+      "line": 1002683
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25613,
+      "functionName": "approveMap",
+      "line": 1002722
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25615,
+      "functionName": "disapproveMap",
+      "line": 1002763
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25617,
+      "functionName": "publishMap",
+      "line": 1002806
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25622,
+      "functionName": "getChild",
+      "line": 1003117
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25624,
+      "functionName": "getChildCourses",
+      "line": 1003154
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25626,
+      "functionName": "getChildCoursePlanTypes",
+      "line": 1003192
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25628,
+      "functionName": "getChildPlansList",
+      "line": 1003235
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25630,
+      "functionName": "getGuardianDiary",
+      "line": 1003280
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25632,
+      "functionName": "getGuardianFeed",
+      "line": 1003318
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25634,
+      "functionName": "getChildProfile",
+      "line": 1003359
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25636,
+      "functionName": "updateChildProfile",
+      "line": 1003397
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25638,
+      "functionName": "getMaps",
+      "line": 1003435
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25640,
+      "functionName": "getChildApprovals",
+      "line": 1003476
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25642,
+      "functionName": "updateApprovalAnswers",
+      "line": 1003514
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25644,
+      "functionName": "getChildCalendar",
+      "line": 1003555
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25646,
+      "functionName": "saveChildCalendarDays",
+      "line": 1003596
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25648,
+      "functionName": "saveChildCalendarSingleDay",
+      "line": 1003635
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25650,
+      "functionName": "getStatusLogs",
+      "line": 1003674
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25652,
+      "functionName": "getAbsenceModalData",
+      "line": 1003717
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25654,
+      "functionName": "uploadChildProfilePicture",
+      "line": 1003760
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25656,
+      "functionName": "deleteChildProfilePicture",
+      "line": 1003804
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25658,
+      "functionName": "getGuardians",
+      "line": 1003842
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25660,
+      "functionName": "getFiles",
+      "line": 1003880
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25661,
+      "functionName": "uploadFile",
+      "line": 1003910
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25663,
+      "functionName": "deleteChildFile",
+      "line": 1003954
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25665,
+      "functionName": "updateChildFile",
+      "line": 1003993
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25667,
+      "functionName": "addChildDates",
+      "line": 1004033
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25669,
+      "functionName": "updateChildDates",
+      "line": 1004072
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25671,
+      "functionName": "getGuardianInvoices",
+      "line": 1004112
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25673,
+      "functionName": "getGuardianInvoice",
+      "line": 1004153
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25675,
+      "functionName": "addGuardianInvoiceService",
+      "line": 1004192
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25677,
+      "functionName": "updateGuardianInvoiceService",
+      "line": 1004231
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25679,
+      "functionName": "deleteGuardianInvoiceService",
+      "line": 1004271
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25681,
+      "functionName": "updateChildGuardianFee",
+      "line": 1004310
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25723,
+      "functionName": "getEmployeeActiveCourses",
+      "line": 1006084
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25725,
+      "functionName": "getEmployeeCourses",
+      "line": 1006122
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25730,
+      "functionName": "updateData",
+      "line": 1006259
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25732,
+      "functionName": "updateSettings",
+      "line": 1006296
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25935,
+      "functionName": "getDiaryData",
+      "line": 1012899
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25937,
+      "functionName": "createDiary",
+      "line": 1012943
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25939,
+      "functionName": "updateComment",
+      "line": 1012980
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25941,
+      "functionName": "uploadMedia",
+      "line": 1013021
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25943,
+      "functionName": "uploadDocument",
+      "line": 1013066
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25945,
+      "functionName": "publish",
+      "line": 1013111
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25947,
+      "functionName": "updateDiaryFile",
+      "line": 1013149
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25949,
+      "functionName": "deleteDiaryFile",
+      "line": 1013187
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25951,
+      "functionName": "deleteDiaryFiles",
+      "line": 1013224
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25953,
+      "functionName": "likeDiary",
+      "line": 1013265
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25955,
+      "functionName": "updateEntryStatus",
+      "line": 1013303
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25957,
+      "functionName": "updateEntryStatuses",
+      "line": 1013342
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25959,
+      "functionName": "updateEntryMeal",
+      "line": 1013381
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25961,
+      "functionName": "addEntryFeedback",
+      "line": 1013420
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25963,
+      "functionName": "updateEntryFeedback",
+      "line": 1013459
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25965,
+      "functionName": "deleteEntryFeedback",
+      "line": 1013499
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25967,
+      "functionName": "startTimeTracking",
+      "line": 1013538
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25969,
+      "functionName": "stopTimeTracking",
+      "line": 1013577
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25971,
+      "functionName": "addTimeLog",
+      "line": 1013616
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25973,
+      "functionName": "updateTimeLog",
+      "line": 1013655
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25975,
+      "functionName": "deleteTimeLog",
+      "line": 1013695
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25977,
+      "functionName": "updateEntryLeaveType",
+      "line": 1013734
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 25979,
+      "functionName": "updateEntryLeaveTypes",
+      "line": 1013773
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26007,
+      "functionName": "getDayMenu",
+      "line": 1014569
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26009,
+      "functionName": "getWeekMenu",
+      "line": 1014606
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26011,
+      "functionName": "getEmployeeMeals",
+      "line": 1014643
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26013,
+      "functionName": "getEmployeeMealsSettings",
+      "line": 1014682
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26015,
+      "functionName": "saveEmployeeMeal",
+      "line": 1014718
+    },
+    {
+      "domain": "communications",
+      "functionId": 26039,
+      "functionName": "getKindergartenView",
+      "line": 1015514
+    },
+    {
+      "domain": "communications",
+      "functionId": 26041,
+      "functionName": "getEmployeeContacts",
+      "line": 1015550
+    },
+    {
+      "domain": "communications",
+      "functionId": 26043,
+      "functionName": "getGuardianContacts",
+      "line": 1015589
+    },
+    {
+      "domain": "communications",
+      "functionId": 26045,
+      "functionName": "getContactsCourseGuardians",
+      "line": 1015628
+    },
+    {
+      "domain": "communications",
+      "functionId": 26047,
+      "functionName": "getContactsCourseEmployees",
+      "line": 1015666
+    },
+    {
+      "domain": "communications",
+      "functionId": 26069,
+      "functionName": "getRecentNotifications",
+      "line": 1016283
+    },
+    {
+      "domain": "communications",
+      "functionId": 26071,
+      "functionName": "getNotifications",
+      "line": 1016313
+    },
+    {
+      "domain": "communications",
+      "functionId": 26073,
+      "functionName": "getUnseenCount",
+      "line": 1016346
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26134,
+      "functionName": "getIndexFolders",
+      "line": 1018505
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26136,
+      "functionName": "deleteGalleryFile",
+      "line": 1018544
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26138,
+      "functionName": "updateGalleryFile",
+      "line": 1018581
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26143,
+      "functionName": "getFolderData",
+      "line": 1018787
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26145,
+      "functionName": "getSubfolders",
+      "line": 1018827
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26147,
+      "functionName": "addFolder",
+      "line": 1018868
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26149,
+      "functionName": "updateFolder",
+      "line": 1018905
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26151,
+      "functionName": "deleteFolder",
+      "line": 1018943
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26153,
+      "functionName": "uploadFiles",
+      "line": 1018980
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26155,
+      "functionName": "getUserTargetGroups",
+      "line": 1019024
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26157,
+      "functionName": "moveFolders",
+      "line": 1019060
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26159,
+      "functionName": "moveFiles",
+      "line": 1019099
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26161,
+      "functionName": "deleteFiles",
+      "line": 1019138
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26163,
+      "functionName": "getBuiltinChildProfile",
+      "line": 1019179
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26165,
+      "functionName": "getBuiltinDiaryFolders",
+      "line": 1019219
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26167,
+      "functionName": "getBuiltinDiaryFiles",
+      "line": 1019258
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26169,
+      "functionName": "getFolderFiles",
+      "line": 1019298
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26268,
+      "functionName": "getIndexFolders",
+      "line": 1021765
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26270,
+      "functionName": "getDocumentsFolderData",
+      "line": 1021804
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26272,
+      "functionName": "deleteDocument",
+      "line": 1021844
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26274,
+      "functionName": "updateDocumentFile",
+      "line": 1021881
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26276,
+      "functionName": "getDocumentAcl",
+      "line": 1021919
+    },
+    {
+      "domain": "children-diary-files",
+      "functionId": 26278,
+      "functionName": "getSharedDocuments",
+      "line": 1021957
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 26289,
+      "functionName": "getCountries",
+      "line": 1022267
+    },
+    {
+      "domain": "communications",
+      "functionId": 26363,
+      "functionName": "deleteIdea",
+      "line": 1024691
+    },
+    {
+      "domain": "communications",
+      "functionId": 26365,
+      "functionName": "deleteIdeaComment",
+      "line": 1024728
+    },
+    {
+      "domain": "communications",
+      "functionId": 26367,
+      "functionName": "deleteIdeaImage",
+      "line": 1024767
+    },
+    {
+      "domain": "communications",
+      "functionId": 26369,
+      "functionName": "getIdea",
+      "line": 1024804
+    },
+    {
+      "domain": "communications",
+      "functionId": 26371,
+      "functionName": "getIdeas",
+      "line": 1024841
+    },
+    {
+      "domain": "communications",
+      "functionId": 26373,
+      "functionName": "getIdeaAgeGroups",
+      "line": 1024880
+    },
+    {
+      "domain": "communications",
+      "functionId": 26375,
+      "functionName": "getIdeaCategories",
+      "line": 1024919
+    },
+    {
+      "domain": "communications",
+      "functionId": 26377,
+      "functionName": "getIdeaComments",
+      "line": 1024958
+    },
+    {
+      "domain": "communications",
+      "functionId": 26379,
+      "functionName": "saveIdeaComment",
+      "line": 1024999
+    },
+    {
+      "domain": "communications",
+      "functionId": 26381,
+      "functionName": "addIdeaToFavorites",
+      "line": 1025038
+    },
+    {
+      "domain": "communications",
+      "functionId": 26383,
+      "functionName": "likeIdea",
+      "line": 1025076
+    },
+    {
+      "domain": "communications",
+      "functionId": 26385,
+      "functionName": "storeIdea",
+      "line": 1025114
+    },
+    {
+      "domain": "communications",
+      "functionId": 26387,
+      "functionName": "updateIdea",
+      "line": 1025156
+    },
+    {
+      "domain": "communications",
+      "functionId": 26454,
+      "functionName": "?anon_0_",
+      "line": 1027492
+    },
+    {
+      "domain": "communications",
+      "functionId": 26455,
+      "functionName": "getPolls",
+      "line": 1027527
+    },
+    {
+      "domain": "communications",
+      "functionId": 26457,
+      "functionName": "fillPollQuestion",
+      "line": 1027566
+    },
+    {
+      "domain": "communications",
+      "functionId": 26488,
+      "functionName": "getQuestionnaires",
+      "line": 1028671
+    },
+    {
+      "domain": "communications",
+      "functionId": 26490,
+      "functionName": "getQuestionnaire",
+      "line": 1028710
+    },
+    {
+      "domain": "communications",
+      "functionId": 26492,
+      "functionName": "getQuestionnaireQuestions",
+      "line": 1028747
+    },
+    {
+      "domain": "communications",
+      "functionId": 26494,
+      "functionName": "fillQuestionnaireQuestion",
+      "line": 1028788
+    },
+    {
+      "domain": "communications",
+      "functionId": 26496,
+      "functionName": "submitQuestionnaire",
+      "line": 1028828
+    },
+    {
+      "domain": "communications",
+      "functionId": 26498,
+      "functionName": "unsubmitQuestionnaire",
+      "line": 1028866
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26547,
+      "functionName": "insertWorkSchedule",
+      "line": 1030614
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26549,
+      "functionName": "getWorkSchedule",
+      "line": 1030651
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26551,
+      "functionName": "updateWorkSchedule",
+      "line": 1030690
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26553,
+      "functionName": "deleteWorkSchedule",
+      "line": 1030728
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26555,
+      "functionName": "getWorkScheduleTypes",
+      "line": 1030768
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26557,
+      "functionName": "addWorkScheduleType",
+      "line": 1030804
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26559,
+      "functionName": "updateWorkScheduleType",
+      "line": 1030841
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26561,
+      "functionName": "getWorkScheduleSettings",
+      "line": 1030879
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26563,
+      "functionName": "updateWorkScheduleSettings",
+      "line": 1030915
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26703,
+      "functionName": "filters",
+      "line": 1035778
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26705,
+      "functionName": "categories",
+      "line": 1035808
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26707,
+      "functionName": "getSuppliers",
+      "line": 1035838
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26709,
+      "functionName": "getSupplierInfo",
+      "line": 1035868
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26711,
+      "functionName": "getSupplierProducts",
+      "line": 1035903
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26713,
+      "functionName": "kindergartenGetSupplierProducts",
+      "line": 1035963
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26715,
+      "functionName": "getSupplierServices",
+      "line": 1036029
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26717,
+      "functionName": "kindergartenGetSupplierServices",
+      "line": 1036089
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26719,
+      "functionName": "popularShopItems",
+      "line": 1036155
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26721,
+      "functionName": "popularKindergartenShopItems",
+      "line": 1036185
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26723,
+      "functionName": "categoryProducts",
+      "line": 1036221
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26725,
+      "functionName": "categoryServices",
+      "line": 1036260
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26727,
+      "functionName": "kindergartenCategoryProducts",
+      "line": 1036299
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26729,
+      "functionName": "kindergartenCategoryServices",
+      "line": 1036340
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26731,
+      "functionName": "product",
+      "line": 1036381
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26733,
+      "functionName": "kindergartenProduct",
+      "line": 1036417
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26735,
+      "functionName": "service",
+      "line": 1036455
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26737,
+      "functionName": "kindergartenService",
+      "line": 1036491
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26739,
+      "functionName": "productSearch",
+      "line": 1036529
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26741,
+      "functionName": "kindergartenProductSearch",
+      "line": 1036578
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26743,
+      "functionName": "serviceSearch",
+      "line": 1036633
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26745,
+      "functionName": "kindergartenServiceSearch",
+      "line": 1036682
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26747,
+      "functionName": "rateProduct",
+      "line": 1036737
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26749,
+      "functionName": "rateService",
+      "line": 1036776
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26751,
+      "functionName": "addProductComment",
+      "line": 1036815
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26753,
+      "functionName": "addKindergartenProductComment",
+      "line": 1036854
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26755,
+      "functionName": "getProductComments",
+      "line": 1036895
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26757,
+      "functionName": "getKindergartenProductComments",
+      "line": 1036934
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26759,
+      "functionName": "addServiceComment",
+      "line": 1036975
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26761,
+      "functionName": "addKindergartenServiceComment",
+      "line": 1037014
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26763,
+      "functionName": "getServiceComments",
+      "line": 1037055
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26765,
+      "functionName": "getKindergartenServiceComments",
+      "line": 1037094
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26767,
+      "functionName": "addToCart",
+      "line": 1037135
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26769,
+      "functionName": "userCart",
+      "line": 1037166
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26771,
+      "functionName": "editCartItem",
+      "line": 1037196
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26773,
+      "functionName": "removeFromCart",
+      "line": 1037233
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26775,
+      "functionName": "storeUserOrder",
+      "line": 1037269
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26777,
+      "functionName": "cancelUserOrder",
+      "line": 1037300
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26779,
+      "functionName": "userOrders",
+      "line": 1037336
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26781,
+      "functionName": "getUserOrder",
+      "line": 1037369
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26783,
+      "functionName": "kindergartenOrders",
+      "line": 1037404
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26785,
+      "functionName": "getKindergartenOrder",
+      "line": 1037443
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26787,
+      "functionName": "storeKindergartenOrder",
+      "line": 1037480
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26789,
+      "functionName": "cancelKindergartenOrder",
+      "line": 1037517
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26791,
+      "functionName": "addToKindergartenWishlist",
+      "line": 1037557
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26793,
+      "functionName": "wishlist",
+      "line": 1037594
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26795,
+      "functionName": "removeFromWishlist",
+      "line": 1037633
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26797,
+      "functionName": "editWishlistItem",
+      "line": 1037671
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26844,
+      "functionName": "cdmSettings",
+      "line": 1039171
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26846,
+      "functionName": "categoriesForChild",
+      "line": 1039207
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26848,
+      "functionName": "getChildGoalsFile",
+      "line": 1039257
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26850,
+      "functionName": "evaluate",
+      "line": 1039297
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26852,
+      "functionName": "storeComment",
+      "line": 1039336
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26854,
+      "functionName": "updateComment",
+      "line": 1039375
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26856,
+      "functionName": "destroyComment",
+      "line": 1039414
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 26882,
+      "functionName": "getUserDashboard",
+      "line": 1040525
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 26884,
+      "functionName": "acceptEmployeeInvite",
+      "line": 1040556
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26886,
+      "functionName": "submitDashboardPoll",
+      "line": 1040591
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26908,
+      "functionName": "getEmployeeMeals",
+      "line": 1041206
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26910,
+      "functionName": "meals",
+      "line": 1041245
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26912,
+      "functionName": "mealsPerCourse",
+      "line": 1041284
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26938,
+      "functionName": "getCoursePlanTypes",
+      "line": 1041995
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26940,
+      "functionName": "getCoursePlans",
+      "line": 1042037
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26942,
+      "functionName": "getPlanSettings",
+      "line": 1042081
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26944,
+      "functionName": "getPlan",
+      "line": 1042120
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26946,
+      "functionName": "getCoursePlansOverView",
+      "line": 1042159
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26948,
+      "functionName": "getProjectPlans",
+      "line": 1042202
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26950,
+      "functionName": "getProjectPlan",
+      "line": 1042239
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 26952,
+      "functionName": "getYearPlan",
+      "line": 1042277
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 28229,
+      "functionName": "getPublicAgreement",
+      "line": 1112422
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 28231,
+      "functionName": "acceptAgreement",
+      "line": 1112462
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 41029,
+      "functionName": "updateSettings",
+      "line": 1664209
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 43832,
+      "functionName": "getCourseAccessCode",
+      "line": 1787234
+    },
+    {
+      "domain": "admin-shop",
+      "functionId": 43834,
+      "functionName": "generateCourseAccessCode",
+      "line": 1787273
+    },
+    {
+      "domain": "auth-common",
+      "functionId": 16398,
+      "functionName": "authorize",
+      "line": 650598
+    }
+  ]
+}

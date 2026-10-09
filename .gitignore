@@ -1,0 +1,27 @@
+node_modules/
+tsp-output/
+dist/
+coverage/
+tests/.generated-fixture-*/
+*.log
+
+# Local research inputs and full third-party source/disassembly.
+*.apk
+*.xapk
+*.hbc
+*.hasm
+input/
+decompiled/
+local-analysis/
+
+# Credentials and private records must never be published.
+.env
+.env.*
+!.env.example
+secrets/
+credentials/
+cookies.txt
+*.pem
+*.key
+
+.DS_Store

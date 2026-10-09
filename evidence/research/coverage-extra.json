@@ -1,0 +1,552 @@
+[
+  {
+    "operationId": "DownloadMessageAttachment",
+    "method": "get",
+    "path": "/api/common/files/messages/{filename}",
+    "tag": "Files",
+    "summary": "Download a message attachment",
+    "source": {
+      "functionId": 34111,
+      "functionName": "?anon_0_",
+      "line": 1335221
+    },
+    "evidence": "#34104 appends attachment.filename to /api/common/files/messages/ (eliis.hasm:1334809-1334819). #34111 builds ApiUrl + downloadUrl as fromUrl and initializes headers.cookie to an empty string (1335255-1335263); getAccessToken().then(#34112) (1335266-1335273) overwrites that cookie with the saved access-cookie before RNFS downloadFile(options) (1335288-1335297). RNFSManager.java:779-792 transfers fromUrl and headers into DownloadParams; 842-844 executes Downloader. Downloader.java:64-74 opens HttpURLConnection, copies headers and connects without a method override or output body, leaving the platform default GET in effect. No query is constructed at this call site.",
+    "pathParams": [
+      {
+        "name": "filename",
+        "type": "string",
+        "evidence": "Function #34104 appends its attachment filename value to the literal path prefix."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The native downloader writes response bytes to a local file and returns download metadata; the complete server response schema is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "The binary download is a separate transport path from the message attachment metadata/upload operations."
+    ]
+  },
+  {
+    "operationId": "DownloadDiaryFile",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/files/diary/{filename}",
+    "tag": "Files",
+    "summary": "Download a diary file",
+    "source": {
+      "functionId": 37887,
+      "functionName": "?anon_0_",
+      "line": 1515676
+    },
+    "evidence": "#37887's diary_documents branch concatenates /api/kindergartens/, closure kindergarten identifier, /files/diary/, and file.filename (eliis.hasm:1515736-1515746). Common options prefix ApiUrl, set fromUrl and initially empty headers.cookie (1515747-1515757). getAccessToken().then(#37888) (1515761-1515770) overwrites cookie with the saved access-cookie and calls RNFS downloadFile(options) (1515785-1515794). RNFSManager.java:779-792 transfers URL/headers into DownloadParams; 842-844 executes Downloader. Downloader.java:64-74 opens/connects HttpURLConnection with copied headers, no method override/output body, hence default GET. No query is constructed here.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "A kindergarten identifier from the closure environment is concatenated after /api/kindergartens/."
+      },
+      {
+        "name": "filename",
+        "type": "string",
+        "evidence": "The file object's filename is appended after /files/diary/."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The native downloader writes response bytes to a local file and returns download metadata; the complete server response schema is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "The route shape also occurs in downloader functions #35409, #39736, and #43644; #37887 additionally selects this route by module. This path overlaps PUT/DELETE metadata operations at /api/kindergartens/{kindergartenId}/files/diary/{fileId}, but the download is GET."
+    ]
+  },
+  {
+    "operationId": "DownloadDocumentFile",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/files/documents/{filename}",
+    "tag": "Files",
+    "summary": "Download a document file",
+    "source": {
+      "functionId": 37887,
+      "functionName": "?anon_0_",
+      "line": 1515676
+    },
+    "evidence": "#37887's documents branch concatenates /api/kindergartens/, closure kindergarten identifier, /files/documents/, and file.filename (eliis.hasm:1515708-1515719). Common options prefix ApiUrl, set fromUrl and initially empty headers.cookie (1515747-1515757). getAccessToken().then(#37888) (1515761-1515770) overwrites cookie with the saved access-cookie and calls RNFS downloadFile(options) (1515785-1515794). RNFSManager.java:779-792 transfers URL/headers into DownloadParams; 842-844 executes Downloader. Downloader.java:64-74 opens/connects HttpURLConnection with copied headers, no method override/output body, hence default GET. No query is constructed here.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "A kindergarten identifier from the closure environment is concatenated after /api/kindergartens/."
+      },
+      {
+        "name": "filename",
+        "type": "string",
+        "evidence": "The file object's filename is appended after /files/documents/."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The native downloader writes response bytes to a local file and returns download metadata; the complete server response schema is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "The route overlaps PUT/DELETE document metadata operations at /api/kindergartens/{kindergartenId}/files/documents/{documentId}; this operation is a GET download. The same GET path is also built in functions #39561 and #39615."
+    ]
+  },
+  {
+    "operationId": "DownloadChildFile",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/files/{filename}",
+    "tag": "Files",
+    "summary": "Download a child file",
+    "source": {
+      "functionId": 37887,
+      "functionName": "?anon_0_",
+      "line": 1515676
+    },
+    "evidence": "#37887's child_files/child_documents branches concatenate /api/kindergartens/, closure kindergarten identifier, /children/, closure child identifier, /files/, and file.filename (eliis.hasm:1515720-1515735). Common options prefix ApiUrl, set fromUrl and initially empty headers.cookie (1515747-1515757). getAccessToken().then(#37888) (1515761-1515770) overwrites cookie with the saved access-cookie and calls RNFS downloadFile(options) (1515785-1515794). #39691 independently builds the same filename URL (1599587-1599601). RNFSManager.java:779-792 transfers URL/headers into DownloadParams; 842-844 executes Downloader. Downloader.java:64-74 opens/connects HttpURLConnection with copied headers, no method override/output body, hence default GET. No query is constructed here.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "A kindergarten identifier from the closure environment is concatenated after /api/kindergartens/."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "A child identifier from the closure environment is concatenated after /children/."
+      },
+      {
+        "name": "filename",
+        "type": "string",
+        "evidence": "The file object's filename is appended after /files/."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The native downloader writes response bytes to a local file and returns download metadata; the complete server response schema is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "The same GET download URL is constructed in functions #39691 and #44496. Metadata endpoints for child files use related but non-identical paths/methods."
+    ]
+  },
+  {
+    "operationId": "DownloadFoodmenuFile",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/foodmenu/{foodmenuId}/download",
+    "tag": "Files",
+    "summary": "Download a food-menu file",
+    "source": {
+      "functionId": 37318,
+      "functionName": "?anon_0_",
+      "line": 1489745
+    },
+    "evidence": "#37318 builds ApiUrl + /api/kindergartens/ + closure kindergarten identifier + /foodmenu/ + selected object's id + /download into fromUrl (eliis.hasm:1489777-1489790), then initializes headers.cookie to empty (1489792-1489795). getAccessToken().then(#37319) (1489799-1489806) overwrites cookie with the saved access-cookie and calls RNFS downloadFile(options) (1489821-1489830). RNFSManager.java:779-792 transfers URL/headers into DownloadParams; 842-844 executes Downloader. Downloader.java:64-74 opens/connects HttpURLConnection with copied headers, no method override/output body, hence default GET. No query is constructed; filename at 1489768 is only for the local destination.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "A kindergarten identifier from the closure environment is concatenated after /api/kindergartens/."
+      },
+      {
+        "name": "foodmenuId",
+        "type": "string",
+        "evidence": "The selected food-menu object's id is concatenated after /foodmenu/."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The native downloader writes response bytes to a local file and returns download metadata; the complete server response schema is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "DownloadPlanPdf",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/plans/{planId}/pdf",
+    "tag": "Files",
+    "summary": "Download a plan PDF",
+    "source": {
+      "functionId": 41207,
+      "functionName": "?anon_0_",
+      "line": 1674199
+    },
+    "evidence": "#41207 builds ApiUrl + /api/kindergartens/ + closure kindergarten identifier + /plans/ + argument1 plan identifier + /pdf as fromUrl and initially empty headers.cookie (eliis.hasm:1674271-1674289). getAccessToken().then(#41208) (1674290-1674299) overwrites cookie with the saved access-cookie and invokes RNFS downloadFile (1674318-1674327). #41299 builds the equivalent URL (1677611-1677629), with saved-cookie/RNFS continuation #41300 (1677651-1677659). RNFSManager.java:779-792 transfers URL/headers into DownloadParams; 842-844 executes Downloader. Downloader.java:64-74 opens/connects HttpURLConnection without method override/output body, hence default GET. These RNFS sites construct no query; this does not resolve #26954's separate .download(url, {params: argument3}) helper.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "A kindergarten identifier from the closure environment is concatenated after /api/kindergartens/."
+      },
+      {
+        "name": "planId",
+        "type": "string",
+        "evidence": "A plan identifier is concatenated after /plans/."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The native downloader writes PDF response bytes to a local file and returns download metadata; the complete server response schema is not established."
+    },
+    "auth": "cookie",
+    "notes": [
+      "The client appends .pdf to the local filename, not to the request URL."
+    ]
+  },
+  {
+    "operationId": "DownloadChildMapPdf",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/maps/{mapId}/pdf",
+    "tag": "Files",
+    "summary": "Download a child map PDF",
+    "source": {
+      "functionId": 44191,
+      "functionName": "?anon_0_",
+      "line": 1803117
+    },
+    "evidence": "#44191 builds ApiUrl + /api/kindergartens/ + argument.kindergarten_id + /children/ + environment child identifier + /maps/ + argument.id + the literal /pdf?guardianFields=false&landscape=false&showApprovalsTable=true (eliis.hasm:1803151-1803167). Options initially have empty headers.cookie (1803169-1803172); getAccessToken().then(#44192) (1803176-1803183) overwrites cookie and invokes RNFS downloadFile(options) (1803198-1803207). RNFSManager.java:779-792 transfers URL/headers into DownloadParams; 842-844 executes Downloader. Downloader.java:64-74 opens/connects HttpURLConnection without method override/output body, hence default GET. The query values are literal string bytes, not proven logical boolean domains.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "The source reads kindergarten_id and concatenates it after /api/kindergartens/."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "#44191 loads the child identifier from environment depth 2, slot 3 (1803156-1803157), then concatenates it after /children/; it does not read a child object's id here."
+      },
+      {
+        "name": "mapId",
+        "type": "string",
+        "evidence": "A map identifier is concatenated after /maps/."
+      }
+    ],
+    "query": [
+      {
+        "name": "guardianFields",
+        "type": "string",
+        "value": "false",
+        "evidence": "The URL suffix contains the literal query guardianFields=false."
+      },
+      {
+        "name": "landscape",
+        "type": "string",
+        "value": "false",
+        "evidence": "The URL suffix contains the literal query landscape=false."
+      },
+      {
+        "name": "showApprovalsTable",
+        "type": "string",
+        "value": "true",
+        "evidence": "The URL suffix contains the literal query showApprovalsTable=true."
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The native downloader writes PDF response bytes to a local file and returns download metadata; the complete server response schema is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "DownloadChildPlanPdf",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/plans/{planId}/pdf",
+    "tag": "Files",
+    "summary": "Download a child plan PDF",
+    "source": {
+      "functionId": 44291,
+      "functionName": "?anon_0_",
+      "line": 1807610
+    },
+    "evidence": "#44291 builds ApiUrl + /api/kindergartens/ + environment kindergarten identifier + /children/ + environment child identifier + /plans/ + argument.id + literal /pdf?landscape=false (eliis.hasm:1807644-1807660). Options initially have empty headers.cookie (1807662-1807665); getAccessToken().then(#44292) (1807669-1807676) overwrites cookie and invokes RNFS downloadFile(options) (1807691-1807700). RNFSManager.java:779-792 transfers URL/headers into DownloadParams; 842-844 executes Downloader. Downloader.java:64-74 opens/connects HttpURLConnection without method override/output body, hence default GET. landscape is the literal string byte sequence false, not a proven logical boolean domain.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "A kindergarten identifier from the closure environment is concatenated after /api/kindergartens/."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "#44291 loads the child identifier from environment depth 2, slot 3 (1807648-1807650), then concatenates it after /children/; it does not read a child object's id here."
+      },
+      {
+        "name": "planId",
+        "type": "string",
+        "evidence": "A plan object's id is concatenated after /plans/."
+      }
+    ],
+    "query": [
+      {
+        "name": "landscape",
+        "type": "string",
+        "value": "false",
+        "evidence": "The URL suffix contains the literal query landscape=false."
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "The native downloader writes PDF response bytes to a local file and returns download metadata; the complete server response schema is not established."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetIdeaImage",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/files/idea/{filename}",
+    "tag": "Files",
+    "summary": "Download an idea image",
+    "source": {
+      "functionId": 35188,
+      "functionName": "?anon_0_",
+      "line": 1404339
+    },
+    "evidence": "#38711 IdeaThumbnails reads props.kindergartenId (eliis.hasm:1554406-1554407), builds only /api/kindergartens/ + kindergartenId + /files/idea/ and passes this imageUrl prefix with images to the shared modal (1554530-1554543). Module 4079 dependency index 4 = module 3683 (20520-20523), imported by #38708 into slot 5 (1554234-1554238); module 3683 = #35175 (18540-18543), exporting ImagesModal #35178 (1403473-1403475). Its downloader #35188 selects props.images[index] (1404356-1404361); only when selectedMedia.url is falsy, it builds ApiUrl + props.imageUrl + selectedMedia.filename as fromUrl with initially empty headers.cookie (1404427-1404447). getAccessToken().then(#35189) (1404448-1404457) overwrites cookie with the saved access-cookie and invokes RNFS downloadFile(options) (1404487-1404496). RNFSManager.java:779-792 transfers URL/headers into DownloadParams; 842-844 executes Downloader. Downloader.java:64-74 opens/connects HttpURLConnection without method override/output body, hence default GET. No query is constructed in this fallback download.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "#38711 reads props.kindergartenId at 1554406 and concatenates it into the imageUrl prefix at 1554538-1554541."
+      },
+      {
+        "name": "filename",
+        "type": "string",
+        "evidence": "#35188 appends selectedMedia.filename at 1404435-1404437; string describes path transport, not a server identifier domain."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "RNFS writes downloaded bytes locally and returns job metadata, not a complete server response schema."
+    },
+    "auth": "cookie",
+    "notes": [
+      "GET is proved by the RNFS/native fallback download, not by image-renderer naming. The remote url branch is not modeled as a concrete Eliis path.",
+      "#38716's id at 1554768-1554769 is a JSX key, not this filename. A DELETE file identifier on a normalized similar path does not establish download filename semantics."
+    ]
+  },
+  {
+    "operationId": "DownloadEmployeeMealsXls",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/reports/employee-meals/xls",
+    "tag": "Reports",
+    "summary": "Download an employee-meals spreadsheet",
+    "source": {
+      "functionId": 40704,
+      "functionName": "fileOpenHandler",
+      "line": 1648187
+    },
+    "evidence": "#40663 EmployeeMealsScreen constructs /api/kindergartens/ + kindergarten identifier + /reports/employee-meals/xls?start_date= + start value + &end_date= + end value into downloadUrl (eliis.hasm:1645663-1645672). Module 4200 dependency index 11 = 4207 (21125-21128), imported into slot 12 (1645300-1645304) and read at 1645651. Module 4207 = #40701 (21160-21163), exporting FileDownload #40702 (1648117-1648118), which captures downloadUrl (1648132-1648133). #40704 prefixes ApiUrl and builds fromUrl with initially empty headers.cookie (1648216-1648224); getAccessToken().then(#40705) (1648228-1648235) overwrites cookie with saved access-cookie + '; lang=' + selected language and invokes RNFS downloadFile(options) (1648247-1648260). RNFSManager.java:779-792 transfers URL/headers into DownloadParams; 842-844 executes Downloader. Downloader.java:64-74 opens/connects HttpURLConnection without method override/output body, hence default GET.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "#40663 concatenates r23 after /api/kindergartens/ (1645665-1645671); the selector result is loaded at 1645562-1645564. String denotes transport, not server identifier domain."
+      }
+    ],
+    "query": [
+      {
+        "name": "start_date",
+        "type": "unknown",
+        "evidence": "#40663 unconditionally concatenates r22 after ?start_date= (1645666-1645671). r22 is selected-date state for the days branch, otherwise a startOf('month').format('YYYY-MM-DD') result (1645573-1645586). This does not establish every possible value's type or a server date format."
+      },
+      {
+        "name": "end_date",
+        "type": "unknown",
+        "evidence": "#40663 unconditionally concatenates r21 after &end_date= (1645667-1645671). r21 is selected-date state for the days branch, otherwise an endOf('month').format('YYYY-MM-DD') result (1645587-1645597). No server date domain or universal argument type is inferred."
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "RNFS writes downloaded bytes locally and returns job metadata, not a complete server response schema."
+    },
+    "auth": "cookie",
+    "notes": [
+      "The request path ends in /xls; .xlsx at 1645658 is only the local fileName extension."
+    ]
+  },
+  {
+    "operationId": "DownloadTodaysMealsPdf",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/reports/todaysmeals/pdf",
+    "tag": "Reports",
+    "summary": "Download today's meals PDF",
+    "source": {
+      "functionId": 40704,
+      "functionName": "fileOpenHandler",
+      "line": 1648187
+    },
+    "evidence": "#40805 TodaysMealsDownloadButtons selects literal todaysmeals only when props.type === 'allClasses' (eliis.hasm:1653794-1653798); PDF downloadUrl is /api/kindergartens/ + r17 + /reports/ + selected literal + /pdf + constructed query (1653888-1653897). Module 4217 dependency index 5 = 4207 (21210-21213), imported into slot 6 (1653580-1653584), read at 1653875. Module 4207 = #40701 (21160-21163), exporting FileDownload #40702 (1648117-1648118), which captures downloadUrl (1648132-1648133). #40704 prefixes ApiUrl and initializes fromUrl/empty headers.cookie (1648216-1648224); getAccessToken().then(#40705) (1648228-1648235) overwrites cookie with saved access-cookie + '; lang=' + selected language and calls RNFS downloadFile(options) (1648247-1648260). RNFSManager.java:779-792 transfers URL/headers into DownloadParams; 842-844 executes Downloader. Downloader.java:64-74 opens/connects HttpURLConnection without method override/output body, hence default GET.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "#40805 concatenates selector result r17 (1653777-1653779) between /api/kindergartens/ and /reports/ at 1653888-1653895; transport string only."
+      }
+    ],
+    "query": [
+      {"name": "date", "type": "unknown", "evidence": "#40805 always appends props.selectedDate (1653733, 1653802-1653803) after ?date=; no logical date domain proved."},
+      {"name": "breakfast", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.breakfast after &breakfast= (1653804, 1653810-1653815)."},
+      {"name": "lunch", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.lunch after &lunch= (1653805, 1653811-1653815)."},
+      {"name": "supper", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.supper after &supper= (1653806, 1653812-1653815)."},
+      {"name": "dinner", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.dinner after &dinner= (1653807, 1653813-1653815)."},
+      {"name": "calendar_days", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.calendarDays after &calendar_days= (1653816-1653821)."},
+      {"name": "absent", "type": "unknown", "optional": true, "evidence": "#40805 appends &absent= + filterSettings.absent only when that value is truthy; JmpFalse skips the append (1653822-1653830)."},
+      {"name": "diets", "type": "unknown", "evidence": "#40805 appends &diets= + filterSettings.diets on the allClasses branch, which is exactly this route; no value-truthiness guard (1653832-1653838)."}
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {"kind": "unknown", "evidence": "RNFS writes downloaded bytes locally and returns job metadata, not a complete server response schema."},
+    "auth": "cookie",
+    "notes": ["Query inclusion describes this client branch, not server requiredness; concatenated values have unresolved logical types. No arbitrary report-type enum is inferred."]
+  },
+  {
+    "operationId": "DownloadTodaysMealsXls",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/reports/todaysmeals/xls",
+    "tag": "Reports",
+    "summary": "Download today's meals spreadsheet",
+    "source": {
+      "functionId": 40704,
+      "functionName": "fileOpenHandler",
+      "line": 1648187
+    },
+    "evidence": "#40805 selects literal todaysmeals only when props.type === 'allClasses' (eliis.hasm:1653794-1653798); XLS downloadUrl concatenates /api/kindergartens/ + r17 + /reports/ + selected literal + /xls + constructed query (1653940-1653949, registers initialized at 1653888-1653894). Module 4217 dependency index 5 = 4207 (21210-21213), imported into slot 6 (1653580-1653584), read at 1653929. Module 4207 = #40701 (21160-21163), exporting FileDownload #40702 (1648117-1648118), which captures downloadUrl (1648132-1648133). #40704 prefixes ApiUrl and initializes fromUrl/empty headers.cookie (1648216-1648224); getAccessToken().then(#40705) (1648228-1648235) overwrites cookie with saved access-cookie + '; lang=' + selected language and calls RNFS downloadFile(options) (1648247-1648260). RNFSManager.java:779-792 transfers URL/headers into DownloadParams; 842-844 executes Downloader. Downloader.java:64-74 opens/connects HttpURLConnection without method override/output body, hence default GET.",
+    "pathParams": [
+      {"name": "kindergartenId", "type": "string", "evidence": "#40805 concatenates selector result r17 (1653777-1653779) between /api/kindergartens/ and /reports/ at 1653943-1653947; transport string only."}
+    ],
+    "query": [
+      {"name": "date", "type": "unknown", "evidence": "#40805 always appends props.selectedDate (1653733, 1653802-1653803) after ?date=; no logical date domain proved."},
+      {"name": "breakfast", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.breakfast after &breakfast= (1653804, 1653810-1653815)."},
+      {"name": "lunch", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.lunch after &lunch= (1653805, 1653811-1653815)."},
+      {"name": "supper", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.supper after &supper= (1653806, 1653812-1653815)."},
+      {"name": "dinner", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.dinner after &dinner= (1653807, 1653813-1653815)."},
+      {"name": "calendar_days", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.calendarDays after &calendar_days= (1653816-1653821)."},
+      {"name": "absent", "type": "unknown", "optional": true, "evidence": "#40805 appends &absent= + filterSettings.absent only when that value is truthy; JmpFalse skips the append (1653822-1653830)."},
+      {"name": "diets", "type": "unknown", "evidence": "#40805 appends &diets= + filterSettings.diets on the allClasses branch, which is exactly this route; no value-truthiness guard (1653832-1653838)."}
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {"kind": "unknown", "evidence": "RNFS writes downloaded bytes locally and returns job metadata, not a complete server response schema."},
+    "auth": "cookie",
+    "notes": ["The request path ends in /xls; .xlsx at 1653937 is only the local fileName extension. Inclusion describes the client branch, not server requiredness; concatenated values have unresolved logical types."]
+  },
+  {
+    "operationId": "DownloadTodaysMealsPerCoursePdf",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/reports/todaysmeals-per-course/pdf",
+    "tag": "Reports",
+    "summary": "Download today's meals per-course PDF",
+    "source": {
+      "functionId": 40704,
+      "functionName": "fileOpenHandler",
+      "line": 1648187
+    },
+    "evidence": "#40805 selects literal todaysmeals-per-course when props.type !== 'allClasses' (eliis.hasm:1653794-1653798); PDF downloadUrl concatenates /api/kindergartens/ + r17 + /reports/ + selected literal + /pdf + constructed query (1653888-1653897). The distinct perClass guard only controls two query fields (1653839-1653853), not all non-allClasses invocations. Module 4217 dependency index 5 = 4207 (21210-21213), imported into slot 6 (1653580-1653584), read at 1653875. Module 4207 = #40701 (21160-21163), exporting FileDownload #40702 (1648117-1648118), which captures downloadUrl (1648132-1648133). #40704 prefixes ApiUrl and initializes fromUrl/empty headers.cookie (1648216-1648224); getAccessToken().then(#40705) (1648228-1648235) overwrites cookie with saved access-cookie + '; lang=' + selected language and calls RNFS downloadFile(options) (1648247-1648260). RNFSManager.java:779-792 transfers URL/headers into DownloadParams; 842-844 executes Downloader. Downloader.java:64-74 opens/connects HttpURLConnection without method override/output body, hence default GET.",
+    "pathParams": [
+      {"name": "kindergartenId", "type": "string", "evidence": "#40805 concatenates selector result r17 (1653777-1653779) between /api/kindergartens/ and /reports/ at 1653888-1653895; transport string only."}
+    ],
+    "query": [
+      {"name": "date", "type": "unknown", "evidence": "#40805 always appends props.selectedDate (1653733, 1653802-1653803) after ?date=; no logical date domain proved."},
+      {"name": "breakfast", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.breakfast after &breakfast= (1653804, 1653810-1653815)."},
+      {"name": "lunch", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.lunch after &lunch= (1653805, 1653811-1653815)."},
+      {"name": "supper", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.supper after &supper= (1653806, 1653812-1653815)."},
+      {"name": "dinner", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.dinner after &dinner= (1653807, 1653813-1653815)."},
+      {"name": "calendar_days", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.calendarDays after &calendar_days= (1653816-1653821)."},
+      {"name": "absent", "type": "unknown", "optional": true, "evidence": "#40805 appends &absent= + filterSettings.absent only when that value is truthy; JmpFalse skips the append (1653822-1653830)."},
+      {"name": "child_name", "type": "unknown", "optional": true, "evidence": "#40805 appends &child_name= + filterSettings.childName only when props.type === 'perClass'; JStrictNotEqual skips the append otherwise (1653839-1653848)."},
+      {"name": "course_id", "type": "unknown", "optional": true, "evidence": "#40805 appends &course_id= + selector result r14 only when props.type === 'perClass' (1653763-1653765, 1653839-1653853). No unrestricted identifier/enum domain inferred."}
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {"kind": "unknown", "evidence": "RNFS writes downloaded bytes locally and returns job metadata, not a complete server response schema."},
+    "auth": "cookie",
+    "notes": ["No diets query is appended in this route branch. Optional marks a client inclusion guard, not server optionality. Other non-allClasses values still select this route without the perClass-only fields."]
+  },
+  {
+    "operationId": "DownloadTodaysMealsPerCourseXls",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/reports/todaysmeals-per-course/xls",
+    "tag": "Reports",
+    "summary": "Download today's meals per-course spreadsheet",
+    "source": {
+      "functionId": 40704,
+      "functionName": "fileOpenHandler",
+      "line": 1648187
+    },
+    "evidence": "#40805 selects literal todaysmeals-per-course when props.type !== 'allClasses' (eliis.hasm:1653794-1653798); XLS downloadUrl concatenates /api/kindergartens/ + r17 + /reports/ + selected literal + /xls + constructed query (1653940-1653949, registers initialized at 1653888-1653894). The distinct perClass guard only controls two query fields (1653839-1653853), not all non-allClasses invocations. Module 4217 dependency index 5 = 4207 (21210-21213), imported into slot 6 (1653580-1653584), read at 1653929. Module 4207 = #40701 (21160-21163), exporting FileDownload #40702 (1648117-1648118), which captures downloadUrl (1648132-1648133). #40704 prefixes ApiUrl and initializes fromUrl/empty headers.cookie (1648216-1648224); getAccessToken().then(#40705) (1648228-1648235) overwrites cookie with saved access-cookie + '; lang=' + selected language and calls RNFS downloadFile(options) (1648247-1648260). RNFSManager.java:779-792 transfers URL/headers into DownloadParams; 842-844 executes Downloader. Downloader.java:64-74 opens/connects HttpURLConnection without method override/output body, hence default GET.",
+    "pathParams": [
+      {"name": "kindergartenId", "type": "string", "evidence": "#40805 concatenates selector result r17 (1653777-1653779) between /api/kindergartens/ and /reports/ at 1653943-1653947; transport string only."}
+    ],
+    "query": [
+      {"name": "date", "type": "unknown", "evidence": "#40805 always appends props.selectedDate (1653733, 1653802-1653803) after ?date=; no logical date domain proved."},
+      {"name": "breakfast", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.breakfast after &breakfast= (1653804, 1653810-1653815)."},
+      {"name": "lunch", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.lunch after &lunch= (1653805, 1653811-1653815)."},
+      {"name": "supper", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.supper after &supper= (1653806, 1653812-1653815)."},
+      {"name": "dinner", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.dinner after &dinner= (1653807, 1653813-1653815)."},
+      {"name": "calendar_days", "type": "unknown", "evidence": "#40805 always concatenates filterSettings.calendarDays after &calendar_days= (1653816-1653821)."},
+      {"name": "absent", "type": "unknown", "optional": true, "evidence": "#40805 appends &absent= + filterSettings.absent only when that value is truthy; JmpFalse skips the append (1653822-1653830)."},
+      {"name": "child_name", "type": "unknown", "optional": true, "evidence": "#40805 appends &child_name= + filterSettings.childName only when props.type === 'perClass'; JStrictNotEqual skips the append otherwise (1653839-1653848)."},
+      {"name": "course_id", "type": "unknown", "optional": true, "evidence": "#40805 appends &course_id= + selector result r14 only when props.type === 'perClass' (1653763-1653765, 1653839-1653853). No unrestricted identifier/enum domain inferred."}
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {"kind": "unknown", "evidence": "RNFS writes downloaded bytes locally and returns job metadata, not a complete server response schema."},
+    "auth": "cookie",
+    "notes": ["No diets query is appended in this route branch. Optional marks a client inclusion guard, not server optionality. The request path ends in /xls; .xlsx at 1653937 is only the local fileName extension."]
+  },
+  {
+    "operationId": "DownloadPlanFile",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/files/plans/{filename}",
+    "tag": "Files",
+    "summary": "Download a plan attachment",
+    "source": {
+      "functionId": 34111,
+      "functionName": "?anon_0_",
+      "line": 1335221
+    },
+    "evidence": "#44303 constructs /api/kindergartens/ + closure kindergarten identifier + /files/plans/ + argument.filename into downloadUrl (eliis.hasm:1808290-1808299). Module 4528 dependency index 5 = 3519 (22765-22768), imported by #44301 into slot 1 (1808193-1808197), read at 1808283-1808284; module 3519 = #34105 (17720-17723), containing FileDownloadButton #34108, which captures downloadUrl (1335078-1335079). #34111 prefixes ApiUrl and sets fromUrl/initially empty headers.cookie (1335255-1335263); getAccessToken().then(#34112) (1335266-1335273) overwrites cookie with the saved access-cookie and invokes RNFS downloadFile(options) (1335288-1335297). RNFSManager.java:779-792 transfers URL/headers into DownloadParams; 842-844 executes Downloader. Downloader.java:64-74 opens/connects HttpURLConnection without method override/output body, hence default GET. No query is constructed here.",
+    "pathParams": [
+      {"name": "kindergartenId", "type": "string", "evidence": "#44303 reads the closure kindergarten value and concatenates it after /api/kindergartens/ (1808290-1808298); transport string only."},
+      {"name": "filename", "type": "string", "evidence": "#44303 reads argument.filename at 1808292 and appends it after /files/plans/ at 1808296-1808298. The argument.id at 1808303 is only a JSX key."}
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {"kind": "unknown", "evidence": "RNFS writes downloaded bytes locally and returns job metadata, not a complete server response schema."},
+    "auth": "cookie",
+    "notes": ["Filename download is distinct from the plan identifier used by /plans/{planId}/pdf; no file-id suffix is invented."]
+  }
+]

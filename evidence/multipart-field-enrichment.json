@@ -1,0 +1,220 @@
+{
+  "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm",
+  "purpose": "Bounded client-side FormData field tracing for the 12 requested multipart service targets. Fields describe only observed app append operations, not server requirements or complete endpoint schemas.",
+  "records": [
+    {
+      "targetFunctionId": 16361,
+      "targetMethod": "uploadUserPicture",
+      "targetEvidence": {"hasmLine": 649743, "bytecodeOffset": "0x00"},
+      "clientConstructors": [{"functionId": 40898, "functionName": "uploadImage", "hasmLine": 1658600, "bytecodeOffset": "0x00"}],
+      "dependencyChain": "EditProfileImage #40894 receives updateService from UserProfileScreen #40854, where updateService is the updateUserImage action (#16229/#16230). uploadImage #40898 builds FormData and calls that prop; action thunk #16230 calls UserService.uploadUserPicture; API method #16361 posts its first argument as data. This is the traced route, not a guess from the part name.",
+      "fields": [
+        {"name": "profile_picture", "type": "unknown", "evidence": "#40898 appends the input photo descriptor under the literal name profile_picture at 0x4b-0x4f. The value object has client file-part metadata name='profile-image', type from input.type or input.mime, and uri from input.path; these are not separate multipart fields or nested HTTP-body properties."}
+      ],
+      "constructionComplete": true,
+      "coverage": "Complete append set for this EditProfileImage uploadImage flow only; no claim that every service caller uses it."
+    },
+    {
+      "targetFunctionId": 25233,
+      "targetMethod": "sendMessage",
+      "targetEvidence": {"hasmLine": 990455, "bytecodeOffset": "0x00"},
+      "clientConstructors": [
+        {"functionId": 32555, "functionName": "sendOldMessageHandler", "hasmLine": 1275086, "bytecodeOffset": "0x00"},
+        {"functionId": 32556, "functionName": "anonymous Object.keys forEach", "hasmLine": 1275202, "bytecodeOffset": "0x00"},
+        {"functionId": 32557, "functionName": "anonymous dynamic target-group appender", "hasmLine": 1275224, "bytecodeOffset": "0x00"}
+      ],
+      "dependencyChain": "sendOldMessageHandler #32555 constructs FormData, then invokes the message action sendMessage; the messages action/service wiring routes that data to #25233. In #25233, Axios POST data is parameter 2 and multipart/form-data is request config, not a body part.",
+      "fields": [
+        {"name": "subject", "type": "unknown", "evidence": "#32555 appends submitted subject at 0x2f-0x45."},
+        {"name": "body", "type": "unknown", "evidence": "#32555 appends convertNewlinesToHTML(submitted body) at 0x45-0x7d."},
+        {"name": "type", "type": "string", "value": "message", "evidence": "#32555 appends literal type=message at 0x7d-0x8b; string and value are client observations, not a server enum."}
+      ],
+      "dynamicParts": [
+        {"namePattern": "files[{index}]", "type": "unknown", "optional": true, "evidence": "#32555 +0x9d-0xfb loops over files; +0xd6-0xf0 constructs native name/type/uri metadata and +0xf5 appends each descriptor using the loop index. Empty collection emits no parts; unknown is the individual part value, not a JSON body array."},
+        {"namePattern": "forwardedFiles[{index}]", "type": "unknown", "optional": true, "evidence": "#32555 +0x131-0x135 loads forwardedFiles[index]; +0x150 replaces the value with item.id; +0x155 appends that unknown ID under the generated indexed name. No file descriptor or nested id property is appended. Empty collection emits no parts."},
+        {"namePattern": "targetGroups[{index}][{key}]", "type": "unknown", "optional": true, "evidence": "#32555 +0x16b-0x181 nullish-checks receivers then forEach(#32556). #32556 +0x02-0x0c captures element/index; +0x12-0x2c enumerates Object.keys(element) with #32557. #32557 +0x13-0x33 constructs targetGroups[index][key]; +0x37-0x3f appends element[key]. Nullish/empty receivers or empty key sets emit no parts; key domain/value type remain unknown."}
+      ],
+      "constructionComplete": true,
+      "coverage": "Complete append set observed in sendOldMessageHandler; other sendMessage callsites were not exhaustively audited."
+    },
+    {
+      "targetFunctionId": 25249,
+      "targetMethod": "uploadDraftAttachment",
+      "targetEvidence": {"hasmLine": 990749, "bytecodeOffset": "0x00"},
+      "clientConstructors": [
+        {"functionId": 32712, "functionName": "draft attachment upload handler", "hasmLine": 1281040, "bytecodeOffset": "0x00"},
+        {"functionId": 32720, "functionName": "draft attachment upload helper", "hasmLine": 1281304, "bytecodeOffset": "0x00"}
+      ],
+      "dependencyChain": "Draft attachment flow #32712 or #32720 builds FormData and calls the uploadDraftAttachment action; that action passes {id,data} to service #25249. #25249 posts its data argument with multipart/form-data request config.",
+      "fields": [
+        {"name": "file", "type": "unknown", "evidence": "#32712 +0x9e appends the original pending item as file. #32720 +0x3b-0x57 constructs native metadata name=input.name (no filename fallback), type=input.mime, uri=input.path; +0x63-0x67 appends that descriptor as file. Descriptor members are not API properties; part value remains unknown."},
+        {"name": "type", "type": "unknown", "evidence": "#32712 +0xb3 appends item.type; #32720 +0x73-0x7d appends input.mime under literal type. Neither establishes a narrower accepted value type."},
+        {"name": "uploaded_at", "type": "unknown", "evidence": "#32712 +0xeb and #32720 +0x83-0xb5 append utc().format('YYYY-MM-DD HH:mm:ss.SSS') under literal uploaded_at; formatter return type/server interpretation remain unestablished."}
+      ],
+      "constructionComplete": true,
+      "coverage": "Two observed draft attachment upload constructor variants; #32712 reaches this form construction only for pending items."
+    },
+    {
+      "targetFunctionId": 25253,
+      "targetMethod": "updateSentMessage",
+      "targetEvidence": {"hasmLine": 990834, "bytecodeOffset": "0x00"},
+      "clientConstructors": [
+        {"functionId": 34032, "functionName": "formSubmitHandler", "hasmLine": 1331160, "bytecodeOffset": "0x00"},
+        {"functionId": 34033, "functionName": "anonymous file appender", "hasmLine": 1331229, "bytecodeOffset": "0x00"},
+        {"functionId": 34034, "functionName": "anonymous removed-file appender", "hasmLine": 1331258, "bytecodeOffset": "0x00"}
+      ],
+      "dependencyChain": "Sent-message edit form #34032 builds FormData and calls the updateSentMessage message action with {id,data}; messages service method #25253 posts that data as multipart/form-data.",
+      "fields": [
+        {"name": "_method", "type": "string", "value": "put", "evidence": "#34032 +0x49-0x57 appends literal string _method=put. Client part value only; transport remains HTTP POST."},
+        {"name": "body", "type": "unknown", "evidence": "#34032 appends convertNewlinesToHTML(submitted body) at 0x5d-0x8f; return type unresolved."}
+      ],
+      "dynamicParts": [
+        {"namePattern": "files[{index}]", "type": "unknown", "optional": true, "evidence": "#34033 +0x0a-0x4d builds files[callbackIndex] and appends each active file descriptor with native name/type/uri metadata. Empty forEach collection emits no parts. Individual file value unknown; descriptor members are not API properties."},
+        {"namePattern": "removedFiles[{index}]", "type": "string", "optional": true, "evidence": "#34034 +0x2b-0x3b appends String(item) (conversion +0x36) under removedFiles[callbackIndex]. Explicit conversion proves each member string; empty forEach collection emits no parts, not a JSON whole-body array."}
+      ],
+      "constructionComplete": true,
+      "coverage": "Complete append set observed in this sent-message edit form only."
+    },
+    {
+      "targetFunctionId": 25338,
+      "targetMethod": "sendAnnouncement",
+      "targetEvidence": {"hasmLine": 993093, "bytecodeOffset": "0x00"},
+      "clientConstructors": [{"functionId": 42237, "functionName": "formSubmitHandler", "hasmLine": 1712780, "bytecodeOffset": "0x07"}],
+      "dependencyChain": "NewAnnouncementScreen handler #42237 constructs FormData and calls sendAnnouncement; service #25338 posts argument 2 as data with multipart/form-data config.",
+      "fields": [
+        {"name": "subject", "type": "unknown", "evidence": "#42237 +0x2b-0x35 appends literal subject from submitted subject; value type unresolved."},
+        {"name": "body", "type": "unknown", "evidence": "#42237 +0x60-0x6f appends literal body from convertNewlinesToHTML(submitted body); return type unresolved."},
+        {"name": "type", "type": "string", "value": "announcement", "evidence": "#42237 +0x7b-0x83 appends literal string type=announcement; client constant only."}
+      ],
+      "dynamicParts": [{"namePattern": "targetGroups[{index}][{key}]", "type": "unknown", "evidence": "#42237 +0x89-0x99 targetGroups.forEach(#42238); #42238 +0x02-0x0c captures element/index and +0x12-0x2c Object.keys(element).forEach(#42239); #42239 +0x13-0x33 constructs indexed name and +0x37-0x3f appends element[key]. Empty collection/key set emits no parts; no fixed property or key domain established."}],
+      "constructionComplete": true,
+      "coverage": "Same three literal names and one dynamic family as evidence/request-model-enrichment.json SendAnnouncement; deduplicated on integration. #42237 +0xbc-0xc2 invokes the action, not append. Complete named local construction; endpoint/caller coverage remains partial."
+    },
+    {
+      "targetFunctionId": 25654,
+      "targetMethod": "uploadChildProfilePicture",
+      "targetEvidence": {"hasmLine": 1003760, "bytecodeOffset": "0x00"},
+      "clientConstructors": [{"functionId": 40898, "functionName": "uploadImage", "hasmLine": 1658600, "bytecodeOffset": "0x00"}],
+      "searchedUpstreamSources": [
+        {"functionId": 44137, "functionName": "updateService", "hasmLine": 1801128, "bytecodeOffset": "0x00"},
+        {"functionId": 44697, "functionName": "updateService", "hasmLine": 1828688, "bytecodeOffset": "0x00"}
+      ],
+      "dependencyChain": "#0 registers M4522/#44117 and M4547/#44670 with dependency 8=M4227. Both import it at +0xdd-0xee into slot 8. #44120 +0x2d0-0x303 and #44673 +0x5ef-0x622 render this same component with updateService=#44137/#44697. M4227 #40891 +0x298-0x29d exports #40894 EditProfileImage; #40894 +0x10-0x16 captures updateService and +0xab creates #40898. #40898 +0x6a-0x73 passes its constructed FormData to that prop and dispatches the thunk. #44137/#44697 +0x2a-0x2d pass data as p3 to M2239 #25539 (export #25509 +0x4b9-0x4be); thunk #25540 +0x0c loads slot 2=dependency 3/M2241 (#25509 +0x23c-0x24d), +0x2a forwards kindergarten/child/data. #25620 +0x18d-0x19a installs #25654, whose +0x46-0x49 POST data is p3.",
+      "fields": [{"name": "profile_picture", "type": "unknown", "evidence": "#40898 +0x4b-0x4f appends literal profile_picture. +0x25-0x46 constructs native file metadata name='profile-image', type=input.type || input.mime, uri=input.path. Shared component identity and both concrete child prop/action chains prove this child variant; no transfer by name similarity. File value unknown and metadata members are not API fields."}],
+      "constructionComplete": true,
+      "coverage": "Complete append set in the shared EditProfileImage constructor for both MyChildInfoScreen and ChildInfoScreen prop variants; arbitrary other endpoint inputs and unaudited callers remain unknown."
+    },
+    {
+      "targetFunctionId": 25661,
+      "targetMethod": "uploadFile",
+      "targetEvidence": {"hasmLine": 1003910, "bytecodeOffset": "0x00"},
+      "clientConstructors": [
+        {"functionId": 25571, "functionName": "uploadChildFiles worker", "hasmLine": 1001667, "bytecodeOffset": "0x00"},
+        {"functionId": 25574, "functionName": "uploadChildFile action factory", "hasmLine": 1001832, "bytecodeOffset": "0x00"},
+        {"functionId": 25575, "functionName": "uploadChildFile action thunk", "hasmLine": 1001845, "bytecodeOffset": "0x00"}
+      ],
+      "dependencyChain": "#25568 captures upload type; #25569/#25570/#25571 constructs FormData. #25571 +0x161-0x17f sends {childId,formData} via module slot 6=#25574 uploadChildFile (export #25509 +0x532-0x53d). #25574 creates thunk #25575, whose +0x11 loads slot 2=dependency 3/M2241 and +0x38 calls uploadFile(selectedKindergartenId,childId,FormData). #25620 +0x1e9-0x1f6 installs #25661; service p3 is POST data +0x46-0x49.",
+      "fields": [
+        {"name": "file", "type": "unknown", "evidence": "#25571 +0xa3 jumps to document branch +0x11f when captured uploadType === 'document'. Non-document +0xa7-0xda constructs native descriptor name=filename || name || 'image', type=item.mime, uri=item.path, then appends file. Document +0x11f-0x125 appends original item as file. Both values unknown; descriptors are not API properties."},
+        {"name": "type", "type": "unknown", "optional": true, "evidence": "#25571 +0xe0-0xea appends captured uploadType under literal type ONLY in uploadType !== 'document' branch. +0xa3 jumps past it for document; document +0x11f-0x152 has no type append. Conditional inclusion proves optional across variants, not server requiredness."},
+        {"name": "uploaded_at", "type": "unknown", "evidence": "#25571 +0xf0-0x117 (non-document) and +0x12b-0x152 (document) append UTC formatter result under literal uploaded_at loaded into r8 at +0x60. Formatter return type/server interpretation unestablished."}
+      ],
+      "constructionComplete": true,
+      "coverage": "Complete append set for this uploadChildFiles worker path; it does not close all endpoint callers."
+    },
+    {
+      "targetFunctionId": 25941,
+      "targetMethod": "uploadMedia",
+      "targetEvidence": {"hasmLine": 1013021, "bytecodeOffset": "0x00"},
+      "clientConstructors": [{"functionId": 25803, "functionName": "media upload worker", "hasmLine": 1009251, "bytecodeOffset": "0x00"}],
+      "dependencyChain": "Outer action #25799 uploadDiaryImage -> #25800/#25801/#25802/#25803. Worker #25803 +0xed-0x105 loads M2248 slot 4=dependency 3/M2249 (#25752 +0x22c-0x23d), then calls default service.uploadMedia directly with selectedKindergartenId, captured diary-reference argument 3 (depth 3 slot 2 +0x101), FormData. No intervening uploadMedia Redux action. #25933 +0x62-0x6f installs #25941; service +0x12-0x15 extracts reference.id for URL, +0x4b-0x4e POST data is p3. Routing values are not parts.",
+      "fields": [
+        {"name": "file", "type": "unknown", "evidence": "#25803 appends a client file-part descriptor under literal name file at 0x38-0x7f; name is from filename/name or fallback image, type from mime, and uri from path. Those are client file metadata, not nested body fields."},
+        {"name": "type", "type": "unknown", "evidence": "#25803 appends a captured value under literal name type at 0x85-0x93."},
+        {"name": "uploaded_at", "type": "unknown", "evidence": "#25803 appends the UTC-formatted date-time value under literal name uploaded_at at 0x99-0xcb."}
+      ],
+      "constructionComplete": true,
+      "coverage": "Complete append set observed in the media-upload worker."
+    },
+    {
+      "targetFunctionId": 25943,
+      "targetMethod": "uploadDocument",
+      "targetEvidence": {"hasmLine": 1013066, "bytecodeOffset": "0x00"},
+      "clientConstructors": [{"functionId": 25815, "functionName": "document upload worker", "hasmLine": 1009626, "bytecodeOffset": "0x00"}],
+      "dependencyChain": "Outer action #25811 uploadDiaryDocument -> #25812/#25813/#25814/#25815. Worker #25815 +0x100-0x118 loads M2248 slot 4=dependency 3/M2249 (#25752 +0x22c-0x23d), directly calls default service.uploadDocument(selectedKindergartenId,captured diary reference,FormData); reference is outer p3 loaded at +0x114 (depth 3 slot 2). No intervening uploadDocument Redux action. #25933 +0x79-0x86 installs #25943; service +0x12-0x15 reads reference.id for URL, +0x4b-0x4e POST data is p3. Routing values are not parts.",
+      "fields": [
+        {"name": "file", "type": "unknown", "evidence": "#25815 appends a client file-part descriptor under literal name file at 0x38-0x7e. Its name/type/uri members are file-part metadata (name from filename/name or fallback document, MIME type from input.type, uri from path), not nested body fields."},
+        {"name": "type", "type": "unknown", "evidence": "#25815 appends the captured file type under literal name type at 0x84-0x92."},
+        {"name": "fileType", "type": "string", "value": "document", "evidence": "#25815 appends literal string fileType=document at 0x98-0xa6; client constant only, not a server enum."},
+        {"name": "uploaded_at", "type": "unknown", "evidence": "#25815 appends a UTC-formatted date-time value under literal name uploaded_at at 0xac-0xde."}
+      ],
+      "constructionComplete": true,
+      "coverage": "Complete append set observed in the document-upload worker."
+    },
+    {
+      "targetFunctionId": 26153,
+      "targetMethod": "uploadFiles",
+      "targetEvidence": {"hasmLine": 1018980, "bytecodeOffset": "0x00"},
+      "clientConstructors": [{"functionId": 26193, "functionName": "folder files outer worker", "hasmLine": 1019858, "bytecodeOffset": "0x00"}, {"functionId": 26195, "functionName": "nested folder file constructor", "hasmLine": 1019990, "bytecodeOffset": "0x00"}],
+      "dependencyChain": "#26190 uploadFolderFiles captures folder p1/type p2; #26191/#26192/#26193 +0x49 creates #26194, which +0x02 creates actual constructor #26195. #26195 +0xb1 loads module slot 8=#26187 uploadFolderFile (installed #26171 +0x252-0x25d); +0xb5-0xb9 calls (FormData,folder). Factory #26187 captures slots 0/1; thunk #26188 +0x11 loads slot 3=dependency 2/M2267 (#26171 +0x139-0x14a); +0x30 calls service(selectedKindergartenId,FormData,folderId). #26141 +0x90-0x9d installs #26153, whose +0x2a uses p3 in URL and +0x46-0x49 p2 as POST data.",
+      "fields": [
+        {"name": "file", "type": "unknown", "evidence": "#26195 +0x41-0x4b appends original selected item r3 under literal file to FormData r9. Forwarded value shape remains unknown; no nested API properties established."},
+        {"name": "type", "type": "unknown", "evidence": "#26195 +0x51-0x62 appends captured uploadFolderFiles argument 2 under literal type; loaded depth 4 slot 1 +0x57-0x5a, captured #26190 +0x09-0x0c. Not item.type; value type unresolved."},
+        {"name": "uploaded_at", "type": "unknown", "evidence": "#26195 +0x68-0x9a computes utc().format('YYYY-MM-DD HH:mm:ss.SSS'), loads literal uploaded_at +0x96, appends +0x9a. Return type/server interpretation unestablished."}
+      ],
+      "constructionComplete": true,
+      "coverage": "Complete append set in actual nested constructor #26195; status === 'size_too_big' +0xa0-0xa9 skips submission, not another part. Endpoint/caller coverage partial."
+    },
+    {
+      "targetFunctionId": 26385,
+      "targetMethod": "storeIdea",
+      "targetEvidence": {"hasmLine": 1025114, "bytecodeOffset": "0x00"},
+      "clientConstructors": [{"functionId": 38749, "functionName": "formSubmitHandler", "hasmLine": 1557034, "bytecodeOffset": "0x00"}],
+      "dependencyChain": "Idea form #38749 submits its locally built FormData through storeIdea; Redux action #26316 calls the service method #26385 with selectedKindergartenId and that data. The update branch in the same form is separate and routes to #26387.",
+      "fields": [
+        {"name": "header", "type": "unknown", "evidence": "#38749 appends submitted header at 0x25-0x3b."},
+        {"name": "contents", "type": "unknown", "evidence": "#38749 appends submitted contents at 0x3b-0x51."},
+        {"name": "keywords", "type": "unknown", "evidence": "#38749 appends submitted keywords at 0x51-0x67."},
+        {"name": "youtube", "type": "unknown", "evidence": "#38749 appends submitted youtube value under literal name youtube at 0x67-0x7d."},
+        {"name": "google_drive", "type": "unknown", "evidence": "#38749 appends submitted googleDrive value under literal name google_drive at 0x7d-0x93."},
+        {"name": "vimeo", "type": "string", "value": "", "evidence": "#38749 +0x93-0xa1 appends literal empty string under vimeo; client value only."},
+        {"name": "is_public", "type": "unknown", "evidence": "#38749 appends a captured value under literal name is_public at 0xa7-0xbe."},
+        {"name": "categories[]", "type": "unknown[]", "optional": true, "evidence": "#38749 appends each categories item under literal repeated field name categories[] at 0xdc-0xfb; the loop runs only when categories is non-null and non-empty."},
+        {"name": "age_groups[]", "type": "unknown[]", "optional": true, "evidence": "#38749 appends each groups item under literal repeated field name age_groups[] at 0x131-0x150; the loop runs only when groups is non-null and non-empty."},
+        {"name": "files[]", "type": "unknown[]", "optional": true, "evidence": "#38749 +0x1a0 loads literal files[]; +0x1ad-0x210 appends every fileUploadList entry (+0x1f8), with native name/size/type-or-mime/uri metadata, not API properties. unknown[] describes repeated unknown-valued occurrences, not a JSON part/body array. Empty list emits none. Count >10 (+0x17b) bypasses file appends and submission; allowed count appends all entries, then total size >200000000 (+0x214-0x218) rejects submission AFTER the loop. Constants #38738 +0x46e-0x47b slots 41/42. Client request gates only, not server/schema limits."}
+      ],
+      "constructionComplete": true,
+      "coverage": "Complete append set in this idea form handler, with its client-side array/size branches; not a server-complete idea schema."
+    },
+    {
+      "targetFunctionId": 26387,
+      "targetMethod": "updateIdea",
+      "targetEvidence": {"hasmLine": 1025156, "bytecodeOffset": "0x00"},
+      "clientConstructors": [{"functionId": 38749, "functionName": "formSubmitHandler", "hasmLine": 1557034, "bytecodeOffset": "0x00"}],
+      "dependencyChain": "Idea edit form #38749 submits the same locally built FormData through updateIdea (with the separate idea id); Redux action #26319 calls service method #26387 with selectedKindergartenId, idea id, and data. The new-item branch instead routes to #26385.",
+      "fields": [
+        {"name": "header", "type": "unknown", "evidence": "#38749 appends submitted header at 0x25-0x3b."},
+        {"name": "contents", "type": "unknown", "evidence": "#38749 appends submitted contents at 0x3b-0x51."},
+        {"name": "keywords", "type": "unknown", "evidence": "#38749 appends submitted keywords at 0x51-0x67."},
+        {"name": "youtube", "type": "unknown", "evidence": "#38749 appends submitted youtube value under literal name youtube at 0x67-0x7d."},
+        {"name": "google_drive", "type": "unknown", "evidence": "#38749 appends submitted googleDrive value under literal name google_drive at 0x7d-0x93."},
+        {"name": "vimeo", "type": "string", "value": "", "evidence": "#38749 +0x93-0xa1 appends literal empty string under vimeo; client value only."},
+        {"name": "is_public", "type": "unknown", "evidence": "#38749 appends a captured value under literal name is_public at 0xa7-0xbe."},
+        {"name": "categories[]", "type": "unknown[]", "optional": true, "evidence": "#38749 appends each categories item under literal repeated field name categories[] at 0xdc-0xfb; the loop runs only when categories is non-null and non-empty."},
+        {"name": "age_groups[]", "type": "unknown[]", "optional": true, "evidence": "#38749 appends each groups item under literal repeated field name age_groups[] at 0x131-0x150; the loop runs only when groups is non-null and non-empty."},
+        {"name": "files[]", "type": "unknown[]", "optional": true, "evidence": "#38749 +0x1a0 loads literal files[]; +0x1ad-0x210 appends every fileUploadList entry (+0x1f8), with native name/size/type-or-mime/uri metadata, not API properties. unknown[] describes repeated unknown-valued occurrences, not a JSON part/body array. Empty list emits none. Count >10 (+0x17b) bypasses file appends and submission; allowed count appends all entries, then total size >200000000 (+0x214-0x218) rejects submission AFTER the loop. Constants #38738 +0x46e-0x47b slots 41/42. Client request gates only, not server/schema limits."}
+      ],
+      "constructionComplete": true,
+      "coverage": "Same observed multipart constructor as storeIdea; does not imply all updateIdea callers or server fields are covered."
+    }
+  ],
+  "coverageBoundary": [
+    "Function IDs, source lines, and bytecode offsets refer to the full local Hermes disassembly at source above.",
+    "fields contains only literal FormData.append names, including genuine repeated categories[]/age_groups[]/files[] names. dynamicParts separately describes generated name patterns and individual member-value types. API routing/action/config values are not fields.",
+    "File-part values stay type unknown. React Native name/type/uri (or name/size/type/uri) descriptors are client file-part metadata, not nested multipart fields; filename alone does not establish a part name.",
+    "A complete local FormData append set does not establish server requiredness, accepted value types, a complete endpoint schema, or coverage of every caller.",
+    "Bundled FormData #2132 +0x0d-0x1f stores [name,value]; #2137 +0x27-0x39 uses the appended name for Content-Disposition, +0x6a-0xdc treats descriptor name/type as filename/Content-Type and native metadata, +0xe5-0xfc String(value) for scalar transport. #2127 +0xa4-0xb0 forwards getParts to native bridge. Metadata is never additional API properties; this is non-normative client transport evidence, not server/native completeness.",
+    "Final inventory: 12 targets, 46 literal-name occurrences, 6 dynamic-family occurrences, 52 total families. All named local append sets established, all baseline endpoint models remain complete:false. Initial round-1 47-declaration inventory was historical and excluded referenced announcement/newly recovered child part.",
+    "F1-F7 corrected and source-verified; this integration phase is not a clean-review certification. No HTTP requests were made."
+  ]
+}

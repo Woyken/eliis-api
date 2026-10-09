@@ -1,0 +1,1431 @@
+[
+  {
+    "operationId": "GetLanguages",
+    "method": "get",
+    "path": "/api/lang/languages",
+    "tag": "AuthCommon",
+    "summary": "Get available languages",
+    "source": {
+      "functionId": 12709,
+      "functionName": "getLanguages",
+      "line": 509969
+    },
+    "evidence": "Function #12709 (getLanguages) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 509969. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #12710 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetTranslations",
+    "method": "get",
+    "path": "/api/lang/{language}.json",
+    "tag": "AuthCommon",
+    "summary": "Get translations for a language",
+    "source": {
+      "functionId": 12711,
+      "functionName": "getTranslations",
+      "line": 509999
+    },
+    "evidence": "Function #12711 (getTranslations) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 509999. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [
+      {
+        "name": "language",
+        "type": "string",
+        "evidence": "Function #12711 concatenates its first explicit argument between \"/api/lang/\" and \".json\"."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #12712 returns response.data when present and truthy, otherwise {}; full translation shape is unknown."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Function #12713 converts rejection to an empty object."
+    ]
+  },
+  {
+    "operationId": "Login",
+    "clientRequestVariants": [{"variantId":"PasswordLogin","constructor":{"functionId":13512,"line":543678,"bytecodeOffset":"0x87"},"finalConstructor":{"functionId":16308,"bytecodeOffset":"0x40"},"targetSourceFunctionId":16308,"provenFieldPaths":["username","password","platform","platform.platform","platform.browser","platform.login"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#0 M1231 dependency 26=M1574; #13512 +0x75-0x9f -> exported #16244/#16245 (#16186 +0x49d-0x4a2). Thunk slot 4=M1575 dependency 3 (#16186 +0x1db-0x1ec); #16306 +0x19-0x26 installs login=#16308. #16308 +0x40-0x61 reconstructs username/password/platform; #16340 supplies platform/browser strings, #16308 +0x2a adds nested login='password'. Isolated auth-client POST."}],
+    "method": "post",
+    "path": "/api/auth/login",
+    "tag": "AuthCommon",
+    "summary": "Log in",
+    "source": {
+      "functionId": 16308,
+      "functionName": "login",
+      "line": 648612
+    },
+    "evidence": "Function #16308 (login) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 648612. Axios POST invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "username",
+          "type": "unknown",
+          "evidence": "Copied from the input username property."
+        },
+        {
+          "name": "password",
+          "type": "unknown",
+          "evidence": "Copied from the input password property."
+        },
+        {
+          "name": "platform",
+          "type": "unknown",
+          "evidence": "Function #16308 +0x22 receives the fresh object from #16340 getPlatform; +0x26/+0x2a assign its nested login=\"password\"; +0x58 places that object in the outer POST body's platform field.",
+          "fields": [
+            {
+              "name": "platform",
+              "type": "string",
+              "evidence": "#16340 (0x004f5894, full lines 649231–649258) +0x05–+0x35 concatenates systemName + \" \" + systemVersion + \", Model: \" + model + \", Device id: \" + deviceId; +0x39 assigns platform. #16339 +0x58–+0x9b traces getDeviceId/getModel/getSystemName/getSystemVersion into environment slots 1–4; #16308 +0x22/+0x58 uses this constructor result."
+            },
+            {
+              "name": "browser",
+              "type": "string",
+              "evidence": "#16340 +0x3e–+0x55 calls getVersion() and concatenates \"Mobile app v\" + its result; +0x59 assigns browser on the fresh object returned at +0x5e; #16308 +0x22/+0x58 uses this constructor result."
+            },
+            {
+              "name": "login",
+              "type": "string",
+              "value": "password",
+              "evidence": "#16308 +0x26 loads the string \"password\" and +0x2a assigns r0.login on the #16340 result, before +0x58 assigns outer platform. This value is a client assignment, not a server enum."
+            }
+          ]
+        }
+      ],
+      "evidence": "Function #16308 +0x40–+0x58 constructs exactly three outer fields: username from input.username (+0x42/+0x48), password from input.password (+0x4d/+0x53), and platform from #16340 getPlatform after assigning nested login=\"password\" (+0x22–+0x2a); +0x61 invokes auth.post(url, data). No outer browser or login is assigned.",
+      "complete": true
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Returns the Axios auth.post promise directly; no response.data transformation in function #16308."
+    },
+    "auth": "none",
+    "notes": [
+      "Uses the separately created auth Axios client: #5603 +0x13e/+0x143 creates/exports auth, while +0x169–+0x189 installs the cookie-attaching request interceptor only on default. Auth does have response interception (#5603 +0x1be–+0x1da): #5621 +0x03/+0x0c invokes the shared setCookie helper, whose #5617 +0x3b–+0x58 extracts/serializes eliis_csrf and +0x91/+0x97 saves it. auth:none describes configured request behavior, not native networking cookie absence or inability to capture a response cookie."
+    ]
+  },
+  {
+    "operationId": "Login2FA",
+    "clientRequestVariants": [{"variantId":"TwoFactorLogin","constructor":{"functionId":27140,"line":1048334,"bytecodeOffset":"0x24"},"targetSourceFunctionId":16309,"provenFieldPaths":["code","login_identifier","platform","platform.platform","platform.browser"],"constructionComplete":true,"callsiteCoverage":"partial","preservesUnknownServiceInput":true,"evidence":"#0 M2340 dependency 6=M1575; #27138 +0xa5-0xb6 stores it in slot 7 used by #27140 +0x15-0x3c. #16306 +0x34-0x41 binds login2FA=#16309. App object has code/login_identifier; #16309 +0x26 adds #16340 platform object, +0x3f default-client POST forwards data. No nested login. Local app-callsite completeness does not close arbitrary service input."}],
+    "method": "post",
+    "path": "/api/auth/login-2fa",
+    "tag": "AuthCommon",
+    "summary": "Log in with two-factor authentication",
+    "source": {
+      "functionId": 16309,
+      "functionName": "login2FA",
+      "line": 648644
+    },
+    "evidence": "Function #16309 (login2FA) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 648644. Axios POST invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {"name":"code","type":"unknown","evidence":"#27140 +0x26-0x29 copies handler parameter 1; +0x3c sends to M1575 login2FA installed #16309."},
+        {"name":"login_identifier","type":"unknown","evidence":"#27140 +0x2d-0x37 copies captured identifier; +0x3c sends to exact #16309 via M2340 slot 7."},
+        {
+          "name": "platform",
+          "type": "unknown",
+          "evidence": "#16309 +0x22 receives #16340 getPlatform's fresh object into r1; +0x26 assigns r3.platform, where r3 is explicit argument 1 loaded at +0x00; +0x3f posts r3. No nested login mutation occurs in this wrapper.",
+          "fields": [
+            {
+              "name": "platform",
+              "type": "string",
+              "evidence": "#16340 (0x004f5894, full lines 649231–649258) +0x05–+0x35 concatenates systemName + \" \" + systemVersion + \", Model: \" + model + \", Device id: \" + deviceId; +0x39 assigns platform. #16339 +0x58–+0x9b traces getDeviceId/getModel/getSystemName/getSystemVersion into environment slots 1–4; #16309 +0x22/+0x26 assigns this constructor result to the payload."
+            },
+            {
+              "name": "browser",
+              "type": "string",
+              "evidence": "#16340 +0x3e–+0x55 calls getVersion() and concatenates \"Mobile app v\" + its result; +0x59 assigns browser on the fresh object returned at +0x5e; #16309 +0x22/+0x26 assigns this constructor result to the payload."
+            }
+          ]
+        }
+      ],
+      "evidence": "Function #16309 +0x22/+0x26 assigns its first argument's platform from #16340 getPlatform, then +0x3f posts that caller object. App caller #27140 +0x24-0x37 constructs code/login_identifier and +0x3c sends them to this exact service via M2340 dependency 6=M1575 and installed login2FA=#16309. Known caller fields and direct helper mutation are partial; arbitrary remainder stays unknown/open.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16310 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": [
+      "The request body is a caller-provided object with a client-added platform property; remaining body fields are unresolved."
+    ]
+  },
+  {
+    "operationId": "SocialLogin",
+    "clientRequestVariants": [{"variantId":"SocialLoginServiceMutation","constructor":{"functionId":16311,"line":648684,"bytecodeOffset":"0x1e"},"targetSourceFunctionId":16311,"provenFieldPaths":["platform","platform.platform","platform.browser","platform.login","role","tz","lang"],"constructionComplete":false,"callsiteCoverage":"partial","preservesUnknownRemainder":true,"evidence":"M1574 #16186 +0x4a8-0x4ad exports #16246 -> #16247 +0x1b, whose slot 4=M1575 via dependency 3. #16306 +0x4b-0x58 installs #16311. #16311 +0x24 returns #16340 object r2; +0x2e writes r2.login=input.social; +0x34 assigns input.platform; outer role/tz/lang assigned +0x3c/+0x48/+0x52. No outer login. +0x97 receives URL/data/config; app_login is query only."}],
+    "method": "post",
+    "path": "/api/auth/callback/{provider}/login",
+    "tag": "AuthCommon",
+    "summary": "Start social login",
+    "source": {
+      "functionId": 16311,
+      "functionName": "socialLogin",
+      "line": 648684
+    },
+    "evidence": "Function #16311 (socialLogin) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 648684. Axios POST invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [
+      {
+        "name": "provider",
+        "type": "string",
+        "evidence": "Function #16311 concatenates the social provider value (input property social) after \"/api/auth/callback/\"."
+      }
+    ],
+    "query": [
+      {
+        "name": "app_login",
+        "type": "boolean",
+        "value": true,
+        "evidence": "Function #16311 passes Axios config.params={app_login:true}."
+      }
+    ],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "platform",
+          "type": "unknown",
+          "evidence": "#16311 +0x24 receives #16340 getPlatform's fresh object into r2; +0x28 reads input.social from r5 into r3; +0x2e assigns r2.login, not input.login; +0x34 assigns r5.platform=r2. +0x97 posts r5 as data.",
+          "fields": [
+            {
+              "name": "platform",
+              "type": "string",
+              "evidence": "#16340 (0x004f5894, full lines 649231–649258) +0x05–+0x35 concatenates systemName + \" \" + systemVersion + \", Model: \" + model + \", Device id: \" + deviceId; +0x39 assigns platform. #16339 +0x58–+0x9b traces getDeviceId/getModel/getSystemName/getSystemVersion into environment slots 1–4; #16311 +0x24/+0x34 assigns this constructor result to the payload."
+            },
+            {
+              "name": "browser",
+              "type": "string",
+              "evidence": "#16340 +0x3e–+0x55 calls getVersion() and concatenates \"Mobile app v\" + its result; +0x59 assigns browser on the fresh object returned at +0x5e; #16311 +0x24/+0x34 assigns this constructor result to the payload."
+            },
+            {
+              "name": "login",
+              "type": "unknown",
+              "evidence": "#16311 +0x28 reads explicit argument 1's social property from r5; +0x2e writes that value to r2.login on the #16340 result, then +0x34 assigns r2 to input.platform. Its value/type and server validation are unresolved; this is not an outer login assignment."
+            }
+          ]
+        },
+        {
+          "name": "role",
+          "type": "unknown",
+          "value": null,
+          "evidence": "#16311 +0x3a loads null into r2; +0x3c writes r5.role=r2 on explicit argument 1, posted at +0x97. value:null records only this client assignment, not server nullability or a complete field domain."
+        },
+        {
+          "name": "tz",
+          "type": "integer",
+          "value": -180,
+          "evidence": "#16311 +0x42 loads integer -180 into r2; +0x48 writes r5.tz=r2 on explicit argument 1, posted at +0x97. This is a client assignment, not a server default or enum."
+        },
+        {
+          "name": "lang",
+          "type": "string",
+          "value": "en",
+          "evidence": "#16311 +0x4e loads string \"en\" into r2; +0x52 writes r5.lang=r2 on explicit argument 1, posted at +0x97. This is a client assignment, not a server default or enum."
+        }
+      ],
+      "evidence": "Function #16311 +0x24–+0x34 performs platform=getPlatform(); platform.login=input.social; input.platform=platform. +0x3a–+0x52 assigns outer role=null, tz=-180, lang=\"en\". +0x97 posts the caller object r5 with third-argument query config. Only those four directly assigned outer fields are represented; arbitrary remainder stays unknown/open. No outer login or social field assignment is established.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16312 returns the Axios response unchanged; rejection handler behavior is separate."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Request uses default Axios client (cookie-authenticated), with app_login=true in query config.",
+      "Body starts as arbitrary caller object; no complete body schema established."
+    ]
+  },
+  {
+    "operationId": "SocialRegister",
+    "clientRequestVariants": [{"variantId":"SocialRegisterServiceMutation","constructor":{"functionId":16314,"line":648760,"bytecodeOffset":"0x1e"},"targetSourceFunctionId":16314,"provenFieldPaths":["platform","platform.platform","platform.browser","platform.login","role","tz","lang"],"constructionComplete":false,"callsiteCoverage":"partial","preservesUnknownRemainder":true,"evidence":"M1574 #16186 +0x4b3-0x4b8 exports #16250 -> #16251 +0x1b, slot 4=M1575 via dependency 3. #16306 +0x62-0x6f installs #16314. #16314 +0x24 returns #16340 object r2; +0x2e writes nested login=input.social; +0x34 assigns input.platform; outer role/tz/lang at +0x3c/+0x48/+0x52. No outer login. +0x97 POST explicit arguments URL/data/config; app_login query only."}],
+    "method": "post",
+    "path": "/api/auth/callback/{provider}/register",
+    "tag": "AuthCommon",
+    "summary": "Start social registration",
+    "source": {
+      "functionId": 16314,
+      "functionName": "socialRegister",
+      "line": 648760
+    },
+    "evidence": "Function #16314 (socialRegister) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 648760. Axios POST invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [
+      {
+        "name": "provider",
+        "type": "string",
+        "evidence": "Function #16314 concatenates the social provider value (input property social) after \"/api/auth/callback/\"."
+      }
+    ],
+    "query": [
+      {
+        "name": "app_login",
+        "type": "boolean",
+        "value": true,
+        "evidence": "Function #16314 passes Axios config.params={app_login:true}."
+      }
+    ],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "platform",
+          "type": "unknown",
+          "evidence": "#16314 +0x24 receives #16340 getPlatform's fresh object into r2; +0x28 reads input.social from r5 into r3; +0x2e assigns r2.login, not input.login; +0x34 assigns r5.platform=r2. +0x97 posts r5 as data.",
+          "fields": [
+            {
+              "name": "platform",
+              "type": "string",
+              "evidence": "#16340 (0x004f5894, full lines 649231–649258) +0x05–+0x35 concatenates systemName + \" \" + systemVersion + \", Model: \" + model + \", Device id: \" + deviceId; +0x39 assigns platform. #16339 +0x58–+0x9b traces getDeviceId/getModel/getSystemName/getSystemVersion into environment slots 1–4; #16314 +0x24/+0x34 assigns this constructor result to the payload."
+            },
+            {
+              "name": "browser",
+              "type": "string",
+              "evidence": "#16340 +0x3e–+0x55 calls getVersion() and concatenates \"Mobile app v\" + its result; +0x59 assigns browser on the fresh object returned at +0x5e; #16314 +0x24/+0x34 assigns this constructor result to the payload."
+            },
+            {
+              "name": "login",
+              "type": "unknown",
+              "evidence": "#16314 +0x28 reads explicit argument 1's social property from r5; +0x2e writes that value to r2.login on the #16340 result, then +0x34 assigns r2 to input.platform. Its value/type and server validation are unresolved; this is not an outer login assignment."
+            }
+          ]
+        },
+        {
+          "name": "role",
+          "type": "unknown",
+          "value": null,
+          "evidence": "#16314 +0x3a loads null into r2; +0x3c writes r5.role=r2 on explicit argument 1, posted at +0x97. value:null records only this client assignment, not server nullability or a complete field domain."
+        },
+        {
+          "name": "tz",
+          "type": "integer",
+          "value": -180,
+          "evidence": "#16314 +0x42 loads integer -180 into r2; +0x48 writes r5.tz=r2 on explicit argument 1, posted at +0x97. This is a client assignment, not a server default or enum."
+        },
+        {
+          "name": "lang",
+          "type": "string",
+          "value": "en",
+          "evidence": "#16314 +0x4e loads string \"en\" into r2; +0x52 writes r5.lang=r2 on explicit argument 1, posted at +0x97. This is a client assignment, not a server default or enum."
+        }
+      ],
+      "evidence": "Function #16314 +0x24–+0x34 performs platform=getPlatform(); platform.login=input.social; input.platform=platform. +0x3a–+0x52 assigns outer role=null, tz=-180, lang=\"en\". +0x97 posts the caller object r5 with third-argument query config. Only those four directly assigned outer fields are represented; arbitrary remainder stays unknown/open. No outer login or social field assignment is established.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16315 returns the Axios response unchanged; rejection handler behavior is separate."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Request uses default Axios client (cookie-authenticated), with app_login=true in query config.",
+      "Body starts as arbitrary caller object; no complete body schema established."
+    ]
+  },
+  {
+    "operationId": "RegisterUser",
+    "method": "post",
+    "path": "/api/auth/register",
+    "tag": "AuthCommon",
+    "summary": "Register a user",
+    "source": {
+      "functionId": 16317,
+      "functionName": "registerUser",
+      "line": 648836
+    },
+    "evidence": "Function #16317 (registerUser) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 648836. Axios POST invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Function #16317 passes its first argument directly as Axios POST data; its shape is unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16318 (0x004f55c6, full lines 648856–648871) +0x03–+0x0b checks response.status === 200; +0x13/+0x18 returns response.data only for that branch, otherwise +0x0f/+0x11 returns undefined. This client test does not establish server response statuses or a complete HTTP schema."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "ResendEmailVerification",
+    "method": "post",
+    "path": "/api/auth/verification/resend",
+    "tag": "AuthCommon",
+    "summary": "Resend email verification",
+    "source": {
+      "functionId": 16319,
+      "functionName": "resendEmailVerification",
+      "line": 648872
+    },
+    "evidence": "Function #16319 (resendEmailVerification) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 648872. Axios POST invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Function #16319 passes its first argument directly as Axios POST data; its shape is unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16320 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "RequestForgotPassword",
+    "method": "post",
+    "path": "/api/auth/password/email",
+    "tag": "AuthCommon",
+    "summary": "Request password reset email",
+    "source": {
+      "functionId": 16321,
+      "functionName": "requestForgotPassword",
+      "line": 648903
+    },
+    "evidence": "Function #16321 (requestForgotPassword) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 648903. Axios POST invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Function #16321 passes its first argument directly as Axios POST data; its shape is unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16322 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "VerifyTwoFactorAuthKey",
+    "method": "post",
+    "path": "/api/auth/2fa/verify",
+    "tag": "AuthCommon",
+    "summary": "Verify two-factor authentication key",
+    "source": {
+      "functionId": 16335,
+      "functionName": "verifyTwoFactorAuthKey",
+      "line": 649120
+    },
+    "evidence": "Function #16335 (verifyTwoFactorAuthKey) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 649120. Axios POST invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Function #16335 passes its first argument directly as Axios POST data; its shape is unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16336 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "RecoverAccount",
+    "method": "post",
+    "path": "/api/auth/recover-2fa",
+    "tag": "AuthCommon",
+    "summary": "Recover account",
+    "source": {
+      "functionId": 16337,
+      "functionName": "recoverAccount",
+      "line": 649151
+    },
+    "evidence": "Function #16337 (recoverAccount) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 649151. Axios POST invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Function #16337 passes its first argument directly as Axios POST data; its shape is unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16338 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "Logout",
+    "method": "get",
+    "path": "/api/auth/logout",
+    "tag": "AuthCommon",
+    "summary": "Log out",
+    "source": {
+      "functionId": 16323,
+      "functionName": "logout",
+      "line": 648934
+    },
+    "evidence": "Function #16323 (logout) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 648934. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [
+      {
+        "name": "platform",
+        "type": "unknown",
+      "evidence": "Function #16323 +0x21 receives #16340 getPlatform's object into r5; +0x25/+0x29 assigns nested login=\"password\"; +0x41 nests r5 under params.platform and +0x46/+0x4e passes GET config. There is no local JSON.stringify. #5683 +0x74–+0x97 constructs AxiosURLSearchParams, #5681 +0x1e calls #5669 toFormData, #5669 +0x9e establishes dots=false, and #5674/#5677 recurse through the object while #5666/#5667 render bracketed keys. #5603 and this call supply no custom serializer: the known wire keys are platform[platform], platform[browser], and platform[login].",
+      "encoding": "AxiosURLSearchParams brackets",
+        "fields": [
+          {
+            "name": "platform",
+            "type": "string",
+            "evidence": "#16340 (0x004f5894, full lines 649231–649258) +0x05–+0x35 concatenates systemName + \" \" + systemVersion + \", Model: \" + model + \", Device id: \" + deviceId; +0x39 assigns platform. #16339 +0x58–+0x9b traces getDeviceId/getModel/getSystemName/getSystemVersion into environment slots 1–4; #16323 +0x21/+0x41 uses this constructor result as params.platform."
+          },
+          {
+            "name": "browser",
+            "type": "string",
+            "evidence": "#16340 +0x3e–+0x55 calls getVersion() and concatenates \"Mobile app v\" + its result; +0x59 assigns browser on the fresh object returned at +0x5e; #16323 +0x21/+0x41 uses this constructor result as params.platform."
+          },
+          {
+            "name": "login",
+            "type": "string",
+            "value": "password",
+            "evidence": "#16323 +0x25 loads string \"password\"; +0x29 writes r5.login on the #16340 result; +0x41 places r5 in params.platform. This is a client assignment, not a server enum."
+          }
+        ]
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16324 returns the Axios response unchanged."
+    },
+    "auth": "cookie",
+    "notes": [
+    "Axios GET config.params.platform is a locally constructed nested object, serialized by the separately traced default AxiosURLSearchParams bracket walker, not JSON.stringify. OpenAPI represents the logical platform object with deepObject/explode serialization; no server requiredness, enum, or validation constraint is inferred."
+    ]
+  },
+  {
+    "operationId": "GetUserData",
+    "method": "get",
+    "path": "/api/common/init",
+    "tag": "AuthCommon",
+    "summary": "Initialize user data",
+    "source": {
+      "functionId": 16344,
+      "functionName": "getUserData",
+      "line": 649457
+    },
+    "evidence": "Function #16344 (getUserData) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 649457. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [
+      {
+        "name": "platform",
+        "type": "string",
+        "evidence": "Function #16344 +0x22 receives #16340 getPlatform's object into r6; +0x26/+0x29 assigns nested login from explicit argument 2; +0x2f/+0x32 conditionally assigns push_token from truthy argument 1; +0x57 JSON.stringify encodes r6 and +0x5c/+0x61 nests that string under config.params.platform for GET +0x69. fields describes the pre-serialization object, not additional query parameters.",
+        "encoding": "JSON.stringify",
+        "fields": [
+          {
+            "name": "platform",
+            "type": "string",
+            "evidence": "#16340 (0x004f5894, full lines 649231–649258) +0x05–+0x35 concatenates systemName + \" \" + systemVersion + \", Model: \" + model + \", Device id: \" + deviceId; +0x39 assigns platform. #16339 +0x58–+0x9b traces getDeviceId/getModel/getSystemName/getSystemVersion into environment slots 1–4; #16344 +0x22/+0x57 uses this constructor result before JSON.stringify."
+          },
+          {
+            "name": "browser",
+            "type": "string",
+            "evidence": "#16340 +0x3e–+0x55 calls getVersion() and concatenates \"Mobile app v\" + its result; +0x59 assigns browser on the fresh object returned at +0x5e; #16344 +0x22/+0x57 uses this constructor result before JSON.stringify."
+          },
+          {
+            "name": "login",
+            "type": "unknown",
+            "evidence": "#16344 +0x26 loads explicit argument 2 and +0x29 unconditionally writes r6.login on the #16340 result. Its value/type are unresolved; JSON.stringify at +0x57 can omit an undefined assigned value, so assignment is not wire/server requiredness."
+          },
+          {
+            "name": "push_token",
+            "type": "unknown",
+            "optional": true,
+            "evidence": "#16344 +0x00 loads explicit argument 1 into r1; +0x2f jumps past +0x32 when r1 is falsy; +0x32 otherwise writes r6.push_token=r1 on the #16340 result before JSON.stringify +0x57. optional records this client inclusion branch only; value/type and server requiredness are unresolved."
+          }
+        ]
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16345 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": [
+      "The pre-serialization platform object receives login unconditionally from explicit argument 2; JSON.stringify can omit undefined, so this does not prove wire presence. push_token is assigned only when explicit argument 1 is truthy. Nested caller-derived values/types and server requiredness remain unknown; query.fields preserves the constructor and direct assignment evidence."
+    ]
+  },
+  {
+    "operationId": "GetUserProfile",
+    "method": "get",
+    "path": "/api/common/user/profile",
+    "tag": "AuthCommon",
+    "summary": "Get user profile",
+    "source": {
+      "functionId": 16346,
+      "functionName": "getUserProfile",
+      "line": 649508
+    },
+    "evidence": "Function #16346 (getUserProfile) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 649508. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16347 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetUserPermissions",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/user/permissions",
+    "tag": "AuthCommon",
+    "summary": "Get user permissions",
+    "source": {
+      "functionId": 16348,
+      "functionName": "getUserPermissions",
+      "line": 649538
+    },
+    "evidence": "Function #16348 (getUserPermissions) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 649538. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #16348 concatenates its first explicit argument into the kindergarten URL segment."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16349 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Function catches rejection and rethrows it."
+    ]
+  },
+  {
+    "operationId": "GetUserMenu",
+    "method": "get",
+    "path": "/api/common/menu",
+    "tag": "AuthCommon",
+    "summary": "Get user menu",
+    "source": {
+      "functionId": 16351,
+      "functionName": "getUserMenu",
+      "line": 649587
+    },
+    "evidence": "Function #16351 (getUserMenu) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 649587. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16352 returns response.data.left (not the full response.data object)."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetUserKindergartenMenu",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/menu",
+    "tag": "AuthCommon",
+    "summary": "Get kindergarten menu",
+    "source": {
+      "functionId": 16354,
+      "functionName": "getUserKindergartenMenu",
+      "line": 649631
+    },
+    "evidence": "Function #16354 (getUserKindergartenMenu) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 649631. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #16354 concatenates its first explicit argument into the kindergarten URL segment."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16355 returns response.data.left (not the full response.data object)."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Function catches rejection and rethrows it."
+    ]
+  },
+  {
+    "operationId": "UpdateUser",
+    "clientRequestVariants": [
+      {"variantId":"UserProfileUpdate","constructor":{"functionId":40860,"line":1657275,"bytecodeOffset":"0x1f"},"targetSourceFunctionId":16357,"provenFieldPaths":["email","username","fname","lname","idcode","address","address.address","phone","privacy_confirmed","timezone","dob"],"branches":["dob always assigned submitted truthy value or null"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"M4226 dependency 25=M1574; #40860 +0xc6 -> #16223/#16224 +0x22 via exported binding #16186 +0x457-0x45c. M1574 slot 5=dependency 4=M1577 (#16186 +0x1f0-0x201); #16342 +0x90-0x9d installs updateUser=#16357, whose +0x19 PUT data is unchanged input."},
+      {"variantId":"UserPasswordUpdate","constructor":{"functionId":40950,"line":1661182,"bytecodeOffset":"0x05"},"targetSourceFunctionId":16357,"provenFieldPaths":["current_password","password","password_confirm"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"M4232 dependency 18=M1574; #40950 +0x47-0x59 imports updateUser=#16223 -> #16224 +0x22 -> M1577 installed #16357 (#16342 +0x90-0x9d). #40950 +0x05-0x23 builds exactly three password keys, forwarded unchanged at service +0x19."}
+    ],
+    "method": "put",
+    "path": "/api/common/user/update",
+    "tag": "AuthCommon",
+    "summary": "Update user",
+    "source": {
+      "functionId": 16357,
+      "functionName": "updateUser",
+      "line": 649681
+    },
+    "evidence": "Function #16357 (updateUser) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 649681. Axios PUT invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {"name":"email","type":"unknown","optional":true,"evidence":"Profile variant #40860 +0x21-0x2b copies captured user.email; absent from #40950 password variant."},
+        {"name":"username","type":"unknown","optional":true,"evidence":"Profile #40860 +0x30-0x36 copies captured username; absent from password variant."},
+        {"name":"fname","type":"unknown","optional":true,"evidence":"Profile #40860 +0x3b-0x41 copies submitted fname; absent from password variant."},
+        {"name":"lname","type":"unknown","optional":true,"evidence":"Profile #40860 +0x46-0x4c copies submitted lname; absent from password variant."},
+        {"name":"idcode","type":"unknown","optional":true,"evidence":"Profile #40860 +0x51-0x57 copies submitted idcode; absent from password variant."},
+        {"name":"address","type":"unknown","optional":true,"fields":[{"name":"address","type":"unknown","evidence":"#40860 +0x5e-0x64 copies submitted address into fresh nested object's address."}],"evidence":"Profile #40860 +0x5c-0x69 constructs {address:submitted.address}; absent from password variant."},
+        {"name":"phone","type":"unknown","optional":true,"evidence":"Profile #40860 +0x6e-0x74 copies submitted phone; absent from password variant."},
+        {"name":"privacy_confirmed","type":"unknown","optional":true,"evidence":"Profile #40860 +0x79-0x7f copies captured privacy_confirmed; absent from password variant."},
+        {"name":"timezone","type":"unknown","optional":true,"evidence":"Profile #40860 +0x84-0x8a copies submitted timezone; absent from password variant."},
+        {"name":"dob","type":"unknown","optional":true,"evidence":"Profile #40860 +0x8f-0xa0 ALWAYS assigns submitted truthy dob or null; conditional here only because password variant omits dob, not because of dob truthiness."},
+        {"name":"current_password","type":"unknown","optional":true,"evidence":"Password variant #40950 +0x07-0x0d copies submitted current_password; profile variant omits it."},
+        {"name":"password","type":"unknown","optional":true,"evidence":"Password variant #40950 +0x12-0x18 copies submitted password; profile variant omits it."},
+        {"name":"password_confirm","type":"unknown","optional":true,"evidence":"Password variant #40950 +0x1d-0x23 copies submitted password_confirm; profile variant omits it."}
+      ],
+      "evidence": "Function #16357 passes its first argument directly as Axios PUT data. Verified #40860/#40950 -> M1574 #16223/#16224 -> M1577 installed #16357 establish the named union below; it is partial across callsites and arbitrary remainder stays unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16358 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateUserName",
+    "method": "put",
+    "path": "/api/common/user/name",
+    "tag": "AuthCommon",
+    "summary": "Update user name",
+    "source": {
+      "functionId": 16359,
+      "functionName": "updateUserName",
+      "line": 649712
+    },
+    "evidence": "Function #16359 (updateUserName) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 649712. Axios PUT invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Function #16359 passes its first argument directly as Axios PUT data; its shape is unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16360 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UploadUserPicture",
+    "clientRequestVariants": [{"variantId":"EditUserProfileImage","constructor":{"functionId":40898,"line":1658600,"bytecodeOffset":"0x00"},"targetSourceFunctionId":16361,"placement":"multipart","fields":[{"name":"profile_picture","type":"unknown","evidence":"#40898 +0x4b-0x4f appends literal profile_picture; native descriptor +0x25-0x46 is file metadata, not API fields."}],"provenFieldPaths":["profile_picture"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#0 M4226 dependency 25=M1574; #40854 +0x3cd-0x3d3 supplies updateUserImage to M4227 #40894. #40894 captures updateService +0x10-0x16 and creates #40898 +0xab; #40898 +0x6a-0x73 invokes prop with FormData and dispatches. Export #16229/thunk #16230 uses M1574 slot 5=dependency 4/M1577 (#16186 +0x1f0-0x201); #16342 +0xbe-0xcb installs #16361, +0x27-0x2a POST data=p1."}],
+    "method": "post",
+    "path": "/api/common/settings/upload",
+    "tag": "AuthCommon",
+    "summary": "Upload user picture",
+    "source": {
+      "functionId": 16361,
+      "functionName": "uploadUserPicture",
+      "line": 649743
+    },
+    "evidence": "Function #16361 (uploadUserPicture) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 649743. Axios POST invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "multipart",
+      "fields": [{"name":"profile_picture","type":"unknown","evidence":"#40898 +0x4b-0x4f appends literal profile_picture with unknown file value. +0x25-0x46 builds native metadata name='profile-image', type=input.type || input.mime, uri=input.path; not nested API fields."}],
+      "evidence": "#16361 POST data=p1 with multipart config; #40898 -> #16229/#16230 -> installed #16361 proves the named client variant. Partial endpoint model; other callers remain unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16362 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": ["Named EditProfileImage variant proves profile_picture; arbitrary endpoint/caller remainder remains unknown. Native name/type/uri descriptor members are file transport metadata, not API properties."]
+  },
+  {
+    "operationId": "DeleteUserPicture",
+    "method": "delete",
+    "path": "/api/common/settings/delete",
+    "tag": "AuthCommon",
+    "summary": "Delete user picture",
+    "source": {
+      "functionId": 16363,
+      "functionName": "deleteUserPicture",
+      "line": 649779
+    },
+    "evidence": "Function #16363 (deleteUserPicture) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 649779. Axios DELETE invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16364 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Axios delete is called as delete(url) with no config/body argument."
+    ]
+  },
+  {
+    "operationId": "DeactivateUser",
+    "method": "put",
+    "path": "/api/common/user/delete",
+    "tag": "AuthCommon",
+    "summary": "Deactivate user",
+    "source": {
+      "functionId": 16365,
+      "functionName": "deactivateUser",
+      "line": 649809
+    },
+    "evidence": "Function #16365 (deactivateUser) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 649809. Axios PUT invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16366 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Axios put is called with URL only; no request data argument is supplied."
+    ]
+  },
+  {
+    "operationId": "GetUserSettings",
+    "method": "get",
+    "path": "/api/common/user/settings",
+    "tag": "AuthCommon",
+    "summary": "Get user settings",
+    "source": {
+      "functionId": 16367,
+      "functionName": "getUserSettings",
+      "line": 649839
+    },
+    "evidence": "Function #16367 (getUserSettings) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 649839. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16368 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetUserTargetGroups",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/target-groups/available",
+    "tag": "AuthCommon",
+    "summary": "Get available target groups",
+    "source": {
+      "functionId": 16369,
+      "functionName": "getUserTargetGroups",
+      "line": 649869
+    },
+    "evidence": "Function #16369 (getUserTargetGroups) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 649869. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #16369 concatenates its first explicit argument into the kindergarten URL segment."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16370 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "RequestEmailChange",
+    "method": "post",
+    "path": "/api/common/user/{userId}/email-change",
+    "tag": "AuthCommon",
+    "summary": "Request email change",
+    "source": {
+      "functionId": 16371,
+      "functionName": "requestEmailChange",
+      "line": 649905
+    },
+    "evidence": "Function #16371 (requestEmailChange) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 649905. Axios POST invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [
+      {
+        "name": "userId",
+        "type": "string",
+        "evidence": "Function #16371 concatenates its first explicit argument into the URL between /user/ and /email-change."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Function #16371 passes its second explicit argument directly as Axios POST data; its shape is unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16372 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetUser2FAProvider",
+    "method": "get",
+    "path": "/api/common/user/2fa",
+    "tag": "AuthCommon",
+    "summary": "Get user two-factor provider",
+    "source": {
+      "functionId": 16373,
+      "functionName": "getUser2FAProvider",
+      "line": 649942
+    },
+    "evidence": "Function #16373 (getUser2FAProvider) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 649942. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16374 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GenerateTwoFactorAuthSecret",
+    "method": "post",
+    "path": "/api/common/user/2fa/generate-secret",
+    "tag": "AuthCommon",
+    "summary": "Generate two-factor authentication secret",
+    "source": {
+      "functionId": 16375,
+      "functionName": "generateTwoFactorAuthSecret",
+      "line": 649972
+    },
+    "evidence": "Function #16375 (generateTwoFactorAuthSecret) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 649972. Axios POST invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "unknown",
+          "evidence": "Copied directly from the first function argument."
+        }
+      ],
+      "evidence": "Function #16375 constructs the complete POST data object {type: firstArgument}.",
+      "complete": true
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16376 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "EnableTwoFactorAuth",
+    "clientRequestVariants": [{"variantId":"EnableTwoFactorAuth","constructor":{"functionId":41132,"line":1669637,"bytecodeOffset":"0x3b"},"targetSourceFunctionId":16377,"provenFieldPaths":["key","identifier"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#41132 +0x50 directly calls imported M1577 enableTwoFactorAuth with fresh object. #0 M4251 dependency 6=M1577; #41123 +0xb7-0xc8 stores module slot 7; #16342 +0x176-0x183 binds exact #16377. POST data unchanged at +0x19."}],
+    "method": "post",
+    "path": "/api/common/user/2fa/enable",
+    "tag": "AuthCommon",
+    "summary": "Enable two-factor authentication",
+    "source": {
+      "functionId": 16377,
+      "functionName": "enableTwoFactorAuth",
+      "line": 650005
+    },
+    "evidence": "Function #16377 (enableTwoFactorAuth) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 650005. Axios POST invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {"name":"key","type":"unknown","evidence":"#41132 +0x0c loads handler parameter 1, copied to key +0x3d; not a captured setup secret."},
+        {"name":"identifier","type":"unknown","evidence":"#41132 +0x41-0x4b copies captured state's login_identifier to identifier."}
+      ],
+      "evidence": "Function #16377 passes its first argument directly as Axios POST data; #41132 +0x3b-0x50 constructs key/identifier, routed via M4251 slot 7=M1577 (#41123 +0xb7-0xc8) and installed #16342 +0x176-0x183=#16377. Callsite coverage partial; arbitrary remainder unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16378 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "DisableTwoFactorAuth",
+    "method": "post",
+    "path": "/api/common/user/2fa/disable/{provider}",
+    "tag": "AuthCommon",
+    "summary": "Disable two-factor authentication",
+    "source": {
+      "functionId": 16379,
+      "functionName": "disableTwoFactorAuth",
+      "line": 650036
+    },
+    "evidence": "Function #16379 (disableTwoFactorAuth) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 650036. Axios POST invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [
+      {
+        "name": "provider",
+        "type": "string",
+        "evidence": "Function #16379 concatenates its first explicit argument after /api/common/user/2fa/disable/."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "password",
+          "type": "unknown",
+          "evidence": "Copied directly from the second function argument."
+        }
+      ],
+      "evidence": "Function #16379 constructs the complete POST data object {password: secondArgument}.",
+      "complete": true
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16380 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "VerifyPassword",
+    "method": "post",
+    "path": "/api/common/user/verify-password",
+    "tag": "AuthCommon",
+    "summary": "Verify password",
+    "source": {
+      "functionId": 16381,
+      "functionName": "verifyPassword",
+      "line": 650074
+    },
+    "evidence": "Function #16381 (verifyPassword) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 650074. Axios POST invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Function #16381 passes its first argument directly as Axios POST data; its shape is unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16382 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetKindergartenActivity",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/activity",
+    "tag": "AuthCommon",
+    "summary": "Get kindergarten activity",
+    "source": {
+      "functionId": 16386,
+      "functionName": "getKindergartenActivity",
+      "line": 650195
+    },
+    "evidence": "Function #16386 (getKindergartenActivity) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 650195. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #16386 concatenates its first explicit argument into the kindergarten URL segment."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16387 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetUserBanners",
+    "method": "get",
+    "path": "/api/{pathPart1}/{pathPart2}/banners",
+    "tag": "AuthCommon",
+    "summary": "Get user banners",
+    "source": {
+      "functionId": 16391,
+      "functionName": "getUserBanners",
+      "line": 650321
+    },
+    "evidence": "Function #16391 (getUserBanners) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 650321. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [
+      {
+        "name": "pathPart1",
+        "type": "string",
+        "evidence": "Function #16391 concatenates first explicit argument as the first path segment after /api/; semantic name unresolved."
+      },
+      {
+        "name": "pathPart2",
+        "type": "string",
+        "evidence": "Function #16391 concatenates second explicit argument between slashes; semantic name unresolved."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16392 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Function #16391 has two explicit arguments (3 params includes implicit this): +0x22/+0x29 load arguments 1/2, +0x30 concatenates the two dynamic URL components, and +0x34 invokes GET with URL only."
+    ]
+  },
+  {
+    "operationId": "SearchByName",
+    "method": "get",
+    "path": "/api/common/kindergartens/search",
+    "tag": "AuthCommon",
+    "summary": "Search kindergartens by name",
+    "source": {
+      "functionId": 24587,
+      "functionName": "searchByName",
+      "line": 967298
+    },
+    "evidence": "Function #24587 (searchByName) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 967298. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [
+      {
+        "name": "term",
+        "type": "unknown",
+        "evidence": "Function #24587 constructs Axios config.params={term: firstArgument}."
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #24588 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetEnabledLanguages",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/languages",
+    "tag": "AuthCommon",
+    "summary": "Get enabled kindergarten languages",
+    "source": {
+      "functionId": 24589,
+      "functionName": "getEnabledLanguages",
+      "line": 967333
+    },
+    "evidence": "Function #24589 (getEnabledLanguages) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 967333. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #24589 concatenates its first explicit argument into the kindergarten URL segment."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #24590 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetKindergartenChildrenList",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children-list",
+    "tag": "AuthCommon",
+    "summary": "Get kindergarten children list",
+    "source": {
+      "functionId": 24591,
+      "functionName": "getKindergartenChildrenList",
+      "line": 967369
+    },
+    "evidence": "Function #24591 (getKindergartenChildrenList) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 967369. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Function #24591 concatenates its first explicit argument into the kindergarten URL segment."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #24592 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetCountries",
+    "method": "get",
+    "path": "/api/auth/countries",
+    "tag": "AuthCommon",
+    "summary": "Get countries",
+    "source": {
+      "functionId": 26289,
+      "functionName": "getCountries",
+      "line": 1022267
+    },
+    "evidence": "Function #26289 (getCountries) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 1022267. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #26290 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetUserDashboard",
+    "method": "get",
+    "path": "/api/common/user/dashboard",
+    "tag": "AuthCommon",
+    "summary": "Get user dashboard",
+    "source": {
+      "functionId": 26882,
+      "functionName": "getUserDashboard",
+      "line": 1040525
+    },
+    "evidence": "Function #26882 (getUserDashboard) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 1040525. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #26883 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Function #26882 passes its first explicit argument as the second argument to Axios get(url, config), not as data; config shape is unresolved and may include params, headers, or other Axios options."
+    ]
+  },
+  {
+    "operationId": "AcceptEmployeeInvite",
+    "method": "put",
+    "path": "/api/common/user/invites/{inviteId}",
+    "tag": "AuthCommon",
+    "summary": "Accept employee invite",
+    "source": {
+      "functionId": 26884,
+      "functionName": "acceptEmployeeInvite",
+      "line": 1040556
+    },
+    "evidence": "Function #26884 (acceptEmployeeInvite) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 1040556. Axios PUT invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [
+      {
+        "name": "inviteId",
+        "type": "string",
+        "evidence": "Function #26884 concatenates its first explicit argument after /api/common/user/invites/."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #26885 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Axios put is called with URL only; no request data argument is supplied."
+    ]
+  },
+  {
+    "operationId": "GetPublicAgreement",
+    "method": "get",
+    "path": "/api/agreements/{agreementId}",
+    "tag": "AuthCommon",
+    "summary": "Get public agreement",
+    "source": {
+      "functionId": 28229,
+      "functionName": "getPublicAgreement",
+      "line": 1112422
+    },
+    "evidence": "Function #28229 (getPublicAgreement) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 1112422. Axios GET invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [
+      {
+        "name": "agreementId",
+        "type": "string",
+        "evidence": "Function #28229 concatenates its first explicit argument after /api/agreements/."
+      }
+    ],
+    "query": [
+      {
+        "name": "language",
+        "type": "unknown",
+        "evidence": "Function #28229 constructs Axios config.params={language: secondArgument}."
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #28230 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "AcceptAgreement",
+    "method": "post",
+    "path": "/api/common/agreements/{agreementId}/accept",
+    "tag": "AuthCommon",
+    "summary": "Accept agreement",
+    "source": {
+      "functionId": 28231,
+      "functionName": "acceptAgreement",
+      "line": 1112462
+    },
+    "evidence": "Function #28231 (acceptAgreement) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 1112462. Axios POST invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [
+      {
+        "name": "agreementId",
+        "type": "string",
+        "evidence": "Function #28231 concatenates its first explicit argument into the agreement URL."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #28232 returns response.data."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Axios post is called with URL only; no request data argument is supplied."
+    ]
+  },
+  {
+    "operationId": "Authorize",
+    "method": "post",
+    "path": "/broadcasting/auth",
+    "tag": "AuthCommon",
+    "summary": "Authorize broadcasting channel",
+    "source": {
+      "functionId": 16398,
+      "functionName": "authorize",
+      "line": 650598
+    },
+    "evidence": "Function #16398 (authorize) in /data/data/com.termux/files/home/eliis-analysis/domain-source/auth-common.hasm; source header line 650598. Axios POST invocation and URL/data/config argument positions are traced in that function.",
+    "pathParams": [],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "socket_id",
+          "type": "unknown",
+          "evidence": "#16398 +0x1d loads authorize's first explicit argument; +0x20 assigns socket_id on the fresh object r2 posted at +0x3a. Its value/type remain unknown."
+        },
+        {
+          "name": "channel_name",
+          "type": "unknown",
+          "evidence": "#16397 authorizer (0x004f653e, full lines 650583–650593) +0x02/+0x05 captures its first explicit argument in outer environment slot 0 and +0x0b creates #16398. #16398 +0x25/+0x28 loads that outer slot, +0x2c reads its name, and +0x31 assigns channel_name on r2 posted at +0x3a. authorize's second explicit argument is the callback, not the channel object; channel_name's value/type remain unknown."
+        }
+      ],
+      "evidence": "Function #16398 +0x1b–+0x31 constructs exactly {socket_id: authorizeArgument1, channel_name: capturedAuthorizerArgument1.name}, posted at +0x3a. #16397 +0x02/+0x05 captures the authorizer argument; #16398 +0x25–+0x31 reads the outer environment's name. #16398 +0x02/+0x05 separately captures authorizeArgument2 as the callback in the new child environment.",
+      "complete": true
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Function #16399 (0x004f65b6, full lines 650629–650640) +0x03 loads the callback captured from authorize's second explicit argument; +0x0a reads response.data; +0x13 invokes callback(null, response.data) and stores its result into r0; +0x19 returns that callback result, not response.data. #16400 (0x004f65d1, full lines 650645–650655) +0x0e/+0x14 invokes callback(error, null) and returns its result. Callback return types and complete HTTP response shape are unknown."
+    },
+    "auth": "cookie",
+    "notes": [
+      "The success and rejection handlers return callback invocation results (#16399 +0x13/+0x19; #16400 +0x0e/+0x14), without establishing that those results are response.data or undefined. These application callbacks do not establish HTTP response schemas or statuses."
+    ]
+  }
+]

@@ -1,0 +1,3694 @@
+[
+  {
+    "operationId": "GuardianUpdateSettings",
+    "clientRequestVariants": [{"variantId":"GuardianSettingsForm","constructor":{"functionId":41002,"line":1663208,"bytecodeOffset":"0x53"},"targetSourceFunctionId":25485,"provenFieldPaths":["setting_id","value"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#0 M4236 dependency 15=M2236; #41002 +0x32-0x66 sends envelope with inner form. M2236 #25478 +0x6b-0x70 exports #25479 -> #25480, whose slot 2=dependency 1=M2237 (#25478 +0x4c-0x5d). #25483 +0x19-0x26 binds updateSettings=#25485. #25480 +0x2e-0x34 passes ONLY envelope.form as service p3; #25485 +0x38 PUT data=p3. guardian_id/kindergarten_id are URL routing, not body."}],
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/guardians/{guardianId}/settings",
+    "tag": "Guardians",
+    "summary": "Updatesettings",
+    "source": {
+      "functionId": 25485,
+      "functionName": "updateSettings",
+      "line": 998999
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/guardians/{guardianId}/settings and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "guardianId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [{"name":"setting_id","type":"unknown","evidence":"#41002 +0x55 writes parameter 3 into inner form.setting_id."},{"name":"value","type":"unknown","evidence":"#41002 +0x5a-0x5d writes parameter 4 into inner form.value."}],
+      "evidence": "Axios put data argument is input parameter 3. #41002 -> M2236 #25479/#25480 -> M2237 installed #25485 proves inner form {setting_id,value}; IDs stay outside body. Partial caller coverage; arbitrary remainder unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "Store",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/guardians",
+    "tag": "Guardians",
+    "summary": "Store",
+    "source": {
+      "functionId": 25487,
+      "functionName": "store",
+      "line": 999038
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/guardians and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios post data argument is input parameter 3.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "Update",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/guardians/{guardianId}",
+    "tag": "Guardians",
+    "summary": "Update",
+    "source": {
+      "functionId": 25489,
+      "functionName": "update",
+      "line": 999077
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/guardians/{guardianId} and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "guardianId",
+        "type": "string",
+        "evidence": "Input parameter 3 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put data argument is input parameter 4.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "Detach",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/guardians/{guardianId}/detach",
+    "tag": "Guardians",
+    "summary": "Detach",
+    "source": {
+      "functionId": 25491,
+      "functionName": "detach",
+      "line": 999117
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/guardians/{guardianId}/detach and invokes Axios delete. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "guardianId",
+        "type": "string",
+        "evidence": "Input parameter 3 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "Delete",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/guardians/{guardianId}/delete",
+    "tag": "Guardians",
+    "summary": "Delete",
+    "source": {
+      "functionId": 25493,
+      "functionName": "_delete",
+      "line": 999157
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/guardians/{guardianId}/delete and invokes Axios delete. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "guardianId",
+        "type": "string",
+        "evidence": "Input parameter 3 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetMap",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/maps/{mapId}",
+    "tag": "Maps",
+    "summary": "Getmap",
+    "source": {
+      "functionId": 25611,
+      "functionName": "getMap",
+      "line": 1002683
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/maps/{mapId} and invokes Axios get. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "mapId",
+        "type": "string",
+        "evidence": "Input parameter 3 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "ApproveMap",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/maps/{mapId}/approve",
+    "tag": "Maps",
+    "summary": "Approvemap",
+    "source": {
+      "functionId": 25613,
+      "functionName": "approveMap",
+      "line": 1002722
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/maps/{mapId}/approve and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "mapId",
+        "type": "string",
+        "evidence": "Input parameter 3 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios post data argument is input parameter 4.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "DisapproveMap",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/maps/{mapId}/approve",
+    "tag": "Maps",
+    "summary": "Disapprovemap",
+    "source": {
+      "functionId": 25615,
+      "functionName": "disapproveMap",
+      "line": 1002763
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/maps/{mapId}/approve and invokes Axios delete. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "mapId",
+        "type": "string",
+        "evidence": "Input parameter 3 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Axios delete config.params is input parameter p4, passed through unchanged; query shape unresolved."
+    ]
+  },
+  {
+    "operationId": "PublishMap",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/maps/{mapId}/publish",
+    "tag": "Maps",
+    "summary": "Publishmap",
+    "source": {
+      "functionId": 25617,
+      "functionName": "publishMap",
+      "line": 1002806
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/maps/{mapId}/publish and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "mapId",
+        "type": "string",
+        "evidence": "Input parameter 3 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put data argument is input parameter 4.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetChild",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}",
+    "tag": "Children",
+    "summary": "Getchild",
+    "source": {
+      "functionId": 25622,
+      "functionName": "getChild",
+      "line": 1003117
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId} and invokes Axios get. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetChildCourses",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/courses",
+    "tag": "Courses",
+    "summary": "Getchildcourses",
+    "source": {
+      "functionId": 25624,
+      "functionName": "getChildCourses",
+      "line": 1003154
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/courses and invokes Axios get. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetChildCoursePlanTypes",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/planTypes",
+    "tag": "Courses",
+    "summary": "Getchildcourseplantypes",
+    "source": {
+      "functionId": 25626,
+      "functionName": "getChildCoursePlanTypes",
+      "line": 1003192
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/planTypes and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [
+      {
+        "name": "course_id",
+        "type": "unknown",
+        "evidence": "Read-only config object constructed with key course_id from parameter 3."
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetChildPlansList",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/courses/{courseId}/plan-list",
+    "tag": "Courses",
+    "summary": "Getchildplanslist",
+    "source": {
+      "functionId": 25628,
+      "functionName": "getChildPlansList",
+      "line": 1003235
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/courses/{courseId}/plan-list and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "courseId",
+        "type": "string",
+        "evidence": "Input parameter 3 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [
+      {
+        "name": "type",
+        "type": "unknown",
+        "evidence": "Read-only config object constructed with key type from parameter 4."
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetGuardianDiary",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/diary",
+    "tag": "Children",
+    "summary": "Getguardiandiary",
+    "source": {
+      "functionId": 25630,
+      "functionName": "getGuardianDiary",
+      "line": 1003280
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/diary and invokes Axios get. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetGuardianFeed",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/guardian-feed",
+    "tag": "Children",
+    "summary": "Getguardianfeed",
+    "source": {
+      "functionId": 25632,
+      "functionName": "getGuardianFeed",
+      "line": 1003318
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/guardian-feed and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Input parameter 3 is forwarded unchanged as Axios config.params; query shape is unresolved."
+    ]
+  },
+  {
+    "operationId": "GetChildProfile",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/profile",
+    "tag": "Children",
+    "summary": "Getchildprofile",
+    "source": {
+      "functionId": 25634,
+      "functionName": "getChildProfile",
+      "line": 1003359
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/profile and invokes Axios get. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateChildProfile",
+    "clientRequestVariants": [
+      {"variantId":"UpdateChildProfileGuardianSurface","constructor":{"functionId":44130,"line":1800862,"bytecodeOffset":"0x05"},"targetSourceFunctionId":25636,"provenFieldPaths":["fname","lname","data","data.address","data.address.address","data.nativelang","data.info","data.comment","dietaryOptions","data.days","data.sex","data.info_for_school","dob","meals","data.leave_date"],"branches":["dietaryOptions iff submitted dietary_options truthy","captured props.view === 'teacher' || props.view === 'manager' adds data.days/data.sex/data.info_for_school/data.leave_date plus outer dob/meals; these six values are captured props, not submitted input; no separate dob truthiness test"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#0 M4522 dependency 26=M2239; #44130 +0x14d sends r7 as third action argument to exported #25536/#25537 (#25509 +0x4ae-0x4b3). #25537 +0x0c loads slot 2=M2241 dependency 3 (#25509 +0x23c-0x24d), +0x2a forwards third action argument as service p3; #25620 +0xbe-0xcb installs exact #25636, PUT data=p3 +0x37. Fourth action argument not body."},
+      {"variantId":"UpdateChildProfileEmployeeSurface","constructor":{"functionId":44687,"line":1828229,"bytecodeOffset":"0x05"},"targetSourceFunctionId":25636,"provenFieldPaths":["fname","lname","data","data.address","data.address.address","data.nativelang","data.info","data.comment","dietaryOptions","data.sex","data.info_for_school","data.days","data.days.d_0","data.days.d_1","data.days.d_2","data.days.d_3","data.days.d_4","data.days.d_5","data.days.d_6","meals","meals.breakfast","meals.dinner","meals.lunch","meals.supper","idcode","dob","data.arrive_date","data.leave_date","data.discount","data.contract"],"branches":["dietaryOptions iff submitted dietary_options truthy","#44687 +0x16c-0x184 requires captured slot 7 truthy AND props.view === 'manager' for idcode/dob/data.arrive_date/data.leave_date/data.discount/data.contract and repeated sex assignment","slot 7=#44676 selector via #44673 +0xfc-0x106; selector requires non-nullish state.user.permissions and truthy child_access_managerfields; client gate only","weekend d_0/d_6 use captured props.data.days truthy values, otherwise zero when props.data nullish or value falsy","sex assigned unconditionally +0x80 and repeated in gated block +0x1c9; meals is OUTER +0x166"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#0 M4547 dependency 29=M2239; #44687 +0x25c sends third argument r7 via #25536/#25537 to M2241 (slot 2=dependency 3), installed #25636 (#25620 +0xbe-0xcb). +0x37 PUT data=p3 unchanged; action's fourth boolean controls application state, not body."}
+    ],
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}",
+    "tag": "Children",
+    "summary": "Updatechildprofile",
+    "source": {
+      "functionId": 25636,
+      "functionName": "updateChildProfile",
+      "line": 1003397
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId} and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {"name":"fname","type":"unknown","evidence":"#44130/#44687 +0x07-0x0d copies submitted fname."},
+        {"name":"lname","type":"unknown","evidence":"#44130/#44687 +0x12-0x18 copies submitted lname."},
+        {"name":"data","type":"unknown","evidence":"#44130/#44687 +0x1d-0x5c construct nested data assigned to outer body; named union partial across callers.","fields":[
+          {"name":"address","type":"unknown","evidence":"#44130/#44687 +0x1f-0x2c constructs fresh address object under data.address.","fields":[{"name":"address","type":"unknown","evidence":"#44130/#44687 +0x21-0x27 copies submitted address into data.address.address."}]},
+          {"name":"nativelang","type":"unknown","evidence":"#44130/#44687 +0x31-0x37 copies submitted nativelang."},
+          {"name":"info","type":"unknown","evidence":"#44130/#44687 +0x3c-0x47 copies truthy submitted info or null; no constant constraint."},
+          {"name":"comment","type":"unknown","evidence":"#44130/#44687 +0x4c-0x57 renames truthy submitted description or null to comment."},
+          {"name":"sex","type":"unknown","optional":true,"evidence":"#44130 +0xb6-0xc6 teacher/manager-only props.data.sex; #44687 +0x7a-0x80 unconditional submitted gender, repeated gated +0x1be-0x1c9."},
+          {"name":"info_for_school","type":"unknown","optional":true,"evidence":"#44130 +0xcc-0xdc teacher/manager-only props.data.info_for_school; #44687 +0x8b-0x91 unconditional submitted info_for_school."},
+          {"name":"days","type":"unknown","optional":true,"evidence":"#44130 +0x9c-0xb0 teacher/manager-only captured props.data.days forwarded; #44687 +0x9c-0x13a builds all seven keys. Nested names below from employee variant only, not complete forwarded days.","fields":[
+            {"name":"d_1","type":"unknown","evidence":"#44687 +0xa1-0xa5 copies captured slot 34."},
+            {"name":"d_2","type":"unknown","evidence":"#44687 +0xaa-0xae copies captured slot 36."},
+            {"name":"d_3","type":"unknown","evidence":"#44687 +0xb3-0xb7 copies captured slot 38."},
+            {"name":"d_4","type":"unknown","evidence":"#44687 +0xbc-0xc0 copies captured slot 40."},
+            {"name":"d_5","type":"unknown","evidence":"#44687 +0xc5-0xc9 copies captured slot 42."},
+            {"name":"d_0","type":"unknown","evidence":"#44687 +0xdf-0x106 uses truthy captured props.data.days.d_0; nullish props.data/falsy value yields numeric 0."},
+            {"name":"d_6","type":"unknown","evidence":"#44687 +0x117-0x13a uses truthy captured props.data.days.d_6; nullish props.data/falsy value yields numeric 0."}
+          ]},
+          {"name":"leave_date","type":"unknown","optional":true,"evidence":"#44130 +0xfa-0x10a teacher/manager-only props.data.leave_date; #44687 +0x1e7-0x1f9 permission AND manager-view-gated captured slot 15 truthy value or null."},
+          {"name":"arrive_date","type":"unknown","optional":true,"evidence":"#44687 +0x1cf-0x1e1 captured slot 13 truthy value or null; ONLY slot 7 truthy AND props.view === manager."},
+          {"name":"discount","type":"unknown","optional":true,"evidence":"#44687 +0x1ff-0x20a copies submitted discount ONLY slot 7 truthy AND props.view === manager."},
+          {"name":"contract","type":"unknown","optional":true,"evidence":"#44687 +0x210-0x21b copies submitted contract ONLY slot 7 truthy AND props.view === manager."}
+        ]},
+        {"name":"dietaryOptions","type":"unknown","optional":true,"evidence":"#44130/#44687 +0x60-0x6f renames submitted dietary_options only when truthy."},
+        {"name":"dob","type":"unknown","optional":true,"evidence":"#44130 +0xe2-0xe8 teacher/manager-only captured props.dob without extra truthiness condition; #44687 +0x1a7-0x1b8 permission AND manager-gated submitted truthy dob or null."},
+        {"name":"meals","type":"unknown","optional":true,"evidence":"#44130 +0xee-0xf4 teacher/manager-only captured props.meals; #44687 +0x140-0x166 builds meals on OUTER r7, not data. Nested keys below from employee variant only.","fields":[
+          {"name":"breakfast","type":"unknown","evidence":"#44687 +0x142-0x146 copies captured slot 26."},
+          {"name":"dinner","type":"unknown","evidence":"#44687 +0x14b-0x14f copies captured slot 28."},
+          {"name":"lunch","type":"unknown","evidence":"#44687 +0x154-0x158 copies captured slot 30."},
+          {"name":"supper","type":"unknown","evidence":"#44687 +0x15d-0x161 copies captured slot 32."}
+        ]},
+        {"name":"idcode","type":"unknown","optional":true,"evidence":"#44687 +0x18b-0x1a1 assigns null iff submitted idcode === '', otherwise submitted value; ONLY slot 7 truthy AND props.view === manager. Absent from #44130."}
+      ],
+      "evidence": "Axios put data argument is input parameter 3. Verified #44130/#44687 -> M2239 exported #25536/#25537 -> M2241 installed #25636 proves this named/nested union. Exact branches and local construction status in clientRequestVariants; arbitrary endpoint remainder and additional callers remain unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetMaps",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/maps",
+    "tag": "Maps",
+    "summary": "Getmaps",
+    "source": {
+      "functionId": 25638,
+      "functionName": "getMaps",
+      "line": 1003435
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/maps, reading child_id from input parameter 2 for the child path segment, and invokes Axios get. The entire input parameter 2 is forwarded unchanged as Axios config.params; query shape is unresolved. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Reads child_id from input parameter 2 and concatenates it into the URL."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Input parameter 2 is forwarded unchanged as Axios config.params, and its child_id property is also interpolated into the path; the forwarded query object is not a locally constructed exhaustive one-field schema."
+    ]
+  },
+  {
+    "operationId": "GetChildApprovals",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/approvals",
+    "tag": "Children",
+    "summary": "Getchildapprovals",
+    "source": {
+      "functionId": 25640,
+      "functionName": "getChildApprovals",
+      "line": 1003476
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/approvals and invokes Axios get. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateApprovalAnswers",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/approvals",
+    "tag": "Children",
+    "summary": "Updateapprovalanswers",
+    "source": {
+      "functionId": 25642,
+      "functionName": "updateApprovalAnswers",
+      "line": 1003514
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/approvals and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "approvals",
+          "type": "unknown",
+          "evidence": "Object property approvals is assigned input parameter 3."
+        }
+      ],
+      "evidence": "Locally constructs an object containing only approvals, set to input parameter 3; passed as Axios put data.",
+      "complete": true
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetChildCalendar",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/calendar",
+    "tag": "Children",
+    "summary": "Getchildcalendar",
+    "source": {
+      "functionId": 25644,
+      "functionName": "getChildCalendar",
+      "line": 1003555
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/calendar and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Input parameter 3 is forwarded unchanged as Axios config.params; query shape is unresolved."
+    ]
+  },
+  {
+    "operationId": "SaveChildCalendarDays",
+    "clientRequestVariants": [{"variantId":"ChildCalendarRange","constructor":{"functionId":43031,"line":1751064,"bytecodeOffset":"0x15"},"targetSourceFunctionId":25646,"branch":"props.longPeriod truthy OR (captured slot 16 truthy AND submitted end_date truthy)","provenFieldPaths":["status","comment","start_time","end_time","start_date","end_date","selected_start","selected_end"],"constructionComplete":true,"callsiteCoverage":"partial","branches":["#43031 +0x104-0x121 selects range construction; repeated +0x227-0x241 selects range action","No date in range branch; both start_date/end_date assigned","Times: submitted truthy -> format('HH:mm'); falsy submitted AND non-nullish props.data/attendance AND truthy existing corresponding time -> ''; otherwise retained null"],"evidence":"#0 M4429 dependency 23=M2279; #43031 +0x2c5 sends body to storeChildCalendarDays. #26397 +0x12b-0x130 exports #26406 -> #26407 +0x39 uses slot 0=dependency 1=M2241 (#26397 +0x92-0xa3). #25620 +0x131-0x13e installs #25646; +0x38 POST data=p3 unchanged. Date selections at constructor +0x212/+0x221, not URL routing fields."}],
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/calendar/days",
+    "tag": "Children",
+    "summary": "Savechildcalendardays",
+    "source": {
+      "functionId": 25646,
+      "functionName": "saveChildCalendarDays",
+      "line": 1003596
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/calendar/days and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {"name":"status","type":"unknown","evidence":"#43031 +0x17-0x1b copies captured status; no enum."},
+        {"name":"comment","type":"unknown","evidence":"#43031 +0x1f-0x25 copies submitted comment."},
+        {"name":"start_time","type":"unknown","evidence":"#43031 +0x2c starts null; +0x64 overwrites for submitted truthy time with format('HH:mm'); +0x97 clears to '' only with submitted falsy time, non-nullish props.data/attendance and truthy existing start_time; otherwise null retained. Not a final constant."},
+        {"name":"end_time","type":"unknown","evidence":"#43031 +0x31 starts null; +0xcb overwrites for submitted truthy time with format('HH:mm'); +0xfe clears to '' only with submitted falsy time, non-nullish props.data/attendance and truthy existing end_time; otherwise null retained. Not a final constant."},
+        {"name":"start_date","type":"unknown","evidence":"#43031 range +0x1c6-0x1df formats submitted start_date and assigns; not conditionally omitted."},
+        {"name":"end_date","type":"unknown","evidence":"#43031 range +0x1e5-0x203 formats submitted end_date and assigns; not conditionally omitted."},
+        {"name":"selected_start","type":"unknown","evidence":"#43031 range +0x209-0x212 copies captured props.start."},
+        {"name":"selected_end","type":"unknown","evidence":"#43031 range +0x218-0x221 copies captured props.end."}
+      ],
+      "evidence": "Axios post data argument is input parameter 3. #43031 range branch -> #26406/#26407 -> M2241 installed #25646 proves these fields, not date or a days array. Known caller shape partial across endpoint calls; remainder unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "SaveChildCalendarSingleDay",
+    "clientRequestVariants": [{"variantId":"ChildCalendarSingleDay","constructor":{"functionId":43031,"line":1751064,"bytecodeOffset":"0x15"},"targetSourceFunctionId":25648,"branch":"NOT (props.longPeriod truthy OR (captured slot 16 truthy AND submitted end_date truthy))","provenFieldPaths":["status","comment","start_time","end_time","start_date","end_date","date"],"constructionComplete":true,"callsiteCoverage":"partial","branches":["No selected_start/selected_end in single-day branch","Both start_date/end_date/date use selected props.day.dateString formatting at +0x156/+0x184/+0x1b2","Times: truthy submitted -> format('HH:mm'); falsy submitted AND non-nullish props.data/attendance AND truthy existing time -> ''; otherwise retained null"],"evidence":"#0 M4429 dependency 23=M2279; #43031 +0x26f sends body to storeChildCalendarSingleDay. #26397 +0x136-0x13b exports #26410 -> #26411 +0x39 uses slot 0=M2241 via dependency 1 +0x92-0xa3. #25620 +0x148-0x155 installs #25648; +0x38 POST data=p3 unchanged. Exact guards repeated in caller before action selection."}],
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/calendar/day",
+    "tag": "Children",
+    "summary": "Savechildcalendarsingleday",
+    "source": {
+      "functionId": 25648,
+      "functionName": "saveChildCalendarSingleDay",
+      "line": 1003635
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/calendar/day and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {"name":"status","type":"unknown","evidence":"#43031 +0x17-0x1b copies captured status; no enum."},
+        {"name":"comment","type":"unknown","evidence":"#43031 +0x1f-0x25 copies submitted comment."},
+        {"name":"start_time","type":"unknown","evidence":"#43031 +0x2c initially null; truthy submitted -> format('HH:mm') +0x64; falsy submitted AND non-nullish props.data/attendance AND truthy existing start_time -> '' +0x97; otherwise null retained. No final constant."},
+        {"name":"end_time","type":"unknown","evidence":"#43031 +0x31 initially null; truthy submitted -> format('HH:mm') +0xcb; falsy submitted AND non-nullish props.data/attendance AND truthy existing end_time -> '' +0xfe; otherwise null retained. No final constant."},
+        {"name":"start_date","type":"unknown","evidence":"#43031 single-day +0x127-0x156 formats selected props.day.dateString; always assigned on this branch."},
+        {"name":"end_date","type":"unknown","evidence":"#43031 single-day +0x15c-0x184 formats selected props.day.dateString; always assigned on this branch."},
+        {"name":"date","type":"unknown","evidence":"#43031 single-day +0x18a-0x1b2 formats selected props.day.dateString; not added in range branch."}
+      ],
+      "evidence": "Axios post data argument is input parameter 3. #43031 single-day branch -> #26410/#26411 -> M2241 installed #25648 proves these fields without range selections. Caller-specific construction is partial endpoint evidence; arbitrary remainder unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetStatusLogs",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/status-log",
+    "tag": "Children",
+    "summary": "Getstatuslogs",
+    "source": {
+      "functionId": 25650,
+      "functionName": "getStatusLogs",
+      "line": 1003674
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/status-log and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [
+      {
+        "name": "date",
+        "type": "unknown",
+        "evidence": "Constructs params object with date set to parameter 3."
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetAbsenceModalData",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/absences/modal",
+    "tag": "Children",
+    "summary": "Getabsencemodaldata",
+    "source": {
+      "functionId": 25652,
+      "functionName": "getAbsenceModalData",
+      "line": 1003717
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/absences/modal and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [
+      {
+        "name": "form",
+        "type": "unknown",
+        "evidence": "Constructs params object with form set to parameter 3."
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UploadChildProfilePicture",
+    "clientRequestVariants": [{"variantId":"SharedChildProfileImage","constructor":{"functionId":40898,"line":1658600,"bytecodeOffset":"0x00"},"targetSourceFunctionId":25654,"placement":"multipart","fields":[{"name":"profile_picture","type":"unknown","evidence":"#40898 +0x4b-0x4f appends literal profile_picture; +0x25-0x46 native descriptor name='profile-image', type=input.type || input.mime, uri=input.path. Unknown file value, not nested API fields."}],"provenFieldPaths":["profile_picture"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#0 M4522/#44117 and M4547/#44670 dependency 8=M4227, imported +0xdd-0xee slot 8. #44120 +0x2d0-0x303 / #44673 +0x5ef-0x622 render exact shared default component with updateService=#44137/#44697. M4227 #40891 +0x298-0x29d exports #40894; +0x10-0x16 captures prop and +0xab creates #40898, which +0x6a-0x73 invokes it with FormData and dispatches. Both wrappers +0x2a-0x2d pass data=p3 to #25539/#25540 (export #25509 +0x4b9-0x4be); thunk +0x0c loads slot 2=dependency 3/M2241 (#25509 +0x23c-0x24d), +0x2a forwards kindergarten/child/data. #25620 +0x18d-0x19a installs #25654, +0x46-0x49 POST data=p3. Actual component/register proof, not transfer by field name similarity."}],
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/profile-picture",
+    "tag": "Children",
+    "summary": "Uploadchildprofilepicture",
+    "source": {
+      "functionId": 25654,
+      "functionName": "uploadChildProfilePicture",
+      "line": 1003760
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/profile-picture and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "multipart",
+      "fields": [{"name":"profile_picture","type":"unknown","evidence":"#40898 +0x4b-0x4f appends literal profile_picture with unknown file value. +0x25-0x46 constructs native name/type/uri metadata, not API fields. #44120/#44673 render shared #40894 with #44137/#44697 props, proving the child action/service chain in clientRequestVariants."}],
+      "evidence": "#40898 shared child-image component -> #44137/#44697 -> #25539/#25540 -> installed #25654 POST data=p3 proves literal profile_picture. Endpoint/caller coverage remains partial, not an unresolved named constructor.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": ["Both traced child screens use the actual shared EditProfileImage FormData constructor. Other endpoint/caller inputs remain open; native descriptor properties are transport metadata, not API properties."]
+  },
+  {
+    "operationId": "DeleteChildProfilePicture",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/profile-picture",
+    "tag": "Children",
+    "summary": "Deletechildprofilepicture",
+    "source": {
+      "functionId": 25656,
+      "functionName": "deleteChildProfilePicture",
+      "line": 1003804
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/profile-picture and invokes Axios delete. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetGuardians",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/guardians",
+    "tag": "Children",
+    "summary": "Getguardians",
+    "source": {
+      "functionId": 25658,
+      "functionName": "getGuardians",
+      "line": 1003842
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/guardians and invokes Axios get. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetFiles",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/files",
+    "tag": "Children",
+    "summary": "Getfiles",
+    "source": {
+      "functionId": 25660,
+      "functionName": "getFiles",
+      "line": 1003880
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/files and invokes Axios get. Query config is built/passed as noted. The helper returns the Axios GET promise/result unchanged; complete HTTP response-data shape is unestablished.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [
+      {
+        "name": "page",
+        "type": "unknown",
+        "evidence": "Constructs params object with page set to parameter 3."
+      },
+      {
+        "name": "perPage",
+        "type": "unknown",
+        "evidence": "Constructs params object with perPage set to parameter 4."
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Returns the Axios GET promise/result unchanged, without a response.data continuation; complete HTTP response-data shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UploadFile",
+    "clientRequestVariants": [{"variantId":"ChildFileNonDocument","constructor":{"functionId":25571,"line":1001667,"bytecodeOffset":"0x00"},"targetSourceFunctionId":25661,"placement":"multipart","branch":"captured uploadType !== 'document'; item.status !== 'size_too_big' for submission","fields":[{"name":"file","type":"unknown","evidence":"#25571 +0xa7-0xda appends descriptor under file: native name=filename || name || 'image', type=item.mime, uri=item.path; no nested API fields."},{"name":"type","type":"unknown","evidence":"#25571 +0xe0-0xea appends captured uploadType under literal type, only this branch."},{"name":"uploaded_at","type":"unknown","evidence":"#25571 +0xf0-0x117 appends UTC formatter result under uploaded_at."}],"provenFieldPaths":["file","type","uploaded_at"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#25568 captures upload type; #25569/#25570/#25571 constructs FormData. +0xa3 jumps to document branch when uploadType === 'document'. +0x161-0x17f calls slot 6=#25574 (export #25509 +0x532-0x53d) with {childId,formData}; #25574 (line 1001832) creates #25575 (line 1001845), +0x11 loads slot 2=dependency 3/M2241, +0x38 calls uploadFile(kindergarten,child,FormData). #25620 +0x1e9-0x1f6 installs #25661, +0x46-0x49 POST data=p3. status gate +0x158-0x15d is client-only."},{"variantId":"ChildFileDocument","constructor":{"functionId":25571,"line":1001667,"bytecodeOffset":"0x00"},"targetSourceFunctionId":25661,"placement":"multipart","branch":"captured uploadType === 'document'; item.status !== 'size_too_big' for submission","fields":[{"name":"file","type":"unknown","evidence":"#25571 +0x11f-0x125 appends original item as file; shape unresolved."},{"name":"uploaded_at","type":"unknown","evidence":"#25571 +0x12b-0x152 appends UTC formatter result under uploaded_at (name r8 loaded +0x60). No type append."}],"provenFieldPaths":["file","uploaded_at"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#25571 +0xa3 selects document branch +0x11f, skipping type append; +0x161-0x17f -> #25574/#25575 -> M2241 installed #25661 POST data=p3 +0x46-0x49. No item descriptor property is promoted to an API field; other callers unknown."}],
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/files",
+    "tag": "Children",
+    "summary": "Uploadfile",
+    "source": {
+      "functionId": 25661,
+      "functionName": "uploadFile",
+      "line": 1003910
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/files and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "multipart",
+      "fields": [{"name":"file","type":"unknown","evidence":"#25571 +0xa7-0xda non-document appends native descriptor, +0x11f-0x125 document appends original item under literal file; both unknown file values, not nested API fields."},{"name":"type","type":"unknown","optional":true,"evidence":"#25571 +0xe0-0xea appends captured uploadType as type ONLY for uploadType !== 'document'. +0xa3 document branch jumps past it; +0x11f-0x152 has no type append. Conditional inclusion proves optional across variants, not server validation."},{"name":"uploaded_at","type":"unknown","evidence":"#25571 +0xf0-0x117 non-document / +0x12b-0x152 document append UTC formatter result under literal uploaded_at loaded +0x60; return type/server interpretation unresolved."}],
+      "evidence": "Branch-aware #25571 -> #25574/#25575 -> installed #25661 POST data=p3 proves literal file/uploaded_at and non-document-only type. Both named local append sets complete; endpoint/caller coverage remains partial.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Named child-file worker branches prove file/uploaded_at; type is appended only for non-document uploads. Other callers/endpoint remainder remain unknown. Original document item/native descriptor properties are not API fields; status gate is client-only."
+    ]
+  },
+  {
+    "operationId": "DeleteChildFile",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/files/{fileId}",
+    "tag": "Children",
+    "summary": "Deletechildfile",
+    "source": {
+      "functionId": 25663,
+      "functionName": "deleteChildFile",
+      "line": 1003954
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/files/{fileId} and invokes Axios delete. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "fileId",
+        "type": "string",
+        "evidence": "Input parameter 3 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateChildFile",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/files/{fileId}",
+    "tag": "Children",
+    "summary": "Updatechildfile",
+    "source": {
+      "functionId": 25665,
+      "functionName": "updateChildFile",
+      "line": 1003993
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/files/{fileId} and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "fileId",
+        "type": "string",
+        "evidence": "Input parameter 3 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put data argument is input parameter 4.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "AddChildDates",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/add-course",
+    "tag": "Courses",
+    "summary": "Addchilddates",
+    "source": {
+      "functionId": 25667,
+      "functionName": "addChildDates",
+      "line": 1004033
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/add-course and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios post data argument is input parameter 3.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateChildDates",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/update-course/{courseChildId}",
+    "tag": "Courses",
+    "summary": "Updatechilddates",
+    "source": {
+      "functionId": 25669,
+      "functionName": "updateChildDates",
+      "line": 1004072
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/update-course/{courseChildId} and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "courseChildId",
+        "type": "string",
+        "evidence": "Reads courseChildId from input parameter 3 and concatenates it into the URL."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put data argument is input parameter 3; its courseChildId property is also read into the URL.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "courseChildId is read from the data argument and interpolated into the URL; the whole same argument is also supplied as Axios data."
+    ]
+  },
+  {
+    "operationId": "GetGuardianInvoices",
+    "clientRequestVariants": [{"variantId":"GuardianInvoiceListQuery","constructor":{"functionId":44547,"line":1819322,"bytecodeOffset":"0x03"},"targetSourceFunctionId":25671,"placement":"query","provenFieldPaths":["perPage","page","sortBy","sortDir","settings","services"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#0 M4540 dependency 15=M2239; #44547 +0x68 puts constructed query in envelope.queryObj and +0x76 invokes exported #25589 (#25509 +0x56d-0x572) -> #25590 +0x39. Thunk slot 2=dependency 3=M2241 (#25509 +0x23c-0x24d); #25620 +0x25c-0x269 installs #25671. Helper +0x39-0x3d forwards p3 as params. Initial page=null is overwritten by p1 +0x13; settings/services are both always assigned boolean conversions of p2."}],
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/guardian-invoices",
+    "tag": "Invoices",
+    "summary": "Getguardianinvoices",
+    "source": {
+      "functionId": 25671,
+      "functionName": "getGuardianInvoices",
+      "line": 1004112
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/guardian-invoices and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [
+      {"name":"perPage","type":"integer","value":15,"evidence":"#44547 +0x03 buffered query has perPage=15; no overwrite; routed via #25589/#25590 to #25671 config.params. Client constant only."},
+      {"name":"page","type":"unknown","evidence":"#44547 +0x10-0x13 overwrites initial page=null with caller parameter 1; no final null constant."},
+      {"name":"sortBy","type":"string","value":"updated_at","evidence":"#44547 +0x03 buffered query assigns string updated_at, unchanged; client value only."},
+      {"name":"sortDir","type":"unknown","evidence":"#44547 +0x1c-0x20 copies captured state to sortDir."},
+      {"name":"settings","type":"boolean","evidence":"#44547 +0x25-0x2c constructs false/true from p2 truthiness and ALWAYS assigns settings."},
+      {"name":"services","type":"boolean","evidence":"#44547 +0x31-0x38 constructs false/true from p2 truthiness and ALWAYS assigns services."}
+    ],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Input parameter 3 is forwarded unchanged as Axios config.params; query shape is unresolved."
+    ]
+  },
+  {
+    "operationId": "GetGuardianInvoice",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/guardian-invoices/{invoiceId}",
+    "tag": "Invoices",
+    "summary": "Getguardianinvoice",
+    "source": {
+      "functionId": 25673,
+      "functionName": "getGuardianInvoice",
+      "line": 1004153
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/guardian-invoices/{invoiceId} and invokes Axios get. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "invoiceId",
+        "type": "string",
+        "evidence": "Input parameter 3 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "AddGuardianInvoiceService",
+    "clientRequestVariants": [{"variantId":"GuardianInvoiceServiceAdd","constructor":{"functionId":44609,"line":1823081,"bytecodeOffset":"0x15"},"targetSourceFunctionId":25675,"branch":"captured service.id falsy","provenFieldPaths":["label","unit_price","qty","discount","valid_from","valid_to"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#0 M4543 dependency 20=M2239; #44609 +0x7a-0x8f calls addGuardianInvoiceService with inner data r5. #25509 +0x5a4-0x5a9 exports #25604 -> #25605 +0x39 -> M2241 (slot 2, dependency 3); #25620 +0x28a-0x297 installs #25675. POST data=p3 +0x38, no body id on add branch; childId is separate routing key."}],
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/guardian-invoices/services",
+    "tag": "Invoices",
+    "summary": "Addguardianinvoiceservice",
+    "source": {
+      "functionId": 25675,
+      "functionName": "addGuardianInvoiceService",
+      "line": 1004192
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/guardian-invoices/services and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {"name":"label","type":"unknown","evidence":"#44609 +0x17-0x1c copies submitted label into inner data."},
+        {"name":"unit_price","type":"unknown","evidence":"#44609 +0x20-0x26 copies submitted unit_price."},
+        {"name":"qty","type":"unknown","evidence":"#44609 +0x2b-0x31 copies submitted qty."},
+        {"name":"discount","type":"unknown","evidence":"#44609 +0x36-0x3c copies submitted discount."},
+        {"name":"valid_from","type":"unknown","evidence":"#44609 +0x41-0x45 copies captured slot 9."},
+        {"name":"valid_to","type":"unknown","evidence":"#44609 +0x4a-0x4e copies captured slot 11."}
+      ],
+      "evidence": "Axios post data argument is input parameter 3. #44609 add branch inner data -> #25604/#25605 -> M2241 installed #25675 proves six fields. Routing childId/envelope data are not wire keys. Caller coverage partial; remainder unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateGuardianInvoiceService",
+    "clientRequestVariants": [{"variantId":"GuardianInvoiceServiceUpdate","constructor":{"functionId":44609,"line":1823081,"bytecodeOffset":"0x15"},"targetSourceFunctionId":25677,"branch":"captured service.id truthy","provenFieldPaths":["label","unit_price","qty","discount","valid_from","valid_to","id"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#0 M4543 dependency 20=M2239; #44609 +0xc2 adds own id to inner data r5 before envelope.data +0x102; serviceId supplied separately +0xfd. Export #25601 -> #25602 +0x40 forwards inner data as p4 via M2239 slot 2=M2241; #25620 +0x2a1-0x2ae installs #25677; +0x3b PUT data=p4. Body id is real, unlike envelope serviceId/childId."}],
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/guardian-invoices/services/{serviceId}",
+    "tag": "Invoices",
+    "summary": "Updateguardianinvoiceservice",
+    "source": {
+      "functionId": 25677,
+      "functionName": "updateGuardianInvoiceService",
+      "line": 1004231
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/guardian-invoices/services/{serviceId} and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "serviceId",
+        "type": "string",
+        "evidence": "Input parameter 3 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {"name":"label","type":"unknown","evidence":"#44609 +0x17-0x1c copies submitted label."},
+        {"name":"unit_price","type":"unknown","evidence":"#44609 +0x20-0x26 copies submitted unit_price."},
+        {"name":"qty","type":"unknown","evidence":"#44609 +0x2b-0x31 copies submitted qty."},
+        {"name":"discount","type":"unknown","evidence":"#44609 +0x36-0x3c copies submitted discount."},
+        {"name":"valid_from","type":"unknown","evidence":"#44609 +0x41-0x45 copies captured slot 9."},
+        {"name":"valid_to","type":"unknown","evidence":"#44609 +0x4a-0x4e copies captured slot 11."},
+        {"name":"id","type":"unknown","evidence":"#44609 update branch +0xb9-0xc2 assigns captured service.id directly to inner body r5.id; not only URL routing."}
+      ],
+      "evidence": "Axios put data argument is input parameter 4. Verified #44609 update branch -> exported #25601/#25602 -> M2241 installed #25677 proves seven body keys including id. Routing serviceId/childId omitted. Callsite coverage partial; remainder unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "DeleteGuardianInvoiceService",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/guardian-invoices/services/{serviceId}",
+    "tag": "Invoices",
+    "summary": "Deleteguardianinvoiceservice",
+    "source": {
+      "functionId": 25679,
+      "functionName": "deleteGuardianInvoiceService",
+      "line": 1004271
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/guardian-invoices/services/{serviceId} and invokes Axios delete. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "serviceId",
+        "type": "string",
+        "evidence": "Input parameter 3 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateChildGuardianFee",
+    "clientRequestVariants": [{"variantId":"ChildGuardianFeeUpdate","constructor":{"functionId":44593,"line":1822044,"bytecodeOffset":"0x15"},"targetSourceFunctionId":25681,"provenFieldPaths":["unit_price","qty","discount"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#0 M4542 dependency 19=M2239; #44593 +0x57-0x6c passes inner data under envelope.data. #25509 +0x58e-0x593 exports #25598 -> #25599 +0x39 uses slot 2=M2241 (dependency 3); #25620 +0x2cf-0x2dc installs exact #25681. PUT data=p3 +0x38. qty source captured fee_qty; discount source submitted invoice_discount; those source names and envelope childId are NOT body keys."}],
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/children/{childId}/guardian-invoices",
+    "tag": "Invoices",
+    "summary": "Updatechildguardianfee",
+    "source": {
+      "functionId": 25681,
+      "functionName": "updateChildGuardianFee",
+      "line": 1004310
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/children/{childId}/guardian-invoices and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "childId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {"name":"unit_price","type":"unknown","evidence":"#44593 +0x17-0x1d copies submitted unit_price into inner data."},
+        {"name":"qty","type":"unknown","evidence":"#44593 +0x22-0x2c reads captured fee_qty and writes wire qty."},
+        {"name":"discount","type":"unknown","evidence":"#44593 +0x31-0x37 reads submitted invoice_discount and writes wire discount."}
+      ],
+      "evidence": "Axios put data argument is input parameter 3. #44593 inner data -> #25598/#25599 -> M2241 installed #25681 proves three known keys; no envelope routing fields. Partial caller coverage; remainder unresolved.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetEmployeeActiveCourses",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/employees/{employeeId}/active-courses",
+    "tag": "Courses",
+    "summary": "Getemployeeactivecourses",
+    "source": {
+      "functionId": 25723,
+      "functionName": "getEmployeeActiveCourses",
+      "line": 1006084
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/employees/{employeeId}/active-courses and invokes Axios get. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "employeeId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetEmployeeCourses",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/employees/{employeeId}/courses",
+    "tag": "Courses",
+    "summary": "Getemployeecourses",
+    "source": {
+      "functionId": 25725,
+      "functionName": "getEmployeeCourses",
+      "line": 1006122
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/employees/{employeeId}/courses and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "employeeId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Input parameter 3 is forwarded unchanged as Axios config.params; query shape is unresolved."
+    ]
+  },
+  {
+    "operationId": "UpdateData",
+    "method": "put",
+    "path": "/api/common/user/employees/{userId}/data",
+    "tag": "Employees",
+    "summary": "Updatedata",
+    "source": {
+      "functionId": 25730,
+      "functionName": "updateData",
+      "line": 1006259
+    },
+    "evidence": "Bytecode constructs URL /api/common/user/employees/{userId}/data and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "userId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put data argument is input parameter 2.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "EmployeeUpdateSettings",
+    "method": "post",
+    "path": "/api/common/user/employees/{userId}/settings",
+    "tag": "Employees",
+    "summary": "Updatesettings",
+    "source": {
+      "functionId": 25732,
+      "functionName": "updateSettings",
+      "line": 1006296
+    },
+    "evidence": "Bytecode constructs URL /api/common/user/employees/{userId}/settings and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "userId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios post data argument is input parameter 2.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetDiaryData",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/diary",
+    "tag": "Diary",
+    "summary": "Getdiarydata",
+    "source": {
+      "functionId": 25935,
+      "functionName": "getDiaryData",
+      "line": 1012899
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Reads selectedKindergartenId from input parameter 1 and concatenates it into the URL."
+      }
+    ],
+    "query": [
+      {
+        "name": "course",
+        "type": "unknown",
+        "evidence": "Reads course_id from input parameter 1 and places that value under params.course."
+      },
+      {
+        "name": "date",
+        "type": "unknown",
+        "evidence": "Reads date from input parameter 1 and places that value under params.date."
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "CreateDiary",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/diary",
+    "tag": "Diary",
+    "summary": "Creatediary",
+    "source": {
+      "functionId": 25937,
+      "functionName": "createDiary",
+      "line": 1012943
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios post data argument is input parameter 2.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateComment",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/save-comment",
+    "tag": "Diary",
+    "summary": "Updatecomment",
+    "source": {
+      "functionId": 25939,
+      "functionName": "updateComment",
+      "line": 1012980
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary/{diaryId}/save-comment and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "diaryId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "data",
+          "type": "unknown",
+          "evidence": "Object property data is assigned input parameter 3."
+        }
+      ],
+      "evidence": "Axios put data argument is a locally constructed object containing data set to input parameter 3.",
+      "complete": true
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UploadMedia",
+    "clientRequestVariants": [{"variantId":"DiaryImageUpload","constructor":{"functionId":25803,"line":1009251,"bytecodeOffset":"0x00"},"targetSourceFunctionId":25941,"placement":"multipart","fields":[{"name":"file","type":"unknown","evidence":"#25803 +0x38-0x7f appends literal file with native name=filename || name || 'image', type=input.mime, uri=input.path; no nested API fields."},{"name":"type","type":"unknown","evidence":"#25803 +0x85-0x93 appends captured type under literal type."},{"name":"uploaded_at","type":"unknown","evidence":"#25803 +0x99-0xcb appends UTC formatter result under literal uploaded_at."}],"provenFieldPaths":["file","type","uploaded_at"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"Action #25799 uploadDiaryImage -> #25800/#25801/#25802/#25803. Worker +0xed-0x105 loads M2248 slot 4=dependency 3/M2249 (#25752 +0x22c-0x23d) and calls service.uploadMedia directly; no intervening uploadMedia action. Captured outer p3 diary reference loaded depth 3 slot 2 +0x101. #25933 +0x62-0x6f installs #25941; service +0x12-0x15 reads p2.id for URL and +0x4b-0x4e POST data=p3. Routing IDs/reference are not parts."}],
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/media",
+    "tag": "Diary",
+    "summary": "Uploadmedia",
+    "source": {
+      "functionId": 25941,
+      "functionName": "uploadMedia",
+      "line": 1013021
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary/{diaryId}/media and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "diaryId",
+        "type": "string",
+        "evidence": "Reads the id property from input parameter 2 and concatenates it into the URL."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "multipart",
+      "fields": [{"name":"file","type":"unknown","evidence":"#25803 +0x38-0x7f appends literal file with native name=filename || name || 'image', type=input.mime, uri=input.path; unknown file value, no nested API fields."},{"name":"type","type":"unknown","evidence":"#25803 +0x85-0x93 appends captured type under literal type; accepted type unestablished."},{"name":"uploaded_at","type":"unknown","evidence":"#25803 +0x99-0xcb appends UTC formatter result under literal uploaded_at; return type/server interpretation unresolved."}],
+      "evidence": "#25799 -> #25803 directly calls installed #25941 with kindergarten,diary reference,FormData. Service reads reference.id for route, POST data=p3 +0x4b-0x4e. Three literal parts in partial endpoint model.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Named diary image worker proves file/type/uploaded_at and calls the service directly; diary reference.id is routing only. Other callers/endpoint remainder remain unknown; native descriptor members are transport metadata, not API fields."
+    ]
+  },
+  {
+    "operationId": "UploadDocument",
+    "clientRequestVariants": [{"variantId":"DiaryDocumentUpload","constructor":{"functionId":25815,"line":1009626,"bytecodeOffset":"0x00"},"targetSourceFunctionId":25943,"placement":"multipart","fields":[{"name":"file","type":"unknown","evidence":"#25815 +0x38-0x7e appends literal file descriptor with native name=filename || name || 'document', type=input.type, uri=input.path; no nested API properties."},{"name":"type","type":"unknown","evidence":"#25815 +0x84-0x92 appends captured type under literal type."},{"name":"fileType","type":"string","value":"document","evidence":"#25815 +0x98-0xa6 appends literal string document under fileType; client constant only."},{"name":"uploaded_at","type":"unknown","evidence":"#25815 +0xac-0xde appends UTC formatter result under literal uploaded_at."}],"provenFieldPaths":["file","type","fileType","uploaded_at"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"Action #25811 uploadDiaryDocument -> #25812/#25813/#25814/#25815. Worker +0x100-0x118 loads M2248 slot 4=dependency 3/M2249 (#25752 +0x22c-0x23d), calls service.uploadDocument directly (no intervening uploadDocument action). Captured outer p3 reference loaded depth 3 slot 2 +0x114. #25933 +0x79-0x86 installs #25943; service +0x12-0x15 reads p2.id for URL and +0x4b-0x4e POST data=p3. Routing reference/IDs not parts."}],
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/document",
+    "tag": "Diary",
+    "summary": "Uploaddocument",
+    "source": {
+      "functionId": 25943,
+      "functionName": "uploadDocument",
+      "line": 1013066
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary/{diaryId}/document and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "diaryId",
+        "type": "string",
+        "evidence": "Reads the id property from input parameter 2 and concatenates it into the URL."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "multipart",
+      "fields": [{"name":"file","type":"unknown","evidence":"#25815 +0x38-0x7e appends literal file descriptor with native name=filename || name || 'document', type=input.type, uri=input.path; unknown file value, no nested API fields."},{"name":"type","type":"unknown","evidence":"#25815 +0x84-0x92 appends captured type under literal type; value type unresolved."},{"name":"fileType","type":"string","value":"document","evidence":"#25815 +0x98-0xa6 appends literal string fileType=document; client constant only, not server enum."},{"name":"uploaded_at","type":"unknown","evidence":"#25815 +0xac-0xde appends UTC formatter result under literal uploaded_at; return type/server interpretation unresolved."}],
+      "evidence": "#25811 -> #25815 directly calls installed #25943 with kindergarten,diary reference,FormData. Service reads reference.id for route and POST data=p3 +0x4b-0x4e. Four literal parts in partial endpoint model.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Named diary document worker proves file/type/fileType/uploaded_at and calls the service directly; fileType='document' is a client constant only. Reference.id is routing only; other callers remain unknown; native descriptor members are not API fields."
+    ]
+  },
+  {
+    "operationId": "Publish",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/publish",
+    "tag": "Diary",
+    "summary": "Publish",
+    "source": {
+      "functionId": 25945,
+      "functionName": "publish",
+      "line": 1013111
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary/{diaryId}/publish and invokes Axios put. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "diaryId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateDiaryFile",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/files/diary/{fileId}",
+    "tag": "Diary",
+    "summary": "Updatediaryfile",
+    "source": {
+      "functionId": 25947,
+      "functionName": "updateDiaryFile",
+      "line": 1013149
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/files/diary/{fileId} and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "fileId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put data argument is input parameter 3.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "DeleteDiaryFile",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/files/diary/{fileId}",
+    "tag": "Diary",
+    "summary": "Deletediaryfile",
+    "source": {
+      "functionId": 25949,
+      "functionName": "deleteDiaryFile",
+      "line": 1013187
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/files/diary/{fileId} and invokes Axios delete. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "fileId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "DeleteDiaryFiles",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/files/diary/{fileId}/files",
+    "tag": "Diary",
+    "summary": "Deletediaryfiles",
+    "source": {
+      "functionId": 25951,
+      "functionName": "deleteDiaryFiles",
+      "line": 1013224
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/files/diary/{fileId}/files and invokes Axios delete. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "fileId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios delete receives a config object with data set to input parameter p3; delete does not receive this value as its direct second-argument body.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "LikeDiary",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/like",
+    "tag": "Diary",
+    "summary": "Likediary",
+    "source": {
+      "functionId": 25953,
+      "functionName": "likeDiary",
+      "line": 1013265
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary/{diaryId}/like and invokes Axios post. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "diaryId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateEntryStatus",
+    "clientRequestVariants": [{"variantId":"DiaryEntryStatus","constructor":{"functionId":25845,"line":1010412,"bytecodeOffset":"0x84"},"targetSourceFunctionId":25955,"provenFieldPaths":["child_id","status"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"M2248 #25752 +0x512-0x517 exports #25842 -> #25843/#25844/#25845. #25845 +0x70 uses module slot 4=M2249 dependency 3 (#25752 +0x22c-0x23d; #0 M2248 deps), +0x9a forwards fresh body to installed #25955 (#25933 +0x103-0x110), PUT data=p3 +0x38. Kindergarten/diary IDs are separate arguments."}],
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/update-entry-status",
+    "tag": "Diary",
+    "summary": "Updateentrystatus",
+    "source": {
+      "functionId": 25955,
+      "functionName": "updateEntryStatus",
+      "line": 1013303
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary/{diaryId}/update-entry-status and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "diaryId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [{"name":"child_id","type":"unknown","evidence":"#25845 +0x89-0x8d copies captured action argument 1 into fresh body."},{"name":"status","type":"unknown","evidence":"#25845 +0x92-0x96 copies captured action argument 2; no enum/conversion."}],
+      "evidence": "Axios put data argument is input parameter 3. Verified M2248 #25845 fresh body -> M2249 installed #25955 proves child_id/status, but not every caller or complete endpoint shape.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateEntryStatuses",
+    "clientRequestVariants": [{"variantId":"DiaryEntryStatusesBulk","constructor":{"functionId":25851,"line":1010561,"bytecodeOffset":"0xb0"},"nestedConstructors":[{"functionId":25852,"line":1010627,"bytecodeOffset":"0x03"},{"functionId":25853,"line":1010638,"bytecodeOffset":"0x03"}],"targetSourceFunctionId":25957,"provenFieldPaths":["children","status"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"M2248 #25752 +0x51d-0x522 exports #25848 -> #25849/#25850/#25851. #25851 +0x9c reads slot 4=M2249 dependency 3; #25933 +0x11a-0x127 installs #25957. #25851 +0xc1 forwards fresh body, PUT p3 +0x38. Array obtained by filtering state.diary.entries with #25852 required_day and mapping #25853 entry.child.id; no numeric element type or child_ids key proved."}],
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/update-entry-statuses",
+    "tag": "Diary",
+    "summary": "Updateentrystatuses",
+    "source": {
+      "functionId": 25957,
+      "functionName": "updateEntryStatuses",
+      "line": 1013342
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary/{diaryId}/update-entry-statuses and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "diaryId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [{"name":"children","type":"unknown[]","evidence":"#25851 +0x7b-0x94 filters diary entries (#25852 required_day) and maps (#25853 entry.child.id); +0xb2 assigns array, element type unresolved."},{"name":"status","type":"unknown","evidence":"#25851 +0xb6-0xbd copies captured action argument 1; no enum."}],
+      "evidence": "Axios put data argument is input parameter 3. Verified #25851 -> M2249 installed #25957 proves children/status for this action; coverage partial and endpoint remainder open.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateEntryMeal",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/update-entry-meal",
+    "tag": "Diary",
+    "summary": "Updateentrymeal",
+    "source": {
+      "functionId": 25959,
+      "functionName": "updateEntryMeal",
+      "line": 1013381
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary/{diaryId}/update-entry-meal and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "diaryId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put data argument is input parameter 3.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "AddEntryFeedback",
+    "clientRequestVariants": [{"variantId":"DiaryFeedbackCreate","constructor":{"functionId":43534,"line":1775784,"bytecodeOffset":"0x26"},"finalConstructor":{"functionId":25867,"line":1010964,"bytecodeOffset":"0x91"},"targetSourceFunctionId":25961,"branch":"no existing feedback","provenFieldPaths":["child_id","diary_feedback_type_id","comment","visible_to_guardians"],"constructionComplete":true,"callsiteCoverage":"partial","preservesUnknownActionInput":true,"evidence":"#0 M4475 dependency 19=M2248; #43534 +0x7d sends route childId and three-field UI object to exported #25864 -> #25865/#25866/#25867. #25867 +0x9a creates child_id then Object.assign UI source +0xa3, data forwarded +0xa9 to M2249 slot 4 dependency 3; #25933 +0x148-0x155 installs exact #25961, POST p3 +0x38. #43525 +0xcd-0xd3 captured route.params.childId; diary ID from state.diary.diary.id. General later source can overwrite child_id/add fields."}],
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/add-entry-feedback",
+    "tag": "Diary",
+    "summary": "Addentryfeedback",
+    "source": {
+      "functionId": 25961,
+      "functionName": "addEntryFeedback",
+      "line": 1013420
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary/{diaryId}/add-entry-feedback and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "diaryId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {"name":"child_id","type":"unknown","evidence":"#25867 +0x91-0x9a constructs base child_id from captured action argument 1 (UI route childId); Object.assign later source +0xa3 can overwrite for arbitrary action input."},
+        {"name":"diary_feedback_type_id","type":"unknown","evidence":"#43534 +0x28-0x2c copies captured selected feedback type, merged into final body by #25867."},
+        {"name":"comment","type":"unknown","evidence":"#43534 +0x31-0x35 copies captured editor state, merged by #25867."},
+        {"name":"visible_to_guardians","type":"integer","evidence":"#43534 +0x3a-0x46 constructs numeric 0/1 by truthiness; #25867 merges UI source. Client branch values, not server enum."}
+      ],
+      "evidence": "Axios post data argument is input parameter 3. #43534 -> exported #25864/#25865/#25866/#25867 -> M2249 installed #25961 verifies four final app-callsite keys, including action-added child_id. Arbitrary later Object.assign source can add keys/overwrite child_id; partial endpoint model.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateEntryFeedback",
+    "clientRequestVariants": [{"variantId":"DiaryFeedbackUpdate","constructor":{"functionId":43534,"line":1775784,"bytecodeOffset":"0x26"},"finalConstructor":{"functionId":25873,"line":1011126,"bytecodeOffset":"0x98"},"targetSourceFunctionId":25963,"branch":"existing feedback","provenFieldPaths":["child_id","diary_feedback_type_id","comment","visible_to_guardians"],"constructionComplete":true,"callsiteCoverage":"partial","preservesUnknownActionInput":true,"evidence":"M4475 dependency 19=M2248; #43534 +0xb3 passes route childId, feedback.id (URL), three-field UI body to exported #25870 -> #25871/#25872/#25873. #25873 +0x9e creates child_id then Object.assign UI source +0xa7; +0xb6 forwards final body to M2249 via slot 4 dependency 3. #25933 +0x15f-0x16c installs exact #25963; PUT data=p4 +0x3b. General later merge source can add fields/overwrite child_id; diary ID state-derived, not UI child reference."}],
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/update-entry-feedback/{feedbackId}",
+    "tag": "Diary",
+    "summary": "Updateentryfeedback",
+    "source": {
+      "functionId": 25963,
+      "functionName": "updateEntryFeedback",
+      "line": 1013459
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary/{diaryId}/update-entry-feedback/{feedbackId} and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "diaryId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "feedbackId",
+        "type": "string",
+        "evidence": "Input parameter 3 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "object",
+      "fields": [
+        {"name":"child_id","type":"unknown","evidence":"#25873 +0x98-0x9e constructs base child_id from captured action argument 1 (UI route childId); later Object.assign +0xa7 can overwrite with arbitrary input source."},
+        {"name":"diary_feedback_type_id","type":"unknown","evidence":"#43534 +0x28-0x2c copies captured selected type; #25873 merges into body."},
+        {"name":"comment","type":"unknown","evidence":"#43534 +0x31-0x35 copies captured editor state; #25873 merges into body."},
+        {"name":"visible_to_guardians","type":"integer","evidence":"#43534 +0x3a-0x46 constructs numeric 0/1 from truthiness, merged by #25873; no server enum."}
+      ],
+      "evidence": "Axios put data argument is input parameter 4. Verified #43534 -> exported #25870/#25871/#25872/#25873 -> M2249 installed #25963 adds child_id before merging UI data. feedback.id is separate URL argument. Additional callers/merge remainder unresolved; partial endpoint model.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "DeleteEntryFeedback",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/delete-entry-feedback/{feedbackId}",
+    "tag": "Diary",
+    "summary": "Deleteentryfeedback",
+    "source": {
+      "functionId": 25965,
+      "functionName": "deleteEntryFeedback",
+      "line": 1013499
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary/{diaryId}/delete-entry-feedback/{feedbackId} and invokes Axios delete. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "diaryId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "feedbackId",
+        "type": "string",
+        "evidence": "Input parameter 3 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "StartTimeTracking",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/start-time-tracking",
+    "tag": "Diary",
+    "summary": "Starttimetracking",
+    "source": {
+      "functionId": 25967,
+      "functionName": "startTimeTracking",
+      "line": 1013538
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary/{diaryId}/start-time-tracking and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "diaryId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios post data argument is input parameter 3.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "StopTimeTracking",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/stop-time-tracking",
+    "tag": "Diary",
+    "summary": "Stoptimetracking",
+    "source": {
+      "functionId": 25969,
+      "functionName": "stopTimeTracking",
+      "line": 1013577
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary/{diaryId}/stop-time-tracking and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "diaryId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios post data argument is input parameter 3.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "AddTimeLog",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/time-logs",
+    "tag": "Diary",
+    "summary": "Addtimelog",
+    "source": {
+      "functionId": 25971,
+      "functionName": "addTimeLog",
+      "line": 1013616
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary/{diaryId}/time-logs and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "diaryId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios post data argument is input parameter 3.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateTimeLog",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/time-logs/{timeLogId}",
+    "tag": "Diary",
+    "summary": "Updatetimelog",
+    "source": {
+      "functionId": 25973,
+      "functionName": "updateTimeLog",
+      "line": 1013655
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary/{diaryId}/time-logs/{timeLogId} and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "diaryId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "timeLogId",
+        "type": "string",
+        "evidence": "Input parameter 3 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put data argument is input parameter 4.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "DeleteTimeLog",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/time-logs/{timeLogId}",
+    "tag": "Diary",
+    "summary": "Deletetimelog",
+    "source": {
+      "functionId": 25975,
+      "functionName": "deleteTimeLog",
+      "line": 1013695
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary/{diaryId}/time-logs/{timeLogId} and invokes Axios delete. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "diaryId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "timeLogId",
+        "type": "string",
+        "evidence": "Input parameter 3 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateEntryLeaveType",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/update-entry-leave-type",
+    "tag": "Diary",
+    "summary": "Updateentryleavetype",
+    "source": {
+      "functionId": 25977,
+      "functionName": "updateEntryLeaveType",
+      "line": 1013734
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary/{diaryId}/update-entry-leave-type and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "diaryId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put data argument is input parameter 3.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateEntryLeaveTypes",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/update-entry-leave-types",
+    "tag": "Diary",
+    "summary": "Updateentryleavetypes",
+    "source": {
+      "functionId": 25979,
+      "functionName": "updateEntryLeaveTypes",
+      "line": 1013773
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/diary/{diaryId}/update-entry-leave-types and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "diaryId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put data argument is input parameter 3.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetDayMenu",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/foodmenu/day",
+    "tag": "Meals",
+    "summary": "Getdaymenu",
+    "source": {
+      "functionId": 26007,
+      "functionName": "getDayMenu",
+      "line": 1014569
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/foodmenu/day and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [
+      {
+        "name": "date",
+        "type": "unknown",
+        "evidence": "Parameter 2 is concatenated directly after the literal query prefix ?date= in the URL."
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetWeekMenu",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/foodmenu/week",
+    "tag": "Meals",
+    "summary": "Getweekmenu",
+    "source": {
+      "functionId": 26009,
+      "functionName": "getWeekMenu",
+      "line": 1014606
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/foodmenu/week and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [
+      {
+        "name": "date",
+        "type": "unknown",
+        "evidence": "Parameter 2 is concatenated directly after the literal query prefix ?date= in the URL."
+      }
+    ],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetEmployeeMeals",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/employee-meals",
+    "tag": "Meals",
+    "summary": "Getemployeemeals",
+    "source": {
+      "functionId": 26011,
+      "functionName": "getEmployeeMeals",
+      "line": 1014643
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/employee-meals and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Input parameter 2 is forwarded unchanged as Axios config.params; query shape is unresolved."
+    ]
+  },
+  {
+    "operationId": "GetEmployeeMealsSettings",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/employee-meals/settings",
+    "tag": "Meals",
+    "summary": "Getemployeemealssettings",
+    "source": {
+      "functionId": 26013,
+      "functionName": "getEmployeeMealsSettings",
+      "line": 1014682
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/employee-meals/settings and invokes Axios get. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "SaveEmployeeMeal",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/employee-meals",
+    "tag": "Meals",
+    "summary": "Saveemployeemeal",
+    "source": {
+      "functionId": 26015,
+      "functionName": "saveEmployeeMeal",
+      "line": 1014718
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/employee-meals and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios post data argument is input parameter 2.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GalleryGetIndexFolders",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/gallery",
+    "tag": "Gallery",
+    "summary": "Getindexfolders",
+    "source": {
+      "functionId": 26134,
+      "functionName": "getIndexFolders",
+      "line": 1018505
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/gallery and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Input parameter 2 is forwarded unchanged as Axios config.params; query shape is unresolved."
+    ]
+  },
+  {
+    "operationId": "DeleteGalleryFile",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/files/gallery/{fileId}",
+    "tag": "Gallery",
+    "summary": "Deletegalleryfile",
+    "source": {
+      "functionId": 26136,
+      "functionName": "deleteGalleryFile",
+      "line": 1018544
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/files/gallery/{fileId} and invokes Axios delete. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "fileId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateGalleryFile",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/files/gallery/{fileId}",
+    "tag": "Gallery",
+    "summary": "Updategalleryfile",
+    "source": {
+      "functionId": 26138,
+      "functionName": "updateGalleryFile",
+      "line": 1018581
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/files/gallery/{fileId} and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "fileId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put data argument is input parameter 3.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetFolderData",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/folders/{folderId}",
+    "tag": "Folders",
+    "summary": "Getfolderdata",
+    "source": {
+      "functionId": 26143,
+      "functionName": "getFolderData",
+      "line": 1018787
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/folders/{folderId} and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "folderId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Input parameter 3 is forwarded unchanged as Axios config.params; query shape is unresolved."
+    ]
+  },
+  {
+    "operationId": "GetSubfolders",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/folders/{folderId}/folders",
+    "tag": "Folders",
+    "summary": "Getsubfolders",
+    "source": {
+      "functionId": 26145,
+      "functionName": "getSubfolders",
+      "line": 1018827
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/folders/{folderId}/folders and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "folderId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Input parameter 3 is forwarded unchanged as Axios config.params; query shape is unresolved."
+    ]
+  },
+  {
+    "operationId": "AddFolder",
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/folders",
+    "tag": "Folders",
+    "summary": "Addfolder",
+    "source": {
+      "functionId": 26147,
+      "functionName": "addFolder",
+      "line": 1018868
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/folders and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios post data argument is input parameter 2.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateFolder",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/folders/{folderId}",
+    "tag": "Folders",
+    "summary": "Updatefolder",
+    "source": {
+      "functionId": 26149,
+      "functionName": "updateFolder",
+      "line": 1018905
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/folders/{folderId} and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "folderId",
+        "type": "string",
+        "evidence": "Reads folder_id from input parameter 2 and concatenates it into the URL."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put data argument is input parameter 2; the same input object’s folder_id property is read into the URL.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "folder_id is read from the data argument and interpolated into the URL; the whole same argument is also supplied as Axios data."
+    ]
+  },
+  {
+    "operationId": "DeleteFolder",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/folders/{folderId}",
+    "tag": "Folders",
+    "summary": "Deletefolder",
+    "source": {
+      "functionId": 26151,
+      "functionName": "deleteFolder",
+      "line": 1018943
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/folders/{folderId} and invokes Axios delete. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "folderId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UploadFiles",
+    "clientRequestVariants": [{"variantId":"FolderFileUpload","constructor":{"functionId":26195,"line":1019990,"bytecodeOffset":"0x00"},"outerConstructors":[{"functionId":26193,"line":1019858,"bytecodeOffset":"0x00"}],"targetSourceFunctionId":26153,"placement":"multipart","fields":[{"name":"file","type":"unknown","evidence":"#26195 +0x41-0x4b appends original selected item r3 under literal file to FormData r9; unknown value, not nested API fields."},{"name":"type","type":"unknown","evidence":"#26195 +0x51-0x62 appends captured uploadFolderFiles p2 as type, loaded depth 4 slot 1 +0x57-0x5a; #26190 +0x09-0x0c captures it. Not item.type."},{"name":"uploaded_at","type":"unknown","evidence":"#26195 +0x68-0x9a appends utc().format('YYYY-MM-DD HH:mm:ss.SSS') under uploaded_at loaded +0x96."}],"provenFieldPaths":["file","type","uploaded_at"],"constructionComplete":true,"callsiteCoverage":"partial","evidence":"#26190 -> #26191/#26192/#26193 +0x49 creates #26194, +0x02 creates actual constructor #26195. +0xb1 loads slot 8=#26187 uploadFolderFile (#26171 +0x252-0x25d); +0xb5-0xb9 calls (FormData,folder). #26187 captures slots 0/1; #26188 +0x11 loads slot 3=dependency 2/M2267 (#26171 +0x139-0x14a), +0x30 calls service(kindergarten,FormData,folderId). #26141 +0x90-0x9d installs #26153; p3 route +0x2a, p2 POST data +0x46-0x49. status === 'size_too_big' +0xa0-0xa9 skips submission, not another field/server limit."}],
+    "method": "post",
+    "path": "/api/kindergartens/{kindergartenId}/folders/{folderId}/upload",
+    "tag": "Folders",
+    "summary": "Uploadfiles",
+    "source": {
+      "functionId": 26153,
+      "functionName": "uploadFiles",
+      "line": 1018980
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/folders/{folderId}/upload and invokes Axios post. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "folderId",
+        "type": "string",
+        "evidence": "Input parameter 3 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "multipart",
+      "fields": [{"name":"file","type":"unknown","evidence":"#26195 +0x41-0x4b appends original selected item under literal file; unknown value, no nested API fields."},{"name":"type","type":"unknown","evidence":"#26195 +0x51-0x62 appends captured uploadFolderFiles p2 under literal type, loaded depth 4 slot 1 +0x57-0x5a and captured #26190 +0x09-0x0c. Not item.type; accepted type unresolved."},{"name":"uploaded_at","type":"unknown","evidence":"#26195 +0x68-0x9a appends UTC formatter result under literal uploaded_at loaded +0x96; return type/server interpretation unresolved."}],
+      "evidence": "Actual nested constructor #26195 -> uploadFolderFile #26187/#26188 -> installed #26153(kindergarten,FormData,folderId); POST data=p2 +0x46-0x49, route p3 +0x2a. Three proved literal parts, partial endpoint/caller coverage.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Actual nested folder constructor #26195 proves file/captured upload type/uploaded_at. Service data is parameter 2 and folder route ID parameter 3; original item properties are not API fields. Other callers remain unknown; status gate is client-only."
+    ]
+  },
+  {
+    "operationId": "GetUserTargetGroups",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/target-groups/available",
+    "tag": "Folders",
+    "summary": "Getusertargetgroups",
+    "source": {
+      "functionId": 26155,
+      "functionName": "getUserTargetGroups",
+      "line": 1019024
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/target-groups/available and invokes Axios get. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "MoveFolders",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/folders/{folderId}/move",
+    "tag": "Folders",
+    "summary": "Movefolders",
+    "source": {
+      "functionId": 26157,
+      "functionName": "moveFolders",
+      "line": 1019060
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/folders/{folderId}/move and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "folderId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put data argument is input parameter 3.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "MoveFiles",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/folders/{folderId}/files/move",
+    "tag": "Folders",
+    "summary": "Movefiles",
+    "source": {
+      "functionId": 26159,
+      "functionName": "moveFiles",
+      "line": 1019099
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/folders/{folderId}/files/move and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "folderId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put data argument is input parameter 3.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "DeleteFiles",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/folders/{folderId}/files",
+    "tag": "Folders",
+    "summary": "Deletefiles",
+    "source": {
+      "functionId": 26161,
+      "functionName": "deleteFiles",
+      "line": 1019138
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/folders/{folderId}/files and invokes Axios delete. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "folderId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios delete receives a config object with data set to input parameter p3; delete does not receive this value as its direct second-argument body.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetBuiltinChildProfile",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/folders/child-profile/{folderId}",
+    "tag": "Folders",
+    "summary": "Getbuiltinchildprofile",
+    "source": {
+      "functionId": 26163,
+      "functionName": "getBuiltinChildProfile",
+      "line": 1019179
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/folders/child-profile/{folderId} and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "folderId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Input parameter 3 is forwarded unchanged as Axios config.params; query shape is unresolved."
+    ]
+  },
+  {
+    "operationId": "GetBuiltinDiaryFolders",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/folders/diary",
+    "tag": "Folders",
+    "summary": "Getbuiltindiaryfolders",
+    "source": {
+      "functionId": 26165,
+      "functionName": "getBuiltinDiaryFolders",
+      "line": 1019219
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/folders/diary and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Input parameter 2 is forwarded unchanged as Axios config.params; query shape is unresolved."
+    ]
+  },
+  {
+    "operationId": "GetBuiltinDiaryFiles",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/folders/diary/{folderId}",
+    "tag": "Folders",
+    "summary": "Getbuiltindiaryfiles",
+    "source": {
+      "functionId": 26167,
+      "functionName": "getBuiltinDiaryFiles",
+      "line": 1019258
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/folders/diary/{folderId} and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "folderId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Input parameter 3 is forwarded unchanged as Axios config.params; query shape is unresolved."
+    ]
+  },
+  {
+    "operationId": "GetFolderFiles",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/folders/{folderId}/files",
+    "tag": "Folders",
+    "summary": "Getfolderfiles",
+    "source": {
+      "functionId": 26169,
+      "functionName": "getFolderFiles",
+      "line": 1019298
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/folders/{folderId}/files and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "folderId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Input parameter 3 is forwarded unchanged as Axios config.params; query shape is unresolved."
+    ]
+  },
+  {
+    "operationId": "DocumentsGetIndexFolders",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/documents",
+    "tag": "Documents",
+    "summary": "Getindexfolders",
+    "source": {
+      "functionId": 26268,
+      "functionName": "getIndexFolders",
+      "line": 1021765
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/documents and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Input parameter 2 is forwarded unchanged as Axios config.params; query shape is unresolved."
+    ]
+  },
+  {
+    "operationId": "GetDocumentsFolderData",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/folders/{folderId}",
+    "tag": "Documents",
+    "summary": "Getdocumentsfolderdata",
+    "source": {
+      "functionId": 26270,
+      "functionName": "getDocumentsFolderData",
+      "line": 1021804
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/folders/{folderId} and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "folderId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Input parameter 3 is forwarded unchanged as Axios config.params; query shape is unresolved."
+    ]
+  },
+  {
+    "operationId": "DeleteDocument",
+    "method": "delete",
+    "path": "/api/kindergartens/{kindergartenId}/files/documents/{documentId}",
+    "tag": "Documents",
+    "summary": "Deletedocument",
+    "source": {
+      "functionId": 26272,
+      "functionName": "deleteDocument",
+      "line": 1021844
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/files/documents/{documentId} and invokes Axios delete. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "documentId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "UpdateDocumentFile",
+    "method": "put",
+    "path": "/api/kindergartens/{kindergartenId}/files/documents/{documentId}",
+    "tag": "Documents",
+    "summary": "Updatedocumentfile",
+    "source": {
+      "functionId": 26274,
+      "functionName": "updateDocumentFile",
+      "line": 1021881
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/files/documents/{documentId} and invokes Axios put. Request data/config is passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "documentId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": {
+      "kind": "unknown",
+      "fields": [],
+      "evidence": "Axios put data argument is input parameter 3.",
+      "complete": false
+    },
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetDocumentAcl",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/documents/{documentId}/acl",
+    "tag": "Documents",
+    "summary": "Getdocumentacl",
+    "source": {
+      "functionId": 26276,
+      "functionName": "getDocumentAcl",
+      "line": 1021919
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/documents/{documentId}/acl and invokes Axios get. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      },
+      {
+        "name": "documentId",
+        "type": "string",
+        "evidence": "Input parameter 2 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": false,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": []
+  },
+  {
+    "operationId": "GetSharedDocuments",
+    "method": "get",
+    "path": "/api/kindergartens/{kindergartenId}/documents/shared",
+    "tag": "Documents",
+    "summary": "Getshareddocuments",
+    "source": {
+      "functionId": 26278,
+      "functionName": "getSharedDocuments",
+      "line": 1021957
+    },
+    "evidence": "Bytecode constructs URL /api/kindergartens/{kindergartenId}/documents/shared and invokes Axios get. Query config is built/passed as noted. The promise continuation returns response.data; complete response shape is not established.",
+    "pathParams": [
+      {
+        "name": "kindergartenId",
+        "type": "string",
+        "evidence": "Input parameter 1 is concatenated into the URL at this path position."
+      }
+    ],
+    "query": [],
+    "queryPassthrough": true,
+    "body": null,
+    "response": {
+      "kind": "unknown",
+      "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
+    },
+    "auth": "cookie",
+    "notes": [
+      "Input parameter 2 is forwarded unchanged as Axios config.params; query shape is unresolved."
+    ]
+  }
+]
