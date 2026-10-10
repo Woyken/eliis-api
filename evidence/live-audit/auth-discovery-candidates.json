@@ -1,0 +1,350 @@
+{
+  "title": "Redacted live model audit candidates: auth and discovery",
+  "scope": "Login, Login2FA, GetUserData, GetUserPermissions, GetChildProfile, GetChildCourses",
+  "provenance": "Context-specific observations from the six named local private capture files under ~/.config/eliis/live-evidence/. Only response-body property paths and observed JSON types are recorded here. Raw bodies, scalar values, credentials, cookies, identifiers, names and other personal values are excluded.",
+  "interpretation": "These are audit candidates, not accepted server schemas. A type listed under sampleObservedTypes describes only the captured value. It does not prove requiredness, general nullability, enum values, completeness, or a universal response shape. Existing static response evidence remains authoritative for bytecode-derived fields.",
+  "operations": [
+    {
+      "operationId": "Login",
+      "sourceFunctionId": 16308,
+      "capture": "Login-private.json",
+      "currentStaticAndOpenApi": {
+        "bodyKind": "object",
+        "bodyProperties": ["type", "identifier", "locked_out"],
+        "propertyTypes": "unknown and optional"
+      },
+      "sampleObserved": {
+        "bodyKind": "object",
+        "properties": [
+          {"path": "type", "observedTypes": ["string"]},
+          {"path": "identifier", "observedTypes": ["string"]},
+          {"path": "locked_out", "observedTypes": ["null"]}
+        ]
+      },
+      "rootDifference": "No root-property-name omission: all three captured body properties already occur in the partial static model and compiled OpenAPI schema. The model was unknown-typed, not a complete account of all possible response properties.",
+      "cause": "The field names are bytecode-backed: #13510 reads body.type and forwards the body object, then #27139 reads provider.identifier and provider.locked_out. The static analysis did not establish primitive wire types. A null value in this one challenge sample does not show that locked_out is always null or universally nullable.",
+      "candidateCorrection": {
+        "staticFieldNameChanges": [],
+        "sampleOnlyTypeMetadata": ["type:string", "identifier:string", "locked_out:null"],
+        "recommendation": "Retain the existing optional, unknown-typed partial static fields. If the live audit is integrated, attach the three observations as explicitly context-specific sample metadata; do not narrow the static types from this sample."
+      },
+      "evidence": {
+        "static": "evidence/responses/auth-common.json: Login; service #16308 returns the Axios result, #13510 reads response.data.type and forwards that body, and #27139/#27140 read identifier and locked_out. #13510 response.status is transport metadata, not a body property.",
+        "runtime": "Redacted shape/type summary of Login-private.json; no values recorded."
+      },
+      "limitations": ["Only the captured challenge response is represented.", "No login status, challenge value, identifier value, or lockout value is published.", "The static error-only message observation remains separate and is not a fulfillment-body field."]
+    },
+    {
+      "operationId": "Login2FA",
+      "sourceFunctionId": 16309,
+      "capture": "Login2FA-private.json",
+      "currentStaticAndOpenApi": {
+        "bodyKind": "object",
+        "bodyProperties": ["status", "locked_at"],
+        "propertyTypes": "unknown and optional"
+      },
+      "sampleObserved": {
+        "bodyKind": "object",
+        "properties": [
+          {"path": "status", "observedTypes": ["string"]},
+          {"path": "locked_at", "observedTypes": ["null"]}
+        ]
+      },
+      "rootDifference": "No root-property-name omission. Both observed properties are already in the partial model. The captured locked_at value was null even though the static caller trace reads locked_at only on its non-success branch.",
+      "cause": "The static model is based on #16310 returning response.data and #27143 reading status, then reading locked_at on one branch. It correctly models those names but cannot establish wire types or other branches. Runtime sampling supplies a string observation for status and a null observation for locked_at only in this capture; it does not justify a status enum or universal nullability.",
+      "candidateCorrection": {
+        "staticFieldNameChanges": [],
+        "sampleOnlyTypeMetadata": ["status:string", "locked_at:null"],
+        "recommendation": "Keep both static fields optional and unknown-typed. Record the captured types as sample-only metadata. Do not publish a sampled status value or convert the client's branch comparison into a server enum."
+      },
+      "evidence": {
+        "static": "evidence/responses/auth-common.json: Login2FA; #16310 returns response.data and #27143 reads status and conditionally locked_at. Axios status and rejection-only message are separate from fulfillment-body fields.",
+        "runtime": "Redacted shape/type summary of Login2FA-private.json; no values recorded."
+      },
+      "limitations": ["The sample does not establish other status strings, field presence, or nullability across branches.", "No challenge/status value or locked_at value is published.", "The rejection-only message observation is not a fulfillment-body property."]
+    },
+    {
+      "operationId": "GetUserData",
+      "sourceFunctionId": 16344,
+      "capture": "GetUserData-private.json",
+      "currentStaticAndOpenApi": {
+        "bodyKind": "object",
+        "bodyProperties": ["kindergartens", "organizations", "employees", "guardians", "children", "officials", "user"],
+        "propertyTypes": "partial; modeled root properties are optional",
+        "modeledNestedPaths": ["kindergartens[].id", "organizations[].id", "guardians[].kindergarten_id", "children[].id", "children[].name", "children[].profile_picture", "user.privacy_confirmed"]
+      },
+      "sampleObserved": {
+        "bodyKind": "object",
+        "properties": [
+          {"path": "login", "observedTypes": ["string"]},
+          {"path": "user", "observedTypes": ["object"]},
+          {"path": "user.id", "observedTypes": ["integer"]},
+          {"path": "user.fname", "observedTypes": ["string"]},
+          {"path": "user.lname", "observedTypes": ["string"]},
+          {"path": "user.username", "observedTypes": ["string"]},
+          {"path": "user.email", "observedTypes": ["string"]},
+          {"path": "user.idcode", "observedTypes": ["null"]},
+          {"path": "user.phone", "observedTypes": ["object"]},
+          {"path": "user.phone.code", "observedTypes": ["string"]},
+          {"path": "user.phone.number", "observedTypes": ["string"]},
+          {"path": "user.address", "observedTypes": ["object"]},
+          {"path": "user.address.address", "observedTypes": ["null"]},
+          {"path": "user.info", "observedTypes": ["null"]},
+          {"path": "user.is_admin", "observedTypes": ["boolean"]},
+          {"path": "user.email_verified_at", "observedTypes": ["string"]},
+          {"path": "user.profile_picture", "observedTypes": ["string"]},
+          {"path": "user.privacy_confirmed", "observedTypes": ["string"]},
+          {"path": "user.country", "observedTypes": ["object"]},
+          {"path": "user.country.id", "observedTypes": ["integer"]},
+          {"path": "user.country.code", "observedTypes": ["string"]},
+          {"path": "user.country.name", "observedTypes": ["string"]},
+          {"path": "user.country.phone_code", "observedTypes": ["string"]},
+          {"path": "user.country.continent", "observedTypes": ["string"]},
+          {"path": "user.language", "observedTypes": ["object"]},
+          {"path": "user.language.id", "observedTypes": ["integer"]},
+          {"path": "user.language.code", "observedTypes": ["string"]},
+          {"path": "user.language.name", "observedTypes": ["string"]},
+          {"path": "user.language.long_code", "observedTypes": ["string"]},
+          {"path": "user.language.native_name", "observedTypes": ["string"]},
+          {"path": "user.language.family", "observedTypes": ["string"]},
+          {"path": "user.timezone", "observedTypes": ["string"]},
+          {"path": "user.dob", "observedTypes": ["null"]},
+          {"path": "user.two_fa_enabled", "observedTypes": ["integer"]},
+          {"path": "user.preferences", "observedTypes": ["null"]},
+          {"path": "user.is_supplier", "observedTypes": ["boolean"]},
+          {"path": "suppliers", "observedTypes": ["array"]},
+          {"path": "kindergartens", "observedTypes": ["array"]},
+          {"path": "kindergartens[]", "observedTypes": ["object"]},
+          {"path": "kindergartens[].id", "observedTypes": ["integer"]},
+          {"path": "kindergartens[].name", "observedTypes": ["string"]},
+          {"path": "kindergartens[].org_id", "observedTypes": ["integer"]},
+          {"path": "kindergartens[].logo", "observedTypes": ["null"]},
+          {"path": "kindergartens[].country_id", "observedTypes": ["integer"]},
+          {"path": "kindergartens[].status", "observedTypes": ["string"]},
+          {"path": "kindergartens[].two_fa_required", "observedTypes": ["integer"]},
+          {"path": "organizations", "observedTypes": ["array"]},
+          {"path": "employees", "observedTypes": ["array"]},
+          {"path": "guardians", "observedTypes": ["array"]},
+          {"path": "guardians[]", "observedTypes": ["object"]},
+          {"path": "guardians[].id", "observedTypes": ["integer"]},
+          {"path": "guardians[].fname", "observedTypes": ["string"]},
+          {"path": "guardians[].lname", "observedTypes": ["string"]},
+          {"path": "guardians[].name", "observedTypes": ["string"]},
+          {"path": "guardians[].user_id", "observedTypes": ["integer"]},
+          {"path": "guardians[].kindergarten_id", "observedTypes": ["integer"]},
+          {"path": "guardians[].type", "observedTypes": ["string"]},
+          {"path": "guardians[].unique_id", "observedTypes": ["string"]},
+          {"path": "officials", "observedTypes": ["array"]},
+          {"path": "children", "observedTypes": ["array"]},
+          {"path": "children[]", "observedTypes": ["object"]},
+          {"path": "children[].id", "observedTypes": ["integer"]},
+          {"path": "children[].fname", "observedTypes": ["string"]},
+          {"path": "children[].lname", "observedTypes": ["string"]},
+          {"path": "children[].kindergarten_id", "observedTypes": ["integer"]},
+          {"path": "children[].profile_picture", "observedTypes": ["null"]},
+          {"path": "children[].name", "observedTypes": ["string"]},
+          {"path": "supplier_reps", "observedTypes": ["array"]},
+          {"path": "unreadAnnouncementCount", "observedTypes": ["integer"]},
+          {"path": "cartData", "observedTypes": ["object"]},
+          {"path": "cartData.count", "observedTypes": ["integer"]},
+          {"path": "cartData.sum", "observedTypes": ["integer"]},
+          {"path": "cartData.items", "observedTypes": ["array"]}
+        ]
+      },
+      "rootDifference": "The sample includes the seven static root keys plus login, suppliers, supplier_reps, unreadAnnouncementCount and cartData. Static omissions also occur within user, kindergarten items, guardian items and child items. Several sample arrays have no item paths in the capture, so no item schema is reported for them.",
+      "cause": "The bytecode-backed static model follows the exact init handler #16202, which reads selected top-level collections and only user.privacy_confirmed, then follows specific collection consumers (#16203/#16204, #34568, #34584). Its intentionally partial consumer trace does not inspect most user fields, full institution/guardian records, or unrelated root payload properties; those omissions are consumer coverage limits, not proof that those payload fields are absent. Employees, officials and organizations had no sampled elements from which to observe item properties. Existing nested types remain unknown because the bytecode establishes reads/collection use rather than scalar wire types.",
+      "candidateCorrection": {
+        "staticFieldNameChanges": [],
+        "sampleOnlyTypeMetadata": "Use every path and observed type above as a redacted sample inventory. New root/nested names are capture-supported only unless independently traced in bytecode or a permitted public response.",
+        "recommendation": "Retain the partial static response model and its unknown optional leaves. A reviewed runtime-enrichment layer may add confirmed sample property names with observed-type annotations, explicitly marked sample-only. Do not claim universal field acceptance, requiredness, or nullable types."
+      },
+      "redactedIdentityChecks": {
+        "guardianUserIdEqualsUserId": true,
+        "guardianKindergartenIdEqualsReturnedKindergartenId": true,
+        "childKindergartenIdEqualsReturnedKindergartenId": true,
+        "someGuardianKindergartenIdEqualsSomeChildKindergartenId": true,
+        "meaning": "Only generic equality outcomes are recorded; no compared value is disclosed. These equalities are consistent with an account/institution/child pattern in this one init payload. They do not establish a guardian-to-child join, cross-institution authorization, or server access policy."
+      },
+      "evidence": {
+        "static": "evidence/responses/auth-common.json: GetUserData; #16345 returns response.data, #16202 reads the modeled roots and user.privacy_confirmed; #34568 reads the modeled child-row fields; #34584 reads guardian.kindergarten_id. Existing limitations explicitly leave broader item shapes and guardian-child relationships unknown.",
+        "runtime": "Redacted shape/type summary of GetUserData-private.json; equality checks were evaluated locally and only Boolean outcomes were retained."
+      },
+        "limitations": ["The capture is one account/context, not a server-complete schema.", "Null observations are sample values only and do not imply general nullability.", "Empty sampled arrays reveal no item field names or item types for those arrays.", "The children and guardians collections remain separate: matching kindergarten keys are not an explicit relationship between a child and a guardian.", "No private scalar values, identifiers, names, address contents, birth data or ID-code contents are present in this candidate."]
+    },
+    {
+      "operationId": "GetUserPermissions",
+      "sourceFunctionId": 16348,
+      "capture": "GetUserPermissions-institution-1-private.json",
+      "currentStaticAndOpenApi": {
+        "bodyKind": "object",
+        "bodyProperties": ["applications_access_manage", "diary_access_course", "diary_access_manager", "surveys_access_index", "surveys_access_questionnaires", "surveys_access_polls", "workschedule_access_index", "child_access_managerfields"],
+        "propertyTypes": "unknown and optional"
+      },
+      "sampleObserved": {
+        "bodyKind": "object",
+        "properties": [
+          {"path": "announcement_access_index", "observedTypes": ["integer"]},
+          {"path": "announcement_can_see_receivers", "observedTypes": ["integer"]},
+          {"path": "child_access_files_guardian", "observedTypes": ["integer"]},
+          {"path": "child_access_index", "observedTypes": ["integer"]},
+          {"path": "child_access_plans", "observedTypes": ["integer"]},
+          {"path": "child_access_view", "observedTypes": ["integer"]},
+          {"path": "child_approvals_edit", "observedTypes": ["integer"]},
+          {"path": "child_dev_goal_view_parent", "observedTypes": ["integer"]},
+          {"path": "child_edit_files_guardian", "observedTypes": ["integer"]},
+          {"path": "child_manage_files_guardian", "observedTypes": ["integer"]},
+          {"path": "child_parent_access_maps", "observedTypes": ["integer"]},
+          {"path": "child_parent_view_map", "observedTypes": ["integer"]},
+          {"path": "child_view_guardian_invoices_guardian", "observedTypes": ["integer"]},
+          {"path": "contacts_access_index", "observedTypes": ["integer"]},
+          {"path": "contacts_access_kindergarten", "observedTypes": ["integer"]},
+          {"path": "documents_access_index", "observedTypes": ["integer"]},
+          {"path": "events_access_index", "observedTypes": ["integer"]},
+          {"path": "foodmenu_access_index", "observedTypes": ["integer"]},
+          {"path": "foodmenu_view_unpublished", "observedTypes": ["integer"]},
+          {"path": "forum_access_index", "observedTypes": ["integer"]},
+          {"path": "gallery_access_index", "observedTypes": ["integer"]},
+          {"path": "message_can_see_receivers", "observedTypes": ["integer"]},
+          {"path": "statistics_access_activity", "observedTypes": ["integer"]},
+          {"path": "statistics_access_attendance", "observedTypes": ["integer"]},
+          {"path": "statistics_access_courses", "observedTypes": ["integer"]},
+          {"path": "statistics_access_index", "observedTypes": ["integer"]},
+          {"path": "statistics_access_kindergarten", "observedTypes": ["integer"]},
+          {"path": "statistics_access_menu", "observedTypes": ["integer"]},
+          {"path": "statistics_access_plans", "observedTypes": ["integer"]},
+          {"path": "surveys_access_index", "observedTypes": ["integer"]},
+          {"path": "surveys_access_polls", "observedTypes": ["integer"]},
+          {"path": "surveys_access_questionnaires", "observedTypes": ["integer"]}
+        ]
+      },
+      "rootDifference": "The live body is an object with 32 observed integer-valued keys. Three names overlap the static inventory (surveys_access_index, surveys_access_polls, surveys_access_questionnaires); 29 names are sample-only relative to the current model. Five current static names were not present in this one capture; that does not invalidate their bytecode evidence.",
+      "cause": "The static record explicitly limits itself to the eight permission keys found through selectors, principally #34544-#34550 and #44676. Those consumers are a partial inventory. The live payload reveals additional names, but the selectors' truthiness conditions do not establish Boolean wire types, permissions semantics, server enforcement, or completeness. The capture's integer values are sample observations only.",
+      "candidateCorrection": {
+        "staticFieldNameChanges": [],
+        "sampleOnlyTypeMetadata": "Record all 32 observed properties above as integer in this capture; do not turn that into an integer-only or exhaustive schema.",
+        "staticNamesNotObservedInCapture": ["applications_access_manage", "diary_access_course", "diary_access_manager", "workschedule_access_index", "child_access_managerfields"],
+        "recommendation": "Keep existing bytecode-backed fields and their unknown optional types. An integration may add the 29 captured names with sample-only annotations, preserving current fields even when the sample did not contain them. Do not infer 0/1 domains or authorization semantics."
+      },
+      "evidence": {
+        "static": "evidence/responses/auth-common.json: GetUserPermissions; #16349 returns response.data, #16211/#16195/#25102 pass/store it unchanged, and selectors read only the listed partial set.",
+        "runtime": "Redacted shape/type summary of GetUserPermissions-institution-1-private.json; no permission values or institution identifier are recorded."
+      },
+      "limitations": ["The sample is scoped to one institution and one account/context.", "Sample integer observations are not permission domains, Boolean types, server-required fields, or proof of server-side access controls.", "Fields absent from this sample remain supported by static evidence where already traced."]
+    },
+    {
+      "operationId": "GetChildProfile",
+      "sourceFunctionId": 25634,
+      "capture": "GetChildProfile-private.json",
+      "currentStaticAndOpenApi": {
+        "bodyKind": "object",
+        "bodyProperties": ["active_courses", "name", "profile_picture"],
+        "propertyTypes": "unknown and optional",
+        "modeledNestedPaths": ["active_courses"]
+      },
+      "sampleObserved": {
+        "bodyKind": "object",
+        "properties": [
+          {"path": "id", "observedTypes": ["integer"]},
+          {"path": "fname", "observedTypes": ["string"]},
+          {"path": "lname", "observedTypes": ["string"]},
+          {"path": "kindergarten_id", "observedTypes": ["integer"]},
+          {"path": "dob", "observedTypes": ["string"]},
+          {"path": "idcode", "observedTypes": ["string"]},
+          {"path": "created_at", "observedTypes": ["string"]},
+          {"path": "updated_at", "observedTypes": ["string"]},
+          {"path": "deleted_at", "observedTypes": ["null"]},
+          {"path": "profile_picture", "observedTypes": ["null"]},
+          {"path": "profile_picture_updated_at", "observedTypes": ["null"]},
+          {"path": "course_dates", "observedTypes": ["array"]},
+          {"path": "course_dates[]", "observedTypes": ["object"]},
+          {"path": "course_dates[].course_child_id", "observedTypes": ["integer"]},
+          {"path": "course_dates[].course_id", "observedTypes": ["integer"]},
+          {"path": "course_dates[].name", "observedTypes": ["string"]},
+          {"path": "course_dates[].type", "observedTypes": ["integer"]},
+          {"path": "course_dates[].start_date", "observedTypes": ["string"]},
+          {"path": "course_dates[].end_date", "observedTypes": ["string"]},
+          {"path": "course_dates[].course_start_date", "observedTypes": ["string"]},
+          {"path": "course_dates[].course_end_date", "observedTypes": ["string"]},
+          {"path": "all_dietary_options", "observedTypes": ["array"]},
+          {"path": "all_dietary_options[]", "observedTypes": ["object"]},
+          {"path": "all_dietary_options[].id", "observedTypes": ["integer"]},
+          {"path": "all_dietary_options[].name", "observedTypes": ["string"]},
+          {"path": "all_dietary_options[].kindergarten_id", "observedTypes": ["integer"]},
+          {"path": "all_dietary_options[].created_by", "observedTypes": ["integer"]},
+          {"path": "all_dietary_options[].updated_by", "observedTypes": ["null"]},
+          {"path": "all_dietary_options[].created_at", "observedTypes": ["string"]},
+          {"path": "all_dietary_options[].updated_at", "observedTypes": ["string"]},
+          {"path": "all_dietary_options[].deleted_at", "observedTypes": ["null"]},
+          {"path": "view", "observedTypes": ["string"]},
+          {"path": "name", "observedTypes": ["string"]},
+          {"path": "data", "observedTypes": ["object"]},
+          {"path": "data.id", "observedTypes": ["integer"]},
+          {"path": "data.child_id", "observedTypes": ["integer"]},
+          {"path": "data.comment", "observedTypes": ["null"]},
+          {"path": "data.info", "observedTypes": ["null"]},
+          {"path": "data.nativelang", "observedTypes": ["null"]},
+          {"path": "data.address", "observedTypes": ["object"]},
+          {"path": "data.address.address", "observedTypes": ["null"]},
+          {"path": "active_courses", "observedTypes": ["array"]},
+          {"path": "active_courses[]", "observedTypes": ["object"]},
+          {"path": "active_courses[].id", "observedTypes": ["integer"]},
+          {"path": "active_courses[].name", "observedTypes": ["string"]},
+          {"path": "active_courses[].type", "observedTypes": ["integer"]},
+          {"path": "active_courses[].active", "observedTypes": ["boolean"]},
+          {"path": "dietary_options", "observedTypes": ["array"]}
+        ]
+      },
+      "rootDifference": "The live object contains many root fields beyond active_courses, name and profile_picture, including course_dates, all_dietary_options and data with nested properties. Static evidence intentionally models only active_courses plus two properties read through a separate true-context consumer path. The captured active_courses array has item properties id, name, type and active; the static analysis only traces a find callback's type read. dietary_options has no item paths in the capture.",
+      "cause": "#25519 returns response.data to the caller, reads active_courses and locally deletes it before constructing the Redux state value. The static trace correctly excludes the locally created wrapper and retains active_courses at the HTTP body root. It reads candidate.type only in a callback and follows name/profile_picture through the separate #44679 true-context caller and UI. The wider root/nested capture properties were not individually read and attributed to the HTTP body by those static consumers; sample presence does not create bytecode evidence. The #44124 false-context caller dispatches a different state branch and does not provide evidence for these fields or for authorization.",
+      "candidateCorrection": {
+        "staticFieldNameChanges": [],
+        "sampleOnlyTypeMetadata": "Record each sample path and observed type above, including the nested active_courses item observations, in a separately labeled live-sample inventory.",
+        "recommendation": "Preserve active_courses at the body root and do not model the local reducer wrapper as a response field. Keep current optional unknown fields unless source evidence supports types; annotate the additional captured names/types as sample-only candidates for a later source trace. Do not infer a complete child profile schema."
+      },
+      "redactedRelationshipChecks": {
+        "context": "This captured account and child-profile response only.",
+        "initChildKindergartenIdEqualsProfileKindergartenId": true,
+        "profileActiveCourseIdSetEqualsCourseDateCourseIdSet": true,
+        "meaning": "Only generic equality outcomes are retained. The init child/institution match does not establish guardian ownership of that child. Equality of the observed profile ID sets does not establish enrollment semantics, stable/global identifiers, or a join to GetChildCourses; the arrays may contain only limited distinct IDs in this sample."
+      },
+      "evidence": {
+        "static": "evidence/responses/children-diary-files.json: GetChildProfile; #25635 returns response.data, #25519 reads and removes active_courses only for local state construction, #25520 reads candidate.type, and the separate #44679/#44120 path reads name/profile_picture. #44124 is the false-context SET_CHILD branch.",
+        "runtime": "Redacted shape/type summary of GetChildProfile-private.json; personal values were not recorded."
+      },
+      "limitations": ["Captured name and type metadata do not establish general field presence, requiredness, date semantics or nullability.", "A null observed for profile_picture or deleted_at does not mean those fields are always null or nullable in all responses.", "The sample-only profile ID-set equality does not prove course/enrollment semantics or a causal join to GetChildCourses items; the arrays may contain only limited distinct IDs in this sample.", "No child identity, address content, birth value or ID-code value is included in this candidate.", "The capture does not establish guardian ownership of the child, guardian authorization, or any cross-institution access scope."]
+    },
+    {
+      "operationId": "GetChildCourses",
+      "sourceFunctionId": 25624,
+      "capture": "GetChildCourses-private.json",
+      "currentStaticAndOpenApi": {
+        "bodyKind": "array",
+        "itemKind": "object",
+        "modeledItemProperties": ["id", "name"],
+        "propertyTypes": "unknown and optional"
+      },
+      "sampleObserved": {
+        "bodyKind": "array",
+        "itemKind": "object",
+        "properties": [
+          {"path": "[]", "observedTypes": ["object"]},
+          {"path": "[].id", "observedTypes": ["integer"]},
+          {"path": "[].name", "observedTypes": ["string"]},
+          {"path": "[].active", "observedTypes": ["boolean"]}
+        ]
+      },
+      "rootDifference": "The static and OpenAPI root array shape agrees with the capture. The static item view includes id and name; the sample additionally has active. The UI's response-derived consumer reads id and name, not active.",
+      "cause": "#25625 returns response.data unchanged, the action/reducer stores the body, and #44274 maps items while reading id and name. The active property has no traced consumer in this operation's static analysis, so its omission is a consumer-coverage limit rather than evidence that the live item differs in root shape.",
+      "candidateCorrection": {
+        "staticFieldNameChanges": [],
+        "sampleOnlyTypeMetadata": ["[].id:integer", "[].name:string", "[].active:boolean"],
+        "recommendation": "Retain the root-array model and unknown optional static id/name fields. If useful, add active only to sample-observation metadata until a source consumer or other independently permitted evidence justifies static response enrichment."
+      },
+      "evidence": {
+        "static": "evidence/responses/children-diary-files.json: GetChildCourses; #25625 returns response.data, #25523 forwards it, #25496 stores it, and #44274 reads item.name and item.id. The OpenAPI response is an array of GetChildCoursesResponseBodyItem.",
+        "runtime": "Redacted shape/type summary of GetChildCourses-private.json; no item values recorded."
+      },
+      "limitations": ["Observed scalar types and active are from one captured array item only.", "No server-requiredness, complete item schema, enrollment meaning, active-course join, stable identifier semantics, or guardian authorization is inferred."]
+    }
+  ]
+}

@@ -13,12 +13,13 @@ This is an unofficial TypeSpec/OpenAPI description of the Eliis 2.69 Android cli
 ## Rules
 
 - Every operation/path/parameter/field needs bytecode evidence or a recorded read-only public response.
+- Current user authorization also permits bounded authenticated **read-only runtime validation** using locally stored credentials. Login/2FA and account-discovered child/institution reads are authorized; explicit feature writes, seen/read mutations, staff-roster substitution, unrelated record enumeration and secondary staff diary reads are not. Preserve all credentials, cookies and raw private responses outside the repository; only redacted shapes, field/type observations and generic identity equality checks may enter published evidence. Runtime samples must be labeled as context-specific observations, not universal contracts.
 - Trace registers and Axios call arguments. A string appearing nearby is not proof of a request field.
 - Do not infer server requiredness, response statuses, enums, nullability, defaults, or fields from UI labels or names.
 - An arbitrary argument passed as request data remains `unknown` unless its construction can be traced. An arbitrary params object remains an explicitly documented unresolved query shape.
 - Client-observed shapes are not necessarily the full server response. Use `unknown` where completeness cannot be established; never fake a complete response model.
 - No invented universal pagination/error wrappers. Do not apply Bearer auth: the main API uses an `eliis_csrf` cookie.
-- Do not make login/write requests, access private records, or commit credentials/APKs/full third-party decompiled sources.
+- Do not make write requests or access private records beyond the user's current bounded read-only authorization. Never commit credentials, raw private responses, APKs or full third-party decompiled sources. Earlier static-only analyses remain historical and must not be relabeled as runtime-verified.
 - Keep code changes focused on real evidence, coverage, or compiler/test problems. Do not do cosmetic rewrites during reviews.
 - Agents may be delegated as requested by the user. Current user override: **only Luna subagents**. Search and implementation use `github-copilot/gpt-6-luna#medium`; independent reviews use `github-copilot/gpt-6-luna#xhigh`. The earlier Sol implementation/review sessions are historical, not authorization to spawn more Sol agents.
 

@@ -1,0 +1,1395 @@
+{
+  "observations": [
+    {
+      "observation": "GetAbsenceModalData",
+      "httpStatusObserved": 200,
+      "contentTypeObserved": "application/json",
+      "provenance": "authorized authenticated sample; scalar values excluded",
+      "shape": {
+        "observedType": "object",
+        "properties": {
+          "min_date": {
+            "observedType": "string"
+          }
+        }
+      },
+      "limitations": [
+        "Observed context only; not a universal response contract.",
+        "Empty collections reveal no item shape.",
+        "Null observations do not establish a constant value or universal nullability."
+      ]
+    },
+    {
+      "observation": "GetChildCalendar",
+      "httpStatusObserved": 200,
+      "contentTypeObserved": "application/json",
+      "provenance": "authorized authenticated sample; scalar values excluded",
+      "shape": {
+        "observedType": "object",
+        "properties": {
+          "days": {
+            "observedType": "array",
+            "observedItemShapes": [
+              {
+                "observedType": "object",
+                "properties": {
+                  "course_id": {
+                    "observedType": "integer"
+                  },
+                  "date": {
+                    "observedType": "string"
+                  },
+                  "entry": {
+                    "observedType": "object",
+                    "properties": {
+                      "id": {
+                        "observedType": "integer"
+                      },
+                      "child_id": {
+                        "observedType": "integer"
+                      },
+                      "diary_id": {
+                        "observedType": "integer"
+                      },
+                      "status": {
+                        "observedType": "integer"
+                      },
+                      "leave_type_id": {
+                        "observedType": "null"
+                      },
+                      "total_time": {
+                        "observedType": "null"
+                      },
+                      "has_card_event": {
+                        "observedType": "integer"
+                      },
+                      "deleted_at": {
+                        "observedType": "null"
+                      },
+                      "diary_status": {
+                        "observedType": "object",
+                        "properties": {
+                          "id": {
+                            "observedType": "integer"
+                          },
+                          "name": {
+                            "observedType": "string"
+                          },
+                          "type": {
+                            "observedType": "integer"
+                          },
+                          "icon": {
+                            "observedType": "string"
+                          },
+                          "color": {
+                            "observedType": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "log_count": {
+                    "observedType": "integer"
+                  }
+                }
+              }
+            ],
+            "itemsObserved": true
+          },
+          "child_data": {
+            "observedType": "object",
+            "properties": {
+              "arrive_date": {
+                "observedType": "null"
+              },
+              "leave_date": {
+                "observedType": "null"
+              },
+              "days": {
+                "observedType": "object",
+                "properties": {
+                  "d_0": {
+                    "observedType": "integer"
+                  },
+                  "d_1": {
+                    "observedType": "integer"
+                  },
+                  "d_2": {
+                    "observedType": "integer"
+                  },
+                  "d_3": {
+                    "observedType": "integer"
+                  },
+                  "d_4": {
+                    "observedType": "integer"
+                  },
+                  "d_5": {
+                    "observedType": "integer"
+                  },
+                  "d_6": {
+                    "observedType": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "lock_date": {
+            "observedType": "string"
+          },
+          "comment_date": {
+            "observedType": "string"
+          },
+          "holidays": {
+            "observedType": "array",
+            "observedItemShapes": [],
+            "itemsObserved": false
+          },
+          "default_status": {
+            "observedType": "object",
+            "properties": {
+              "id": {
+                "observedType": "integer"
+              },
+              "name": {
+                "observedType": "string"
+              },
+              "type": {
+                "observedType": "integer"
+              },
+              "icon": {
+                "observedType": "string"
+              },
+              "color": {
+                "observedType": "string"
+              },
+              "meals": {
+                "observedType": "integer"
+              }
+            }
+          },
+          "access": {
+            "observedType": "string"
+          },
+          "workday_weekend": {
+            "observedType": "integer"
+          },
+          "workday_holiday": {
+            "observedType": "integer"
+          }
+        }
+      },
+      "limitations": [
+        "Observed context only; not a universal response contract.",
+        "Empty collections reveal no item shape.",
+        "Null observations do not establish a constant value or universal nullability."
+      ]
+    },
+    {
+      "observation": "GetChildCourses",
+      "httpStatusObserved": 200,
+      "contentTypeObserved": "application/json",
+      "provenance": "authorized authenticated sample; scalar values excluded",
+      "shape": {
+        "observedType": "array",
+        "observedItemShapes": [
+          {
+            "observedType": "object",
+            "properties": {
+              "id": {
+                "observedType": "integer"
+              },
+              "name": {
+                "observedType": "string"
+              },
+              "active": {
+                "observedType": "boolean"
+              }
+            }
+          }
+        ],
+        "itemsObserved": true
+      },
+      "limitations": [
+        "Observed context only; not a universal response contract.",
+        "Empty collections reveal no item shape.",
+        "Null observations do not establish a constant value or universal nullability."
+      ]
+    },
+    {
+      "observation": "GetChildProfile",
+      "httpStatusObserved": 200,
+      "contentTypeObserved": "application/json",
+      "provenance": "authorized authenticated sample; scalar values excluded",
+      "shape": {
+        "observedType": "object",
+        "properties": {
+          "id": {
+            "observedType": "integer"
+          },
+          "fname": {
+            "observedType": "string"
+          },
+          "lname": {
+            "observedType": "string"
+          },
+          "kindergarten_id": {
+            "observedType": "integer"
+          },
+          "dob": {
+            "observedType": "string"
+          },
+          "idcode": {
+            "observedType": "string"
+          },
+          "created_at": {
+            "observedType": "string"
+          },
+          "updated_at": {
+            "observedType": "string"
+          },
+          "deleted_at": {
+            "observedType": "null"
+          },
+          "profile_picture": {
+            "observedType": "null"
+          },
+          "profile_picture_updated_at": {
+            "observedType": "null"
+          },
+          "course_dates": {
+            "observedType": "array",
+            "observedItemShapes": [
+              {
+                "observedType": "object",
+                "properties": {
+                  "course_child_id": {
+                    "observedType": "integer"
+                  },
+                  "course_id": {
+                    "observedType": "integer"
+                  },
+                  "name": {
+                    "observedType": "string"
+                  },
+                  "type": {
+                    "observedType": "integer"
+                  },
+                  "start_date": {
+                    "observedType": "string"
+                  },
+                  "end_date": {
+                    "observedType": "string"
+                  },
+                  "course_start_date": {
+                    "observedType": "string"
+                  },
+                  "course_end_date": {
+                    "observedType": "string"
+                  }
+                }
+              }
+            ],
+            "itemsObserved": true
+          },
+          "all_dietary_options": {
+            "observedType": "array",
+            "observedItemShapes": [
+              {
+                "observedType": "object",
+                "properties": {
+                  "id": {
+                    "observedType": "integer"
+                  },
+                  "name": {
+                    "observedType": "string"
+                  },
+                  "kindergarten_id": {
+                    "observedType": "integer"
+                  },
+                  "created_by": {
+                    "observedType": "integer"
+                  },
+                  "updated_by": {
+                    "observedType": "null"
+                  },
+                  "created_at": {
+                    "observedType": "string"
+                  },
+                  "updated_at": {
+                    "observedType": "string"
+                  },
+                  "deleted_at": {
+                    "observedType": "null"
+                  }
+                }
+              }
+            ],
+            "itemsObserved": true
+          },
+          "view": {
+            "observedType": "string"
+          },
+          "name": {
+            "observedType": "string"
+          },
+          "data": {
+            "observedType": "object",
+            "properties": {
+              "id": {
+                "observedType": "integer"
+              },
+              "child_id": {
+                "observedType": "integer"
+              },
+              "comment": {
+                "observedType": "null"
+              },
+              "info": {
+                "observedType": "null"
+              },
+              "nativelang": {
+                "observedType": "null"
+              },
+              "address": {
+                "observedType": "object",
+                "properties": {
+                  "address": {
+                    "observedType": "null"
+                  }
+                }
+              }
+            }
+          },
+          "active_courses": {
+            "observedType": "array",
+            "observedItemShapes": [
+              {
+                "observedType": "object",
+                "properties": {
+                  "id": {
+                    "observedType": "integer"
+                  },
+                  "name": {
+                    "observedType": "string"
+                  },
+                  "type": {
+                    "observedType": "integer"
+                  },
+                  "active": {
+                    "observedType": "boolean"
+                  }
+                }
+              }
+            ],
+            "itemsObserved": true
+          },
+          "dietary_options": {
+            "observedType": "array",
+            "observedItemShapes": [],
+            "itemsObserved": false
+          }
+        }
+      },
+      "limitations": [
+        "Observed context only; not a universal response contract.",
+        "Empty collections reveal no item shape.",
+        "Null observations do not establish a constant value or universal nullability."
+      ]
+    },
+    {
+      "observation": "GetDayMenu",
+      "httpStatusObserved": 200,
+      "contentTypeObserved": "application/json",
+      "provenance": "authorized authenticated sample; scalar values excluded",
+      "shape": {
+        "observedType": "object",
+        "properties": {}
+      },
+      "limitations": [
+        "Observed context only; not a universal response contract.",
+        "Empty collections reveal no item shape.",
+        "Null observations do not establish a constant value or universal nullability."
+      ]
+    },
+    {
+      "observation": "GetEvents",
+      "httpStatusObserved": 200,
+      "contentTypeObserved": "application/json",
+      "provenance": "authorized authenticated sample; scalar values excluded",
+      "shape": {
+        "observedType": "array",
+        "observedItemShapes": [
+          {
+            "observedType": "object",
+            "properties": {
+              "id": {
+                "observedType": "integer"
+              },
+              "kindergarten_id": {
+                "observedType": "integer"
+              },
+              "org_id": {
+                "observedType": "null"
+              },
+              "folder_id": {
+                "observedType": "null"
+              },
+              "title": {
+                "observedType": "string"
+              },
+              "description": {
+                "observedType": "string"
+              },
+              "start_date": {
+                "observedType": "string"
+              },
+              "end_date": {
+                "observedType": "string"
+              },
+              "start_time": {
+                "observedType": "string"
+              },
+              "end_time": {
+                "observedType": "null"
+              },
+              "duration": {
+                "observedType": "integer"
+              },
+              "event_type": {
+                "observedType": "integer"
+              },
+              "is_recurring": {
+                "observedType": "boolean"
+              },
+              "rrule": {
+                "observedType": "null"
+              },
+              "synced_at": {
+                "observedType": "null"
+              },
+              "created_by": {
+                "observedType": "integer"
+              },
+              "updated_by": {
+                "observedType": "null"
+              },
+              "created_at": {
+                "observedType": "string"
+              },
+              "updated_at": {
+                "observedType": "string"
+              },
+              "deleted_at": {
+                "observedType": "null"
+              },
+              "access": {
+                "observedType": "string"
+              },
+              "exceptions": {
+                "observedType": "array",
+                "observedItemShapes": [],
+                "itemsObserved": false
+              },
+              "creator": {
+                "observedType": "object",
+                "properties": {
+                  "id": {
+                    "observedType": "integer"
+                  },
+                  "fname": {
+                    "observedType": "string"
+                  },
+                  "lname": {
+                    "observedType": "string"
+                  },
+                  "profile_picture": {
+                    "observedType": "null"
+                  },
+                  "name": {
+                    "observedType": "string"
+                  }
+                }
+              },
+              "unique_id": {
+                "observedType": "string"
+              }
+            }
+          }
+        ],
+        "itemsObserved": true
+      },
+      "limitations": [
+        "Observed context only; not a universal response contract.",
+        "Empty collections reveal no item shape.",
+        "Null observations do not establish a constant value or universal nullability."
+      ]
+    },
+    {
+      "observation": "GetGuardianFeed",
+      "httpStatusObserved": 200,
+      "contentTypeObserved": "application/json",
+      "provenance": "authorized authenticated sample; scalar values excluded",
+      "shape": {
+        "observedType": "object",
+        "properties": {
+          "data": {
+            "observedType": "array",
+            "observedItemShapes": [
+              {
+                "observedType": "object",
+                "properties": {
+                  "date": {
+                    "observedType": "string"
+                  },
+                  "diaries": {
+                    "observedType": "array",
+                    "observedItemShapes": [
+                      {
+                        "observedType": "object",
+                        "properties": {
+                          "id": {
+                            "observedType": "integer"
+                          },
+                          "course": {
+                            "observedType": "string"
+                          },
+                          "texts": {
+                            "observedType": "array",
+                            "observedItemShapes": [],
+                            "itemsObserved": false
+                          },
+                          "feedback": {
+                            "observedType": "array",
+                            "observedItemShapes": [],
+                            "itemsObserved": false
+                          },
+                          "status": {
+                            "observedType": "object",
+                            "properties": {
+                              "id": {
+                                "observedType": "integer"
+                              },
+                              "kindergarten_id": {
+                                "observedType": "integer"
+                              },
+                              "name": {
+                                "observedType": "string"
+                              },
+                              "type": {
+                                "observedType": "integer"
+                              },
+                              "icon": {
+                                "observedType": "string"
+                              },
+                              "color": {
+                                "observedType": "string"
+                              },
+                              "meals": {
+                                "observedType": "integer"
+                              },
+                              "created_at": {
+                                "observedType": "string"
+                              },
+                              "updated_at": {
+                                "observedType": "string"
+                              },
+                              "created_by": {
+                                "observedType": "integer"
+                              },
+                              "updated_by": {
+                                "observedType": "null"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "itemsObserved": true
+                  },
+                  "evaluations": {
+                    "observedType": "array",
+                    "observedItemShapes": [],
+                    "itemsObserved": false
+                  }
+                }
+              }
+            ],
+            "itemsObserved": true
+          },
+          "next_date": {
+            "observedType": "string"
+          }
+        }
+      },
+      "limitations": [
+        "Observed context only; not a universal response contract.",
+        "Empty collections reveal no item shape.",
+        "Null observations do not establish a constant value or universal nullability."
+      ]
+    },
+    {
+      "observation": "GetRecentEvents",
+      "httpStatusObserved": 200,
+      "contentTypeObserved": "application/json",
+      "provenance": "authorized authenticated sample; scalar values excluded",
+      "shape": {
+        "observedType": "object",
+        "properties": {
+          "events": {
+            "observedType": "array",
+            "observedItemShapes": [
+              {
+                "observedType": "object",
+                "properties": {
+                  "id": {
+                    "observedType": "integer"
+                  },
+                  "kindergarten_id": {
+                    "observedType": "integer"
+                  },
+                  "org_id": {
+                    "observedType": "null"
+                  },
+                  "folder_id": {
+                    "observedType": "null"
+                  },
+                  "title": {
+                    "observedType": "string"
+                  },
+                  "description": {
+                    "observedType": "string"
+                  },
+                  "start_date": {
+                    "observedType": "string"
+                  },
+                  "end_date": {
+                    "observedType": "string"
+                  },
+                  "start_time": {
+                    "observedType": "string"
+                  },
+                  "end_time": {
+                    "observedType": "null"
+                  },
+                  "duration": {
+                    "observedType": "integer"
+                  },
+                  "event_type": {
+                    "observedType": "integer"
+                  },
+                  "is_recurring": {
+                    "observedType": "boolean"
+                  },
+                  "rrule": {
+                    "observedType": "null"
+                  },
+                  "synced_at": {
+                    "observedType": "null"
+                  },
+                  "created_by": {
+                    "observedType": "integer"
+                  },
+                  "updated_by": {
+                    "observedType": "null"
+                  },
+                  "created_at": {
+                    "observedType": "string"
+                  },
+                  "updated_at": {
+                    "observedType": "string"
+                  },
+                  "deleted_at": {
+                    "observedType": "null"
+                  },
+                  "creator": {
+                    "observedType": "object",
+                    "properties": {
+                      "id": {
+                        "observedType": "integer"
+                      },
+                      "fname": {
+                        "observedType": "string"
+                      },
+                      "lname": {
+                        "observedType": "string"
+                      },
+                      "profile_picture": {
+                        "observedType": "null"
+                      },
+                      "name": {
+                        "observedType": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "itemsObserved": true
+          },
+          "count": {
+            "observedType": "integer"
+          }
+        }
+      },
+      "limitations": [
+        "Observed context only; not a universal response contract.",
+        "Empty collections reveal no item shape.",
+        "Null observations do not establish a constant value or universal nullability."
+      ]
+    },
+    {
+      "observation": "GetStatusLogs",
+      "httpStatusObserved": 200,
+      "contentTypeObserved": "application/json",
+      "provenance": "authorized authenticated sample; scalar values excluded",
+      "shape": {
+        "observedType": "array",
+        "observedItemShapes": [],
+        "itemsObserved": false
+      },
+      "limitations": [
+        "Observed context only; not a universal response contract.",
+        "Empty collections reveal no item shape.",
+        "Null observations do not establish a constant value or universal nullability."
+      ]
+    },
+    {
+      "observation": "GetStatusLogs-recorded-day",
+      "httpStatusObserved": 200,
+      "contentTypeObserved": "application/json",
+      "provenance": "authorized authenticated sample; scalar values excluded",
+      "shape": {
+        "observedType": "array",
+        "observedItemShapes": [
+          {
+            "observedType": "object",
+            "properties": {
+              "id": {
+                "observedType": "integer"
+              },
+              "date": {
+                "observedType": "string"
+              },
+              "status": {
+                "observedType": "integer"
+              },
+              "comment": {
+                "observedType": "null"
+              },
+              "start_time": {
+                "observedType": "null"
+              },
+              "end_time": {
+                "observedType": "null"
+              },
+              "identifiable_id": {
+                "observedType": "integer"
+              },
+              "identifiable_type": {
+                "observedType": "string"
+              },
+              "type": {
+                "observedType": "string"
+              },
+              "created_at": {
+                "observedType": "string"
+              },
+              "identifiable": {
+                "observedType": "object",
+                "properties": {
+                  "id": {
+                    "observedType": "integer"
+                  },
+                  "fname": {
+                    "observedType": "string"
+                  },
+                  "lname": {
+                    "observedType": "string"
+                  },
+                  "name": {
+                    "observedType": "string"
+                  },
+                  "type": {
+                    "observedType": "string"
+                  },
+                  "unique_id": {
+                    "observedType": "string"
+                  }
+                }
+              },
+              "diary_status": {
+                "observedType": "object",
+                "properties": {
+                  "id": {
+                    "observedType": "integer"
+                  },
+                  "name": {
+                    "observedType": "string"
+                  },
+                  "icon": {
+                    "observedType": "string"
+                  },
+                  "color": {
+                    "observedType": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "itemsObserved": true
+      },
+      "limitations": [
+        "Observed context only; not a universal response contract.",
+        "Empty collections reveal no item shape.",
+        "Null observations do not establish a constant value or universal nullability."
+      ]
+    },
+    {
+      "observation": "GetUserData",
+      "httpStatusObserved": 200,
+      "contentTypeObserved": "application/json",
+      "provenance": "authorized authenticated sample; scalar values excluded",
+      "shape": {
+        "observedType": "object",
+        "properties": {
+          "login": {
+            "observedType": "string"
+          },
+          "user": {
+            "observedType": "object",
+            "properties": {
+              "id": {
+                "observedType": "integer"
+              },
+              "fname": {
+                "observedType": "string"
+              },
+              "lname": {
+                "observedType": "string"
+              },
+              "username": {
+                "observedType": "string"
+              },
+              "email": {
+                "observedType": "string"
+              },
+              "idcode": {
+                "observedType": "null"
+              },
+              "phone": {
+                "observedType": "object",
+                "properties": {
+                  "code": {
+                    "observedType": "string"
+                  },
+                  "number": {
+                    "observedType": "string"
+                  }
+                }
+              },
+              "address": {
+                "observedType": "object",
+                "properties": {
+                  "address": {
+                    "observedType": "null"
+                  }
+                }
+              },
+              "info": {
+                "observedType": "null"
+              },
+              "is_admin": {
+                "observedType": "boolean"
+              },
+              "email_verified_at": {
+                "observedType": "string"
+              },
+              "profile_picture": {
+                "observedType": "string"
+              },
+              "privacy_confirmed": {
+                "observedType": "string"
+              },
+              "country": {
+                "observedType": "object",
+                "properties": {
+                  "id": {
+                    "observedType": "integer"
+                  },
+                  "code": {
+                    "observedType": "string"
+                  },
+                  "name": {
+                    "observedType": "string"
+                  },
+                  "phone_code": {
+                    "observedType": "string"
+                  },
+                  "continent": {
+                    "observedType": "string"
+                  }
+                }
+              },
+              "language": {
+                "observedType": "object",
+                "properties": {
+                  "id": {
+                    "observedType": "integer"
+                  },
+                  "code": {
+                    "observedType": "string"
+                  },
+                  "name": {
+                    "observedType": "string"
+                  },
+                  "long_code": {
+                    "observedType": "string"
+                  },
+                  "native_name": {
+                    "observedType": "string"
+                  },
+                  "family": {
+                    "observedType": "string"
+                  }
+                }
+              },
+              "timezone": {
+                "observedType": "string"
+              },
+              "dob": {
+                "observedType": "null"
+              },
+              "two_fa_enabled": {
+                "observedType": "integer"
+              },
+              "preferences": {
+                "observedType": "null"
+              },
+              "is_supplier": {
+                "observedType": "boolean"
+              }
+            }
+          },
+          "suppliers": {
+            "observedType": "array",
+            "observedItemShapes": [],
+            "itemsObserved": false
+          },
+          "kindergartens": {
+            "observedType": "array",
+            "observedItemShapes": [
+              {
+                "observedType": "object",
+                "properties": {
+                  "id": {
+                    "observedType": "integer"
+                  },
+                  "name": {
+                    "observedType": "string"
+                  },
+                  "org_id": {
+                    "observedType": "integer"
+                  },
+                  "logo": {
+                    "observedType": "null"
+                  },
+                  "country_id": {
+                    "observedType": "integer"
+                  },
+                  "status": {
+                    "observedType": "string"
+                  },
+                  "two_fa_required": {
+                    "observedType": "integer"
+                  }
+                }
+              }
+            ],
+            "itemsObserved": true
+          },
+          "organizations": {
+            "observedType": "array",
+            "observedItemShapes": [],
+            "itemsObserved": false
+          },
+          "employees": {
+            "observedType": "array",
+            "observedItemShapes": [],
+            "itemsObserved": false
+          },
+          "guardians": {
+            "observedType": "array",
+            "observedItemShapes": [
+              {
+                "observedType": "object",
+                "properties": {
+                  "id": {
+                    "observedType": "integer"
+                  },
+                  "fname": {
+                    "observedType": "string"
+                  },
+                  "lname": {
+                    "observedType": "string"
+                  },
+                  "name": {
+                    "observedType": "string"
+                  },
+                  "user_id": {
+                    "observedType": "integer"
+                  },
+                  "kindergarten_id": {
+                    "observedType": "integer"
+                  },
+                  "type": {
+                    "observedType": "string"
+                  },
+                  "unique_id": {
+                    "observedType": "string"
+                  }
+                }
+              }
+            ],
+            "itemsObserved": true
+          },
+          "officials": {
+            "observedType": "array",
+            "observedItemShapes": [],
+            "itemsObserved": false
+          },
+          "children": {
+            "observedType": "array",
+            "observedItemShapes": [
+              {
+                "observedType": "object",
+                "properties": {
+                  "id": {
+                    "observedType": "integer"
+                  },
+                  "fname": {
+                    "observedType": "string"
+                  },
+                  "lname": {
+                    "observedType": "string"
+                  },
+                  "kindergarten_id": {
+                    "observedType": "integer"
+                  },
+                  "profile_picture": {
+                    "observedType": "null"
+                  },
+                  "name": {
+                    "observedType": "string"
+                  }
+                }
+              }
+            ],
+            "itemsObserved": true
+          },
+          "supplier_reps": {
+            "observedType": "array",
+            "observedItemShapes": [],
+            "itemsObserved": false
+          },
+          "unreadAnnouncementCount": {
+            "observedType": "integer"
+          },
+          "cartData": {
+            "observedType": "object",
+            "properties": {
+              "count": {
+                "observedType": "integer"
+              },
+              "sum": {
+                "observedType": "integer"
+              },
+              "items": {
+                "observedType": "array",
+                "observedItemShapes": [],
+                "itemsObserved": false
+              }
+            }
+          }
+        }
+      },
+      "limitations": [
+        "Observed context only; not a universal response contract.",
+        "Empty collections reveal no item shape.",
+        "Null observations do not establish a constant value or universal nullability."
+      ]
+    },
+    {
+      "observation": "GetUserPermissions-institution-1",
+      "httpStatusObserved": 200,
+      "contentTypeObserved": "application/json",
+      "provenance": "authorized authenticated sample; scalar values excluded",
+      "shape": {
+        "observedType": "object",
+        "properties": {
+          "child_access_index": {
+            "observedType": "integer"
+          },
+          "child_access_view": {
+            "observedType": "integer"
+          },
+          "child_parent_access_maps": {
+            "observedType": "integer"
+          },
+          "child_parent_view_map": {
+            "observedType": "integer"
+          },
+          "contacts_access_kindergarten": {
+            "observedType": "integer"
+          },
+          "forum_access_index": {
+            "observedType": "integer"
+          },
+          "statistics_access_index": {
+            "observedType": "integer"
+          },
+          "statistics_access_kindergarten": {
+            "observedType": "integer"
+          },
+          "statistics_access_courses": {
+            "observedType": "integer"
+          },
+          "statistics_access_activity": {
+            "observedType": "integer"
+          },
+          "statistics_access_attendance": {
+            "observedType": "integer"
+          },
+          "statistics_access_menu": {
+            "observedType": "integer"
+          },
+          "statistics_access_plans": {
+            "observedType": "integer"
+          },
+          "events_access_index": {
+            "observedType": "integer"
+          },
+          "foodmenu_access_index": {
+            "observedType": "integer"
+          },
+          "contacts_access_index": {
+            "observedType": "integer"
+          },
+          "gallery_access_index": {
+            "observedType": "integer"
+          },
+          "announcement_access_index": {
+            "observedType": "integer"
+          },
+          "surveys_access_index": {
+            "observedType": "integer"
+          },
+          "surveys_access_questionnaires": {
+            "observedType": "integer"
+          },
+          "surveys_access_polls": {
+            "observedType": "integer"
+          },
+          "announcement_can_see_receivers": {
+            "observedType": "integer"
+          },
+          "foodmenu_view_unpublished": {
+            "observedType": "integer"
+          },
+          "message_can_see_receivers": {
+            "observedType": "integer"
+          },
+          "child_access_files_guardian": {
+            "observedType": "integer"
+          },
+          "child_edit_files_guardian": {
+            "observedType": "integer"
+          },
+          "child_view_guardian_invoices_guardian": {
+            "observedType": "integer"
+          },
+          "child_dev_goal_view_parent": {
+            "observedType": "integer"
+          },
+          "child_access_plans": {
+            "observedType": "integer"
+          },
+          "child_manage_files_guardian": {
+            "observedType": "integer"
+          },
+          "child_approvals_edit": {
+            "observedType": "integer"
+          },
+          "documents_access_index": {
+            "observedType": "integer"
+          }
+        }
+      },
+      "limitations": [
+        "Observed context only; not a universal response contract.",
+        "Empty collections reveal no item shape.",
+        "Null observations do not establish a constant value or universal nullability."
+      ]
+    },
+    {
+      "observation": "GetWeekMenu",
+      "httpStatusObserved": 200,
+      "contentTypeObserved": "application/json",
+      "provenance": "authorized authenticated sample; scalar values excluded",
+      "shape": {
+        "observedType": "object",
+        "properties": {
+          "id": {
+            "observedType": "integer"
+          },
+          "kindergarten_id": {
+            "observedType": "integer"
+          },
+          "start": {
+            "observedType": "string"
+          },
+          "end": {
+            "observedType": "string"
+          },
+          "published": {
+            "observedType": "null"
+          },
+          "info": {
+            "observedType": "null"
+          },
+          "created_by": {
+            "observedType": "integer"
+          },
+          "updated_by": {
+            "observedType": "null"
+          },
+          "created_at": {
+            "observedType": "string"
+          },
+          "updated_at": {
+            "observedType": "string"
+          },
+          "uploaded_file": {
+            "observedType": "null"
+          },
+          "settings": {
+            "observedType": "object",
+            "properties": {
+              "workday_weekend": {
+                "observedType": "integer"
+              },
+              "workday_holiday": {
+                "observedType": "integer"
+              }
+            }
+          },
+          "days": {
+            "observedType": "array",
+            "observedItemShapes": [
+              {
+                "observedType": "object",
+                "properties": {
+                  "id": {
+                    "observedType": "integer"
+                  },
+                  "kindergarten_id": {
+                    "observedType": "integer"
+                  },
+                  "week_id": {
+                    "observedType": "integer"
+                  },
+                  "date": {
+                    "observedType": "string"
+                  },
+                  "breakfast": {
+                    "observedType": "string"
+                  },
+                  "lunch": {
+                    "observedType": "string"
+                  },
+                  "dinner": {
+                    "observedType": "null"
+                  },
+                  "supper": {
+                    "observedType": "string"
+                  },
+                  "created_by": {
+                    "observedType": "integer"
+                  },
+                  "updated_by": {
+                    "observedType": "null"
+                  },
+                  "created_at": {
+                    "observedType": "string"
+                  },
+                  "updated_at": {
+                    "observedType": "string"
+                  }
+                }
+              }
+            ],
+            "itemsObserved": true
+          },
+          "uploaded_files": {
+            "observedType": "array",
+            "observedItemShapes": [],
+            "itemsObserved": false
+          }
+        }
+      },
+      "limitations": [
+        "Observed context only; not a universal response contract.",
+        "Empty collections reveal no item shape.",
+        "Null observations do not establish a constant value or universal nullability."
+      ]
+    },
+    {
+      "observation": "Login",
+      "httpStatusObserved": 200,
+      "contentTypeObserved": "application/json",
+      "provenance": "authorized authenticated sample; scalar values excluded",
+      "shape": {
+        "observedType": "object",
+        "properties": {
+          "type": {
+            "observedType": "string"
+          },
+          "identifier": {
+            "observedType": "string"
+          },
+          "locked_out": {
+            "observedType": "null"
+          }
+        }
+      },
+      "limitations": [
+        "Observed context only; not a universal response contract.",
+        "Empty collections reveal no item shape.",
+        "Null observations do not establish a constant value or universal nullability."
+      ]
+    },
+    {
+      "observation": "Login2FA",
+      "httpStatusObserved": 200,
+      "contentTypeObserved": "application/json",
+      "provenance": "authorized authenticated sample; scalar values excluded",
+      "shape": {
+        "observedType": "object",
+        "properties": {
+          "status": {
+            "observedType": "string"
+          },
+          "locked_at": {
+            "observedType": "null"
+          }
+        }
+      },
+      "limitations": [
+        "Observed context only; not a universal response contract.",
+        "Empty collections reveal no item shape.",
+        "Null observations do not establish a constant value or universal nullability."
+      ]
+    }
+  ],
+  "rawResponsesIncluded": false
+}

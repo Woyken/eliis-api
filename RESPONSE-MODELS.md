@@ -69,6 +69,19 @@ silently choosing a schema.
   operations, universal defaults, or closed enum values. Documentation builds
   do not repeat the request.
 
+- **Authorized authenticated samples:** the subsequent read-only account audit
+  exports field/type structure only. See [the audit report](docs/LIVE-MODEL-AUDIT.md),
+  [standalone TypeSpec views](models/live-observations.tsp), and
+  [sample JSON schema views](scripts/observed-response-models.json). These can
+  contain fields missed by static consumer tracing, but their observed types
+  apply only to the sampled context. They are not wired into the operation's
+  universal response schema. No private scalar values are included.
+
+The `GetEvents` static model was corrected from a supposed `items` wrapper to a
+root array after the live audit exposed a source-attribution mistake: the
+`items` field was on a locally constructed Redux action. Valid static item
+properties remain preserved, including ones not present in the sampled event.
+
 Do not infer requiredness, nullability, enums, defaults, validation rules,
 success/error statuses, pagination, or universal error wrappers. These
 restrictions apply even where the client uses a property or expects a value.

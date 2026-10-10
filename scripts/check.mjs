@@ -3,7 +3,8 @@ import { readFile, readdir } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse } from "yaml";
-import { bracketQueryEncoding, isDeepObjectQuery } from "./generate.mjs";
+import { bracketQueryEncoding, isDeepObjectQuery, makeLiveObservationAuthorization, makeLiveResponseModels, renderLiveObservationModels } from "./generate.mjs";
+import { validateLiveObservations } from "./check-live-observations.mjs";
 
 const methods = ["get", "post", "put", "patch", "delete", "head", "options"];
 const sorted = (values) => [...values].sort();
@@ -19,6 +20,13 @@ export function checkOpenApi(document, catalog, responseCatalog = undefined) {
     routeShapes.set(shape, path);
   }
   const operations = Object.entries(document.paths ?? {}).flatMap(([path, item]) => methods.filter((m) => item[m]).map((method) => ({ path, method, operation: item[method] })));
+  for (const { operation } of operations) {
+    assert.equal(operation["x-observed-response-model"], undefined, "Sample-only schemas must not be attached as universal operation responses");
+  }
+  for (const [name, schema] of Object.entries(document.components?.schemas ?? {})) {
+    assert.ok(!/(?:^|\.)Observed_/.test(name), `Sample-only schema ${name} must not enter normative OpenAPI components`);
+    assert.ok(!Object.hasOwn(schema, "x-authenticated-sample-view"), `Sample-only schema ${name} must not enter normative OpenAPI components`);
+  }
   assert.equal(operations.length, catalog.operationCount, "OpenAPI operation count differs from research catalog");
   const ids = operations.map((item) => item.operation.operationId);
   assert.equal(new Set(ids).size, ids.length, "Duplicate OpenAPI operation IDs");
@@ -213,8 +221,20 @@ export async function check(root = process.cwd()) {
   assert.deepEqual(yamlDocument, document, "Published YAML must exactly match normalized JSON");
   const count = checkOpenApi(document, catalog, responseCoverage);
   checkOpenApi(yamlDocument, catalog, responseCoverage);
+  let liveObservations = { observations: [], rawResponsesIncluded: false };
+  try { liveObservations = await load("evidence/live-audit/observed-shapes.json"); }
+  catch (error) { if (error.code !== "ENOENT") throw error; }
+  validateLiveObservations(liveObservations);
+  let liveAuthorization;
+  if (liveObservations.observations.length) {
+    const dispositions = await load("evidence/live-audit/path-dispositions.json");
+    liveAuthorization = makeLiveObservationAuthorization(dispositions);
+  }
+  const expectedLiveModels = makeLiveResponseModels(liveObservations, catalog, { authorization: liveAuthorization });
+  assert.deepEqual(await load("scripts/observed-response-models.json"), expectedLiveModels, "Generated sample-only JSON Schema catalog differs from redacted observations");
+  assert.equal(await readFile(resolve(root, "models/live-observations.tsp"), "utf8"), renderLiveObservationModels(expectedLiveModels), "Generated standalone TypeSpec sample models differ from redacted observations");
   assert.equal(coverage.missingCount, 0, `Missing inventory functions: ${coverage.candidates.filter((c) => c.status === "missing").map((c) => `${c.functionId} ${c.functionName}`).join(", ")}`);
-  console.log(`Validated ${count} OpenAPI operations; ${coverage.coveredCount} covered and ${coverage.excludedCount} explicitly excluded inventory functions${responseCoverage ? `; ${responseCoverage.modeledOperationCount} partial response models and ${responseCoverage.unknownOperationCount + responseCoverage.binaryOperationCount} unknown/opaque dispositions` : "; legacy unknown responses"}.`);
+  console.log(`Validated ${count} OpenAPI operations; ${coverage.coveredCount} covered and ${coverage.excludedCount} explicitly excluded inventory functions${responseCoverage ? `; ${responseCoverage.modeledOperationCount} partial response models and ${responseCoverage.unknownOperationCount + responseCoverage.binaryOperationCount} unknown/opaque dispositions` : "; legacy unknown responses"}; ${expectedLiveModels.responseModels.length} separate sample-only response views.`);
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await check();

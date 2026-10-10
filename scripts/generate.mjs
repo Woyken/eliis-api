@@ -1,6 +1,7 @@
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { validateLiveObservations } from "./check-live-observations.mjs";
 
 const methods = new Set(["get", "post", "put", "patch", "delete", "head", "options"]);
 const types = new Set(["unknown", "string", "boolean", "integer", "number", "string[]", "unknown[]"]);
@@ -231,6 +232,230 @@ export function makeResponseCatalog(catalog, responseFiles = [], { strict = true
   });
   const recordCount = expectedRows.length;
   return { schemaVersion: 1, analysisRequired: strict, researchObservationCount: recordCount, canonicalOperationCount: catalog.operationCount, analyzedObservationCount: analyses.size, missingObservationCount: missing.length, modeledOperationCount: operations.filter((op) => op.disposition === "modeled").length, unknownOperationCount: operations.filter((op) => op.disposition === "unknown").length, binaryOperationCount: operations.filter((op) => op.disposition === "binary").length, operations, missing: missing.map((key) => key.replace("\0", "/")) };
+}
+
+const liveObservationAliases = new Map([
+  ["StatusLogs", "GetStatusLogs"],
+  ["StatusLogs-recorded-day", "GetStatusLogs"],
+  ["GetStatusLogs-recorded-day", "GetStatusLogs"],
+  ["GetUserPermissions-institution-1", "GetUserPermissions"],
+]);
+const skippedLiveOperationIds = new Set(["GetGuardianDiary", "GetDiaryData", "DownloadFoodmenuFile"]);
+const observedPrimitiveTypes = new Set(["string", "integer", "number", "boolean"]);
+
+function sampleLabelFromReference(reference, context) {
+  const match = /^evidence\/live-audit\/observed-shapes\.json#([A-Za-z][A-Za-z0-9-]*)$/.exec(reference ?? "");
+  if (!match) fail(`${context}: expected an observed-shapes label reference`);
+  return match[1];
+}
+
+/** Build the exact nonempty sample allowlist from the reviewed path dispositions. */
+export function makeLiveObservationAuthorization(dispositions) {
+  if (!dispositions || !Array.isArray(dispositions.operations) || !dispositions.summary) fail("Live path dispositions are required for nonempty authenticated samples");
+  const expectedSkipped = new Map([
+    ["GetGuardianDiary", 25630],
+    ["GetDiaryData", 25935],
+    ["DownloadFoodmenuFile", 37318],
+  ]);
+  const labels = [];
+  const seenOperations = new Set();
+  const seenSkipped = new Set();
+  for (const item of dispositions.operations) {
+    if (!item || typeof item.operationId !== "string" || !Number.isInteger(item.sourceFunctionId)) fail("Live path disposition is missing operation/source identity");
+    if (item.disposition === "skipped") {
+      if (expectedSkipped.has(item.operationId)) {
+        if (item.sourceFunctionId !== expectedSkipped.get(item.operationId)) fail(`Live skipped operation source identity mismatch: ${item.operationId}`);
+        seenSkipped.add(item.operationId);
+      }
+      continue;
+    }
+    if (item.disposition !== "sampled") continue;
+    if (skippedLiveOperationIds.has(item.operationId)) fail(`Skipped live operation cannot be authorized: ${item.operationId}`);
+    if (seenOperations.has(item.operationId)) fail(`Duplicate sampled operation disposition: ${item.operationId}`);
+    seenOperations.add(item.operationId);
+    const refs = item.provenance?.sampleShapes ?? (item.provenance?.sampleShape ? [item.provenance.sampleShape] : []);
+    if (!Array.isArray(refs) || !refs.length) fail(`${item.operationId}: sampled disposition has no reviewed observation label reference`);
+    const operationLabels = refs.map((reference) => sampleLabelFromReference(reference, item.operationId));
+    if (new Set(operationLabels).size !== operationLabels.length) fail(`${item.operationId}: duplicate reviewed observation labels`);
+    if (item.sampleObservationCount !== operationLabels.length) fail(`${item.operationId}: reviewed observation label count differs from disposition`);
+    for (const label of operationLabels) labels.push({ observation: label, operationId: item.operationId, sourceFunctionId: item.sourceFunctionId });
+  }
+  if (expectedSkipped.size !== seenSkipped.size) fail("Live path dispositions do not contain all reviewed skipped-operation identities");
+  const { uniqueScopedOperations, sampledOperations, skippedOperations, bodyObservations, sampleOperationModels, sampleObservationLabels } = dispositions.summary;
+  const actual = { uniqueScopedOperations: seenOperations.size + seenSkipped.size, sampledOperations: seenOperations.size, skippedOperations: seenSkipped.size, bodyObservations: labels.length, sampleOperationModels: seenOperations.size, sampleObservationLabels: labels.length };
+  const expected = { uniqueScopedOperations, sampledOperations, skippedOperations, bodyObservations, sampleOperationModels, sampleObservationLabels };
+  if (JSON.stringify(actual) !== JSON.stringify(expected) || JSON.stringify(actual) !== JSON.stringify({ uniqueScopedOperations: 17, sampledOperations: 14, skippedOperations: 3, bodyObservations: 15, sampleOperationModels: 14, sampleObservationLabels: 15 })) {
+    fail(`Live path disposition coverage differs from reviewed sample set: ${JSON.stringify(actual)}`);
+  }
+  if (labels.length !== 15 || new Set(labels.map((entry) => entry.observation)).size !== 15) fail("Reviewed live observation labels must be exactly 15 unique labels");
+  return { exact: true, observations: labels };
+}
+
+function liveModelName(operationId) {
+  return `Observed_${operationId}`;
+}
+
+function observedShapeType(shape) {
+  if (shape.observedType === "null") return "unknown";
+  if (observedPrimitiveTypes.has(shape.observedType)) return shape.observedType;
+  return shape.observedType;
+}
+
+/** Merge shapes without inventing unions/nullability or treating absent fields as required. */
+function mergeObservedShapes(shapes) {
+  const types = new Set(shapes.map(observedShapeType));
+  if (types.size !== 1 || types.has("unknown")) return { type: "unknown" };
+  const [type] = types;
+  if (type === "object") {
+    const keys = [...new Set(shapes.flatMap((shape) => Object.keys(shape.properties)))].sort(compare);
+    const properties = {};
+    for (const key of keys) {
+      const variants = shapes.flatMap((shape) => Object.hasOwn(shape.properties, key) ? [shape.properties[key]] : []);
+      properties[key] = mergeObservedShapes(variants);
+    }
+    return { type, properties };
+  }
+  if (type === "array") {
+    const itemShapes = shapes.flatMap((shape) => shape.observedItemShapes);
+    return { type, items: itemShapes.length ? mergeObservedShapes(itemShapes) : { type: "unknown" } };
+  }
+  return { type };
+}
+
+function toSampleJsonSchema(shape) {
+  if (shape.type === "unknown") return {};
+  if (shape.type === "object") {
+    const properties = Object.fromEntries(Object.entries(shape.properties).map(([name, child]) => [name, toSampleJsonSchema(child)]));
+    return { type: "object", properties, additionalProperties: true };
+  }
+  if (shape.type === "array") return { type: "array", items: toSampleJsonSchema(shape.items) };
+  return { type: shape.type };
+}
+
+/** Construct named sample views separately from the normative/static response catalog. */
+export function makeLiveResponseModels(document, catalog, { authorization } = {}) {
+  validateLiveObservations(document);
+  if (document.observations.length && !authorization) fail("Nonempty live observations require an explicit reviewed/test authorization fixture");
+  const authorized = new Map();
+  if (authorization !== undefined) {
+    if (!authorization || authorization.exact !== true || !Array.isArray(authorization.observations)) fail("Live observation authorization must be an explicit exact label set");
+    for (const entry of authorization.observations) {
+      if (!entry || typeof entry.observation !== "string" || typeof entry.operationId !== "string" || !Number.isInteger(entry.sourceFunctionId)) fail("Live observation authorization needs label, operationId, and sourceFunctionId");
+      if (authorized.has(entry.observation)) fail(`Duplicate authorized live observation label: ${entry.observation}`);
+      if (skippedLiveOperationIds.has(entry.operationId)) fail(`Skipped live operation cannot be authorized: ${entry.operationId}`);
+      authorized.set(entry.observation, entry);
+    }
+  }
+  const observedLabels = new Set(document.observations.map((observation) => observation.observation));
+  for (const observation of document.observations) {
+    const approval = authorized.get(observation.observation);
+    if (!approval) fail(`Live observation label is not in the reviewed authorization set: ${observation.observation}`);
+    const mappedOperationId = liveObservationAliases.get(observation.observation) ?? observation.observation;
+    if (mappedOperationId !== approval.operationId) fail(`Live observation ${observation.observation} substitutes an approved label for ${approval.operationId}`);
+    if (!catalog.operations.some((operation) => operation.records.some((record) => record.operationId === approval.operationId && record.source.functionId === approval.sourceFunctionId))) {
+      fail(`Live observation ${observation.observation} source identity does not match catalog operation ${approval.operationId}/${approval.sourceFunctionId}`);
+    }
+  }
+  if (authorization?.exact) {
+    const missing = [...authorized.keys()].filter((label) => !observedLabels.has(label)).sort(compare);
+    if (missing.length) fail(`Missing reviewed live observation label(s): ${missing.join(", ")}`);
+    const unexpected = [...observedLabels].filter((label) => !authorized.has(label)).sort(compare);
+    if (unexpected.length) fail(`Unexpected reviewed live observation label(s): ${unexpected.join(", ")}`);
+  }
+  const operationIds = new Set(catalog.operations.map((operation) => operation.operationId));
+  const grouped = new Map();
+  for (const observation of document.observations) {
+    const operationId = liveObservationAliases.get(observation.observation) ?? observation.observation;
+    if (!operationIds.has(operationId)) fail(`Live observation ${observation.observation} does not map to a catalog operation (${operationId})`);
+    if (!grouped.has(operationId)) grouped.set(operationId, []);
+    grouped.get(operationId).push(observation);
+  }
+  const responseModels = [...grouped.entries()].sort(([a], [b]) => compare(a, b)).map(([operationId, observations]) => {
+    const shape = mergeObservedShapes(observations.map((observation) => observation.shape));
+    return {
+      operationId,
+      name: liveModelName(operationId),
+      observationLabels: observations.map((observation) => observation.observation).sort(compare),
+      schema: {
+        ...toSampleJsonSchema(shape),
+        "x-authenticated-sample-view": true,
+        "x-operation-id": operationId,
+        "x-observation-labels": observations.map((observation) => observation.observation).sort(compare),
+        "x-provenance": {
+          type: "redacted-authenticated-observation-shapes",
+          operationId,
+          observationLabels: observations.map((observation) => observation.observation).sort(compare),
+        },
+        "x-normative": false,
+      },
+    };
+  });
+  return {
+    schemaVersion: 1,
+    scope: "x-authenticated-sample-view; context-specific observation, not a universal or accepted API contract",
+    normative: false,
+    responseModels,
+  };
+}
+
+function tspObservedType(shape, name, models, observationLabels = undefined, operationId = undefined) {
+  if (shape.type === "unknown") return "unknown";
+  if (shape.type === "object") {
+    const properties = Object.entries(shape.properties);
+    const lines = [
+      ...(observationLabels ? [`@extension("x-observation-labels", ${tspValue(observationLabels)})`] : []),
+      ...(operationId ? [`@extension("x-operation-id", ${quote(operationId)})`, `@extension("x-provenance", ${tspValue({ type: "redacted-authenticated-observation-shapes", operationId, observationLabels })})`] : []),
+      `@extension("x-authenticated-sample-view", true)`,
+      `@extension("x-normative", false)`,
+      `model ${name} extends Record<unknown> {`,
+    ];
+    for (const [property, child] of properties) {
+      const childType = tspObservedType(child, `${name}_${property}`, models);
+      lines.push(`  @extension("x-sample-observed-type", ${quote(child.type)})`);
+      lines.push(`  ${tspPropertyName(property)}?: ${childType};`);
+    }
+    lines.push("}");
+    models.push(lines.join("\n"));
+    return name;
+  }
+  if (shape.type === "array") return `${tspObservedType(shape.items, `${name}Item`, models)}[]`;
+  return shape.type === "number" ? "numeric" : shape.type;
+}
+
+/** Render free-standing sample models; deliberately emit no operation response bindings. */
+export function renderLiveObservationModels(modelDocument) {
+  const output = [
+    "// Generated sample-only views from redacted authenticated observations.",
+    "// These types are not linked to API operations or static response models.",
+    "using TypeSpec.OpenAPI;",
+    "namespace Eliis.LiveObservations;",
+  ];
+  for (const responseModel of modelDocument.responseModels) {
+    const generated = [];
+    const schema = responseModel.schema;
+    const labels = responseModel.observationLabels;
+    if (schema.type === "object") {
+      tspObservedType({ type: "object", properties: Object.fromEntries(Object.entries(schema.properties).map(([name, property]) => [name, schemaShapeFromJsonSchema(property)])) }, responseModel.name, generated, labels, responseModel.operationId);
+    } else if (schema.type === "array") {
+      const itemType = schemaShapeFromJsonSchema(schema.items);
+      const bodyType = `${tspObservedType(itemType, `${responseModel.name}Item`, generated, labels, responseModel.operationId)}[]`;
+      generated.push(`// Sample-only response array view for ${responseModel.operationId}; labels: ${labels.join(", ")}.\nalias ${responseModel.name} = ${bodyType};`);
+    } else if (schema.type) {
+      const bodyType = schema.type === "number" ? "numeric" : schema.type;
+      generated.push(`// Sample-only response scalar view for ${responseModel.operationId}; labels: ${labels.join(", ")}.\nalias ${responseModel.name} = ${bodyType};`);
+    } else {
+      generated.push(`// Sample-only unresolved response view for ${responseModel.operationId}; labels: ${labels.join(", ")}.\nalias ${responseModel.name} = unknown;`);
+    }
+    output.push(generated.join("\n\n"));
+  }
+  return `${output.join("\n\n")}\n`;
+}
+
+function schemaShapeFromJsonSchema(schema) {
+  if (!schema || !Object.keys(schema).length) return { type: "unknown" };
+  if (schema.type === "object") return { type: "object", properties: Object.fromEntries(Object.entries(schema.properties ?? {}).map(([name, child]) => [name, schemaShapeFromJsonSchema(child)])) };
+  if (schema.type === "array") return { type: "array", items: schemaShapeFromJsonSchema(schema.items) };
+  return { type: schema.type };
 }
 
 function responseFieldType(field, name, models) {
@@ -518,6 +743,15 @@ export async function generate(root = process.cwd()) {
   const responseCatalog = responseFiles
     ? makeResponseCatalog(catalog, await Promise.all(responseFiles.map(async (name) => ({ name, entries: JSON.parse(await readFile(resolve(responseDir, name), "utf8")) }))), { strict: true })
     : makeResponseCatalog(catalog, [], { strict: false });
+  const liveObservations = await optionalJson(resolve(root, "evidence/live-audit/observed-shapes.json"), { observations: [], rawResponsesIncluded: false });
+  let liveAuthorization;
+  if (liveObservations.observations?.length) {
+    const dispositions = await optionalJson(resolve(root, "evidence/live-audit/path-dispositions.json"), null);
+    if (!dispositions) fail("Nonempty live observations require evidence/live-audit/path-dispositions.json");
+    liveAuthorization = makeLiveObservationAuthorization(dispositions);
+  }
+  const liveResponseModels = makeLiveResponseModels(liveObservations, catalog, { authorization: liveAuthorization });
+  const liveModelsTsp = renderLiveObservationModels(liveResponseModels);
   const exclusions = await optionalJson(resolve(root, "evidence/coverage-exclusions.json"), []);
   const inventory = await optionalJson(resolve(root, "evidence/inventory.json"), { candidateFunctions: [] });
   const coverage = makeCoverage(catalog, inventory, exclusions);
@@ -527,13 +761,15 @@ export async function generate(root = process.cwd()) {
   await Promise.all([
     writeFile(resolve(root, "models/generated.tsp"), rendered.models),
     writeFile(resolve(root, "models/responses.tsp"), renderedResponses.tsp),
+    writeFile(resolve(root, "models/live-observations.tsp"), liveModelsTsp),
     writeFile(resolve(root, "routes/generated.tsp"), rendered.routes),
     writeFile(resolve(root, "scripts/operation-catalog.json"), JSON.stringify(catalog, null, 2) + "\n"),
     writeFile(resolve(root, "scripts/coverage.json"), JSON.stringify(coverage, null, 2) + "\n"),
     writeFile(resolve(root, "scripts/response-coverage.json"), JSON.stringify(responseCatalog, null, 2) + "\n"),
+    writeFile(resolve(root, "scripts/observed-response-models.json"), JSON.stringify(liveResponseModels, null, 2) + "\n"),
   ]);
-  console.log(`Generated ${catalog.operationCount} operations from ${catalog.researchRecordCount} evidence records; ${responseCatalog.modeledOperationCount} partial response models, ${responseCatalog.unknownOperationCount} unknown, ${responseCatalog.binaryOperationCount} opaque binary; ${coverage.missingCount} inventory functions missing.`);
-  return { catalog, coverage, responseCatalog };
+  console.log(`Generated ${catalog.operationCount} operations from ${catalog.researchRecordCount} evidence records; ${responseCatalog.modeledOperationCount} partial response models, ${liveResponseModels.responseModels.length} separate sample-only views, ${responseCatalog.unknownOperationCount} unknown, ${responseCatalog.binaryOperationCount} opaque binary; ${coverage.missingCount} inventory functions missing.`);
+  return { catalog, coverage, responseCatalog, liveResponseModels };
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await generate();

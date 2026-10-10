@@ -1,21 +1,21 @@
 # Guardian Home Assistant blockers
 
-**Planning notes only.** This is a static, evidence-bounded blocker list, not an implementation plan or authorization to make network requests. Endpoint observations come from the Android client; server policy and completeness are not established.
+**Historical planning notes only.** This generated blocker list describes the original static guardian batch, not an implementation plan or authorization to make network requests. The later bounded, authorized audit performed login/2FA session creation and scoped account-discovered GETs; its context-specific results are summarized in [LIVE-MODEL-AUDIT.md](LIVE-MODEL-AUDIT.md). No explicit feature writes or seen/read requests were made. Server policy and completeness remain unestablished.
 
 ## Current decision
 
-Do not ship guardian account setup or child-scoped polling until the signed-in guardian-to-child access path is evidenced and reviewed. Keep the proposed integration read-only; no live login, private-record access, or write request was performed for this batch.
+Do not ship guardian account setup or child-scoped polling until the signed-in guardian-to-child access path is evidenced and reviewed. The historical static batch did not include runtime validation; the later audit scope and limitations are described in [LIVE-MODEL-AUDIT.md](LIVE-MODEL-AUDIT.md).
 
 ## Setup, authentication, and child selection
 
-A safe setup flow is not established yet: there was no live login, and the static client findings do not prove server-required fields, guardian role/authorization, or a guardian-to-child join. Do not treat the separate `guardians` and `children` init values, a permissions truthiness gate, or a child route argument as proof that the signed-in account may access that child. Do not replace this missing relationship with an employee/staff roster. [Login fn #16308](../evidence/guardian-batch/auth.json); [Login2FA fn #16309](../evidence/guardian-batch/auth.json); [GetUserData fn #16344](../evidence/guardian-batch/discovery.json); [GetUserPermissions fn #16348](../evidence/guardian-batch/discovery.json); [GetChildProfile fn #25634](../evidence/guardian-batch/discovery.json)
+The historical static client findings do not prove server-required fields, guardian role/authorization, or a guardian-to-child join. The later bounded audit sampled login/2FA and account-discovered reads, but does not establish those server rules or relationships. Do not treat the separate `guardians` and `children` init values, a permissions truthiness gate, or a child route argument as proof that the signed-in account may access that child. Do not replace this missing relationship with an employee/staff roster. [Login fn #16308](../evidence/guardian-batch/auth.json); [Login2FA fn #16309](../evidence/guardian-batch/auth.json); [GetUserData fn #16344](../evidence/guardian-batch/discovery.json); [GetUserPermissions fn #16348](../evidence/guardian-batch/discovery.json); [GetChildProfile fn #25634](../evidence/guardian-batch/discovery.json)
 
 Evidence-recorded blockers:
 
-- No live login or private account test was performed; server\-required fields, authentication requirements, response completeness, and status contracts remain unknown\. [Login fn #16308](../evidence/guardian-batch/auth.json)
+- The earlier static\-only candidate analysis did not include runtime account validation; the later authorized login/2FA and bounded account\-discovered GET observations are summarized in the audit report above\. Server\-required fields, authentication requirements, response completeness, and status contracts remain unknown\. [Login fn #16308](../evidence/guardian-batch/auth.json)
 - The truthy type challenge branch is client\-observed; the complete challenge schema and server meaning of type/identifier/locked\_out are not established\. [Login fn #16308](../evidence/guardian-batch/auth.json)
 - Do not treat Axios response\.status 200/202 UI constants or the separate default\-client interceptor's 401/412/429 branches as universal server status contracts\. Login's auth\-client 401 rejection is pass\-through; no expired\-session interpretation or explicit navigation reset is established\. [Login fn #16308](../evidence/guardian-batch/auth.json)
-- No live login or private account test was performed; server\-required request fields, cookie requirement, success/error schemas, and accepted status values remain unknown\. [Login2FA fn #16309](../evidence/guardian-batch/auth.json)
+- The earlier static\-only candidate analysis did not include runtime account validation; the later authorized login/2FA and bounded account\-discovered GET observations are summarized in the audit report above\. Server\-required request fields, cookie requirement, success/error schemas, and accepted status values remain unknown\. [Login2FA fn #16309](../evidence/guardian-batch/auth.json)
 - 'valid' is a UI comparison against a body property, not a universal server enum or HTTP status\. The semantics and type of locked\_at remain unproved\. [Login2FA fn #16309](../evidence/guardian-batch/auth.json)
 - Keep this login challenge identifier flow distinct from cookies and unrelated recovery/2FA operations; no general identifier mapping is established\. [Login2FA fn #16309](../evidence/guardian-batch/auth.json)
 - The default\-client 401 cleanup is proven app behavior, but the code does not label 401 as expired\-session detection or call an explicit navigation reset in the traced cleanup callbacks\. [Login2FA fn #16309](../evidence/guardian-batch/auth.json)
@@ -46,7 +46,7 @@ Evidence-recorded blockers:
 - No nested access\.restrict or equivalent writable\-availability contract; client permission checks are not server guarantees\. [GetChildCalendar fn #25644](../evidence/guardian-batch/attendance.json)
 - No server status\-transition dictionary or meaning for status/type values\. [GetStatusLogs fn #25650](../evidence/guardian-batch/attendance.json)
 - No proof of an actor ID or last\-update field; only identifiable\.name and created\_at are displayed\. [GetStatusLogs fn #25650](../evidence/guardian-batch/attendance.json)
-- No write request or live status\-log response was used\. [GetStatusLogs fn #25650](../evidence/guardian-batch/attendance.json)
+- The historical static candidate analysis did not use a live status\-log response; the later audit sampled two bounded GET contexts, as summarized above\. No explicit feature write or seen/read request was made\. [GetStatusLogs fn #25650](../evidence/guardian-batch/attendance.json)
 - No complete modal payload, access/restrict flag or server write permission evidence\. [GetAbsenceModalData fn #25652](../evidence/guardian-batch/attendance.json)
 - No date timezone/inclusivity interpretation is established for min\_date\. [GetAbsenceModalData fn #25652](../evidence/guardian-batch/attendance.json)
 

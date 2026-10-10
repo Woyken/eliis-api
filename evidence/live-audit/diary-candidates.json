@@ -1,0 +1,163 @@
+{
+  "title": "Read-only diary response model candidates",
+  "phase": "context-specific live observations for integration review",
+  "privacy": {
+    "rawPrivateResponsesIncluded": false,
+    "identifiersDatesNamesAndDiaryContent": "redacted; no scalar private values are recorded",
+    "captureHandling": "Private captures remain outside the repository. This file contains only field paths, observed types, counts, and generic equality results.",
+    "requestsByThisAudit": 0
+  },
+  "interpretation": [
+    "The GetGuardianFeed sample is one authenticated, account- and request-context-specific HTTP 200 observation, not a universal response contract.",
+    "Observed primitive types are sample metadata only. They do not prove requiredness, accepted values, enums, nullability, completeness, stable identifiers, or behavior for other accounts, roles, dates, and feed variants.",
+    "Empty arrays reveal no item shape. Missing sample fields do not invalidate independently supported optional static client-read paths.",
+    "The capture envelope is not the response body: status and content-type metadata are excluded from all body paths below.",
+    "No raw values, actual dates, diary text, names, or identifiers are included. The continuation field is observed but no pagination or accepted-cursor semantics are inferred."
+  ],
+  "observations": [
+    {
+      "operationId": "GetGuardianFeed",
+      "sourceFunctionId": 25632,
+      "method": "get",
+      "path": "/api/kindergartens/{kindergartenId}/children/{childId}/guardian-feed",
+      "availabilityDisposition": "sampled_one_authorized_read",
+      "sample": {
+        "capture": "GetGuardianFeed-private.json",
+        "httpStatusObserved": 200,
+        "contentTypeObserved": "application/json",
+        "bodyKind": "object",
+        "rootFieldCount": 2,
+        "rootFields": [
+          {"path": "data", "observedTypes": ["array"], "count": 1},
+          {"path": "next_date", "observedTypes": ["string"], "count": 1}
+        ],
+        "data": {
+          "groupCount": 5,
+          "groupKind": "object",
+          "groupKeySetUniformAcrossSample": true,
+          "groupFields": [
+            {"path": "data[].date", "observedTypes": ["string"], "count": 5},
+            {"path": "data[].diaries", "observedTypes": ["array"], "count": 5},
+            {"path": "data[].evaluations", "observedTypes": ["array"], "count": 5}
+          ],
+          "diaries": {
+            "itemCount": 5,
+            "itemKind": "object",
+            "itemKeySetUniformAcrossSample": true,
+            "fields": [
+              {"path": "data[].diaries[].id", "observedTypes": ["integer"], "count": 5},
+              {"path": "data[].diaries[].course", "observedTypes": ["string"], "count": 5},
+              {"path": "data[].diaries[].texts", "observedTypes": ["array"], "count": 5},
+              {"path": "data[].diaries[].feedback", "observedTypes": ["array"], "count": 5},
+              {"path": "data[].diaries[].status", "observedTypes": ["object"], "count": 5}
+            ],
+            "status": {
+              "itemCount": 5,
+              "keySetUniformAcrossSample": true,
+              "fields": [
+                {"path": "data[].diaries[].status.id", "observedTypes": ["integer"], "count": 5},
+                {"path": "data[].diaries[].status.kindergarten_id", "observedTypes": ["integer"], "count": 5},
+                {"path": "data[].diaries[].status.name", "observedTypes": ["string"], "count": 5},
+                {"path": "data[].diaries[].status.type", "observedTypes": ["integer"], "count": 5},
+                {"path": "data[].diaries[].status.icon", "observedTypes": ["string"], "count": 5},
+                {"path": "data[].diaries[].status.color", "observedTypes": ["string"], "count": 5},
+                {"path": "data[].diaries[].status.meals", "observedTypes": ["integer"], "count": 5},
+                {"path": "data[].diaries[].status.created_at", "observedTypes": ["string"], "count": 5},
+                {"path": "data[].diaries[].status.updated_at", "observedTypes": ["string"], "count": 5},
+                {"path": "data[].diaries[].status.created_by", "observedTypes": ["integer"], "count": 5},
+                {"path": "data[].diaries[].status.updated_by", "observedTypes": ["null"], "count": 5, "modelTypeRecommendation": "unknown"}
+              ]
+            }
+          },
+          "emptyArrayCounts": {
+            "data[].evaluations": 0,
+            "data[].diaries[].texts": 0,
+            "data[].diaries[].feedback": 0
+          }
+        },
+        "equalityChecks": {
+          "explicitParentChildIdMismatchCount": 0,
+          "feedGroupContentsOwnershipEstablished": false
+        }
+      },
+      "modelPathComparison": {
+        "staticPathsObserved": [
+          "data",
+          "data[].date",
+          "data[].diaries",
+          "data[].diaries[].course",
+          "data[].diaries[].texts",
+          "data[].diaries[].status",
+          "data[].diaries[].status.color",
+          "data[].diaries[].status.icon",
+          "data[].diaries[].status.name",
+          "data[].diaries[].feedback",
+          "data[].diaries[].id",
+          "data[].evaluations",
+          "next_date"
+        ],
+        "sampleOnlyPaths": [
+          "data[].diaries[].status.id",
+          "data[].diaries[].status.kindergarten_id",
+          "data[].diaries[].status.type",
+          "data[].diaries[].status.meals",
+          "data[].diaries[].status.created_at",
+          "data[].diaries[].status.updated_at",
+          "data[].diaries[].status.created_by",
+          "data[].diaries[].status.updated_by"
+        ],
+        "staticPathsNotObservedInThisSample": [
+          "data[].diaries[].meals",
+          "data[].diaries[].total_time",
+          "data[].diaries[].summaries",
+          "data[].diaries[].summaries[].comment",
+          "data[].diaries[].images",
+          "data[].diaries[].documents",
+          "data[].diaries[].feedback[].comment",
+          "data[].diaries[].feedback[].owner",
+          "data[].diaries[].likes"
+        ],
+        "note": "Paths absent from this one response remain legitimate optional static-only observations. In particular, the observed status.meals is distinct from the unobserved diary-entry meals path; no diary-entry total_time value was observed. Empty feedback/text/evaluation arrays do not test their item paths."
+      },
+      "candidateDisposition": {
+        "recommendation": "Keep the response body rooted at data and next_date, consistent with the existing service-to-callback-to-reducer trace. Add the sample paths/types above as non-normative observation metadata only; retain the existing partial static model and its unknown primitive types, open objects, and optional fields.",
+        "doNotInfer": [
+          "Do not claim data-group contents are owned by the explicitly selected child; the generic explicit child-ID boundary comparison had zero mismatches, but the unlabelled response groups do not establish ownership or guarantee exclusively private content.",
+          "Do not claim that feedback is visible to this guardian or that the endpoint exposes feedback generally; all observed feedback arrays were empty.",
+          "Do not infer a schema for texts, feedback, or evaluations items from empty arrays. The client static check for texts admits arrays and must remain unknown rather than being narrowed to a dictionary or this sample's array type.",
+          "Do not reinterpret status fields, status.meals, IDs, timestamps, null updated_by, or the next_date value; the sample establishes types only.",
+          "Do not remove static-only diary-entry meals, total_time, summaries, images, documents, feedback item, or likes paths because they were absent or uninspectable in this sample.",
+          "Do not infer pagination rules, date meaning/timezone, guaranteed group or item counts, publication behavior, server authorization, or response completeness."
+        ]
+      },
+      "staticEvidence": "evidence/responses/children-diary-files.json: GetGuardianFeed (source #25632); service #25632/#25633 returns response.data, callback #25516 forwards that body unchanged, reducer #26862 reads body-root data and next_date, and #26865/#34949 trace partial group and diary paths. The body-root shape and existing partial paths are independently source-backed; runtime metadata does not replace that proof.",
+      "requestObservation": {
+        "page": "first page only; page is local action state, not a query field",
+        "query": "date parameter present; actual value redacted",
+        "requestBudget": "one captured read; no retries, refreshes, pagination, or other endpoints in this audit"
+      }
+    },
+    {
+      "operationId": "GetGuardianDiary",
+      "sourceFunctionId": 25630,
+      "availabilityDisposition": "skipped_unproved_guardian_access",
+      "sample": null,
+      "candidateDisposition": {
+        "recommendation": "No live model candidate; preserve the existing opaque unknown response disposition.",
+        "reason": "No proven parent UI caller or body consumer exists for this separate child /diary helper, and guardian access/safe-use semantics are unproved. Do not probe it, test for denial, or use it as a feed substitute."
+      },
+      "staticEvidence": "evidence/live-audit/diary-read-plan.md; service registration and GET construction are traced, but no consuming parent action/reducer/UI path is established."
+    },
+    {
+      "operationId": "GetDiaryData",
+      "sourceFunctionId": 25935,
+      "availabilityDisposition": "skipped_employee_scope_and_autosave_side_effect",
+      "sample": null,
+      "candidateDisposition": {
+        "recommendation": "No live model candidate; retain its separate employee-facing partial static analysis without attributing it to guardian access.",
+        "reason": "The established consumer reads employee/course state, absent from this guardian context. A separate reachable caller flushes diary auto-saves before the GET; do not substitute staff records or invoke that caller."
+      },
+      "staticEvidence": "evidence/live-audit/diary-read-plan.md; employee thunk #25782 consumes this operation, while caller #43846 flushes diary autosaves before its GET."
+    }
+  ]
+}

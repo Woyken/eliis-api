@@ -496,10 +496,26 @@
       }
     ],
     "fields": [
-      {"name":"id","type":"unknown","evidence":"Callback #25189 directly reads body.id at 989479-989480; value type and complete item shape are unresolved."},
-      {"name":"subject","type":"unknown","evidence":"Callback #25189 directly reads body.subject at 989481-989482; value type is unresolved."},
-      {"name":"files","type":"unknown","evidence":"Callback #25189 directly reads body.files and then its length at 989483-989490. Length use does not prove an array, and the locally derived files_count is not modeled as a server field."},
-      {"name":"created_at","type":"unknown","evidence":"Callback #25189 directly reads body.created_at at 989491-989492; value type is unresolved."}
+      {
+        "name": "id",
+        "type": "unknown",
+        "evidence": "Callback #25189 directly reads body.id at 989479-989480; value type and complete item shape are unresolved."
+      },
+      {
+        "name": "subject",
+        "type": "unknown",
+        "evidence": "Callback #25189 directly reads body.subject at 989481-989482; value type is unresolved."
+      },
+      {
+        "name": "files",
+        "type": "unknown",
+        "evidence": "Callback #25189 directly reads body.files and then its length at 989483-989490. Length use does not prove an array, and the locally derived files_count is not modeled as a server field."
+      },
+      {
+        "name": "created_at",
+        "type": "unknown",
+        "evidence": "Callback #25189 directly reads body.created_at at 989491-989492; value type is unresolved."
+      }
     ],
     "complete": false,
     "limitations": [
@@ -544,10 +560,26 @@
       }
     ],
     "fields": [
-      {"name":"id","type":"unknown","evidence":"Callback #25195 directly reads body.id at 989601-989602; value type and complete item shape are unresolved."},
-      {"name":"subject","type":"unknown","evidence":"Callback #25195 directly reads body.subject at 989603-989604; value type is unresolved."},
-      {"name":"files","type":"unknown","evidence":"Callback #25195 directly reads body.files and then its length at 989605-989612. Length use does not prove an array, and the locally derived files_count is not modeled as a server field."},
-      {"name":"created_at","type":"unknown","evidence":"Callback #25195 directly reads body.created_at at 989613-989614; value type is unresolved."}
+      {
+        "name": "id",
+        "type": "unknown",
+        "evidence": "Callback #25195 directly reads body.id at 989601-989602; value type and complete item shape are unresolved."
+      },
+      {
+        "name": "subject",
+        "type": "unknown",
+        "evidence": "Callback #25195 directly reads body.subject at 989603-989604; value type is unresolved."
+      },
+      {
+        "name": "files",
+        "type": "unknown",
+        "evidence": "Callback #25195 directly reads body.files and then its length at 989605-989612. Length use does not prove an array, and the locally derived files_count is not modeled as a server field."
+      },
+      {
+        "name": "created_at",
+        "type": "unknown",
+        "evidence": "Callback #25195 directly reads body.created_at at 989613-989614; value type is unresolved."
+      }
     ],
     "complete": false,
     "limitations": [
@@ -592,10 +624,26 @@
       }
     ],
     "fields": [
-      {"name":"id","type":"unknown","evidence":"Callback #25198 directly reads body.id at 989672-989673; value type and complete item shape are unresolved."},
-      {"name":"subject","type":"unknown","evidence":"Callback #25198 directly reads body.subject at 989674-989675; value type is unresolved."},
-      {"name":"files","type":"unknown","evidence":"Callback #25198 directly reads body.files and then its length at 989676-989683. Length use does not prove an array, and the locally derived files_count is not modeled as a server field."},
-      {"name":"created_at","type":"unknown","evidence":"Callback #25198 directly reads body.created_at at 989684-989685; value type is unresolved."}
+      {
+        "name": "id",
+        "type": "unknown",
+        "evidence": "Callback #25198 directly reads body.id at 989672-989673; value type and complete item shape are unresolved."
+      },
+      {
+        "name": "subject",
+        "type": "unknown",
+        "evidence": "Callback #25198 directly reads body.subject at 989674-989675; value type is unresolved."
+      },
+      {
+        "name": "files",
+        "type": "unknown",
+        "evidence": "Callback #25198 directly reads body.files and then its length at 989676-989683. Length use does not prove an array, and the locally derived files_count is not modeled as a server field."
+      },
+      {
+        "name": "created_at",
+        "type": "unknown",
+        "evidence": "Callback #25198 directly reads body.created_at at 989684-989685; value type is unresolved."
+      }
     ],
     "complete": false,
     "limitations": [
@@ -1463,8 +1511,8 @@
   {
     "operationId": "GetEvents",
     "sourceFunctionId": 25403,
-    "kind": "object",
-    "evidence": "Service #25403/#25404 projects Axios response.data as the HTTP body. Saga #25374/#25375 dispatches the body, reducer #25344 iterates body.items, and event records are copied and date/time-transformed before calendar consumers read them. Only traced original item-property reads are listed; this is a partial client-observed model.",
+    "kind": "array",
+    "evidence": "Original Hermes bytecode: service #25403 returns Axios response.data through #25404. Continuation #25375 writes that whole returned value into the locally constructed SET_EVENTS action.data.items slot; reducer #25344 iterates that local slot. This establishes the successful HTTP body as an array, not an HTTP-root items property. The array-item model preserves only traced client-read event properties and remains partial.",
     "trace": [
       {
         "functionId": 25403,
@@ -1484,7 +1532,7 @@
       {
         "functionId": 25375,
         "line": 994704,
-        "evidence": "Action continuation #25375 dispatches the body-derived events and supplies local kindergarten, selected-date, and timezone context (994715-994729); only properties traced from body.items are modeled."
+        "evidence": "Action continuation #25375 dispatches the body-derived events and supplies local kindergarten, selected-date, and timezone context (994715-994729); only properties traced from HTTP body array entries are modeled."
       },
       {
         "functionId": 25403,
@@ -1504,17 +1552,17 @@
       {
         "functionId": 25375,
         "line": 994704,
-        "evidence": "Success continuation dispatches SET_EVENTS with items copied from the resolved body at 994715-994729; it separately supplies kindergartenId, locally selected date, and user.timezone."
+        "evidence": "Success continuation #25375 writes the entire resolved HTTP body value to the locally composed action.data.items slot at 994724, alongside local kindergartenId/date/timezone context (994719-994728); this action envelope does not establish a body-root items property."
       },
       {
         "functionId": 25344,
         "line": 993275,
-        "evidence": "SET_EVENTS branch reads action.data.items at 993583-993589 and iterates it; it also derives separate calendar dot records from those events."
+        "evidence": "SET_EVENTS branch reads the locally composed action.data.items slot and invokes forEach at 993583-993589. Since #25375 placed the entire returned HTTP body in that slot, the read proves iteration of the body array, not an HTTP-root items property."
       },
       {
         "functionId": 25345,
         "line": 993640,
-        "evidence": "For each body.items entry, the reducer calls convertFromToUtc with the entry and action.data.tz, then pushes the returned copy into the Redux events array."
+        "evidence": "For each HTTP HTTP body array entry (read through the local action.data.items slot), the reducer calls convertFromToUtc with the entry and locally supplied action.data.tz, then pushes the returned copy into the Redux events array."
       },
       {
         "functionId": 25423,
@@ -1569,7 +1617,7 @@
       {
         "functionId": 42360,
         "line": 1719611,
-        "evidence": "ICS export helper consumes the selected event and reads title/description at 1719625-1719634; event values here are downstream of the selected body.items entry."
+        "evidence": "ICS export helper consumes the selected event and reads title/description at 1719625-1719634; event values here are downstream of the selected HTTP HTTP body array entry."
       },
       {
         "functionId": 42363,
@@ -1597,154 +1645,148 @@
         "evidence": "Edit-form selector returns state.events.selectedEvent at 1729674-1729677."
       }
     ],
-    "fields": [
-      {
-        "name": "items",
-        "type": "array",
-        "evidence": "Reducer #25344 reads body.items and invokes its forEach method at 993585-993589; each entry is passed to #25345 and retained as a converted copy in state. This establishes the client-used collection shape, not server completeness.",
-        "items": {
-          "kind": "object",
-          "evidence": "Each iterated entry is passed to #25423, which reads entry properties and shallow-copies it with Object.assign({}, entry) at 995962-995969.",
-          "fields": [
-            {
-              "name": "start_date",
-              "type": "unknown",
-              "evidence": "Conversion helper #25423 reads the source entry's start_date at 995973 and UI EventListItem #42311 reads event.start_date at 1715998; the helper may replace the value in its local copy."
-            },
-            {
-              "name": "end_date",
-              "type": "unknown",
-              "evidence": "Conversion helper #25423 reads the source entry's end_date at 995987 and UI EventListItem #42311 reads event.end_date at 1716000."
-            },
-            {
-              "name": "start_time",
-              "type": "unknown",
-              "evidence": "Conversion helper #25423 reads the source entry's start_time at 995969-995980 and UI EventListItem #42311 reads event.start_time at 1716110-1716141. The helper may replace the value in its local copy."
-            },
-            {
-              "name": "end_time",
-              "type": "unknown",
-              "evidence": "Conversion helper #25423 reads the source entry's end_time at 995983-995994 and UI EventListItem #42311 reads event.end_time at 1716147-1716162. The helper may replace the value in its local copy."
-            },
-            {
-              "name": "repeat_start",
-              "type": "unknown",
-              "evidence": "Conversion helper #25423 reads the source entry's repeat_start while preparing its start-date/time conversion at 995975; this is a property read, not evidence of a recurrence contract."
-            },
-            {
-              "name": "title",
-              "type": "unknown",
-              "evidence": "EventListItem #42311 reads event.title at 1716068-1716069 from the Redux event record, which descends from body.items through the shallow-copy conversion path."
-            },
-            {
-              "name": "event_type",
-              "type": "unknown",
-              "evidence": "EventListItem #42311 reads event.event_type at 1715977-1715990 and compares it with local event-type presentation records."
-            },
-            {
-              "name": "id",
-              "type": "unknown",
-              "evidence": "Reducer date-dot generation #25347 reads each retained event's id at 993765-993769 and compares it with selectedEvent.id."
-            },
-            {
-              "name": "unique_id",
-              "type": "unknown",
-              "evidence": "Calendar event-list path #42305 uses item.unique_id for row key extraction at 1715802-1715808 and forwards the same item to EventListItem #42311."
-            },
-            {
-              "name": "access",
-              "type": "unknown",
-              "evidence": "Calendar row action #42306 reads event.access and compares it with the literal 'manage' at 1715773-1715782; that client branch does not establish API permission semantics."
-            },
-            {
-              "name": "duration",
-              "type": "unknown",
-              "evidence": "After reducer #25345 passes the body.items entry through #25423's Object.assign shallow copy (#25423 header 995958; Object.assign instruction offset 00000015, 995962-995969), calendar marker loop #25347 (#25347 header 993693) reads event.duration at instruction offset 000000cb (993743). Its comparison does not prove a source scalar type."
-            },
-            {
-              "name": "description",
-              "type": "unknown",
-              "evidence": "After the #25423 shallow-copy path, SingleEventScreen #42355 (#42355 header 1718822) reads selectedEvent.description at instruction offsets 000007e8 and 0000089f (1719291, 1719333) and passes the value as content to the detail HTML-rendering path; export helpers #42363/#42368 also read it at offsets 000001ee (1719820-1719824) and 00000169 (1720077-1720082). This observes a rendering path only; it does not establish a scalar type, HTTP media type, or guaranteed MIME string."
-            },
-            {
-              "name": "creator",
-              "type": "object",
-              "evidence": "SingleEventScreen #42355 (#42355 header 1718822) reads selectedEvent.creator at instruction offset 000008cb (1719342) and then creator.name at offset 0000098b-00000991 (1719386-1719388); selectedEvent is sourced from body.items through #25423's shallow-copy path. Only this observed nested path is represented.",
-              "fields": [
-                {
-                  "name": "name",
-                  "type": "unknown",
-                  "evidence": "Detail consumer #42355 (#42355 header 1718822) reads selectedEvent.creator.name at instruction offsets 0000098b-00000991 (1719386-1719388) after the row event has passed through #25423's shallow copy; the value type is not established."
-                }
-              ]
-            },
-            {
-              "name": "is_recurring",
-              "type": "unknown",
-              "evidence": "Detail screen #42355 (#42355 header 1718822) reads selectedEvent.is_recurring at instruction offset 00000137 (1718900); edit form #42554 (#42554 header 1729015) reads it at offsets 0000033f and 000008e2 (1729215, 1729557); Apple export #42366 (#42366 header 1719876) reads it at offset 00000032 (1719893). These are client property reads only and establish no recurrence meaning or scalar type."
-            },
-            {
-              "name": "rrule",
-              "type": "unknown",
-              "evidence": "Edit form #42554 (#42554 header 1729015) reads selectedEvent.rrule at instruction offset 000002fb (1729198); Apple export #42366 (#42366 header 1719876) reads it at offset 00000065 (1719902). The export transforms/concatenates the value client-side; no server recurrence semantics or value type is inferred."
-            },
-            {
-              "name": "repeat_end",
-              "type": "unknown",
-              "evidence": "Edit form #42554 (#42554 header 1729015) reads selectedEvent.repeat_end at instruction offset 00000945 (1729582); Apple export #42366 (#42366 header 1719876) reads it at offset 00000046 (1719898) and applies a local replacement before appending an UNTIL value at offsets 0000004c-00000074 (1719899-1719905). This does not prove server recurrence semantics or type."
-            },
-            {
-              "name": "acl_groups",
-              "type": "object",
-              "evidence": "SingleEventScreen #42355 (#42355 header 1718822) reads selectedEvent.acl_groups.view and invokes .map at instruction offsets 00000081-000000b1 (1718858-1718869); edit form #42554 (#42554 header 1729015) reads acl_groups.view at offsets 0000064f-00000670 (1729395-1729402) and acl_groups.manage at offsets 000009fe-00000a04 (1729626-1729628). These are observed UI paths, not an authorization contract.",
-              "fields": [
-                {
-                  "name": "view",
-                  "type": "array",
-                  "evidence": "Detail screen #42355 invokes .map on selectedEvent.acl_groups.view at instruction offsets 00000090-000000b1 (1718862-1718869); this records the client's array use while leaving the contents open.",
-                  "items": {
-                    "kind": "object",
-                    "evidence": "Mapper #42359 (#42359 header 1719562) is called for view.map items and reads item.name, item.id, and item.type at instruction offsets 0000001a, 00000084, and 00000091-0000009c (1719573-1719605); unobserved group-item properties remain open.",
-                    "fields": [
-                      {
-                        "name": "name",
-                        "type": "unknown",
-                        "evidence": "Mapper #42359 (#42359 header 1719562) reads each view-group item's name at instruction offset 0000001a (1719573); the value type is not established."
-                      },
-                      {
-                        "name": "id",
-                        "type": "unknown",
-                        "evidence": "Mapper #42359 (#42359 header 1719562) reads each view-group item's id at instruction offsets 00000084-0000008d (1719599-1719601); the value type is not established."
-                      },
-                      {
-                        "name": "type",
-                        "type": "unknown",
-                        "evidence": "Mapper #42359 (#42359 header 1719562) reads each view-group item's type at instruction offsets 00000091-0000009c (1719602-1719605); the value type is not established."
-                      }
-                    ]
-                  }
-                },
-                {
-                  "name": "manage",
-                  "type": "unknown",
-                  "evidence": "Edit form #42554 (#42554 header 1729015) reads selectedEvent.acl_groups.manage at instruction offsets 000009fe-00000a04 (1729626-1729628). No manage-group item fields or value type are inferred."
-                }
-              ]
-            }
-          ]
-        }
-      }
-    ],
+    "fields": [],
     "complete": false,
     "limitations": [
-      "Only the body.items path and the listed client-read item properties are modeled; other caller branches, body fields, item fields, and response completeness remain unresolved.",
-      "The model preserves the HTTP body's items nesting. Only client-read item properties are listed; other body fields and item properties are unknown.",
+      "The HTTP body root is modeled as an array from the traced successful service/caller/reducer flow; action.data.items is a local Redux-action envelope slot holding the entire body, not a body-root property.",
+      "The array item is an open partial view containing only the existing source-traced client-read properties. Other body/item members and complete response shape remain unresolved.",
       "All listed event property types remain unknown. Date construction, Moment formatting, comparison, and UI display do not prove source wire types or server constraints.",
       "The reducer shallow-copies each item and rewrites date/time values using a timezone supplied from local user state. Those transformed Redux values are not new HTTP fields and do not establish a server timezone convention.",
       "No response-origin read was established for root name, location, audience/course/child applicability, full_day, cancellation state, published state, or change_mode. A selected-event UI path does read description, creator.name, duration, is_recurring, rrule, repeat_end, and acl_groups.view/manage; their presence is not guaranteed and their server semantics remain unknown.",
       "Calendar export branches on null start_time/end_time for an all-day-style path; this is not evidence for a full_day response property. Recurrence-related fields are read/transformed by client branches only, which do not establish server recurrence semantics.",
-      "No complete response schema, item requiredness, statuses, nullability, defaults, enum meanings, or date-range inclusivity is established."
-    ]
+      "No complete response schema, item requiredness, statuses, nullability, defaults, enum meanings, or date-range inclusivity is established. The separate one-capture array shape does not establish behavior for error bodies, every role, or every server branch."
+    ],
+    "items": {
+      "kind": "object",
+      "evidence": "The successful HTTP body is iterated as a collection: #25375 assigns the entire body to locally composed action.data.items at 994724, and reducer #25344 invokes forEach on that local slot at 993583-993589. The one-snapshot array observation is corroborative, not the sole basis for this static root-array shape.",
+      "fields": [
+        {
+          "name": "start_date",
+          "type": "unknown",
+          "evidence": "Conversion helper #25423 reads the source entry's start_date at 995973 and UI EventListItem #42311 reads event.start_date at 1715998; the helper may replace the value in its local copy."
+        },
+        {
+          "name": "end_date",
+          "type": "unknown",
+          "evidence": "Conversion helper #25423 reads the source entry's end_date at 995987 and UI EventListItem #42311 reads event.end_date at 1716000."
+        },
+        {
+          "name": "start_time",
+          "type": "unknown",
+          "evidence": "Conversion helper #25423 reads the source entry's start_time at 995969-995980 and UI EventListItem #42311 reads event.start_time at 1716110-1716141. The helper may replace the value in its local copy."
+        },
+        {
+          "name": "end_time",
+          "type": "unknown",
+          "evidence": "Conversion helper #25423 reads the source entry's end_time at 995983-995994 and UI EventListItem #42311 reads event.end_time at 1716147-1716162. The helper may replace the value in its local copy."
+        },
+        {
+          "name": "repeat_start",
+          "type": "unknown",
+          "evidence": "Conversion helper #25423 reads the source entry's repeat_start while preparing its start-date/time conversion at 995975; this is a property read, not evidence of a recurrence contract."
+        },
+        {
+          "name": "title",
+          "type": "unknown",
+          "evidence": "EventListItem #42311 reads event.title at 1716068-1716069 from the Redux event record, which descends from HTTP body array entries through the shallow-copy conversion path."
+        },
+        {
+          "name": "event_type",
+          "type": "unknown",
+          "evidence": "EventListItem #42311 reads event.event_type at 1715977-1715990 and compares it with local event-type presentation records."
+        },
+        {
+          "name": "id",
+          "type": "unknown",
+          "evidence": "Reducer date-dot generation #25347 reads each retained event's id at 993765-993769 and compares it with selectedEvent.id."
+        },
+        {
+          "name": "unique_id",
+          "type": "unknown",
+          "evidence": "Calendar event-list path #42305 uses item.unique_id for row key extraction at 1715802-1715808 and forwards the same item to EventListItem #42311."
+        },
+        {
+          "name": "access",
+          "type": "unknown",
+          "evidence": "Calendar row action #42306 reads event.access and compares it with the literal 'manage' at 1715773-1715782; that client branch does not establish API permission semantics."
+        },
+        {
+          "name": "duration",
+          "type": "unknown",
+          "evidence": "After reducer #25345 passes the HTTP body array entries entry through #25423's Object.assign shallow copy (#25423 header 995958; Object.assign instruction offset 00000015, 995962-995969), calendar marker loop #25347 (#25347 header 993693) reads event.duration at instruction offset 000000cb (993743). Its comparison does not prove a source scalar type."
+        },
+        {
+          "name": "description",
+          "type": "unknown",
+          "evidence": "After the #25423 shallow-copy path, SingleEventScreen #42355 (#42355 header 1718822) reads selectedEvent.description at instruction offsets 000007e8 and 0000089f (1719291, 1719333) and passes the value as content to the detail HTML-rendering path; export helpers #42363/#42368 also read it at offsets 000001ee (1719820-1719824) and 00000169 (1720077-1720082). This observes a rendering path only; it does not establish a scalar type, HTTP media type, or guaranteed MIME string."
+        },
+        {
+          "name": "creator",
+          "type": "object",
+          "evidence": "SingleEventScreen #42355 (#42355 header 1718822) reads selectedEvent.creator at instruction offset 000008cb (1719342) and then creator.name at offset 0000098b-00000991 (1719386-1719388); selectedEvent is sourced from HTTP body array entries through #25423's shallow-copy path. Only this observed nested path is represented.",
+          "fields": [
+            {
+              "name": "name",
+              "type": "unknown",
+              "evidence": "Detail consumer #42355 (#42355 header 1718822) reads selectedEvent.creator.name at instruction offsets 0000098b-00000991 (1719386-1719388) after the row event has passed through #25423's shallow copy; the value type is not established."
+            }
+          ]
+        },
+        {
+          "name": "is_recurring",
+          "type": "unknown",
+          "evidence": "Detail screen #42355 (#42355 header 1718822) reads selectedEvent.is_recurring at instruction offset 00000137 (1718900); edit form #42554 (#42554 header 1729015) reads it at offsets 0000033f and 000008e2 (1729215, 1729557); Apple export #42366 (#42366 header 1719876) reads it at offset 00000032 (1719893). These are client property reads only and establish no recurrence meaning or scalar type."
+        },
+        {
+          "name": "rrule",
+          "type": "unknown",
+          "evidence": "Edit form #42554 (#42554 header 1729015) reads selectedEvent.rrule at instruction offset 000002fb (1729198); Apple export #42366 (#42366 header 1719876) reads it at offset 00000065 (1719902). The export transforms/concatenates the value client-side; no server recurrence semantics or value type is inferred."
+        },
+        {
+          "name": "repeat_end",
+          "type": "unknown",
+          "evidence": "Edit form #42554 (#42554 header 1729015) reads selectedEvent.repeat_end at instruction offset 00000945 (1729582); Apple export #42366 (#42366 header 1719876) reads it at offset 00000046 (1719898) and applies a local replacement before appending an UNTIL value at offsets 0000004c-00000074 (1719899-1719905). This does not prove server recurrence semantics or type."
+        },
+        {
+          "name": "acl_groups",
+          "type": "object",
+          "evidence": "SingleEventScreen #42355 (#42355 header 1718822) reads selectedEvent.acl_groups.view and invokes .map at instruction offsets 00000081-000000b1 (1718858-1718869); edit form #42554 (#42554 header 1729015) reads acl_groups.view at offsets 0000064f-00000670 (1729395-1729402) and acl_groups.manage at offsets 000009fe-00000a04 (1729626-1729628). These are observed UI paths, not an authorization contract.",
+          "fields": [
+            {
+              "name": "view",
+              "type": "array",
+              "evidence": "Detail screen #42355 invokes .map on selectedEvent.acl_groups.view at instruction offsets 00000090-000000b1 (1718862-1718869); this records the client's array use while leaving the contents open.",
+              "items": {
+                "kind": "object",
+                "evidence": "Mapper #42359 (#42359 header 1719562) is called for view.map items and reads item.name, item.id, and item.type at instruction offsets 0000001a, 00000084, and 00000091-0000009c (1719573-1719605); unobserved group-item properties remain open.",
+                "fields": [
+                  {
+                    "name": "name",
+                    "type": "unknown",
+                    "evidence": "Mapper #42359 (#42359 header 1719562) reads each view-group item's name at instruction offset 0000001a (1719573); the value type is not established."
+                  },
+                  {
+                    "name": "id",
+                    "type": "unknown",
+                    "evidence": "Mapper #42359 (#42359 header 1719562) reads each view-group item's id at instruction offsets 00000084-0000008d (1719599-1719601); the value type is not established."
+                  },
+                  {
+                    "name": "type",
+                    "type": "unknown",
+                    "evidence": "Mapper #42359 (#42359 header 1719562) reads each view-group item's type at instruction offsets 00000091-0000009c (1719602-1719605); the value type is not established."
+                  }
+                ]
+              }
+            },
+            {
+              "name": "manage",
+              "type": "unknown",
+              "evidence": "Edit form #42554 (#42554 header 1729015) reads selectedEvent.acl_groups.manage at instruction offsets 000009fe-00000a04 (1729626-1729628). No manage-group item fields or value type are inferred."
+            }
+          ]
+        }
+      ]
+    }
   },
   {
     "operationId": "CreateEvent",
@@ -2350,8 +2392,16 @@
       }
     ],
     "fields": [
-      {"name":"current_page","type":"unknown","evidence":"Reducer #26292 reads action.data.current_page at 1022803-1022805; action.data is the unchanged projected HTTP body dispatched by #26331. The value type is unresolved."},
-      {"name":"data","type":"unknown","evidence":"Reducer #26292 reads action.data.data at 1022814-1022816 and 1022821-1022825 while concatenating and enumerating it. Those client operations do not prove an array or object server type."}
+      {
+        "name": "current_page",
+        "type": "unknown",
+        "evidence": "Reducer #26292 reads action.data.current_page at 1022803-1022805; action.data is the unchanged projected HTTP body dispatched by #26331. The value type is unresolved."
+      },
+      {
+        "name": "data",
+        "type": "unknown",
+        "evidence": "Reducer #26292 reads action.data.data at 1022814-1022816 and 1022821-1022825 while concatenating and enumerating it. Those client operations do not prove an array or object server type."
+      }
     ],
     "complete": false,
     "limitations": [
@@ -2459,8 +2509,16 @@
       }
     ],
     "fields": [
-      {"name":"current_page","type":"unknown","evidence":"Reducer #26292 reads action.data.current_page at 1022724-1022726; action.data is the unchanged projected HTTP body dispatched by #26344. The value type is unresolved."},
-      {"name":"data","type":"unknown","evidence":"Reducer #26292 reads action.data.data at 1022735-1022738 and enumerates/maps it at 1022741-1022756. These client operations do not prove an array type for the server field."}
+      {
+        "name": "current_page",
+        "type": "unknown",
+        "evidence": "Reducer #26292 reads action.data.current_page at 1022724-1022726; action.data is the unchanged projected HTTP body dispatched by #26344. The value type is unresolved."
+      },
+      {
+        "name": "data",
+        "type": "unknown",
+        "evidence": "Reducer #26292 reads action.data.data at 1022735-1022738 and enumerates/maps it at 1022741-1022756. These client operations do not prove an array type for the server field."
+      }
     ],
     "complete": false,
     "limitations": [
@@ -2764,7 +2822,7 @@
     "operationId": "GetQuestionnaires",
     "sourceFunctionId": 26488,
     "kind": "object",
-  "evidence": "Service function #26488 attaches fulfillment handler #26489, which returns Axios response.data as the HTTP body. Caller #26466 passes that body to callback #26467, which dispatches it according to captured view. Reducer #26460 then directly reads body-root current_page and data in questionnaire-category branches. These are partial client-observed fields; the list concatenation does not establish data's type or a complete response schema.",
+    "evidence": "Service function #26488 attaches fulfillment handler #26489, which returns Axios response.data as the HTTP body. Caller #26466 passes that body to callback #26467, which dispatches it according to captured view. Reducer #26460 then directly reads body-root current_page and data in questionnaire-category branches. These are partial client-observed fields; the list concatenation does not establish data's type or a complete response schema.",
     "trace": [
       {
         "functionId": 26488,

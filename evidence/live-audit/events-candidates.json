@@ -1,0 +1,354 @@
+{
+  "domain": "events",
+  "scope": "Live-capture comparison candidates only; this file does not amend evidence/responses/communications.json.",
+  "operations": [
+    {
+      "operationId": "GetEvents",
+      "sourceFunctionId": 25403,
+      "disposition": "root_array_correction_applied_to_static_analysis",
+      "proposedResponseAnalysis": {
+        "kind": "array",
+        "evidence": "The private live capture's `body` is an array (one item in this snapshot). In the client path, service #25403 returns Axios response.data via #25404 (eliis.hasm 995342-995389); caller #25375 assigns that returned body directly to its locally constructed action.data.items (994704-994729); reducer #25344 then calls forEach on action.data.items (993583-993589). Thus the current static model's root object/items property describes the local SET_EVENTS action envelope, not the HTTP body root.",
+        "trace": [
+          {
+            "functionId": 25403,
+            "line": 995342,
+            "evidence": "GET service attaches fulfillment handler #25404."
+          },
+          {
+            "functionId": 25404,
+            "line": 995383,
+            "evidence": "Handler returns the Axios result's data property as the HTTP body."
+          },
+          {
+            "functionId": 25375,
+            "line": 994704,
+            "evidence": "Builds a local SET_EVENTS action and a fresh action.data object; writes selectedKindergartenId to kindergartenId (994719-994720), captured local date to date (994721-994723), the returned HTTP body to items (994724), and local user.timezone to tz (994725-994728). The outer data/items/tz/date/kindergartenId shape is therefore locally composed, not the HTTP body's root object."
+          },
+          {
+            "functionId": 25344,
+            "line": 993275,
+            "evidence": "Reducer reads action.data.items and calls its forEach method at 993583-993589; this property access is on the locally constructed action."
+          },
+          {
+            "functionId": 25345,
+            "line": 993640,
+            "evidence": "For each action.data.items entry, passes the entry and action.data.tz to conversion helper #25423 (993654-993660)."
+          },
+          {
+            "functionId": 25423,
+            "line": 995958,
+            "evidence": "Shallow-copies the event input with Object.assign and reads/converts selected date/time properties; resulting Redux objects are transformed client copies."
+          }
+        ],
+        "items": {
+          "kind": "object",
+          "evidence": "The live body array contains an object item. Client source treats each body element as an event record and shallow-copies it in #25423 (995962-995969). This remains a partial, open item view.",
+          "fields": [
+            {
+              "name": "start_date",
+              "type": "unknown",
+              "evidence": "#25423 reads source start_date at 995973; #42311 reads the converted event value at 1715998. Conversion can rewrite the local copy."
+            },
+            {
+              "name": "end_date",
+              "type": "unknown",
+              "evidence": "#25423 reads source end_date at 995987; #42311 reads the event value at 1716000."
+            },
+            {
+              "name": "start_time",
+              "type": "unknown",
+              "evidence": "#25423 reads source start_time at 995969-995980; #42311 reads the converted event value at 1716110-1716141."
+            },
+            {
+              "name": "end_time",
+              "type": "unknown",
+              "evidence": "#25423 reads source end_time at 995983-995994; #42311 reads the event value at 1716147-1716162."
+            },
+            {
+              "name": "repeat_start",
+              "type": "unknown",
+              "evidence": "#25423 reads source repeat_start at 995975; this is a property read only."
+            },
+            {
+              "name": "title",
+              "type": "unknown",
+              "evidence": "#42311 reads event.title at 1716068-1716069 from the converted record."
+            },
+            {
+              "name": "event_type",
+              "type": "unknown",
+              "evidence": "#42311 reads event.event_type at 1715977-1715990."
+            },
+            {
+              "name": "id",
+              "type": "unknown",
+              "evidence": "Reducer #25347 reads event.id at 993765-993769."
+            },
+            {
+              "name": "unique_id",
+              "type": "unknown",
+              "evidence": "Calendar row path #42305 reads item.unique_id at 1715802-1715808."
+            },
+            {
+              "name": "access",
+              "type": "unknown",
+              "evidence": "Row action #42306 reads event.access at 1715773-1715782; no permission semantics or type inferred."
+            },
+            {
+              "name": "duration",
+              "type": "unknown",
+              "evidence": "Calendar marker loop #25347 reads event.duration at 993743; source scalar type is not established."
+            },
+            {
+              "name": "description",
+              "type": "unknown",
+              "evidence": "Detail screen #42355 reads selectedEvent.description at 1719291 and 1719333; export consumers also read it. This does not establish a wire scalar type."
+            },
+            {
+              "name": "creator",
+              "type": "object",
+              "evidence": "Detail screen #42355 reads selectedEvent.creator and then creator.name at 1719342 and 1719386-1719388, downstream of the body item shallow-copy path.",
+              "fields": [
+                {
+                  "name": "name",
+                  "type": "unknown",
+                  "evidence": "Detail screen #42355 reads selectedEvent.creator.name at 1719386-1719388; value type is not established."
+                }
+              ]
+            },
+            {
+              "name": "is_recurring",
+              "type": "unknown",
+              "evidence": "Detail #42355, edit form #42554, and Apple export #42366 read this property at 1718900, 1729215/1729557, and 1719893. No recurrence semantics or scalar type inferred."
+            },
+            {
+              "name": "rrule",
+              "type": "unknown",
+              "evidence": "Edit form #42554 and Apple export #42366 read this property at 1729198 and 1719902; client transformations do not establish server semantics or type."
+            },
+            {
+              "name": "repeat_end",
+              "type": "unknown",
+              "evidence": "Edit form #42554 and Apple export #42366 read this property at 1729582 and 1719898; no server recurrence semantics or type inferred."
+            },
+            {
+              "name": "acl_groups",
+              "type": "object",
+              "evidence": "Detail screen #42355 reads acl_groups.view and calls map; edit form #42554 reads view and manage. These are UI paths, not an authorization contract.",
+              "fields": [
+                {
+                  "name": "view",
+                  "type": "array",
+                  "evidence": "Detail screen #42355 calls map on acl_groups.view at 1718862-1718869.",
+                  "items": {
+                    "kind": "object",
+                    "evidence": "Mapper #42359 reads view-group item name, id, and type at 1719573-1719605; contents remain open.",
+                    "fields": [
+                      {
+                        "name": "name",
+                        "type": "unknown",
+                        "evidence": "Mapper #42359 reads item.name at 1719573."
+                      },
+                      {
+                        "name": "id",
+                        "type": "unknown",
+                        "evidence": "Mapper #42359 reads item.id at 1719599-1719601."
+                      },
+                      {
+                        "name": "type",
+                        "type": "unknown",
+                        "evidence": "Mapper #42359 reads item.type at 1719602-1719605."
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "manage",
+                  "type": "unknown",
+                  "evidence": "Edit form #42554 reads acl_groups.manage at 1729626-1729628; no value type inferred."
+                }
+              ]
+            }
+          ]
+        },
+        "complete": false,
+        "limitations": [
+          "The model is an open partial view; only source-traced item reads are modeled. Preserve source-backed item fields even when absent from this one-item snapshot; absence is not evidence against them.",
+          "The client-read item fields and their detailed evidence correspond to the existing GetEvents item-field analysis in evidence/responses/communications.json; the correction is to move that item view to the array root, not to discard its fields.",
+          "The private capture is a local capture envelope with keys body/content_type/status; only its body value is treated as the observed HTTP body here. Capture-envelope metadata is not promoted to body fields or API status/media guarantees.",
+          "No server requiredness, completeness, status/media type, nullability, defaults, enum meanings, date-range inclusivity, or recurrence/cancellation semantics are established. Scalar item types remain unknown absent direct source proof."
+        ]
+      },
+      "privateSnapshotShapeOnly": {
+        "captureEnvelopeKeys": [
+          "body",
+          "content_type",
+          "status"
+        ],
+        "bodyType": "array",
+        "bodyItemCount": 1,
+        "bodyItemType": "object",
+        "itemFieldTypes": {
+          "access": "string",
+          "created_at": "string",
+          "created_by": "number",
+          "creator": "object",
+          "deleted_at": "null",
+          "description": "string",
+          "duration": "number",
+          "end_date": "string",
+          "end_time": "null",
+          "event_type": "number",
+          "exceptions": "array",
+          "folder_id": "null",
+          "id": "number",
+          "is_recurring": "boolean",
+          "kindergarten_id": "number",
+          "org_id": "null",
+          "rrule": "null",
+          "start_date": "string",
+          "start_time": "string",
+          "synced_at": "null",
+          "title": "string",
+          "unique_id": "string",
+          "updated_at": "string",
+          "updated_by": "null"
+        },
+        "creatorFieldTypes": {
+          "fname": "string",
+          "id": "number",
+          "lname": "string",
+          "name": "string",
+          "profile_picture": "null"
+        },
+        "valueHandling": "Names and primitive/container types only; no private values, identifiers, dates, descriptions, or names recorded. These are observations from one snapshot, not schema guarantees."
+      },
+      "snapshotOnlyFieldsNotInExistingStaticReadList": [
+        "created_at",
+        "created_by",
+        "deleted_at",
+        "exceptions",
+        "folder_id",
+        "kindergarten_id",
+        "org_id",
+        "synced_at",
+        "updated_at",
+        "updated_by"
+      ],
+      "sourceBackedFieldsAbsentFromThisSnapshotButRetainedAsPartialCandidates": [
+        "repeat_start",
+        "repeat_end",
+        "acl_groups"
+      ],
+      "queryNote": "Calendar callers construct dateFrom/dateTo strings and pass the query object as Axios config.params (research/communications.json); date-range inclusivity and all-caller query completeness remain unproved.",
+      "resolution": "Resolved from original static call flow, with the one-capture array as corroboration: HTTP response.data is assigned wholesale to local action.data.items, which the reducer iterates. The static analysis now models an array with the existing 17 direct item properties and 23 item/nested field nodes retained. The HTTP-root items wrapper was a local Redux-action-envelope attribution error."
+    },
+    {
+      "operationId": "GetRecentEvents",
+      "sourceFunctionId": 25401,
+      "disposition": "sample_types_recorded_separately_static_unknown_types_retained",
+      "privateCaptureInspected": true,
+      "staticResponseAnalysisPath": "evidence/responses/communications.json#GetRecentEvents",
+      "proposedResponseAnalysis": {
+        "kind": "object",
+        "evidence": "Service #25401 returns Axios response.data through #25402 (eliis.hasm 995306-995337). Saga continuation #25372 reads body-root events and count at 994640-994649. The private capture body is an object with events (array, three entries in this snapshot) and count (integer in this snapshot). The runtime observation agrees with the client-read body-root names; it does not establish a complete or universal response contract.",
+        "trace": [
+          {
+            "functionId": 25401,
+            "line": 995306,
+            "evidence": "Service constructs GET /api/kindergartens/{kindergartenId}/events/recent and attaches fulfillment handler #25402."
+          },
+          {
+            "functionId": 25402,
+            "line": 995331,
+            "evidence": "Handler returns the Axios result's data property as the HTTP body."
+          },
+          {
+            "functionId": 25371,
+            "line": 994605,
+            "evidence": "Saga calls service #25401 for selectedKindergartenId and attaches continuation #25372."
+          },
+          {
+            "functionId": 25372,
+            "line": 994630,
+            "evidence": "Reads body.events at 994640-994643 and body.count at 994647-994649, dispatching each as a separate action payload."
+          },
+          {
+            "functionId": 25344,
+            "line": 993275,
+            "evidence": "Reducer stores the dispatched values separately as newEvents and newEventsCount at 993545-993561; no nested event-item reads were found in this flow."
+          }
+        ],
+        "fields": [
+          {
+            "name": "events",
+            "type": "unknown",
+            "evidence": "Saga #25372 reads body.events at 994640-994643 and dispatches it as SET_RECENT_EVENTS.data. Its static flow does not call an array method or inspect event entries; the one runtime capture observes an array of three objects, as recorded separately below."
+          },
+          {
+            "name": "count",
+            "type": "unknown",
+            "evidence": "Saga #25372 reads body.count at 994647-994649 and dispatches it as SET_RECENT_EVENTS_COUNT.data. The client trace does not establish a source type; the one runtime capture observes an integer, as recorded separately below."
+          }
+        ],
+        "complete": false,
+        "limitations": [
+          "Runtime shape and types below are a single context-specific snapshot, not requiredness, completeness, or a universal API guarantee.",
+          "Do not attribute event item fields observed in this capture to static client reads for GetRecentEvents; its traced consumers do not inspect nested entries.",
+          "The capture is a local envelope with body/content_type/status. Only body is treated as the HTTP body; wrapper metadata is not modeled as HTTP response fields or guarantees.",
+          "No generic pagination/error wrapper, server status/media guarantee, nullability, defaults, or complete item schema is inferred."
+        ]
+      },
+      "privateSnapshotShapeOnly": {
+        "captureEnvelopeKeys": [
+          "body",
+          "content_type",
+          "status"
+        ],
+        "bodyType": "object",
+        "bodyKeys": [
+          "count",
+          "events"
+        ],
+        "eventsType": "array",
+        "eventsItemCount": 3,
+        "eventsFirstItemType": "object",
+        "countType": "integer",
+        "eventItemFieldTypes": {
+          "created_at": "string",
+          "created_by": "number",
+          "creator": "object",
+          "deleted_at": "null",
+          "description": "string",
+          "duration": "number",
+          "end_date": "string",
+          "end_time": "null",
+          "event_type": "number",
+          "folder_id": "null",
+          "id": "number",
+          "is_recurring": "boolean",
+          "kindergarten_id": "number",
+          "org_id": "null",
+          "rrule": "null",
+          "start_date": "string",
+          "start_time": "string",
+          "synced_at": "null",
+          "title": "string",
+          "updated_at": "string",
+          "updated_by": "null"
+        },
+        "creatorFieldTypes": {
+          "fname": "string",
+          "id": "number",
+          "lname": "string",
+          "name": "string",
+          "profile_picture": "null"
+        },
+        "valueHandling": "Keys and types only; no private event values, identifiers, dates, descriptions, or names recorded. Snapshot item fields are not attributed to the endpoint's static client-read model."
+      },
+      "staticDisposition": "Retain the current partial HTTP-body-root object candidate with events and count as unknown in the static-derived fields. Store observed array/integer types only as snapshot metadata until independently warranted in a future response-model review; do not create event-item schema from this endpoint's single capture.",
+      "resolution": "Resolved without narrowing static field types: the snapshot-only observation remains separate, recording events as an array and count as an integer in that sample. Static response fields events and count remain unknown because the source only reads and dispatches them, without proving their types."
+    }
+  ]
+}

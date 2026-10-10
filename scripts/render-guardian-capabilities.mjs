@@ -223,7 +223,7 @@ function renderCapabilities(scope, candidates, researchRecords) {
   const lines = [
     "# Guardian-facing Eliis capabilities",
     "",
-    "**Static client research only — not a verified Home Assistant integration or complete server contract.** This generated view contains exactly the 17 operations in the guardian batch. It does not imply that an endpoint is safe, authorized, complete, or suitable for polling. No live login, private-record access, or API mutation was performed.",
+    "**Historical static client research — not a verified Home Assistant integration or complete server contract.** This generated view contains exactly the 17 operations in the original guardian batch and reflects that batch's bytecode-based scope. A later bounded, authorized read-only audit performed login/2FA session creation and scoped account-discovered GETs; see [LIVE-MODEL-AUDIT.md](LIVE-MODEL-AUDIT.md). That audit made no explicit feature writes or seen/read requests. Neither source establishes universal server authorization, ownership, completeness, or absence semantics; this table does not incorporate the runtime sample views.",
     "",
     "## Reading this table",
     "",
@@ -274,7 +274,7 @@ function renderBlockers(scope, candidates) {
     {
       title: "Setup, authentication, and child selection",
       refs: [["auth", "Login"], ["auth", "Login2FA"], ["discovery", "GetUserData"], ["discovery", "GetUserPermissions"], ["discovery", "GetChildProfile"]],
-      text: "A safe setup flow is not established yet: there was no live login, and the static client findings do not prove server-required fields, guardian role/authorization, or a guardian-to-child join. Do not treat the separate `guardians` and `children` init values, a permissions truthiness gate, or a child route argument as proof that the signed-in account may access that child. Do not replace this missing relationship with an employee/staff roster.",
+      text: "The historical static client findings do not prove server-required fields, guardian role/authorization, or a guardian-to-child join. The later bounded audit sampled login/2FA and account-discovered reads, but does not establish those server rules or relationships. Do not treat the separate `guardians` and `children` init values, a permissions truthiness gate, or a child route argument as proof that the signed-in account may access that child. Do not replace this missing relationship with an employee/staff roster.",
     },
     {
       title: "Events",
@@ -300,11 +300,11 @@ function renderBlockers(scope, candidates) {
   const lines = [
     "# Guardian Home Assistant blockers",
     "",
-    "**Planning notes only.** This is a static, evidence-bounded blocker list, not an implementation plan or authorization to make network requests. Endpoint observations come from the Android client; server policy and completeness are not established.",
+    "**Historical planning notes only.** This generated blocker list describes the original static guardian batch, not an implementation plan or authorization to make network requests. The later bounded, authorized audit performed login/2FA session creation and scoped account-discovered GETs; its context-specific results are summarized in [LIVE-MODEL-AUDIT.md](LIVE-MODEL-AUDIT.md). No explicit feature writes or seen/read requests were made. Server policy and completeness remain unestablished.",
     "",
     "## Current decision",
     "",
-    "Do not ship guardian account setup or child-scoped polling until the signed-in guardian-to-child access path is evidenced and reviewed. Keep the proposed integration read-only; no live login, private-record access, or write request was performed for this batch.",
+    "Do not ship guardian account setup or child-scoped polling until the signed-in guardian-to-child access path is evidenced and reviewed. The historical static batch did not include runtime validation; the later audit scope and limitations are described in [LIVE-MODEL-AUDIT.md](LIVE-MODEL-AUDIT.md).",
     "",
   ];
   for (const section of sections) {
@@ -316,7 +316,8 @@ function renderBlockers(scope, candidates) {
       lines.push("Evidence-recorded blockers:", "");
       for (const blocker of uniqueBlockers) {
         const owner = section.refs.find(([domain, operationId]) => (candidateFor(candidates, domain, operationId)?.blockers ?? []).includes(blocker));
-        lines.push(`- ${markdownText(blocker)} ${owner ? operationCitation(scope, owner[1], owner[0]) : ""}`.trim());
+        const renderedBlocker = normalizeHistoricalBlocker(blocker, owner?.[1]);
+        lines.push(`- ${markdownText(renderedBlocker)} ${owner ? operationCitation(scope, owner[1], owner[0]) : ""}`.trim());
       }
       lines.push("");
     }
@@ -333,6 +334,18 @@ function renderBlockers(scope, candidates) {
     "",
   );
   return lines.join("\n");
+}
+
+function normalizeHistoricalBlocker(blocker, operationId) {
+  const loginNote = "The earlier static-only candidate analysis did not include runtime account validation; the later authorized login/2FA and bounded account-discovered GET observations are summarized in the audit report above.";
+  if (/^No live login or private account test was performed;\s*/.test(blocker)) {
+    const remainder = blocker.replace(/^No live login or private account test was performed;\s*/, "");
+    return `${loginNote} ${remainder.charAt(0).toUpperCase()}${remainder.slice(1)}`;
+  }
+  if (operationId === "GetStatusLogs" && blocker === "No write request or live status-log response was used.") {
+    return "The historical static candidate analysis did not use a live status-log response; the later audit sampled two bounded GET contexts, as summarized above. No explicit feature write or seen/read request was made.";
+  }
+  return blocker;
 }
 
 /** Pure renderer: validates scope, candidates, and existing request research without mutating them. */

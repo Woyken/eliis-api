@@ -4,7 +4,7 @@ Scope: `GetEvents` (#25403) and `GetRecentEvents` (#25401) only. Evidence is fro
 
 ## Calendar events (`GetEvents`)
 
-Trace: calendar callbacks #42300 and #42323 (UI module) build a fresh two-key object and call `getEvents` → action #25373 captures the first explicit argument → thunk #25374 forwards it as service argument 2 → EventsServices module #2227 binds service class #25400 to GET operation #25403 → handler #25404 unwraps Axios `response.data` → success continuation #25375 dispatches `body.items` plus local date/timezone context → reducer #25344 iterates items and #25345 calls #25423 to shallow-copy and timezone-transform each item → `EventsList` #42292 selects Redux events and renders `EventListItem` #42311. Row callback #42306 sends the selected row event through `setSelectedEvent` (action creator #25388; reducer #25344 stores `action.data` as `selectedEvent`) before navigating to `Event`; detail selector #42356 and edit selector #42555 both return `state.events.selectedEvent`. The detail/edit consumer chain is downstream of the same fetched `body.items` entries.
+Trace: calendar callbacks #42300 and #42323 (UI module) build a fresh two-key object and call `getEvents` → action #25373 captures the first explicit argument → thunk #25374 forwards it as service argument 2 → EventsServices module #2227 binds service class #25400 to GET operation #25403 → handler #25404 unwraps Axios `response.data` → success continuation #25375 places the whole HTTP body into the local `action.data.items` slot alongside date/timezone context → reducer #25344 iterates items and #25345 calls #25423 to shallow-copy and timezone-transform each item → `EventsList` #42292 selects Redux events and renders `EventListItem` #42311. Row callback #42306 sends the selected row event through `setSelectedEvent` (action creator #25388; reducer #25344 stores `action.data` as `selectedEvent`) before navigating to `Event`; detail selector #42356 and edit selector #42555 both return `state.events.selectedEvent`. The detail/edit consumer chain is downstream of the same fetched HTTP body array entries.
 
 ### Request and date behavior
 
@@ -15,9 +15,9 @@ Trace: calendar callbacks #42300 and #42323 (UI module) build a fresh two-key ob
 
 ### Response fields versus local display values
 
-- The HTTP body nesting established by the reducer is `{ items: [...] }` as a partial client view. The reducer calls `forEach` on `body.items`; response items flow through a shallow-copy helper before they are kept in Redux.
+- The successful HTTP body root is an array, represented as a partial client view of event items. Service #25404 returns Axios `response.data`; continuation #25375 writes that entire returned body into the locally composed `action.data.items` slot at 994724, and reducer #25344 calls `forEach` on that local slot at 993583-993589. The local action-envelope property is not an HTTP-body `items` wrapper. Entries flow through a shallow-copy helper before they are kept in Redux.
 - Original item properties read in the list/calendar path: `start_date`, `end_date`, `start_time`, `end_time`, `repeat_start`, `title`, `event_type`, `id`, `unique_id`, `access`, and `duration`. Their types remain unknown. For date/time properties, #25423 reads the source entry after `Object.assign({}, entry)` (instructions at offsets `0x12`-`0x15`, `0x1b`-`0x21`, `0x2b`-`0x31`, `0x5d`-`0x63`, `0x6d`-`0x73`, and `0x83`-`0x8e`; source lines 995962-995994) and can rewrite the local copy. `duration` is read from the converted event by marker loop #25347 at offset `0xcb` (source line 993743).
-- The selected-event detail/edit/export path adds these response-origin client reads, reachable from `body.items` through the selection chain above:
+- The selected-event detail/edit/export path adds these response-origin client reads, reachable from HTTP body array entries through the selection chain above:
 
   | Item path | Original consumer read(s) | Limits |
   |---|---|---|
@@ -34,7 +34,7 @@ Trace: calendar callbacks #42300 and #42323 (UI module) build a fresh two-key ob
 
 ## Recent events (`GetRecentEvents`)
 
-Trace: service #25401 → Axios unwrapping handler #25402 → saga #25371/#25372 → reducer #25344. The saga reads only body-root `events` and `count`, dispatches them separately, and the reducer stores them as `newEvents` and `newEventsCount`. A tab selector #32426 reads the Redux count for a badge. No nested event entry is inspected in this traced flow, so `events` and `count` stay unknown; `events` is not assumed to be an array.
+Trace: service #25401 → Axios unwrapping handler #25402 → saga #25371/#25372 → reducer #25344. The saga reads only HTTP-body-root `events` and `count`, dispatches them separately, and the reducer stores them as `newEvents` and `newEventsCount`. A tab selector #32426 reads the Redux count for a badge. No nested event entry is inspected in this traced flow, so static field types remain unknown and no item schema is attributed. A separate single-snapshot observation records `events` as an array and `count` as an integer; these are sample-only types, not static or universal constraints.
 
 No query/body is built by #25401; it calls GET with `/api/kindergartens/{kindergartenId}/events/recent`. No pagination behavior, visibility semantics, completeness, or server read/seen effect is established. No follow-up seen/read request occurs in the traced saga/reducer flow, which is not a claim that none exists elsewhere.
 

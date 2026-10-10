@@ -1,0 +1,341 @@
+{
+  "title": "Read-only attendance and food response model candidates",
+  "phase": "context-specific live observations for integration review",
+  "privacy": {
+    "rawPrivateResponsesIncluded": false,
+    "identifiersDatesNamesAndMenuText": "redacted; no scalar private values are recorded",
+    "captureHandling": "Private captures remain outside the repository under the local config directory. Summaries below contain field paths, runtime types, counts, and non-identifying equality relations only.",
+    "requestsByThisAgent": 0
+  },
+  "interpretation": [
+    "Live observations describe only the selected account/context and the captured responses; they do not establish universal requiredness, nullability, enum domains, completeness, or server semantics.",
+    "For values observed only as null, the candidate keeps the modeled primitive type unknown rather than asserting a null-only or nullable contract.",
+    "Static client-read fields remain valid even when absent from a particular live sample. Empty arrays and empty objects do not prove global emptiness, absence semantics, or a complete empty schema.",
+    "The response bodies are distinguished from capture-envelope metadata. HTTP status/content-type envelope values are not modeled as body fields.",
+    "Wire-query templates below contain placeholders only; no child, institution, user, or date values are recorded."
+  ],
+  "observations": [
+    {
+      "operationId": "GetChildCalendar",
+      "sourceFunctionId": 25644,
+      "method": "get",
+      "path": "/api/kindergartens/{kindergartenId}/children/{childId}/calendar",
+      "sample": {
+        "capture": "GetChildCalendar-private.json",
+        "bodyKind": "object",
+        "rootFieldCount": 9,
+        "rootFields": [
+          {"path": "access", "observedTypes": ["string"], "count": 1},
+          {"path": "child_data", "observedTypes": ["object"], "count": 1},
+          {"path": "comment_date", "observedTypes": ["string"], "count": 1},
+          {"path": "days", "observedTypes": ["array"], "count": 1},
+          {"path": "default_status", "observedTypes": ["object"], "count": 1},
+          {"path": "holidays", "observedTypes": ["array"], "count": 1},
+          {"path": "lock_date", "observedTypes": ["string"], "count": 1},
+          {"path": "workday_holiday", "observedTypes": ["integer"], "count": 1},
+          {"path": "workday_weekend", "observedTypes": ["integer"], "count": 1}
+        ],
+        "days": {
+          "itemCount": 7,
+          "itemKind": "object",
+          "sameKeySetAcrossSampleItems": true,
+          "itemFields": [
+            {"path": "days[].course_id", "observedTypes": ["integer"], "count": 7},
+            {"path": "days[].date", "observedTypes": ["string"], "count": 7, "shapeOnly": "YYYY-MM-DD"},
+            {"path": "days[].entry", "observedTypes": ["object"], "count": 7},
+            {"path": "days[].log_count", "observedTypes": ["integer"], "count": 7}
+          ],
+          "entry": {
+            "sameKeySetAcrossSampleItems": true,
+            "fields": [
+              {"path": "days[].entry.child_id", "observedTypes": ["integer"], "count": 7},
+              {"path": "days[].entry.deleted_at", "observedTypes": ["null"], "count": 7, "modelTypeRecommendation": "unknown"},
+              {"path": "days[].entry.diary_id", "observedTypes": ["integer"], "count": 7},
+              {"path": "days[].entry.diary_status", "observedTypes": ["object"], "count": 7},
+              {"path": "days[].entry.has_card_event", "observedTypes": ["integer"], "count": 7},
+              {"path": "days[].entry.id", "observedTypes": ["integer"], "count": 7},
+              {"path": "days[].entry.leave_type_id", "observedTypes": ["null"], "count": 7, "modelTypeRecommendation": "unknown"},
+              {"path": "days[].entry.status", "observedTypes": ["integer"], "count": 7},
+              {"path": "days[].entry.total_time", "observedTypes": ["null"], "count": 7, "modelTypeRecommendation": "unknown"}
+            ],
+            "diaryStatus": {
+              "fields": [
+                {"path": "days[].entry.diary_status.color", "observedTypes": ["string"], "count": 7},
+                {"path": "days[].entry.diary_status.icon", "observedTypes": ["string"], "count": 7},
+                {"path": "days[].entry.diary_status.id", "observedTypes": ["integer"], "count": 7},
+                {"path": "days[].entry.diary_status.name", "observedTypes": ["string"], "count": 7},
+                {"path": "days[].entry.diary_status.type", "observedTypes": ["integer"], "count": 7}
+              ]
+            }
+          },
+          "dateCountDistinct": 7,
+          "entryChildIdSameAcrossRows": true
+        },
+        "childData": {
+          "fields": [
+            {"path": "child_data.arrive_date", "observedTypes": ["null"], "count": 1, "modelTypeRecommendation": "unknown"},
+            {"path": "child_data.leave_date", "observedTypes": ["null"], "count": 1, "modelTypeRecommendation": "unknown"},
+            {"path": "child_data.days", "observedTypes": ["object"], "count": 1}
+          ],
+          "dayKeyCount": 7,
+          "dayKeys": ["d_0", "d_1", "d_2", "d_3", "d_4", "d_5", "d_6"],
+          "dayValueObservedTypes": ["integer"]
+        },
+        "defaultStatus": {
+          "fields": [
+            {"path": "default_status.color", "observedTypes": ["string"]},
+            {"path": "default_status.icon", "observedTypes": ["string"]},
+            {"path": "default_status.id", "observedTypes": ["integer"]},
+            {"path": "default_status.meals", "observedTypes": ["integer"]},
+            {"path": "default_status.name", "observedTypes": ["string"]},
+            {"path": "default_status.type", "observedTypes": ["integer"]}
+          ]
+        },
+        "emptyArrayCounts": {"holidays": 0},
+        "equalityChecks": {"calendarDayDatesUnique": true}
+      },
+      "requestObservation": {
+        "redactedWireTemplate": "?start_date=<redacted YYYY-MM-DD>&end_date=<redacted YYYY-MM-DD>",
+        "queryKeys": ["start_date", "end_date"],
+        "staticCallerEvidence": "The client constructs start_date/end_date from the selected month boundaries and formats both as Y-MM-DD; this does not prove server range inclusivity or timezone semantics.",
+        "querySerialization": "No stronger URL serialization claim than the observed redacted template is made here."
+      },
+      "candidateDisposition": {
+        "recommendation": "Keep the existing nine root paths open/optional and retain their existing unknown semantics where types or nested structures are unproved. Add this sample-backed days[] object/entry path inventory as partial client-context observation; it corrects the former raw-day-item unknown disposition. Keep observed-null leaves typed unknown in a universal model.",
+        "doNotInfer": [
+          "Do not interpret access as a permission contract or publish its value.",
+          "Do not assign meanings to status, has_card_event, workday_holiday, workday_weekend, or default_status fields from their names or observed integer types.",
+          "Do not turn missing arrival/pickup fields, null total_time, an empty log result, or a date row into an absence/presence conclusion.",
+          "Do not treat the seven rows, their key uniformity, or their shared child identifier as a server completeness guarantee or a general branch inventory."
+        ]
+      },
+      "staticEvidence": "evidence/guardian-batch/attendance.json: GetChildCalendar response candidate and trace (#25644, #26402, #26394, #44368, #44393). Static projection previously left raw days[] items unknown; the sample is the source for the additional item paths, not CalendarDay's composed UI model.",
+      "availabilityDisposition": "sampled"
+    },
+    {
+      "operationId": "GetStatusLogs",
+      "sourceFunctionId": 25650,
+      "method": "get",
+      "path": "/api/kindergartens/{kindergartenId}/children/{childId}/status-log",
+      "samples": [
+        {
+          "capture": "GetStatusLogs-private.json",
+          "httpStatusObserved": 200,
+          "bodyKind": "array",
+          "itemCount": 0,
+          "interpretation": "An empty result for the requested current date only; it is not evidence that the child was absent or that the endpoint has no item shape."
+        },
+        {
+          "capture": "GetStatusLogs-recorded-day-private.json",
+          "httpStatusObserved": 200,
+          "bodyKind": "array",
+          "itemCount": 1,
+          "itemKind": "object",
+          "itemFieldTypes": [
+            {"path": "[].comment", "observedTypes": ["null"], "modelTypeRecommendation": "unknown"},
+            {"path": "[].created_at", "observedTypes": ["string"]},
+            {"path": "[].date", "observedTypes": ["string"], "shapeOnly": "YYYY-MM-DD"},
+            {"path": "[].diary_status", "observedTypes": ["object"]},
+            {"path": "[].diary_status.color", "observedTypes": ["string"]},
+            {"path": "[].diary_status.icon", "observedTypes": ["string"]},
+            {"path": "[].diary_status.id", "observedTypes": ["integer"]},
+            {"path": "[].diary_status.name", "observedTypes": ["string"]},
+            {"path": "[].end_time", "observedTypes": ["null"], "modelTypeRecommendation": "unknown"},
+            {"path": "[].id", "observedTypes": ["integer"]},
+            {"path": "[].identifiable", "observedTypes": ["object"]},
+            {"path": "[].identifiable.fname", "observedTypes": ["string"], "sensitiveValueOmitted": true},
+            {"path": "[].identifiable.id", "observedTypes": ["integer"]},
+            {"path": "[].identifiable.lname", "observedTypes": ["string"], "sensitiveValueOmitted": true},
+            {"path": "[].identifiable.name", "observedTypes": ["string"], "sensitiveValueOmitted": true},
+            {"path": "[].identifiable.type", "observedTypes": ["string"]},
+            {"path": "[].identifiable.unique_id", "observedTypes": ["string"], "sensitiveValueOmitted": true},
+            {"path": "[].identifiable_id", "observedTypes": ["integer"]},
+            {"path": "[].identifiable_type", "observedTypes": ["string"]},
+            {"path": "[].start_time", "observedTypes": ["null"], "modelTypeRecommendation": "unknown"},
+            {"path": "[].status", "observedTypes": ["integer"]},
+            {"path": "[].type", "observedTypes": ["string"]}
+          ],
+          "equalityChecks": {
+            "identifiableIdEqualsNestedId": true,
+            "queryDateWasChosenFromReturnedCalendarDayWithPositiveLogCount": true,
+            "queryDateMatchesSelectedCalendarEntry": true
+          },
+          "interpretation": "One previously returned calendar date was selected because its calendar entry had a positive log_count; the query then returned one row. This establishes a linked, scoped observation, not a general log-count invariant or meaning for status/type."
+        }
+      ],
+      "requestObservation": {
+        "redactedWireTemplate": "?date=<redacted YYYY-MM-DD>",
+        "queryKeys": ["date"],
+        "serialization": "The observed date was URL-encoded without changing the date text; the request carries one date, not a range.",
+        "staticCallerEvidence": "#25650 builds params={date: p3}; the history caller supplies one selected date formatted YYYY-MM-DD. No range boundary or timezone interpretation is established."
+      },
+      "candidateDisposition": {
+        "recommendation": "Retain the array response and static direct-read item fields. Add the sample-backed item keys and nested paths as partial observations; sample-only identity/id paths must not be presented as verified actor semantics. Record integer status and string item.type as observed for this row only, without enum meanings.",
+        "preserveStaticOnlyPaths": [
+          "Keep any independently justified static-only item path, including diary_status.type if present in an integration candidate, as an optional/unobserved branch; it is absent from this single live item's diary_status object and must not be deleted on that basis.",
+          "The static top-level start_time and end_time reads remain valid despite being null in this sample; their UI use does not make them log event timestamps or arrival/pickup proof."
+        ],
+        "doNotInfer": [
+          "An empty response array does not mean absence, no attendance, or a universally empty log.",
+          "The positive calendar log_count and one matching returned item do not prove all count/log consistency behavior.",
+          "Do not derive status/type labels or transitions from observed primitive types or UI labels.",
+          "Do not publish identifiable names, IDs, unique identifiers, or actual dates."
+        ]
+      },
+      "staticEvidence": "evidence/guardian-batch/attendance.json and evidence/responses/children-diary-files.json: GetStatusLogs; service #25650, caller/action #26404-#26405, consumer #43079. Static UI reads establish item paths independently of the empty sample.",
+      "availabilityDisposition": "sampled_empty_and_one_row"
+    },
+    {
+      "operationId": "GetAbsenceModalData",
+      "sourceFunctionId": 25652,
+      "method": "get",
+      "path": "/api/kindergartens/{kindergartenId}/children/{childId}/absences/modal",
+      "sample": {
+        "capture": "GetAbsenceModalData-private.json",
+        "httpStatusObserved": 200,
+        "bodyKind": "object",
+        "rootFieldCount": 1,
+        "fields": [{"path": "min_date", "observedTypes": ["string"], "count": 1, "shapeOnly": "redacted date string"}]
+      },
+      "requestObservation": {
+        "redactedWireTemplate": "?form%5Buser_id%5D=<redacted>",
+        "queryKey": "form",
+        "serialization": "Parent-observed URL-encoded form[user_id] query for this successful read. This single sample does not prove Axios serialization in general, that the server recognized/applied the parameter, or its filtering semantics.",
+        "staticCallerEvidence": "#25652 wraps its third argument as params.form; #26414 constructs the passed object from the current user's id. Static evidence does not establish nested wire serialization."
+      },
+      "candidateDisposition": {
+        "recommendation": "Keep min_date as an open top-level field. Record string as the observed type in this response only; retain the current unknown canonical primitive type unless separately approved by the integration owner. No other response property is observed.",
+        "doNotInfer": [
+          "Do not publish the min_date value or assert its format, timezone, inclusivity, or server meaning.",
+          "Do not infer access/restrict flags or write permission from this body or the successful GET."
+        ]
+      },
+      "staticEvidence": "evidence/guardian-batch/attendance.json: GetAbsenceModalData trace (#25652, #26414, #26415) and min_date client read.",
+      "availabilityDisposition": "sampled"
+    },
+    {
+      "operationId": "GetDayMenu",
+      "sourceFunctionId": 26007,
+      "method": "get",
+      "path": "/api/kindergartens/{kindergartenId}/foodmenu/day",
+      "sample": {
+        "capture": "GetDayMenu-private.json",
+        "httpStatusObserved": 200,
+        "bodyKind": "object",
+        "rootFieldCount": 0,
+        "rootFields": []
+      },
+      "requestObservation": {
+        "redactedWireTemplate": "?date=<redacted YYYY-MM-DD>",
+        "queryKeys": ["date"],
+        "serialization": "Parent-observed query date was URL-encoded without changing its text. The URL contains one date value; no range parameters were observed.",
+        "staticCallerEvidence": "#26007 directly concatenates its date argument after ?date= and calls Axios without a params object; caller formatting/semantic date interval is not established for this operation."
+      },
+      "candidateDisposition": {
+        "recommendation": "Leave the response disposition unknown with no fields. The one empty object is an observed body instance, not an empty-menu or publication-state contract; do not replace the unknown response with a complete empty object schema or borrow fields from GetWeekMenu.",
+        "doNotInfer": [
+          "Do not infer that the menu has no entries, is unpublished, or has any particular date semantics from this empty object.",
+          "The static reducer has no located consumer for state.foodmenu.day_menu, so weekly day-item fields remain inapplicable."
+        ]
+      },
+      "staticEvidence": "evidence/guardian-batch/food.json: GetDayMenu body passthrough into state.foodmenu.day_menu; no consumer found.",
+      "availabilityDisposition": "sampled_empty_object"
+    },
+    {
+      "operationId": "GetWeekMenu",
+      "sourceFunctionId": 26009,
+      "method": "get",
+      "path": "/api/kindergartens/{kindergartenId}/foodmenu/week",
+      "sample": {
+        "capture": "GetWeekMenu-private.json",
+        "bodyKind": "object",
+        "rootFieldCount": 14,
+        "rootFields": [
+          {"path": "created_at", "observedTypes": ["string"]},
+          {"path": "created_by", "observedTypes": ["integer"]},
+          {"path": "days", "observedTypes": ["array"], "count": 1},
+          {"path": "end", "observedTypes": ["string"], "shapeOnly": "redacted date string"},
+          {"path": "id", "observedTypes": ["integer"]},
+          {"path": "info", "observedTypes": ["null"], "modelTypeRecommendation": "unknown"},
+          {"path": "kindergarten_id", "observedTypes": ["integer"]},
+          {"path": "published", "observedTypes": ["null"], "modelTypeRecommendation": "unknown"},
+          {"path": "settings", "observedTypes": ["object"]},
+          {"path": "start", "observedTypes": ["string"], "shapeOnly": "redacted date string"},
+          {"path": "updated_at", "observedTypes": ["string"]},
+          {"path": "updated_by", "observedTypes": ["null"], "modelTypeRecommendation": "unknown"},
+          {"path": "uploaded_file", "observedTypes": ["null"], "modelTypeRecommendation": "unknown"},
+          {"path": "uploaded_files", "observedTypes": ["array"], "count": 0}
+        ],
+        "settings": {
+          "fields": [
+            {"path": "settings.workday_holiday", "observedTypes": ["integer"]},
+            {"path": "settings.workday_weekend", "observedTypes": ["integer"]}
+          ]
+        },
+        "days": {
+          "itemCount": 5,
+          "itemKind": "object",
+          "sameKeySetAcrossSampleItems": true,
+          "itemFields": [
+            {"path": "days[].breakfast", "observedTypes": ["string"], "count": 5, "contentOmitted": true},
+            {"path": "days[].created_at", "observedTypes": ["string"], "count": 5},
+            {"path": "days[].created_by", "observedTypes": ["integer"], "count": 5},
+            {"path": "days[].date", "observedTypes": ["string"], "count": 5, "shapeOnly": "YYYY-MM-DD"},
+            {"path": "days[].dinner", "observedTypes": ["null"], "count": 5, "modelTypeRecommendation": "unknown"},
+            {"path": "days[].id", "observedTypes": ["integer"], "count": 5},
+            {"path": "days[].kindergarten_id", "observedTypes": ["integer"], "count": 5},
+            {"path": "days[].lunch", "observedTypes": ["string"], "count": 5, "contentOmitted": true},
+            {"path": "days[].supper", "observedTypes": ["string"], "count": 5, "contentOmitted": true},
+            {"path": "days[].updated_at", "observedTypes": ["string"], "count": 5},
+            {"path": "days[].updated_by", "observedTypes": ["null"], "count": 5, "modelTypeRecommendation": "unknown"},
+            {"path": "days[].week_id", "observedTypes": ["integer"], "count": 5}
+          ],
+          "dateCountDistinct": 5
+        },
+        "equalityChecks": {
+          "eachDayWeekIdEqualsRootId": true,
+          "eachDayKindergartenIdEqualsRootKindergartenId": true
+        }
+      },
+      "requestObservation": {
+        "redactedWireTemplate": "?date=<redacted YYYY-MM-DD>",
+        "queryKeys": ["date"],
+        "serialization": "Parent-observed query date was URL-encoded without changing its text; one date value was sent, not a start/end range.",
+        "staticCallerEvidence": "#26009 concatenates one date argument after ?date=. The screen formats its initial date as Y-MM-DD and offers a week-range selector, but the client does not compute or send week boundaries; server interval semantics are unknown."
+      },
+      "candidateDisposition": {
+        "recommendation": "Retain the existing open partial root model and response.days nesting. Add sample-backed root and day-item paths as observed context, including the singular uploaded_file separately from uploaded_files. The five sampled day objects support the observed field paths/types but not completeness or universal type/nullability claims.",
+        "mealValues": "Breakfast/lunch/supper were strings and dinner was null in all five sampled day objects. Do not publish their text, model null-only dinner as a universal null type, assert universal meal nullability, or infer structured dish/group semantics from the strings.",
+        "doNotInfer": [
+          "The week publication state, display fallback, and root id do not establish a server publication enum/status; published was null only in this sample.",
+          "The empty uploaded_files array and null uploaded_file are sample-specific and do not establish that files are unavailable generally.",
+          "Do not publish actor IDs, institution IDs, menu contents, or actual date values.",
+          "Do not interpret integer settings values or infer boolean/domain semantics from their names."
+        ]
+      },
+      "staticEvidence": "evidence/guardian-batch/food.json: GetWeekMenu raw-body passthrough and traced UI reads in #35897/#35903/#37310/#37314/#37318. Static model already distinguishes root uploaded_files from file-item paths; uploaded_file is a separate sample-observed root key.",
+      "availabilityDisposition": "sampled"
+    },
+    {
+      "operationId": "DownloadFoodmenuFile",
+      "sourceFunctionId": 37318,
+      "method": "get",
+      "path": "/api/kindergartens/{kindergartenId}/foodmenu/{foodmenuId}/download",
+      "sample": null,
+      "requestObservation": {
+        "performed": false,
+        "reason": "The sampled weekly body had an empty uploaded_files array and a null uploaded_file; the user explicitly directed not to download without a structured file item.",
+        "query": "No query parameter is constructed by the static URL builder."
+      },
+      "candidateDisposition": {
+        "recommendation": "Retain the existing opaque binary/transport disposition with no JSON body model. No download was attempted; file bytes, MIME type, status/headers, and native download metadata were not inspected.",
+        "doNotInfer": [
+          "The current week sample does not establish that files are always absent.",
+          "Do not model native downloader result/event metadata as HTTP response-body fields."
+        ]
+      },
+      "staticEvidence": "evidence/guardian-batch/food.json: DownloadFoodmenuFile (#37318/#37319), RNFS streams response bytes to a local path; static binary disposition is retained.",
+      "availabilityDisposition": "explicitly_skipped_no_sample_file"
+    }
+  ]
+}

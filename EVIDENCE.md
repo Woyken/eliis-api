@@ -65,4 +65,12 @@ The exact public sample and its context/limitations are retained in [`evidence/p
 
 ## Publication boundary
 
+The later [authorized read-only audit](docs/LIVE-MODEL-AUDIT.md) is distinct from
+the earlier public/static work. Login and 2FA created a session, then selected
+GETs used only account-discovered institution/child identifiers. Raw private
+responses, credentials and cookies remain outside the repo; the tracked audit
+contains shapes/types and generic equality outcomes only. Authenticated sample
+views are explicitly non-normative and are not substituted for unproved server
+contracts. CI does not replay these requests.
+
 Keep original APKs, Hermes bytecode, full disassembly, full third-party decompiled sources, credentials, and private responses local and untracked. Publish only authored specs/scripts and minimal evidence identifiers, hashes, and descriptions. The MIT license for this project grants no rights to third-party application material and no permission to access accounts or records.

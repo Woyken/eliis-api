@@ -107,6 +107,27 @@ test("renders all 17 validated capability rows and the feature blocker sections 
   assert.match(first.blockers, /Never infer absence/);
   assert.match(first.blockers, /GetGuardianDiary/);
   assert.match(first.blockers, /week_menu/);
+  assert.match(first.capabilities, /Historical static client research/);
+  assert.match(first.capabilities, /later bounded, authorized read-only audit/);
+  assert.match(first.blockers, /later bounded, authorized audit/);
+});
+
+test("renders stale static-batch blocker notes as historical and acknowledges sampled audit scope", () => {
+  const input = fixture();
+  const auth = input.candidates.find((item) => item.domain === "auth");
+  auth.capabilities.find((item) => item.operationId === "Login").blockers.unshift(
+    "No live login or private account test was performed; server-required fields remain unknown.",
+  );
+  const attendance = input.candidates.find((item) => item.domain === "attendance");
+  attendance.capabilities.find((item) => item.operationId === "GetStatusLogs").blockers.push(
+    "No write request or live status-log response was used.",
+  );
+
+  const { blockers } = renderGuardianBatch(input);
+  assert.ok(blockers.includes("candidate analysis did not include runtime account validation"));
+  assert.ok(blockers.includes("candidate analysis did not use a live status"));
+  assert.doesNotMatch(blockers, /No live login or private account test was performed/);
+  assert.doesNotMatch(blockers, /No write request or live status-log response was used/);
 });
 
 test("escapes untrusted evidence and field/path text in Markdown table output", () => {

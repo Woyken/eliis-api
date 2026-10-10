@@ -1,5 +1,11 @@
 # Eliis API — evidence-backed TypeSpec
 
+## Authorized runtime model audit
+
+The [read-only audit report](docs/LIVE-MODEL-AUDIT.md) compares 14 sampled guardian-scope endpoints with the static models and records 3 safe skips. The `GetEvents` root-array correction is backed by both original code and a live observation; its previous `items` wrapper belonged to a local action, not the HTTP body.
+
+[Sample-qualified TypeSpec views](models/live-observations.tsp) and [JSON schema views](scripts/observed-response-models.json) describe the redacted payload shapes actually observed. They are separate from OpenAPI operation responses and are **not universal server contracts**. All fields remain optional/open, null-only or conflicting observations are unconstrained, and raw private values/cookies/credentials are excluded.
+
 An **unofficial, unaffiliated** description of HTTP behavior traced in the **Eliis Android app 2.69** (`com.eliis`, version code `33012366`), using **Hermes bytecode v96**. The observed production API host is **https://api.eliis.eu**.
 
 This project is for education, research, and authorized personal integration. It is not endorsed by Eliis and is **not a complete or guaranteed server contract**. App behavior and server behavior may change independently.
@@ -9,7 +15,7 @@ This project is for education, research, and authorized personal integration. It
 - [Documentation viewer](https://woyken.github.io/eliis-api/) — published by GitHub Pages after deployment; API submission is disabled.
 - [OpenAPI JSON](https://woyken.github.io/eliis-api/openapi.json) · [OpenAPI YAML](https://woyken.github.io/eliis-api/openapi.yaml) — normalized artifacts from the same build.
 - [Authentication](AUTH.md): the client sends an `eliis_csrf` cookie, not an assumed Bearer token.
-- [Evidence and limitations](EVIDENCE.md): provenance, source identifiers, and the sole recorded live check.
+- [Evidence and limitations](EVIDENCE.md): provenance, source identifiers, the public language-list check, and the later authorized read-only audit.
 - [Response models and evidence](RESPONSE-MODELS.md): how to interpret partial static-derived models, client observations, opaque operations, and coverage.
 - [Guardian-facing capability observations](docs/GUARDIAN-CAPABILITIES.md) and [Home Assistant blockers](docs/GUARDIAN-HA-BLOCKERS.md): bounded static client findings for discovery, events, attendance, diary, and food menus—not verified server permissions or an implemented integration.
 - [`evidence/research/`](evidence/research/): operation-level bytecode findings; [`evidence/inventory.json`](evidence/inventory.json): source hashes and candidate function inventory.
@@ -38,6 +44,6 @@ The build generates TypeSpec from research records and compiles OpenAPI under `t
 
 ## Scope and safety
 
-Only the previously recorded unauthenticated `GET /api/lang/languages` was checked live (HTTP 200 on 2026-10-09). No login, write request, or private-record access was performed. Documented write/auth routes are bytecode observations, not instructions to exercise them. Respect account permissions, privacy, and service terms; never publish credentials or children's records.
+The earlier public check was an unauthenticated `GET /api/lang/languages` (HTTP 200 on 2026-10-09). A later bounded, authorized read-only audit performed login and 2FA session creation, then sampled scoped GETs using account-discovered institution/child context; see the [audit report](docs/LIVE-MODEL-AUDIT.md). No explicit feature writes or seen/read requests were made. These context-specific observations do not prove universal server rules, ownership, authorization, completeness, or absence semantics. Documented write routes remain bytecode observations, not instructions to exercise them. Respect account permissions, privacy, and service terms; never publish credentials or children's records.
 
 The repository contains authored specifications, scripts, and minimal evidence records—not APKs, full disassembly, or full third-party decompiled sources. [MIT](LICENSE) applies to project-authored material, not to the Eliis application or other third-party material.

@@ -1,0 +1,149 @@
+{
+  "scope": "GuardianFeed25632 GuardianDiary25630 DiaryData25935",
+  "runtimeRequestsMade": false,
+  "accountBoundary": {
+    "basis": "Account discovery returned one child and one guardian record. The guardian record's user_id matches the signed-in user and its kindergarten_id matches that child's institution; child_access_view is enabled. No explicit child-to-guardian join or ownership guarantee is claimed.",
+    "identifierHandling": "Use only the already account-discovered institution and that one child. Do not include identifier values in this tracked plan, enumerate child records, or expose any other child's data.",
+    "authorityCaveat": "The UI's MyChild branch establishes the intended parent-client route, not universal server authorization semantics. The bounded account context is the reason this one child-scoped feed request is eligible."
+  },
+  "operations": [
+    {
+      "operationId": "GetGuardianFeed",
+      "sourceFunctionId": 25632,
+      "safeToRequest": true,
+      "disposition": "PLAN_ONE_READ_ONLY_GET",
+      "reasons": [
+        "The exact parent UI path is MyChildStack -> screen label Child diary. MyChildStack constructs this screen with the route's childId and employeeView=false (HASM #44019, lines 1795664-1795763).",
+        "The child diary screen reads route.params.childId and parent-side MyChild state, then supplies a fetch callback (HASM #44110, lines 1799541-1799597). The parent callback invokes getGuardianFeed with the first page and the non-employee branch (HASM #44115, lines 1799677-1799698).",
+        "For page 1 the thunk constructs a date parameter from its default date formatter using YYYY-MM-DD and calls the guardian-feed service (HASM #25515, lines 1000422-1000465). Page is client-side action state, not a query parameter.",
+        "The service issues Axios GET to the child-scoped guardian-feed path with config.params (HASM #25632, lines 1003318-1003338), then returns response.data through #25633. The success callback #25516 only forwards that data in a local Redux dispatch and keeps page bookkeeping separate (lines 1000474-1000503).",
+        "The scoped source review of the GET, success callback, focus/resume handlers, list callbacks, and rendered entry component found no explicit seen/read/write service call. Focus/resume, pull-to-refresh, content-size fill, and end-reached handlers can cause additional feed GETs; this plan limits validation to one first-page request and does not ask to exercise those triggers.",
+        "The controlling session's account observation is limited to one discovered child, an account-matching guardian record in that institution, and child_access_view enabled. No explicit child-to-guardian ownership relation is inferred, and no other-child lookup is needed or permitted."
+      ],
+      "method": "GET",
+      "pathTemplate": "/api/kindergartens/{account-discovered-kindergartenId}/children/{account-discovered-childId}/guardian-feed",
+      "queryTemplate": {
+        "date": "<the app's current-day date string, formatted YYYY-MM-DD>"
+      },
+      "page": "First page (page=1 in client action state; not sent as a query parameter).",
+      "requestBudget": "One request only. Do not launch the full screen as the transport if it may trigger automatic focus/content-size fetches. Do not invoke refresh, pagination, resume, retries, or any other endpoint as part of this validation.",
+      "responseHandling": "Keep the raw response private. Publish only redacted field names/shapes/types for the authorized child. If the response includes any data for a child other than the one already account-discovered, do not copy, print, or publish that data; stop and report only that the boundary check failed.",
+      "sourceTrace": [
+        {
+          "functionId": 44019,
+          "lines": "1795664-1795763",
+          "evidence": "MyChildStack registers the Child diary screen, carrying the selected childId and employeeView=false."
+        },
+        {
+          "functionId": 44110,
+          "lines": "1799541-1799597",
+          "evidence": "ChildDiaryScreen reads route.params.childId, obtains MyChild-derived state, and creates the fetchEntries callback."
+        },
+        {
+          "functionId": 44115,
+          "lines": "1799677-1799698",
+          "evidence": "Parent screen callback calls getGuardianFeed for the requested page with the non-employee argument."
+        },
+        {
+          "functionId": 25515,
+          "lines": "1000422-1000465",
+          "evidence": "Thunk selects the current diary-next-date source; for page one it formats the default current date as YYYY-MM-DD, constructs params.date, and calls the service."
+        },
+        {
+          "functionId": 25632,
+          "lines": "1003318-1003338",
+          "evidence": "Axios GET to /api/kindergartens/{kindergartenId}/children/{childId}/guardian-feed with the supplied params object."
+        },
+        {
+          "functionId": 25633,
+          "lines": "1003348-1003354",
+          "evidence": "Returns Axios response.data unchanged."
+        },
+        {
+          "functionId": 25516,
+          "lines": "1000474-1000503",
+          "evidence": "Success callback forwards the response body unchanged in local dispatch; page is client state."
+        },
+        {
+          "functionId": 34930,
+          "lines": "1391814-1391997",
+          "evidence": "Feed UI wires focus, app-resume, pull-to-refresh, content-size, and end-reached handlers. These can initiate additional GETs and are excluded by the one-request budget."
+        },
+        {
+          "functionId": 34949,
+          "lines": "1392765-1393054",
+          "evidence": "Rendered feed-entry component constructs display content and callbacks for local presentation; no seen/read service call is present in this inspected branch."
+        }
+      ],
+      "skipReason": null
+    },
+    {
+      "operationId": "GetGuardianDiary",
+      "sourceFunctionId": 25630,
+      "safeToRequest": false,
+      "disposition": "SKIPPED_UNPROVED_GUARDIAN_ACCESS",
+      "reasons": [
+        "The service is registered in ChildServices and issues a GET to /api/kindergartens/{kindergartenId}/children/{childId}/diary with no query (HASM #25620 lines 1002896-1002936; #25630 lines 1003280-1003302).",
+        "Full-disassembly reference search found only the export registration, with no established action, reducer, or UI caller consuming its result; the registered helper is not part of the proven parent Child diary -> GuardianFeed route.",
+        "The existing guardian permission/context observation is not evidence of access behavior for this separate, unmodeled endpoint. A GET can also have unobservable server-side effects; do not probe it or use it as a substitute for GuardianFeed."
+      ],
+      "method": "GET",
+      "pathTemplate": "/api/kindergartens/{kindergartenId}/children/{childId}/diary",
+      "queryTemplate": {},
+      "sourceTrace": [
+        {
+          "functionId": 25620,
+          "lines": "1002896-1002936",
+          "evidence": "ChildServices registers getGuardianDiary."
+        },
+        {
+          "functionId": 25630,
+          "lines": "1003280-1003302",
+          "evidence": "Builds the child /diary Axios GET; the continuation returns response.data."
+        },
+        {
+          "functionId": 25631,
+          "lines": "1003307-1003313",
+          "evidence": "Returns the body without establishing a consumer or body fields."
+        }
+      ],
+      "skipReason": "Guardian access and safe-use behavior for this secondary endpoint are unproved; it has no established parent UI caller. Do not send it, test for 403, or substitute it for the feed read."
+    },
+    {
+      "operationId": "GetDiaryData",
+      "sourceFunctionId": 25935,
+      "safeToRequest": false,
+      "disposition": "SKIPPED_EMPLOYEE_SCOPE_AND_AUTOSAVE_SIDE_EFFECT",
+      "reasons": [
+        "The service builds GET /api/kindergartens/{selectedKindergartenId}/diary with params.course from course_id and params.date (HASM #25935, lines 1012899-1012927). This is not the child-scoped guardian feed or guardian diary route.",
+        "The established body-reading thunk is employee diary flow: #25782 reads state.user.employee and employee.selected_course_id, then #25783 consumes the service result. The actual account context has no employee state; do not substitute a staff record or probe access.",
+        "A separate caller #43846 sets local loading state, calls flushDiaryAutoSaves, then invokes getDiaryData and performs modal cleanup (#43846, lines 1787831-1787885). Avoid entering that UI/caller path because the auto-save flush may issue writes.",
+        "No 403 test or other staff-scope/access probe is authorized or needed."
+      ],
+      "method": "GET",
+      "pathTemplate": "/api/kindergartens/{selectedKindergartenId}/diary",
+      "queryTemplate": {
+        "course": "<employee-selected course_id>",
+        "date": "<employee-selected diary date>"
+      },
+      "sourceTrace": [
+        {
+          "functionId": 25935,
+          "lines": "1012899-1012927",
+          "evidence": "Constructs params.course and params.date and issues the kindergarten diary GET."
+        },
+        {
+          "functionId": 25782,
+          "lines": "1008630-1008676",
+          "evidence": "Employee diary thunk reads user.employee/selected_course_id and diary.selected_date, then calls getDiaryData."
+        },
+        {
+          "functionId": 43846,
+          "lines": "1787831-1787885",
+          "evidence": "Separate caller flushes diary autosaves before calling getDiaryData."
+        }
+      ],
+      "skipReason": "Staff/employee-scoped state is absent for this account, and one reachable caller flushes auto-saves before the GET. Do not issue this request or attempt a staff-scope denial test."
+    }
+  ]
+}

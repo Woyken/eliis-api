@@ -1,6 +1,6 @@
 # Authentication observations
 
-These findings describe the Eliis 2.69 Android client, not a verified server authentication contract. Production API: `https://api.eliis.eu`. **No authenticated login was performed.**
+These findings describe the Eliis 2.69 Android client, not a verified server authentication contract. Production API: `https://api.eliis.eu`. A later bounded, authorized audit performed password login and 2FA session creation, followed by scoped read-only GETs; see the [audit report](docs/LIVE-MODEL-AUDIT.md). Those context-specific observations do not establish universal authentication or authorization rules.
 
 ## Cookie flow
 
@@ -28,8 +28,8 @@ The APK metadata is 2.69; function #6017 contains a stale internal `appVersion` 
 - #16308 (`login`): `POST /api/auth/login`; traced body keys are `username`, `password`, and `platform`.
 - #16309 (`login2FA`): `POST /api/auth/login-2fa`.
 
-These routes are documented from bytecode only. See the operation research records for individually traced payload details; route names alone do not prove fields, requiredness, or challenge semantics. Login responses, cookie lifetime/refresh, actual 2FA behavior, and authenticated permissions remain untested. This repository provides **no automated login scripts** and requires no account credentials for building or publishing documentation.
+The request construction is documented from bytecode. The bounded runtime audit observed one password-login challenge and one valid-session 2FA branch; other success/error branches, cookie lifetime/refresh, and server-side authorization remain untested. See the operation research records for individually traced payload details; route names and one runtime context do not prove server-required fields or universal challenge semantics. This repository provides **no automated login scripts** and requires no account credentials for building or publishing documentation.
 
 For any separately authorized integration, treat the serialized cookie as a secret and use secure credential storage rather than source files, logs, screenshots, or workflow secrets for this project. Do not copy real passwords, 2FA codes, session cookies, or private records into issues or examples. Swagger UI here is documentation-only, not an authentication client.
 
-See [EVIDENCE.md](EVIDENCE.md) for provenance and the recorded unauthenticated language-list check.
+See [EVIDENCE.md](EVIDENCE.md) for provenance, the earlier unauthenticated language-list check, and the later authorized read-only audit.
