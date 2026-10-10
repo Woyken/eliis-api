@@ -1,0 +1,734 @@
+[
+  {
+    "operationId": "GetLanguages",
+    "sourceFunctionId": 12709,
+    "kind": "object",
+    "evidence": "The service returns response.data (#12710); its Metro caller reads and dispatches top-level langs and country from that fulfillment value. The object shape is a partial client-observed projection, not a complete response model.",
+    "trace": [
+      {"functionId": 12709, "line": 509969, "evidence": "GET /api/lang/languages; fulfillment is handled by #12710."},
+      {"functionId": 12710, "line": 509988, "evidence": "Returns the fulfillment argument's data property unchanged."},
+      {"functionId": 12696, "line": 509592, "evidence": "Metro caller invokes the bound getLanguages service and passes its fulfillment to #12697."},
+      {"functionId": 12697, "line": 509612, "evidence": "Reads langs and country from the service fulfillment and dispatches each value; no value type is established."}
+    ],
+    "fields": [
+      {"name": "langs", "type": "unknown", "evidence": "#12697 line 509622 reads langs from the #12710 response.data fulfillment, then passes it as SET_LANGUAGES.data at line 509623."},
+      {"name": "country", "type": "unknown", "evidence": "#12697 lines 509629-509631 reads country from the same #12710 response.data fulfillment and passes it as SET_COUNTRY.data."}
+    ],
+    "complete": false,
+    "limitations": ["No static sample or public-language payload was used to infer nested fields or types.", "Other response properties and server completeness are unknown."]
+  },
+  {
+    "operationId": "GetTranslations",
+    "sourceFunctionId": 12711,
+    "kind": "unknown",
+    "evidence": "The service resolves response.data when truthy and otherwise returns a local empty object; the translations consumer uses the result as a resource bundle, but no HTTP-body property schema is established.",
+    "trace": [
+      {"functionId": 12711, "line": 509999, "evidence": "GET /api/lang/{language}.json; fulfillment and rejection handlers are #12712 and #12713."},
+      {"functionId": 12712, "line": 510027, "evidence": "Selects response.data when truthy; the empty-object fallback is local behavior, not a server response shape."},
+      {"functionId": 12699, "line": 509660, "evidence": "Metro caller invokes getTranslations using a language derived from the local translation country and passes fulfillment to #12700."},
+      {"functionId": 12700, "line": 509693, "evidence": "Uses the fulfillment value as an i18n resource bundle; no individual HTTP response keys are attributed."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["The resource-bundle consumer does not provide safe, individually evidenced HTTP body fields.", "The local {} fallback is not modeled as an HTTP response; rejected/falsy branches do not establish the server body's type."]
+  },
+  {
+    "operationId": "Login",
+    "sourceFunctionId": 16308,
+    "kind": "object",
+    "evidence": "The login service returns the isolated auth Axios promise unchanged. The exact password-login Metro caller passes its result to handleLoginResponse, which reads Axios response.data.type; only type belongs in this HTTP body model. Axios response.status is transport metadata and is excluded.",
+    "trace": [
+      {"functionId": 16308, "line": 648612, "evidence": "POST /api/auth/login through the separately created auth Axios client; promise is returned without a service response.data projection."},
+      {"functionId": 16306, "line": 648505, "evidence": "Installs the auth service methods, including login, on the service object; this binding is not a response-body transformation."},
+      {"functionId": 16244, "line": 647225, "evidence": "Metro userLogin action returns wrapper #16245."},
+      {"functionId": 16245, "line": 647238, "evidence": "Calls login service and returns its raw Axios promise."},
+      {"functionId": 13512, "line": 543678, "evidence": "Password login UI handler calls userLogin and attaches response continuation #13513."},
+      {"functionId": 13513, "line": 543736, "evidence": "Wraps the login success handler in async response-processing callback #13515."},
+      {"functionId": 13515, "line": 543765, "evidence": "Invokes the captured handleLoginResponse callback with the resolved login result."},
+      {"functionId": 13511, "line": 543661, "evidence": "Login response callback wrapper forwards its arguments to the response processor."},
+      {"functionId": 13510, "line": 543554, "evidence": "Reads response.data.type for login branching and response.status for client flow control; status is the Axios transport status, not a body field."}
+    ],
+    "fields": [
+      {"name": "type", "type": "unknown", "evidence": "#13510 lines 543564-543567 reads type from the raw Axios fulfillment's data property. Since #16308 returns the raw Axios promise, this is HTTP body path type, not an HTTP-body field named data. No type value domain is modeled."}
+    ],
+    "complete": false,
+    "limitations": ["The separately-read Axios response.status is transport metadata and is not modeled as body content.", "Only the type property is observed; no enum, presence guarantee, or other body field is established."]
+  },
+  {
+    "operationId": "Login2FA",
+    "sourceFunctionId": 16309,
+    "kind": "object",
+    "evidence": "The service returns response.data unchanged and the exact Metro two-factor login caller reads status and, on its valid branch, locked_at from that returned value. These are partial client-observed fields without enum/type or presence guarantees.",
+    "trace": [
+      {"functionId": 16309, "line": 648644, "evidence": "POST /api/auth/login-2fa and forwards fulfillment to #16310."},
+      {"functionId": 16310, "line": 648673, "evidence": "Returns the Axios fulfillment's data property unchanged."},
+      {"functionId": 27140, "line": 1048334, "evidence": "Two-factor login screen handler calls login2FA and connects fulfillment to #27141."},
+      {"functionId": 27141, "line": 1048370, "evidence": "Passes fulfillment to async response processor #27143."},
+      {"functionId": 27143, "line": 1048399, "evidence": "Reads status from service result; on the valid branch also reads locked_at, then drives local handlers/first-load flow."}
+    ],
+    "fields": [
+      {"name": "status", "type": "unknown", "evidence": "#27143 line 1048407 reads status from the value returned by #16310 (response.data) and compares it to a client string literal; this does not establish an enum or a server value domain."},
+      {"name": "locked_at", "type": "unknown", "evidence": "#27143 lines 1048410-1048414 reads locked_at from that same service result on one client branch and passes the value to a local handler; no value type is established."}
+    ],
+    "complete": false,
+    "limitations": ["The valid/status comparisons are client branches, not server enum/requiredness claims.", "locked_at is only read on one branch; all other body fields and nested shapes remain unknown."]
+  },
+  {
+    "operationId": "SocialLogin",
+    "sourceFunctionId": 16311,
+    "kind": "unknown",
+    "evidence": "The social-login service returns the Axios response unchanged; the named Metro action wrapper forwards the service result without a body projection. No exact body-property consumer was established.",
+    "trace": [
+      {"functionId": 16311, "line": 648684, "evidence": "POST /api/auth/callback/{provider}/login; fulfillment is chained through #16312."},
+      {"functionId": 16312, "line": 648735, "evidence": "Returns the Axios fulfillment unchanged; response wrapper properties are not HTTP body fields."},
+      {"functionId": 16246, "line": 647254, "evidence": "Metro socialLogin action creator returns thunk #16247."},
+      {"functionId": 16247, "line": 647267, "evidence": "Calls socialLogin service and connects fulfillment to #16248 and rejection to #16249."},
+      {"functionId": 16248, "line": 647290, "evidence": "Success continuation forwards the raw result without a body-property read."},
+      {"functionId": 16249, "line": 647300, "evidence": "Separate rejection continuation; its error value is not a success HTTP body."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["Axios response wrapper/status/header fields are intentionally excluded from the HTTP body model.", "No body shape or consumer field reads were proven."]
+  },
+  {
+    "operationId": "SocialRegister",
+    "sourceFunctionId": 16314,
+    "kind": "unknown",
+    "evidence": "The social-registration service returns the Axios response unchanged; the named Metro action wrapper does not project body fields. No exact consumer field reads were established.",
+    "trace": [
+      {"functionId": 16314, "line": 648760, "evidence": "POST /api/auth/callback/{provider}/register; fulfillment is chained through #16315."},
+      {"functionId": 16315, "line": 648811, "evidence": "Returns the Axios fulfillment unchanged; its wrapper metadata is not an HTTP body schema."},
+      {"functionId": 16250, "line": 647310, "evidence": "Metro socialRegister action creator returns thunk #16251."},
+      {"functionId": 16251, "line": 647323, "evidence": "Calls socialRegister service and connects fulfillment to #16252 and rejection to #16253."},
+      {"functionId": 16252, "line": 647346, "evidence": "Success continuation forwards the result without a body-property read."},
+      {"functionId": 16253, "line": 647356, "evidence": "Separate rejection continuation; its error value is not a success HTTP body."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["Axios response wrapper/status/header fields are intentionally excluded from the HTTP body model.", "No body shape or consumer field reads were proven."]
+  },
+  {
+    "operationId": "RegisterUser",
+    "sourceFunctionId": 16317,
+    "kind": "unknown",
+    "evidence": "The response handler checks response.status === 200 and returns response.data only on that branch; otherwise it returns undefined. This client branch does not prove server status behavior or a body schema.",
+    "trace": [
+      {"functionId": 16317, "line": 648836, "evidence": "POST /api/auth/register; fulfillment is handled by #16318."},
+      {"functionId": 16318, "line": 648856, "evidence": "Tests the Axios response status and conditionally projects response.data; status is transport metadata, not body content."},
+      {"functionId": 16254, "line": 647366, "evidence": "Metro registerUser action creator returns thunk #16255."},
+      {"functionId": 16255, "line": 647379, "evidence": "Calls the service and passes fulfillment to #16256."},
+      {"functionId": 16256, "line": 647399, "evidence": "Success continuation does not read response-body fields."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["The non-200/undefined branch and rejection branch remain unresolved as HTTP body shapes.", "No body type or response properties are established."]
+  },
+  {
+    "operationId": "ResendEmailVerification",
+    "sourceFunctionId": 16319,
+    "kind": "unknown",
+    "evidence": "The service handler returns response.data; the Metro action thunk forwards that value as action data without reading body properties.",
+    "trace": [
+      {"functionId": 16319, "line": 648872, "evidence": "POST /api/auth/verification/resend; fulfillment is projected by #16320."},
+      {"functionId": 16320, "line": 648892, "evidence": "Returns Axios response.data unchanged."},
+      {"functionId": 16263, "line": 647495, "evidence": "Metro action creator returns thunk #16264."},
+      {"functionId": 16264, "line": 647508, "evidence": "Calls the service and passes fulfillment to #16265."},
+      {"functionId": 16265, "line": 647528, "evidence": "Forwards fulfillment without reading response-body properties."},
+      {"functionId": 13505, "line": 543431, "evidence": "Login screen dispatches the resend action; this caller constructs the request, not a response model."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["The response is passed through without a proven body shape or consumer field read.", "No status, media type, or server-required response shape is inferred."]
+  },
+  {
+    "operationId": "RequestForgotPassword",
+    "sourceFunctionId": 16321,
+    "kind": "unknown",
+    "evidence": "The service handler returns response.data; the Metro action thunk passes that fulfillment onward without reading response-body properties.",
+    "trace": [
+      {"functionId": 16321, "line": 648903, "evidence": "POST /api/auth/password/email; fulfillment is projected by #16322."},
+      {"functionId": 16322, "line": 648923, "evidence": "Returns Axios response.data unchanged."},
+      {"functionId": 16260, "line": 647452, "evidence": "Metro action creator returns thunk #16261."},
+      {"functionId": 16261, "line": 647465, "evidence": "Calls the service and passes fulfillment to #16262."},
+      {"functionId": 16262, "line": 647485, "evidence": "Forwards fulfillment without reading response-body properties."},
+      {"functionId": 28196, "line": 1110862, "evidence": "Request-password screen dispatches the action; caller evidence concerns request construction, not response fields."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["No response-body property reads or primitive/collection use proving a shape were established.", "Error and rejection branches remain outside a success-body model."]
+  },
+  {
+    "operationId": "VerifyTwoFactorAuthKey",
+    "sourceFunctionId": 16335,
+    "kind": "unknown",
+    "evidence": "The service's fulfillment handler returns response.data unchanged. Its downstream caller/reducer consumer chain remains untraced, so no body fields are attributed to this opaque response.",
+    "trace": [
+      {"functionId": 16335, "line": 649120, "evidence": "POST /api/auth/2fa/verify; fulfillment is handled by #16336."},
+      {"functionId": 16336, "line": 649140, "evidence": "Returns Axios response.data unchanged."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["Service projection establishes only response.data, not its type or properties.", "The exact downstream caller/reducer consumer chain remains untraced; this is an open coverage disposition, not evidence that no consumer exists."]
+  },
+  {
+    "operationId": "RecoverAccount",
+    "sourceFunctionId": 16337,
+    "kind": "unknown",
+    "evidence": "The response handler returns response.data unchanged; the direct account-recovery caller evidence concerns construction of the request only, and no response fields are projected or read.",
+    "trace": [
+      {"functionId": 16337, "line": 649151, "evidence": "POST /api/auth/recover-2fa; fulfillment is handled by #16338."},
+      {"functionId": 16338, "line": 649171, "evidence": "Returns Axios response.data unchanged."},
+      {"functionId": 27174, "line": 1049954, "evidence": "Account-recovery screen calls the service directly; traced instructions construct the request and do not read response-body properties."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["The direct caller trace covers request construction only; downstream success-value consumers were not exhaustively traced, so the opaque disposition does not establish absence of consumers.", "The arbitrary request body is not treated as a response model."]
+  },
+  {
+    "operationId": "Logout",
+    "sourceFunctionId": 16323,
+    "kind": "unknown",
+    "evidence": "The logout service returns the Axios response unchanged. The native response wrapper, cookie-interceptor activity, and its status are not HTTP body fields; no body projection was found.",
+    "trace": [
+      {"functionId": 16323, "line": 648934, "evidence": "GET /api/auth/logout; returns the raw Axios promise through fulfillment handler #16324."},
+      {"functionId": 16324, "line": 648973, "evidence": "Returns the Axios response object unchanged; this does not establish response.data's shape."},
+      {"functionId": 13727, "line": 549892, "evidence": "Login flow invokes the logout action; inspected path does not project response-body fields."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["Raw Axios response/status/header/cookie metadata is excluded from the body model.", "No HTTP body type or fields are proven."]
+  },
+  {
+    "operationId": "GetUserData",
+    "sourceFunctionId": 16344,
+    "kind": "object",
+    "evidence": "The service projects response.data. Its exact Metro thunk #16201 calls this service and passes the fulfillment to #16202, which reads the listed top-level properties and nested user.privacy_confirmed before dispatching state actions. This is a partial static-derived view, not a complete response contract.",
+    "trace": [
+      {"functionId": 16344, "line": 649457, "evidence": "GET /api/common/init and chains fulfillment to #16345."},
+      {"functionId": 16345, "line": 649497, "evidence": "Returns response.data unchanged."},
+      {"functionId": 16201, "line": 646074, "evidence": "Metro getUserData thunk calls the service with notification token and login method, then passes the result to #16202."},
+      {"functionId": 16202, "line": 646106, "evidence": "Reads kindergartens, organizations, employees, guardians, children, officials and user directly from the service fulfillment; dispatches those values. Its kindergartens and organizations find callbacks read each tested item.id at lines 646288 and 646303. Reads user.privacy_confirmed and dispatches it as local privacy status."},
+      {"functionId": 16203, "line": 646283, "evidence": "The kindergartens find callback reads item.id at line 646288 and compares it with selectedKindergartenId; the read is from an item of the exact response-derived collection."},
+      {"functionId": 16204, "line": 646298, "evidence": "The organizations find callback reads item.id at line 646303 and compares it with selectedOrganizationId; the read is from an item of the exact response-derived collection."}
+    ],
+    "fields": [
+      {"name": "kindergartens", "type": "array", "evidence": "#16202 reads kindergartens from #16345 response.data (lines 646112-646114); it calls find on that value at 646130-646139, and #16203 reads item.id at 646288. This is a partial static client array/item view, not a server guarantee or complete item schema.", "items": {"kind": "object", "evidence": "#16203 is the find callback for the response-derived kindergartens value and reads the callback item's id at line 646288; no other item fields or item type are established.", "fields": [
+        {"name": "id", "type": "unknown", "evidence": "#16203 line 646288 reads id from the item supplied by #16202's kindergartens.find at lines 646130-646139, whose collection is the #16345 response.data.kindergartens value."}
+      ]}},
+      {"name": "organizations", "type": "array", "evidence": "#16202 reads organizations from #16345 response.data (lines 646165-646167); it calls find on that value at 646183-646192, and #16204 reads item.id at 646303. This is a partial static client array/item view, not a server guarantee or complete item schema.", "items": {"kind": "object", "evidence": "#16204 is the find callback for the response-derived organizations value and reads the callback item's id at line 646303; no other item fields or item type are established.", "fields": [
+        {"name": "id", "type": "unknown", "evidence": "#16204 line 646303 reads id from the item supplied by #16202's organizations.find at lines 646183-646192, whose collection is the #16345 response.data.organizations value."}
+      ]}},
+      {"name": "employees", "type": "unknown", "evidence": "#16202 lines 646208-646216 reads employees from response.data and dispatches that exact value as SET_USER_EMPLOYEES.data."},
+      {"name": "guardians", "type": "unknown", "evidence": "#16202 lines 646219-646227 reads guardians from response.data and dispatches that exact value as SET_USER_GUARDIANS.data."},
+      {"name": "children", "type": "unknown", "evidence": "#16202 lines 646230-646239 reads children from response.data, checks its length, and dispatches the same value; this does not establish an array type or item shape."},
+      {"name": "officials", "type": "unknown", "evidence": "#16202 lines 646242-646250 reads officials from response.data and dispatches that exact value as SET_USER_OFFICIALS.data."},
+      {"name": "user", "type": "object", "evidence": "#16202 lines 646253-646263 reads user from response.data and dispatches the same value as SET_USER.data; nested access at lines 646266-646267 proves a read of user.privacy_confirmed.", "fields": [
+        {"name": "privacy_confirmed", "type": "unknown", "evidence": "#16202 lines 646266-646267 reads privacy_confirmed on the user value obtained from response.data.user; no value type is established."}
+      ]}
+    ],
+    "complete": false,
+    "limitations": ["The find callbacks establish only a partial client-side array/item view for kindergartens and organizations; they do not guarantee server array types, item presence, or item completeness.", "Dispatch action objects and Redux state are not HTTP response fields; only values read from the response.data argument are represented.", "The handler also compares local privacy state and emits a local TOGGLE_APP_PRIVACY action; that local status is not modeled as an HTTP response property.", "Other collection element shapes, response keys, missing/error branches, and completeness are unknown."]
+  },
+  {
+    "operationId": "GetUserProfile",
+    "sourceFunctionId": 16346,
+    "kind": "unknown",
+    "evidence": "The service projects response.data and its Metro thunk passes the value as SET_USER.data without inspecting body properties. The reducer/action wrapper does not establish a field schema.",
+    "trace": [
+      {"functionId": 16346, "line": 649508, "evidence": "GET /api/common/user/profile; fulfillment is handled by #16347."},
+      {"functionId": 16347, "line": 649527, "evidence": "Returns response.data unchanged."},
+      {"functionId": 16295, "line": 648210, "evidence": "Metro getUserProfile action creator returns thunk #16296."},
+      {"functionId": 16296, "line": 648221, "evidence": "Calls getUserProfile and passes fulfillment to #16297."},
+      {"functionId": 16297, "line": 648241, "evidence": "Places the entire service fulfillment into SET_USER.data; no individual response properties are read."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["An object-shaped Redux action is local; it does not prove the response.data shape.", "No body property or nested field is inferred from the user-profile UI or labels."]
+  },
+  {
+    "operationId": "GetUserPermissions",
+    "sourceFunctionId": 16348,
+    "kind": "object",
+    "evidence": "The service returns response.data. Its exact thunk passes that value unchanged through setUserPermissions and userReducer into user.permissions; the menu selector subsequently reads applications_access_manage. This partial client-observed read does not establish its value type, presence, or a complete permission schema.",
+    "trace": [
+      {"functionId": 16348, "line": 649538, "evidence": "GET /api/kindergartens/{kindergartenId}/user/permissions; fulfillment projects data in #16349."},
+      {"functionId": 16349, "line": 649566, "evidence": "Returns response.data unchanged."},
+      {"functionId": 16209, "line": 646412, "evidence": "Metro getUserPermissions action creator returns thunk #16210."},
+      {"functionId": 16210, "line": 646425, "evidence": "Calls getUserPermissions and connects fulfillment to #16211."},
+      {"functionId": 16211, "line": 646450, "evidence": "Passes the service fulfillment to setUserPermissions (#16195); the rejection branch is separate in #16212."},
+      {"functionId": 16195, "line": 645993, "evidence": "setUserPermissions constructs SET_PERMISSIONS with its input unchanged as action.data (lines 645997-646002)."},
+      {"functionId": 25102, "line": 986102, "evidence": "userReducer stores SET_PERMISSIONS action.data unchanged as user.permissions (lines 986450-986458)."},
+      {"functionId": 32321, "line": 1265046, "evidence": "The selector reads applications_access_manage from user.permissions (line 1265057); its conditional comparison does not establish a server Boolean type or requiredness."}
+    ],
+    "fields": [
+      {"name": "applications_access_manage", "type": "unknown", "evidence": "#32321 line 1265057 reads applications_access_manage from user.permissions; #25102 stores the unchanged #16195 action.data as user.permissions at lines 986453-986458, and #16195 receives the #16349 projection of this operation's response.data through #16211. The selector's condition does not establish field type or presence."}
+    ],
+    "complete": false,
+    "limitations": ["Only applications_access_manage is a traced client read; its value type, presence, and other permission fields remain unknown.", "The selector's conditional behavior is not a server type, requiredness, or permission-domain assertion; response completeness is unknown."]
+  },
+  {
+    "operationId": "GetUserMenu",
+    "sourceFunctionId": 16351,
+    "kind": "object",
+    "evidence": "The service projects response.data.left, not response.data. The exact Metro thunk passes that value to setUserMenu, and the reducer stores it unchanged as user_menu. Traced selectors and reducers then read a partial menu-item view; the HTTP body model retains left at its original root nesting.",
+    "trace": [
+      {"functionId": 16351, "line": 649587, "evidence": "GET /api/common/menu; fulfillment is handled by #16352."},
+      {"functionId": 16352, "line": 649609, "evidence": "Reads response.data then its left property and returns that value; the operation result is the nested left value."},
+      {"functionId": 16216, "line": 646560, "evidence": "Metro getUserMenu thunk calls the service and forwards fulfillment to #16218."},
+      {"functionId": 16218, "line": 646594, "evidence": "Passes the already-projected left value to setUserMenu (#16196)."},
+      {"functionId": 16196, "line": 646007, "evidence": "setUserMenu constructs SET_USER_MENU with its input unchanged as action.data (lines 646011-646016)."},
+      {"functionId": 25102, "line": 986102, "evidence": "userReducer stores SET_USER_MENU action.data unchanged as user_menu (lines 986441-986449). The separate child-image action can add local profile_picture values; those are excluded from the response model."},
+      {"functionId": 32319, "line": 1265022, "evidence": "The component selector reads state.user.user_menu (lines 1265026-1265029)."},
+      {"functionId": 32317, "line": 1264318, "evidence": "The MenuItems component creates #32331 and invokes getSubmenuItems with one explicit argument at line 1264520, so #32331 uses its default root_name lookup key."},
+      {"functionId": 32308, "line": 1263848, "evidence": "The menu consumer calls find on user_menu and reads item.subitems.active_children and item.subitems.inactive_children (lines 1263855-1263882)."},
+      {"functionId": 32309, "line": 1263888, "evidence": "The menu find callback reads item.route (lines 1263892-1263896)."},
+      {"functionId": 32331, "line": 1265212, "evidence": "The submenu consumer looks up a menu-item key selected using the root_name string at line 1265224, then reads the found item's subitems at lines 1265234-1265242."},
+      {"functionId": 32332, "line": 1265248, "evidence": "The submenu find callback dynamically reads the chosen property from each item (line 1265255); #32331 supplies root_name as that key at lines 1265224-1265230."},
+      {"functionId": 25104, "line": 986577, "evidence": "The reducer's active_children map callback reads each child-item id at line 986587 while applying a separate local child-image action."},
+      {"functionId": 25105, "line": 986607, "evidence": "The reducer's inactive_children map callback reads each child-item id at line 986617 while applying a separate local child-image action."}
+    ],
+    "fields": [
+      {"name": "left", "type": "array", "evidence": "#16352 line 649615 reads left from the response.data object returned by GET /api/common/menu. Downstream #32308 calls find on the unchanged user_menu value (line 1263856), supporting a partial static client array view; keep it at the HTTP body's root, not the service's projected result shape.", "items": {"kind": "object", "evidence": "The response-derived left value is passed unchanged through #16196 and #25102 to user_menu; #32309 and #32331/#32332 read menu-item properties from that collection. This is a partial observed item view only.", "fields": [
+        {"name": "route", "type": "unknown", "evidence": "#32309 lines 1263892-1263896 reads route from an item found in the response-derived user_menu collection by #32308 at line 1263856."},
+        {"name": "root_name", "type": "unknown", "evidence": "#32317 calls #32331 with one explicit argument at line 1264520; #32331 therefore uses its default literal root_name key at line 1265224, and #32332 line 1265255 reads that key from menu items in the response-derived user_menu collection. No value type is established."},
+        {"name": "subitems", "type": "object", "evidence": "#32331 lines 1265238-1265242 and #32308 lines 1263862-1263880 read subitems and its active_children/inactive_children properties on response-derived menu items.", "fields": [
+          {"name": "active_children", "type": "array", "evidence": "#32308 reads subitems.active_children and calls map on it (lines 1263865-1263871); the reducer also maps the response-derived child entries (lines 986422-986426). This is a partial client array view, not a complete server schema.", "items": {"kind": "object", "evidence": "The reducer maps entries from response-derived subitems.active_children and reads an entry's id at #25104 line 986587. Locally added profile_picture is excluded.", "fields": [
+            {"name": "id", "type": "unknown", "evidence": "#25104 line 986587 reads id from a child item in the response-derived active_children collection; the value is compared with a local childId. Its type is not established."}
+          ]}},
+          {"name": "inactive_children", "type": "array", "evidence": "#32308 reads subitems.inactive_children and calls map on it (lines 1263876-1263882); the reducer also maps the response-derived child entries (lines 986427-986431). This is a partial client array view, not a complete server schema.", "items": {"kind": "object", "evidence": "The reducer maps entries from response-derived subitems.inactive_children and reads an entry's id at #25105 line 986617. Locally added profile_picture is excluded.", "fields": [
+            {"name": "id", "type": "unknown", "evidence": "#25105 line 986617 reads id from a child item in the response-derived inactive_children collection; the value is compared with a local childId. Its type is not established."}
+          ]}}
+        ]}
+      ]}}
+    ],
+    "complete": false,
+    "limitations": ["The array/item view is based on client find/map/property accesses, not a server guarantee, full menu schema, or field-presence assertion.", "The reducer can add profile_picture from a separate child-image action; that optimistic/local field and other locally composed menu state are not modeled as HTTP response fields.", "All modeled property value types remain unknown and response completeness is unestablished.", "The caller's local action wrapper is not included in the HTTP body."]
+  },
+  {
+    "operationId": "GetUserKindergartenMenu",
+    "sourceFunctionId": 16354,
+    "kind": "object",
+    "evidence": "The service projects response.data.left, not response.data. Its named Metro thunk passes that value to setUserMenu, and the reducer stores it unchanged as user_menu. Traced selectors and reducers then read a partial menu-item view; the HTTP body model preserves the left root property.",
+    "trace": [
+      {"functionId": 16354, "line": 649631, "evidence": "GET /api/kindergartens/{kindergartenId}/menu; fulfillment is handled by #16355."},
+      {"functionId": 16355, "line": 649659, "evidence": "Reads response.data then left and returns the nested value."},
+      {"functionId": 16235, "line": 646960, "evidence": "Metro action creator returns thunk #16236."},
+      {"functionId": 16236, "line": 646973, "evidence": "Calls the service and binds fulfillment to #16237; rejection is handled separately by #16238."},
+      {"functionId": 16237, "line": 646998, "evidence": "Passes the service's projected left value to setUserMenu (#16196)."},
+      {"functionId": 16196, "line": 646007, "evidence": "setUserMenu constructs SET_USER_MENU with its input unchanged as action.data (lines 646011-646016)."},
+      {"functionId": 25102, "line": 986102, "evidence": "userReducer stores SET_USER_MENU action.data unchanged as user_menu (lines 986441-986449). The separate child-image action can add local profile_picture values; those are excluded from the response model."},
+      {"functionId": 32319, "line": 1265022, "evidence": "The component selector reads state.user.user_menu (lines 1265026-1265029)."},
+      {"functionId": 32317, "line": 1264318, "evidence": "The MenuItems component creates #32331 and invokes getSubmenuItems with one explicit argument at line 1264520, so #32331 uses its default root_name lookup key."},
+      {"functionId": 32308, "line": 1263848, "evidence": "The menu consumer calls find on user_menu and reads item.subitems.active_children and item.subitems.inactive_children (lines 1263855-1263882)."},
+      {"functionId": 32309, "line": 1263888, "evidence": "The menu find callback reads item.route (lines 1263892-1263896)."},
+      {"functionId": 32331, "line": 1265212, "evidence": "The submenu consumer looks up a menu-item key selected using the root_name string at line 1265224, then reads the found item's subitems at lines 1265234-1265242."},
+      {"functionId": 32332, "line": 1265248, "evidence": "The submenu find callback dynamically reads the chosen property from each item (line 1265255); #32331 supplies root_name as that key at lines 1265224-1265230."},
+      {"functionId": 25104, "line": 986577, "evidence": "The reducer's active_children map callback reads each child-item id at line 986587 while applying a separate local child-image action."},
+      {"functionId": 25105, "line": 986607, "evidence": "The reducer's inactive_children map callback reads each child-item id at line 986617 while applying a separate local child-image action."}
+    ],
+    "fields": [
+      {"name": "left", "type": "array", "evidence": "#16355 line 649665 reads left from the response.data object for GET /api/kindergartens/{kindergartenId}/menu. Downstream #32308 calls find on the unchanged user_menu value (line 1263856), supporting a partial static client array view; left remains at the HTTP body's root.", "items": {"kind": "object", "evidence": "The response-derived left value is passed unchanged through #16196 and #25102 to user_menu; #32309 and #32331/#32332 read menu-item properties from that collection. This is a partial observed item view only.", "fields": [
+        {"name": "route", "type": "unknown", "evidence": "#32309 lines 1263892-1263896 reads route from an item found in the response-derived user_menu collection by #32308 at line 1263856."},
+        {"name": "root_name", "type": "unknown", "evidence": "#32317 calls #32331 with one explicit argument at line 1264520; #32331 therefore uses its default literal root_name key at line 1265224, and #32332 line 1265255 reads that key from menu items in the response-derived user_menu collection. No value type is established."},
+        {"name": "subitems", "type": "object", "evidence": "#32331 lines 1265238-1265242 and #32308 lines 1263862-1263880 read subitems and its active_children/inactive_children properties on response-derived menu items.", "fields": [
+          {"name": "active_children", "type": "array", "evidence": "#32308 reads subitems.active_children and calls map on it (lines 1263865-1263871); the reducer also maps the response-derived child entries (lines 986422-986426). This is a partial client array view, not a complete server schema.", "items": {"kind": "object", "evidence": "The reducer maps entries from response-derived subitems.active_children and reads an entry's id at #25104 line 986587. Locally added profile_picture is excluded.", "fields": [
+            {"name": "id", "type": "unknown", "evidence": "#25104 line 986587 reads id from a child item in the response-derived active_children collection; the value is compared with a local childId. Its type is not established."}
+          ]}},
+          {"name": "inactive_children", "type": "array", "evidence": "#32308 reads subitems.inactive_children and calls map on it (lines 1263876-1263882); the reducer also maps the response-derived child entries (lines 986427-986431). This is a partial client array view, not a complete server schema.", "items": {"kind": "object", "evidence": "The reducer maps entries from response-derived subitems.inactive_children and reads an entry's id at #25105 line 986617. Locally added profile_picture is excluded.", "fields": [
+            {"name": "id", "type": "unknown", "evidence": "#25105 line 986617 reads id from a child item in the response-derived inactive_children collection; the value is compared with a local childId. Its type is not established."}
+          ]}}
+        ]}
+      ]}}
+    ],
+    "complete": false,
+    "limitations": ["The array/item view is based on client find/map/property accesses, not a server guarantee, full menu schema, or field-presence assertion.", "The reducer can add profile_picture from a separate child-image action; that optimistic/local field and other locally composed menu state are not modeled as HTTP response fields.", "All modeled property value types remain unknown and response completeness is unestablished.", "The caller's local action wrapper is not included in the HTTP body."]
+  },
+  {
+    "operationId": "UpdateUser",
+    "sourceFunctionId": 16357,
+    "kind": "unknown",
+    "evidence": "The service projects response.data unchanged. The named update action forwards the value; callers vary request construction, but no safe HTTP response-body fields are established.",
+    "trace": [
+      {"functionId": 16357, "line": 649681, "evidence": "PUT /api/common/user/update; fulfillment is handled by #16358."},
+      {"functionId": 16358, "line": 649701, "evidence": "Returns response.data unchanged."},
+      {"functionId": 16223, "line": 646755, "evidence": "Metro updateUser action creator returns thunk #16224."},
+      {"functionId": 16224, "line": 646768, "evidence": "Calls updateUser and passes fulfillment to #16225."},
+      {"functionId": 16225, "line": 646790, "evidence": "Dispatches the full fulfillment as SET_USER.data without reading response-body fields."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["Request payload fields and optimistic/local user state are excluded from response analysis.", "No response-body consumer property reads are proven."]
+  },
+  {
+    "operationId": "UpdateUserName",
+    "sourceFunctionId": 16359,
+    "kind": "unknown",
+    "evidence": "The service's fulfillment projection is response.data; no response fields are directly read in the traced service path.",
+    "trace": [
+      {"functionId": 16359, "line": 649712, "evidence": "PUT /api/common/user/name; fulfillment is handled by #16360."},
+      {"functionId": 16360, "line": 649732, "evidence": "Returns response.data unchanged."},
+      {"functionId": 16226, "line": 646808, "evidence": "Metro updateUserName action creator returns thunk #16227."},
+      {"functionId": 16227, "line": 646821, "evidence": "Calls updateUserName and passes fulfillment to #16228."},
+      {"functionId": 16228, "line": 646843, "evidence": "Dispatches the full fulfillment as SET_USER.data without reading response-body fields."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["Request name fields or local profile updates do not establish response properties.", "No exact downstream response-field read is established."]
+  },
+  {
+    "operationId": "UploadUserPicture",
+    "sourceFunctionId": 16361,
+    "kind": "object",
+    "evidence": "The upload service returns response.data and its exact Metro upload thunk reads profile_picture from that value before dispatching it as an image update. This establishes one partial body field only.",
+    "trace": [
+      {"functionId": 16361, "line": 649743, "evidence": "POST /api/common/settings/upload with multipart request; fulfillment is handled by #16362."},
+      {"functionId": 16362, "line": 649768, "evidence": "Returns response.data unchanged."},
+      {"functionId": 16229, "line": 646861, "evidence": "Metro updateUserImage thunk creates a service-call handler #16230."},
+      {"functionId": 16230, "line": 646874, "evidence": "Calls uploadUserPicture and passes fulfillment to #16231."},
+      {"functionId": 16231, "line": 646896, "evidence": "Reads profile_picture on the service fulfillment and dispatches that value as UPDATE_USER_IMAGE.data."}
+    ],
+    "fields": [
+      {"name": "profile_picture", "type": "unknown", "evidence": "#16231 lines 646903-646907 reads profile_picture from the value returned by #16362 (response.data), then stores only that value in the local UPDATE_USER_IMAGE action. No value type is established."}
+    ],
+    "complete": false,
+    "limitations": ["Multipart request data and native file metadata are not HTTP response fields.", "Only profile_picture is observed; its value type and all other response properties remain unknown."]
+  },
+  {
+    "operationId": "DeleteUserPicture",
+    "sourceFunctionId": 16363,
+    "kind": "unknown",
+    "evidence": "The service projects response.data. The Metro wrapper forwards the result, without a proven response-body field read.",
+    "trace": [
+      {"functionId": 16363, "line": 649779, "evidence": "DELETE /api/common/settings/delete; fulfillment is handled by #16364."},
+      {"functionId": 16364, "line": 649798, "evidence": "Returns response.data unchanged."},
+      {"functionId": 16232, "line": 646915, "evidence": "Metro deleteUserPicture action creates thunk #16233."},
+      {"functionId": 16233, "line": 646926, "evidence": "Calls deleteUserPicture and passes the fulfillment to #16234."},
+      {"functionId": 16234, "line": 646946, "evidence": "Ignores the service fulfillment and dispatches a locally constructed UPDATE_USER_IMAGE.data=null action; this null is not an HTTP response field."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["Local picture deletion/update behavior is not treated as a server response field.", "No response-body type or fields are proven."]
+  },
+  {
+    "operationId": "DeactivateUser",
+    "sourceFunctionId": 16365,
+    "kind": "unknown",
+    "evidence": "The service projects response.data; its Metro action wrapper forwards the result without inspecting response-body properties.",
+    "trace": [
+      {"functionId": 16365, "line": 649809, "evidence": "PUT /api/common/user/delete; fulfillment is handled by #16366."},
+      {"functionId": 16366, "line": 649828, "evidence": "Returns response.data unchanged."},
+      {"functionId": 16257, "line": 647409, "evidence": "Metro deactivateUser action creator returns thunk #16258."},
+      {"functionId": 16258, "line": 647422, "evidence": "Calls deactivateUser and passes fulfillment to #16259."},
+      {"functionId": 16259, "line": 647442, "evidence": "Success continuation forwards fulfillment without reading body properties."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["No fields are inferred from the operation name, request, or local account state.", "The response body remains opaque to traced consumers."]
+  },
+  {
+    "operationId": "GetUserSettings",
+    "sourceFunctionId": 16367,
+    "kind": "unknown",
+    "evidence": "The service projects response.data. The Metro thunk dispatches the fulfillment as SET_USER_SETTINGS.data but does not inspect the response value's properties.",
+    "trace": [
+      {"functionId": 16367, "line": 649839, "evidence": "GET /api/common/user/settings; fulfillment is handled by #16368."},
+      {"functionId": 16368, "line": 649858, "evidence": "Returns response.data unchanged."},
+      {"functionId": 16213, "line": 646511, "evidence": "Metro getUserSettings action creator returns thunk #16214."},
+      {"functionId": 16214, "line": 646522, "evidence": "Calls getUserSettings and passes fulfillment to #16215."},
+      {"functionId": 16215, "line": 646542, "evidence": "Stores the fulfillment as local SET_USER_SETTINGS.data without reading its fields."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["The object built by the thunk is a Redux action, not the HTTP response schema.", "No settings property or type is directly proved."]
+  },
+  {
+    "operationId": "GetUserTargetGroups",
+    "sourceFunctionId": 16369,
+    "kind": "unknown",
+    "evidence": "The service returns response.data; named Metro call paths pass the result onward without establishing a response-field projection. Message target-group operations are separate endpoints and are not merged into this response model.",
+    "trace": [
+      {"functionId": 16369, "line": 649869, "evidence": "GET /api/kindergartens/{kindergartenId}/target-groups/available; fulfillment is handled by #16370."},
+      {"functionId": 16370, "line": 649894, "evidence": "Returns response.data unchanged."},
+      {"functionId": 16266, "line": 647538, "evidence": "Metro getUserTargetGroups action creator returns thunk #16267."},
+      {"functionId": 16267, "line": 647549, "evidence": "Calls getUserTargetGroups and passes fulfillment to #16268."},
+      {"functionId": 16268, "line": 647574, "evidence": "Dispatches the full fulfillment as SET_USER_TARGETGROUPS.data without reading response properties."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["The similarly named message target-groups endpoint is a distinct operation and provides no evidence for this path.", "No response shape or item fields are established."]
+  },
+  {
+    "operationId": "RequestEmailChange",
+    "sourceFunctionId": 16371,
+    "kind": "unknown",
+    "evidence": "The service returns response.data unchanged; no response body fields are read in the traced service/action projection.",
+    "trace": [
+      {"functionId": 16371, "line": 649905, "evidence": "POST /api/common/user/{userId}/email-change; fulfillment is handled by #16372."},
+      {"functionId": 16372, "line": 649931, "evidence": "Returns response.data unchanged."},
+      {"functionId": 16292, "line": 648164, "evidence": "Metro requestEmailChange action creator returns thunk #16293."},
+      {"functionId": 16293, "line": 648179, "evidence": "Calls requestEmailChange and passes fulfillment to #16294."},
+      {"functionId": 16294, "line": 648200, "evidence": "Forwards fulfillment without reading response-body properties."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["Request email-change values and UI status messaging are not treated as response-body fields.", "No response shape is established."]
+  },
+  {
+    "operationId": "GetUser2FAProvider",
+    "sourceFunctionId": 16373,
+    "kind": "unknown",
+    "evidence": "The service projects response.data. The connected Metro action stores the entire fulfillment as action data and does not inspect body properties.",
+    "trace": [
+      {"functionId": 16373, "line": 649942, "evidence": "GET /api/common/user/2fa; fulfillment is handled by #16374."},
+      {"functionId": 16374, "line": 649961, "evidence": "Returns response.data unchanged."},
+      {"functionId": 16300, "line": 648287, "evidence": "Metro getTwoFactorAuthProvider action creator returns thunk #16301."},
+      {"functionId": 16301, "line": 648298, "evidence": "Calls getUser2FAProvider and passes its fulfillment to #16302."},
+      {"functionId": 16302, "line": 648318, "evidence": "Dispatches the full fulfillment as SET_TWO_FACTOR_AUTH_PROVIDER.data; no body properties are read."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["The local reducer action shape does not prove a response property schema.", "No provider field or type is inferred from naming or UI labels."]
+  },
+  {
+    "operationId": "GenerateTwoFactorAuthSecret",
+    "sourceFunctionId": 16375,
+    "kind": "unknown",
+    "evidence": "The service projects response.data. Two traced UI success continuations call it but do not inspect named response properties; one passes the whole result as a navigation parameter, leaving any downstream interpretation unresolved.",
+    "trace": [
+      {"functionId": 16375, "line": 649972, "evidence": "POST /api/common/user/2fa/generate-secret; fulfillment is handled by #16376."},
+      {"functionId": 16376, "line": 649994, "evidence": "Returns response.data unchanged."},
+      {"functionId": 41051, "line": 1665522, "evidence": "Calls generateTwoFactorAuthSecret and attaches success continuation #41052 (lines 1665535-1665539)."},
+      {"functionId": 41052, "line": 1665548, "evidence": "Uses the whole fulfillment as a local navigation parameter named provider (lines 1665561-1665565), without reading any named response property; later screen interpretation is unresolved."},
+      {"functionId": 45112, "line": 1848497, "evidence": "Creates generator continuation #45113 for the two-factor-required flow."},
+      {"functionId": 45113, "line": 1848508, "evidence": "Calls generateTwoFactorAuthSecret and proceeds through local verification/navigation handling without reading a named property from the resolved value (lines 1848524-1848544)."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["The two traced callers establish only whole-result navigation/continuation behavior, not a body shape; any further downstream consumers remain unresolved.", "No secret or QR field is fabricated from operation/UI names."]
+  },
+  {
+    "operationId": "EnableTwoFactorAuth",
+    "sourceFunctionId": 16377,
+    "kind": "object",
+    "evidence": "The service projects response.data. The awaited Metro caller #41132 reads status from the service fulfillment and compares it with string literals; only the property read is modeled, with no enum or value-domain claim.",
+    "trace": [
+      {"functionId": 16377, "line": 650005, "evidence": "POST /api/common/user/2fa/enable; fulfillment is handled by #16378."},
+      {"functionId": 16378, "line": 650025, "evidence": "Returns response.data unchanged."},
+      {"functionId": 41132, "line": 1669637, "evidence": "Awaits the service result and reads its status property at +0x69; compares that value to client strings valid and unauthenticated, then calls local handlers. Only status property access is evidence for the response model."}
+    ],
+    "fields": [
+      {"name": "status", "type": "unknown", "evidence": "#41132 lines 1669671-1669674 reads status from the fulfilled #16378 response.data value and strictly compares it to a client literal. This proves the property read, not a server enum, requiredness, or value domain."}
+    ],
+    "complete": false,
+    "limitations": ["The client's literal comparisons do not establish server enum values or exhaustiveness.", "Local enabled state, error handlers, and unrelated response branches are excluded; other body fields are unknown."]
+  },
+  {
+    "operationId": "DisableTwoFactorAuth",
+    "sourceFunctionId": 16379,
+    "kind": "object",
+    "evidence": "The service projects response.data, and the exact UI success continuation reads deleted from that fulfillment. This is one partial client-observed field, not a complete body contract.",
+    "trace": [
+      {"functionId": 16379, "line": 650036, "evidence": "POST /api/common/user/2fa/disable/{provider}; argument 1 is concatenated into the path, while argument 2 is the password body value; fulfillment is handled by #16380."},
+      {"functionId": 16380, "line": 650063, "evidence": "Returns response.data unchanged."},
+      {"functionId": 41084, "line": 1667216, "evidence": "Calls disableTwoFactorAuth and attaches success continuation #41085 (lines 1667229-1667237)."},
+      {"functionId": 41085, "line": 1667246, "evidence": "Reads deleted from the service fulfillment at line 1667251; subsequent toast and locally constructed provider state are not HTTP-body fields."}
+    ],
+    "fields": [
+      {"name": "deleted", "type": "unknown", "evidence": "#41085 line 1667251 reads deleted from the value returned by #16380 (response.data). The truthy branch is client behavior, not a server presence, type, or value-domain guarantee."}
+    ],
+    "complete": false,
+    "limitations": ["Only deleted is observed; its value type and all other response properties remain unknown.", "Subsequent toast handling and locally constructed SET_TWO_FACTOR_AUTH_PROVIDER state are excluded from the HTTP body model."]
+  },
+  {
+    "operationId": "VerifyPassword",
+    "sourceFunctionId": 16381,
+    "kind": "unknown",
+    "evidence": "The service response handler returns response.data unchanged. Traced password flows compare the entire fulfillment to Boolean true but read no named body property; that use does not prove an HTTP Boolean body schema.",
+    "trace": [
+      {"functionId": 16381, "line": 650074, "evidence": "POST /api/common/user/verify-password; fulfillment is handled by #16382."},
+      {"functionId": 16382, "line": 650094, "evidence": "Returns response.data unchanged."},
+      {"functionId": 41054, "line": 1665586, "evidence": "Calls verifyPassword and connects the fulfillment to #41055 (lines 1665599-1665607)."},
+      {"functionId": 41055, "line": 1665616, "evidence": "Strictly compares the entire fulfillment with true at line 1665622; no named property is read, so this does not establish an HTTP Boolean body type."},
+      {"functionId": 45109, "line": 1848408, "evidence": "Calls verifyPassword in the two-factor-required password flow and compares the resolved whole value with true at line 1848434; this is a client branch, not proof of a scalar HTTP body type."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["The request password is not response content. Strict equality against true shows only client-side interpretation of the whole fulfillment and does not establish its HTTP body type.", "No named body fields are read; other consumers and response completeness remain unresolved."]
+  },
+  {
+    "operationId": "GetKindergartenActivity",
+    "sourceFunctionId": 16386,
+    "kind": "object",
+    "evidence": "The service projects response.data; the exact Metro getRecentActivity caller reads events_count from that fulfillment and dispatches the value. Only that partial object field is modeled.",
+    "trace": [
+      {"functionId": 16386, "line": 650195, "evidence": "GET /api/kindergartens/{kindergartenId}/activity; fulfillment is handled by #16387."},
+      {"functionId": 16387, "line": 650220, "evidence": "Returns response.data unchanged."},
+      {"functionId": 16206, "line": 646358, "evidence": "Metro getRecentActivity action creator returns thunk #16207."},
+      {"functionId": 16207, "line": 646371, "evidence": "Calls getKindergartenActivity and passes fulfillment to #16208."},
+      {"functionId": 16208, "line": 646393, "evidence": "Reads events_count from the service fulfillment and dispatches it as local SET_RECENT_EVENTS_COUNT.data."}
+    ],
+    "fields": [
+      {"name": "events_count", "type": "unknown", "evidence": "#16208 lines 646400-646404 reads events_count directly from the value returned by #16387 (response.data) and uses that value as action data. No field value type is established."}
+    ],
+    "complete": false,
+    "limitations": ["Only events_count is observed; other body properties and any activity-item shape remain unknown.", "The Redux action wrapper and event-count state are not HTTP response properties."]
+  },
+  {
+    "operationId": "GetUserBanners",
+    "sourceFunctionId": 16391,
+    "kind": "unknown",
+    "evidence": "The service projects response.data; its Metro action forwards the result without identifying fields on the HTTP body.",
+    "trace": [
+      {"functionId": 16391, "line": 650321, "evidence": "GET /api/{scope}/{id}/banners; fulfillment is handled by #16392."},
+      {"functionId": 16392, "line": 650348, "evidence": "Returns response.data unchanged."},
+      {"functionId": 16220, "line": 646655, "evidence": "Metro getUserBanners creates thunk #16221."},
+      {"functionId": 16221, "line": 646670, "evidence": "Calls getUserBanners using local user/date/selection state and passes the service fulfillment to #16222; those request inputs are not response fields."},
+      {"functionId": 16222, "line": 646733, "evidence": "Wraps the full fulfillment as local action data and adds a locally computed date; it does not read response-body properties."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["No banner item properties or array type are established.", "Local rendering and action wrappers are not response fields."]
+  },
+  {
+    "operationId": "SearchByName",
+    "sourceFunctionId": 24587,
+    "kind": "unknown",
+    "evidence": "The response handler returns response.data unchanged; only the service/handler path is traced here, leaving downstream consumer coverage open.",
+    "trace": [
+      {"functionId": 24587, "line": 967298, "evidence": "GET /api/common/kindergartens/search; fulfillment is handled by #24588."},
+      {"functionId": 24588, "line": 967322, "evidence": "Returns response.data unchanged."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["No result item fields or array type are inferred from search semantics.", "The exact downstream consumer chain remains untraced; this open disposition is not evidence that no consumer exists.", "The query/request inputs are not response evidence."]
+  },
+  {
+    "operationId": "GetEnabledLanguages",
+    "sourceFunctionId": 24589,
+    "kind": "unknown",
+    "evidence": "The response handler returns response.data unchanged; only the service/handler path is traced here, leaving downstream consumers and any body/item shape unresolved.",
+    "trace": [
+      {"functionId": 24589, "line": 967333, "evidence": "GET /api/kindergartens/{kindergartenId}/languages; fulfillment is handled by #24590."},
+      {"functionId": 24590, "line": 967358, "evidence": "Returns response.data unchanged."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["The endpoint name and language labels do not prove array/object shape or fields.", "The exact downstream consumer chain remains untraced; this open disposition is not evidence that no consumer exists."]
+  },
+  {
+    "operationId": "GetKindergartenChildrenList",
+    "sourceFunctionId": 24591,
+    "kind": "unknown",
+    "evidence": "The service projects response.data and the named Metro action forwards its result without response field reads. The request's children/list terminology does not prove an array response.",
+    "trace": [
+      {"functionId": 24591, "line": 967369, "evidence": "GET /api/kindergartens/{kindergartenId}/children-list; fulfillment is handled by #24592."},
+      {"functionId": 24592, "line": 967394, "evidence": "Returns response.data unchanged."},
+      {"functionId": 24581, "line": 967142, "evidence": "Metro action creator returns thunk #24582."},
+      {"functionId": 24582, "line": 967153, "evidence": "Reads local user/selected-kindergarten state, calls getKindergartenChildrenList, and passes fulfillment to #24583."},
+      {"functionId": 24583, "line": 967178, "evidence": "Dispatches the full fulfillment as SET_KINDERGARTEN_CHILDREN.data without reading body properties."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["No child item fields or array type are inferred from the endpoint name.", "Request and local selection objects are not response fields."]
+  },
+  {
+    "operationId": "GetCountries",
+    "sourceFunctionId": 26289,
+    "kind": "unknown",
+    "evidence": "The service projects response.data unchanged. No static public-country sample was used as authority for this endpoint's response shape.",
+    "trace": [
+      {"functionId": 26289, "line": 1022267, "evidence": "GET /api/auth/countries; fulfillment is handled by #26290."},
+      {"functionId": 26290, "line": 1022286, "evidence": "Returns response.data unchanged."},
+      {"functionId": 26283, "line": 1022128, "evidence": "Metro getCountries action creator returns thunk #26284."},
+      {"functionId": 26284, "line": 1022139, "evidence": "Calls getCountries and passes fulfillment to #26285."},
+      {"functionId": 26285, "line": 1022159, "evidence": "Dispatches the full fulfillment as SET_COUNTRIES.data without reading response properties."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["No country list type or item fields are inferred from a public sample, endpoint name, or UI labels.", "No exact consumer field reads establish the response shape."]
+  },
+  {
+    "operationId": "GetUserDashboard",
+    "sourceFunctionId": 26882,
+    "kind": "object",
+    "evidence": "The service projects response.data; its exact Metro caller #26873 passes that value to #26874, which directly reads the listed dashboard properties before dispatch. Only those top-level reads are modeled; locally composed state and the response remainder are excluded.",
+    "trace": [
+      {"functionId": 26882, "line": 1040525, "evidence": "GET /api/common/user/dashboard; fulfillment is handled by #26883."},
+      {"functionId": 26883, "line": 1040545, "evidence": "Returns response.data unchanged."},
+      {"functionId": 26872, "line": 1040185, "evidence": "Metro action creator returns thunk #26873."},
+      {"functionId": 26873, "line": 1040198, "evidence": "Calls getUserDashboard and passes its fulfillment to #26874."},
+      {"functionId": 26874, "line": 1040235, "evidence": "Reads invites, employee_applications, child_birthdays, attendance_count, diary_comments, work_schedules, employee_birthdays, poll_data, and questionnaires directly from the fulfillment; each is conditionally dispatched."}
+    ],
+    "fields": [
+      {"name": "invites", "type": "unknown", "evidence": "#26874 lines 1040239-1040248 reads invites directly from #26883 response.data and dispatches that value as SET_USER_INVITES.data."},
+      {"name": "employee_applications", "type": "unknown", "evidence": "#26874 lines 1040251-1040259 reads employee_applications directly from response.data and dispatches that value as SET_DASHBOARD_APPLICATIONS.data."},
+      {"name": "child_birthdays", "type": "unknown", "evidence": "#26874 lines 1040262-1040270 reads child_birthdays directly from response.data and dispatches that value."},
+      {"name": "attendance_count", "type": "unknown", "evidence": "#26874 lines 1040273-1040281 reads attendance_count directly from response.data and dispatches that value."},
+      {"name": "diary_comments", "type": "unknown", "evidence": "#26874 lines 1040284-1040292 reads diary_comments directly from response.data and dispatches that value."},
+      {"name": "work_schedules", "type": "unknown", "evidence": "#26874 lines 1040295-1040304 reads work_schedules directly from response.data and places it inside a locally composed schedule object; the local tz property is derived from separate Redux user state and is not modeled."},
+      {"name": "employee_birthdays", "type": "unknown", "evidence": "#26874 lines 1040316-1040324 reads employee_birthdays directly from response.data and dispatches that value."},
+      {"name": "poll_data", "type": "unknown", "evidence": "#26874 lines 1040327-1040335 reads poll_data directly from response.data and dispatches that value."},
+      {"name": "questionnaires", "type": "unknown", "evidence": "#26874 lines 1040338-1040346 reads questionnaires directly from response.data and dispatches that value."}
+    ],
+    "complete": false,
+    "limitations": ["All listed value types and nested/item shapes are unknown; truthy client guards do not prove server optionality or type.", "The locally created work-schedules wrapper and last-refresh timestamp are not HTTP response fields.", "Other response properties and completeness are unknown."]
+  },
+  {
+    "operationId": "AcceptEmployeeInvite",
+    "sourceFunctionId": 26884,
+    "kind": "unknown",
+    "evidence": "The response handler returns response.data unchanged; its downstream success consumer chain remains untraced, so no body fields are attributed here.",
+    "trace": [
+      {"functionId": 26884, "line": 1040556, "evidence": "PUT /api/common/user/invites/{inviteId}; fulfillment is handled by #26885."},
+      {"functionId": 26885, "line": 1040580, "evidence": "Returns response.data unchanged."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["The exact downstream success consumer chain remains untraced; request values, navigation, or local state do not establish response fields, and this open disposition does not prove no consumer exists.", "No response type is proved."]
+  },
+  {
+    "operationId": "GetPublicAgreement",
+    "sourceFunctionId": 28229,
+    "kind": "object",
+    "evidence": "The service returns response.data unchanged. Two exact UI fulfillment paths read name and content from that returned value; these are partial client-observed HTTP-body properties only.",
+    "trace": [
+      {"functionId": 28229, "line": 1112422, "evidence": "GET /api/agreements/{agreementId}; the language value is supplied through config.params.language; fulfillment is handled by #28230."},
+      {"functionId": 28230, "line": 1112451, "evidence": "Returns response.data unchanged."},
+      {"functionId": 28222, "line": 1112232, "evidence": "The terms caller invokes getPublicAgreement and reads name and content from the resolved service result at lines 1112257 and 1112260."},
+      {"functionId": 41110, "line": 1668586, "evidence": "The privacy-policy caller invokes getPublicAgreement and reads name and content from the resolved service result at lines 1668611 and 1668614."}
+    ],
+    "fields": [
+      {"name": "name", "type": "unknown", "evidence": "#28222 line 1112257 and #41110 line 1668611 read name from the value returned by #28230 (response.data); no value type or presence is established."},
+      {"name": "content", "type": "unknown", "evidence": "#28222 line 1112260 and #41110 line 1668614 read content from the value returned by #28230 (response.data); no value type, encoding, or presence is established."}
+    ],
+    "complete": false,
+    "limitations": ["Only name and content are observed; their types, encoding, presence, and other body fields remain unknown.", "No body completeness, media type, or status is established."]
+  },
+  {
+    "operationId": "AcceptAgreement",
+    "sourceFunctionId": 28231,
+    "kind": "unknown",
+    "evidence": "The response handler returns response.data unchanged; its downstream success consumer chain remains untraced, so no body fields are attributed here.",
+    "trace": [
+      {"functionId": 28231, "line": 1112462, "evidence": "POST /api/common/agreements/{agreementId}/accept; fulfillment is handled by #28232."},
+      {"functionId": 28232, "line": 1112487, "evidence": "Returns response.data unchanged."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["The exact downstream success consumer chain remains untraced; this open disposition does not establish absence of consumers.", "Acceptance request fields and local acceptance state are not response fields; no response type or body properties are established."]
+  },
+  {
+    "operationId": "Authorize",
+    "sourceFunctionId": 16398,
+    "kind": "unknown",
+    "evidence": "The success continuation passes response.data to an arbitrary caller-supplied callback and returns that callback's return value, rather than returning a stable projected HTTP body. No callback result shape is established.",
+    "trace": [
+      {"functionId": 16398, "line": 650598, "evidence": "POST /broadcasting/auth; success and rejection are handled separately."},
+      {"functionId": 16399, "line": 650629, "evidence": "Reads Axios response.data, invokes the callback as callback(null, response.data), then returns the callback result."},
+      {"functionId": 16400, "line": 650645, "evidence": "Error continuation invokes callback(error, null) and returns callback result; this is not a success HTTP body shape."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["Arbitrary callback result and rejection branches remain unresolved.", "Callback arguments, transport status, and Axios wrapper metadata are not modeled as HTTP body fields."]
+  }
+]

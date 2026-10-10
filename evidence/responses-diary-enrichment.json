@@ -1,0 +1,406 @@
+[
+  {
+    "operationId": "GetDiaryData",
+    "sourceFunctionId": 25935,
+    "kind": "unknown",
+    "evidence": "Service #25935 returns the Axios response .data unchanged (#25936). One caller #43846 awaits it without inspecting the value. Separately, the existing canonical response record traces #25782/#25783 and #25784 and retains 15 root observations plus two unknown-typed statuses item reads; this opaque caller does not replace that stronger model.",
+    "trace": [
+      {
+        "functionId": 25935,
+        "line": 1012899,
+        "evidence": "Builds the GET request for /diary and attaches continuation #25936."
+      },
+      {
+        "functionId": 25936,
+        "line": 1012932,
+        "evidence": "Returns the resolved Axios response .data unchanged, establishing only the HTTP-body boundary."
+      },
+      {
+        "functionId": 43846,
+        "line": 1787831,
+        "evidence": "Thunk calls getDiaryData; its continuation #43847 does not inspect the resolved value and only conditionally closes a modal. No response properties are attributable."
+      },
+      {
+        "functionId": 25782,
+        "line": 1008630,
+        "evidence": "A separate employee diary thunk calls the same registered getDiaryData helper and attaches callback #25783."
+      },
+      {
+        "functionId": 25783,
+        "line": 1008685,
+        "evidence": "Callback #25783 reads the 15 root body properties retained by the canonical response model."
+      },
+      {
+        "functionId": 25784,
+        "line": 1008861,
+        "evidence": "The statuses forEach callback reads item.used_in_course and item.type; the existing canonical model retains both unknown-typed item paths."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "The #43846 caller itself establishes no response fields; the stronger independent #25782/#25783/#25784 observation remains in the canonical response model and is not overwritten by this caller-specific unknown disposition.",
+      "Request params course/date and caller state are not response evidence.",
+      "Response is opaque beyond the service projection to response.data; no status, media type, or server contract is established."
+    ]
+  },
+  {
+    "operationId": "GetGuardianDiary",
+    "sourceFunctionId": 25630,
+    "kind": "unknown",
+    "evidence": "Service #25630 returns the Axios response .data unchanged (#25631). ChildServices registers getGuardianDiary as #25630, but no downstream caller/body-property consumer is established.",
+    "trace": [
+      {
+        "functionId": 25630,
+        "line": 1003280,
+        "evidence": "Builds a GET request for the child /diary resource and attaches continuation #25631."
+      },
+      {
+        "functionId": 25631,
+        "line": 1003307,
+        "evidence": "Returns the resolved Axios response .data unchanged, establishing only the HTTP-body boundary."
+      },
+      {
+        "functionId": 25620,
+        "line": 1002896,
+        "evidence": "ChildServices registers getGuardianDiary (#25630) in the exported service table at 1002932-1002935; no consuming action/reducer body read is established."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "No action, reducer, saga, or UI read was tied to this service's resolved body; response shape remains opaque.",
+      "Do not infer response fields from the route name or from similarly named diary operations.",
+      "No status, media type, or server contract is established."
+    ]
+  },
+  {
+    "operationId": "GetGuardianFeed",
+    "sourceFunctionId": 25632,
+    "kind": "unknown",
+    "evidence": "Service #25632 returns the Axios response .data unchanged (#25633). The exact thunk #25515 invokes this helper and callback #25516 forwards the body unchanged; page bookkeeping comes from captured client state, not the HTTP body.",
+    "trace": [
+      {
+        "functionId": 25632,
+        "line": 1003318,
+        "evidence": "Builds a GET request for /guardian-feed, passing its third input as Axios config.params, and attaches continuation #25633."
+      },
+      {
+        "functionId": 25633,
+        "line": 1003348,
+        "evidence": "Returns the resolved Axios response .data unchanged, establishing only the HTTP-body boundary."
+      },
+      {
+        "functionId": 25514,
+        "line": 1000403,
+        "evidence": "Guardian-feed action creator returns the thunk that invokes the exact service helper #25632."
+      },
+      {
+        "functionId": 25515,
+        "line": 1000422,
+        "evidence": "Thunk calls getGuardianFeed and attaches callback #25516."
+      },
+      {
+        "functionId": 25516,
+        "line": 1000474,
+        "evidence": "Success callback forwards the response body unchanged; page is separately read from captured action state at 1000478-1000494."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "The exact consumer is raw body passthrough, so no field or collection-item structure is established; page is client state and excluded from the body.",
+      "The forwarded query object and route name are not response evidence.",
+      "No status, media type, or server contract is established."
+    ]
+  },
+  {
+    "operationId": "GalleryGetIndexFolders",
+    "sourceFunctionId": 26134,
+    "kind": "object",
+    "evidence": "Service #26134 returns response.data via #26135. Its thunk continuation #26109 reads the body properties folders and settings and forwards them separately into Redux actions; these are root HTTP-body properties, not Axios or Redux wrapper fields.",
+    "trace": [
+      {
+        "functionId": 26134,
+        "line": 1018505,
+        "evidence": "Builds the GET request for /gallery with params and attaches continuation #26135."
+      },
+      {
+        "functionId": 26135,
+        "line": 1018533,
+        "evidence": "Returns the resolved Axios response .data unchanged."
+      },
+      {
+        "functionId": 26109,
+        "line": 1017919,
+        "evidence": "Callback #26109 reads response-body folders at full-disassembly lines 1017929-1017933 and settings at 1017950-1017951, then dispatches their values."
+      },
+      {
+        "functionId": 26108,
+        "line": 1017863,
+        "evidence": "Gallery thunk calls getIndexFolders and attaches callback #26109 at lines 1017904-1017913."
+      }
+    ],
+    "fields": [
+      {
+        "name": "folders",
+        "type": "unknown",
+        "evidence": "Callback #26109 reads response-body property folders at full-disassembly lines 1017929-1017933 and forwards it as action data; collection/item shape is not established."
+      },
+      {
+        "name": "settings",
+        "type": "unknown",
+        "evidence": "Callback #26109 reads response-body property settings at full-disassembly lines 1017950-1017951 and forwards it as action data; nested shape is not established."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Only the two root properties consumed by the callback are modeled; no folder/item fields were proven to originate in this response.",
+      "A separate page/folder action envelope is client-created and is not part of the HTTP body.",
+      "No status, media type, or server contract is established."
+    ]
+  },
+  {
+    "operationId": "GetFolderData",
+    "sourceFunctionId": 26143,
+    "kind": "object",
+    "evidence": "Service #26143 returns response.data via #26144. Both the gallery chain (#26111/#26112 → #26094) and documents chain (#26251/#26252 → #26566) call this same FolderService helper through Metro module 2267. Consumers observe subfolders.data/current_page/last_page and root files; these remain partial property-read observations, not a proven nested container/item schema.",
+    "trace": [
+      {
+        "functionId": 26143,
+        "line": 1018787,
+        "evidence": "Builds the GET request for /folders/{folderId} with params and attaches its response continuation."
+      },
+      {
+        "functionId": 26144,
+        "line": 1018816,
+        "evidence": "Returns the resolved Axios response .data unchanged."
+      },
+      {
+        "functionId": 26110,
+        "line": 1017958,
+        "evidence": "Gallery getFolderData action creator returns thunk #26111."
+      },
+      {
+        "functionId": 26111,
+        "line": 1017973,
+        "evidence": "Gallery thunk calls getFolderData and attaches callback #26112 at 1018011-1018019."
+      },
+      {
+        "functionId": 26141,
+        "line": 1018668,
+        "evidence": "FolderService export table registers getFolderData as #26143 at 1018679-1018682."
+      },
+      {
+        "functionId": 26112,
+        "line": 1018025,
+        "evidence": "Callback reads response-body subfolders at 1018035-1018036 and forwards the whole same body to SET_GALLERY_FOLDER and SET_GALLERY_DATA."
+      },
+      {
+        "functionId": 26094,
+        "line": 1017052,
+        "evidence": "galleryReducer consumes the forwarded SET_GALLERY_DATA body and reads subfolders.data/current_page/last_page and root files at 1017428-1017448 and 1017466-1017468."
+      },
+      {
+        "functionId": 26234,
+        "line": 1020850,
+        "evidence": "Metro module 2269 is initialized with dependency module 2267 at module registration lines 11470-11473; #26234 loads that dependency into environment slot 4 at 1020910-1020914. Module 2267 is FolderService, whose export table maps getFolderData to #26143 at 1018668-1018682."
+      },
+      {
+        "functionId": 26251,
+        "line": 1021334,
+        "evidence": "Documents thunk reads getFolderData from its FolderService dependency and calls it at 1021369-1021377, then attaches callback #26252. This is not DocumentsService #26270."
+      },
+      {
+        "functionId": 26252,
+        "line": 1021386,
+        "evidence": "Callback reads body subfolders at 1021396-1021397 and forwards the same whole body as SET_DOCUMENTS_FOLDER and SET_DOCUMENTS_DATA."
+      },
+      {
+        "functionId": 26566,
+        "line": 1031014,
+        "evidence": "documentsReducer consumes the forwarded body and reads subfolders.data/current_page/last_page plus root files at 1031406-1031426 and 1031444-1031446."
+      }
+    ],
+    "fields": [
+      {
+        "name": "subfolders",
+        "type": "unknown",
+        "evidence": "#26112 reads response-body subfolders at 1018035-1018036; #26252 independently reads the same path at 1021396-1021397. Reducers #26094 and #26566 then observe nested paths subfolders.data (1017428-1017435; 1031406-1031415), subfolders.current_page (1017438-1017440; 1031416-1031418), and subfolders.last_page (1017441-1017443; 1031419-1031421). These are client property reads only; no runtime object/container or item schema is established."
+      },
+      {
+        "name": "files",
+        "type": "unknown",
+        "evidence": "The exact #26143 body is forwarded by #26112/#26252. galleryReducer #26094 reads body.files at 1017447-1017448 and 1017466-1017468; documentsReducer #26566 reads body.files at 1031425-1031426 and 1031444-1031446. Value and item shape are unknown."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "The callback itself reads only subfolders, but the exact forwarded response body is consumed by both reducers, which additionally read subfolders.data/current_page/last_page and root files. These remain client observations; the subfolders container type and item schema are unproved.",
+      "Reducer-created wrapper/state keys such as folder, media, images, folderData, and folderFilesLoaded are not response properties.",
+      "No status, media type, or server contract is established."
+    ]
+  },
+  {
+    "operationId": "DocumentsGetIndexFolders",
+    "sourceFunctionId": 26268,
+    "kind": "object",
+    "evidence": "Service #26268 returns response.data via #26269. Its thunk continuation #26237 reads root folders and settings; on the folders branch it additionally reads folders.data. These are projections of the HTTP body, while the dispatch objects are client-created.",
+    "trace": [
+      {
+        "functionId": 26268,
+        "line": 1021765,
+        "evidence": "Builds the GET request for /documents with params and attaches continuation #26269."
+      },
+      {
+        "functionId": 26269,
+        "line": 1021793,
+        "evidence": "Returns the resolved Axios response .data unchanged."
+      },
+      {
+        "functionId": 26237,
+        "line": 1021045,
+        "evidence": "Caller #26236 invokes getIndexFolders and attaches this callback at 1021030-1021039. It reads folders, root fallback data, and nested folders.data at 1021055-1021061, then reads settings at 1021078-1021079."
+      },
+      {
+        "functionId": 26236,
+        "line": 1020989,
+        "evidence": "Documents index thunk calls getIndexFolders and attaches callback #26237 at 1021030-1021039."
+      }
+    ],
+    "fields": [
+      {
+        "name": "folders",
+        "type": "unknown",
+        "evidence": "#26237 reads root folders at 1021055/1021059 and, in the truthy branch, nested folders.data at 1021060. Both are partial client property-read observations; no normative object/array/container type or item schema is established."
+      },
+      {
+        "name": "data",
+        "type": "unknown",
+        "evidence": "#26237 reads HTTP-body p1.data at 1021057 when p1.folders is falsy, then places that value in the client action. This is a separate observed root body path, not a locally synthesized fallback and not proven equivalent to folders.data; type remains unknown."
+      },
+      {
+        "name": "settings",
+        "type": "unknown",
+        "evidence": "#26237 reads response-body property settings at 1021078-1021079 and forwards it as action data; nested shape is not established."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "folders.data and root data are distinct observed HTTP-body paths; their equivalence and value/container shape are unresolved.",
+      "No folder item fields or files collection were proven to originate in this response.",
+      "No status, media type, or server contract is established."
+    ]
+  },
+  {
+    "operationId": "GetDocumentsFolderData",
+    "sourceFunctionId": 26270,
+    "kind": "unknown",
+    "evidence": "Service #26270 returns response.data via #26271. DocumentsService #26266 registers this helper, and documents-mode branch #26228 calls getDocumentsFolderData; its result is returned without inspecting body properties. Screen refresh caller #39598 uses only finally cleanup #39599. Do not transfer the separate FolderService #26143/#26252 reducer observations to this same-path alias.",
+    "trace": [
+      {
+        "functionId": 26270,
+        "line": 1021804,
+        "evidence": "Builds the GET request for /folders/{folderId} with params and attaches its response continuation."
+      },
+      {
+        "functionId": 26271,
+        "line": 1021833,
+        "evidence": "Returns the resolved Axios response .data unchanged."
+      },
+      {
+        "functionId": 26266,
+        "line": 1021694,
+        "evidence": "DocumentsService registers getDocumentsFolderData as #26270 at 1021712-1021715; this is a separate service from FolderService #26143."
+      },
+      {
+        "functionId": 26228,
+        "line": 1020700,
+        "evidence": "The documents-mode branch calls imported getDocumentsFolderData at lines 1020711-1020723 and returns that promise without a body-reading continuation; branch catch handler #26229 is separate."
+      },
+      {
+        "functionId": 26229,
+        "line": 1020744,
+        "evidence": "The corresponding documents-mode catch branch repeats getDocumentsFolderData at 1020748-1020781; no resolved-body property is read."
+      },
+      {
+        "functionId": 39578,
+        "line": 1595489,
+        "evidence": "DocumentsFolderScreen creates and invokes the folder-refresh callback chain containing #39598."
+      },
+      {
+        "functionId": 39598,
+        "line": 1596328,
+        "evidence": "Screen callback calls getDocumentsFolderData at 1596376-1596378 and attaches only finally callback #39599."
+      },
+      {
+        "functionId": 39599,
+        "line": 1596389,
+        "evidence": "Finally callback performs local loading/timestamp cleanup and does not inspect the response body."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "The actual #26228/#26229 call chain and screen caller #39598/#39599 do not read response properties; no field or collection shape is established.",
+      "Although #26270 and #26143 have the same route shape, only #26143 is tied to the #26252/#26566 reducer chain; this is an unresolved same-path alias conflict, not permission to transfer fields.",
+      "No status, media type, or server contract is established."
+    ]
+  },
+  {
+    "operationId": "GetGuardianInvoices",
+    "sourceFunctionId": 25671,
+    "kind": "object",
+    "evidence": "The exact thunk chain #25590 calls service #25671, which returns response.data via #25672. Its continuation #25591 reads body properties invoices, settings, and services and dispatches them independently. No generic pagination wrapper is inferred.",
+    "trace": [
+      {
+        "functionId": 25671,
+        "line": 1004112,
+        "evidence": "Builds the GET request for /guardian-invoices with config.params and attaches the response continuation."
+      },
+      {
+        "functionId": 25672,
+        "line": 1004142,
+        "evidence": "Returns the resolved Axios response .data unchanged."
+      },
+      {
+        "functionId": 25590,
+        "line": 1002155,
+        "evidence": "Calls the child invoice service method getGuardianInvoices (#25590 +0x23-0x39), resolving to service #25671 through the child-services export table."
+      },
+      {
+        "functionId": 25591,
+        "line": 1002183,
+        "evidence": "Reads response-body invoices at 1002197-1002198, response-body services at 1002211-1002213, and response-body settings at 1002221-1002223. The distinct access at 1002202 reads captured environment state, not the response."
+      },
+      {
+        "functionId": 25684,
+        "line": 1004424,
+        "evidence": "The child reducer receives the dispatched invoices value as action.data and reads action.data.current_page and action.data.data (#25684 +0x4d5-0x4f6). It enumerates action.data.data with Object.entries before mapping it; this proves the nested body paths but not that data is an array. No last_page read is established for this response chain."
+      }
+    ],
+    "fields": [
+      {
+        "name": "invoices",
+        "type": "unknown",
+        "evidence": "#25591 reads root response-body invoices at 1002197-1002198 and forwards it as action.data. Reducer #25684 then reads action.data.current_page and action.data.data at 1004697-1004707. These prove the nested client-read paths invoices.current_page and invoices.data only; the invoices container type and data collection shape are unknown, and Object.entries does not prove an array."
+      },
+      {
+        "name": "settings",
+        "type": "unknown",
+        "evidence": "#25591 reads response-body p1.settings at 1002221-1002223 and forwards the value; nested shape is not established. The different read at 1002202 is from captured environment state."
+      },
+      {
+        "name": "services",
+        "type": "unknown",
+        "evidence": "#25591 reads response-body p1.services at 1002211-1002213 as a top-level property and forwards it to a separate Redux action; it is not nested under response settings and its shape is unknown."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "The traced response consumer establishes root invoices/settings/services and nested invoices.current_page/invoices.data. The nested paths are observations only; no invoice container type, array type, or last_page read is established for this exact response chain.",
+      "Do not confuse query fields or Redux state keys with body properties, or assume a generic data/current_page/last_page wrapper.",
+      "No status, media type, or server contract is established."
+    ]
+  }
+]

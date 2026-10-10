@@ -26,9 +26,26 @@ To reproduce source inspection with your own matching APK:
 
 - Trace registers, object construction, serialization, URL branches, and Axios call arguments. Nearby strings or the `function-strings.json` search index are discovery aids, not sufficient proof of fields or operations.
 - An arbitrary forwarded body remains `unknown`. Forwarded params remain an explicitly unresolved query shape. Only a wholly traced construction can establish a complete client-built object.
-- Client-observed fields do not establish the full server response. Unknown shapes are intentionally unconstrained, not omissions to fill with guesses.
+- Partial static-derived response models are permitted only when source tracing connects the service response to callers/actions and reducers or other consumers. They are client-observed views, not complete server schemas; models stay open and every property optional. Client observations do not guarantee presence, and unknown shapes remain unconstrained rather than omissions to fill with guesses. See [Response models and evidence](RESPONSE-MODELS.md).
 - A named payload field establishes only the evidenced client behavior. It does not establish server requiredness, validation, nullability, enums, defaults, or accepted values beyond the observation.
-- Do not fabricate success/error statuses or universal pagination/error wrappers. A compile/test pass validates project consistency, not live server behavior or the correctness of every reverse-engineering interpretation. Field models remain subject to review.
+- Do not fabricate success/error statuses, media types, or universal pagination/error wrappers. Unknown media uses the `*/*` documentation range, not a literal request header. Opaque downloads are binary transport bodies, not JSON models of native transfer metadata. A compile/test pass validates project consistency, not live server behavior or the correctness of every reverse-engineering interpretation. Field models remain subject to review.
+
+## Response-model evidence
+
+Response analysis is maintained separately from the operation/request records in
+[`evidence/research/`](evidence/research/). The static-derived definitions are
+in [`models/responses.tsp`](models/responses.tsp), and per-operation source
+analysis is in [`evidence/responses/`](evidence/responses/). The generated
+response-coverage report is expected at
+[`scripts/response-coverage.json`](scripts/response-coverage.json); consult the
+repository's current build output if its implementation uses a different
+location. A coverage disposition indicates that an operation was analyzed,
+not that its server response is fully modeled.
+
+The public language-list response sample documented below is a separate,
+read-only live observation. It is not evidence for static-derived models of
+other operations or a universal shape. The static analysis relies on traced
+client code; it does not make additional live requests.
 
 Representative findings: #6017 exports the production host; #5603 configures Axios; #5612/#5617 and #6562/#6566 establish cookie handling; #12709 calls the language route. See [AUTH.md](AUTH.md) and individual research records for the relevant evidence.
 

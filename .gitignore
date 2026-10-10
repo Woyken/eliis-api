@@ -4,6 +4,7 @@ dist/
 coverage/
 tests/.generated-fixture-*/
 tests/.luna-observations-*/
+tests/.response-fixture-*/
 *.log
 
 # Local research inputs and full third-party source/disassembly.

@@ -1,0 +1,1437 @@
+[
+  {
+    "operationId": "Product",
+    "sourceFunctionId": 26731,
+    "kind": "object",
+    "evidence": "#26731 returns Axios response.data. ProductScreen's Metro action #26618 chooses this service branch when selectedKindergartenId is falsy; #26620 dispatches the resolved value as SET_SELECTED_SHOP_ITEM, and #26581 stores action.data directly. ItemScreen reads the selectedShopItem root through state.shop, so these property reads remain at the HTTP body root. Metro identity cross-check: service module 2294, action module 2293, shared ItemScreen module 4149.",
+    "trace": [
+      {
+        "functionId": 26580,
+        "line": 1031752,
+        "evidence": "Shop reducer module initializer #26580; its Metro registration at 11585-11588 identifies module 2292."
+      },
+      {
+        "functionId": 26601,
+        "line": 1032994,
+        "evidence": "Shop action module initializer #26601; its Metro registration at 11590-11593 identifies module 2293 and imports service module 2294."
+      },
+      {
+        "functionId": 26731,
+        "line": 1036381,
+        "evidence": "Axios GET for the product detail endpoint, chained to #26732."
+      },
+      {
+        "functionId": 26732,
+        "line": 1036406,
+        "evidence": "Returns the Axios response.data value."
+      },
+      {
+        "functionId": 26618,
+        "line": 1033550,
+        "evidence": "The registered getShopProduct action calls service.product when selectedKindergartenId is falsy; its other branch is #26733."
+      },
+      {
+        "functionId": 26620,
+        "line": 1033605,
+        "evidence": "Dispatches the resolved service value unchanged as SET_SELECTED_SHOP_ITEM.data."
+      },
+      {
+        "functionId": 26581,
+        "line": 1031834,
+        "evidence": "The SET_SELECTED_SHOP_ITEM reducer branch assigns action.data to state.selectedShopItem at 1032491-1032499."
+      },
+      {
+        "functionId": 39986,
+        "line": 1612260,
+        "evidence": "ItemScreen selects state.shop.selectedShopItem via #39995, then reads item fields in this render function at 1612582-1612604, 1612630-1612658, 1612707-1612745, 1612787-1612919, and 1612989-1612994."
+      },
+      {
+        "functionId": 26700,
+        "line": 1035406,
+        "evidence": "Shop service module initializer #26700; its Metro registration at 11595-11598 identifies module 2294."
+      },
+      {
+        "functionId": 26601,
+        "line": 1032994,
+        "evidence": "Shop action module initializer #26601; its Metro registration at 11590-11593 identifies module 2293 and imports service module 2294."
+      },
+      {
+        "functionId": 39983,
+        "line": 1611855,
+        "evidence": "Shared ItemScreen module initializer #39983; Metro registration at 20870-20873 identifies module 4149 and its service/action imports."
+      },
+      {
+        "functionId": 39999,
+        "line": 1613442,
+        "evidence": "Shared ItemScreen selector #39999 selects getShopProduct or getShopService according to route/item kind before the renderer reads selectedShopItem."
+      }
+    ],
+    "fields": [
+      {
+        "name": "images",
+        "type": "array",
+        "evidence": "#39986 reads the HTTP-body-root item.images and forwards that unchanged value as ImageThumbnails.images at 1612582-1612608. ImageThumbnails #40054 reads its images prop and calls map on the value at 1615171 and 1615236-1615241; this supports an observed array use without modeling image members."
+      },
+      {
+        "name": "name",
+        "type": "unknown",
+        "evidence": "ItemScreen #39986 passes the body-root item.name through shopTranslate at 1612624-1612632."
+      },
+      {
+        "name": "code",
+        "type": "unknown",
+        "evidence": "ItemScreen #39986 reads body-root item.code for the product-code display at 1612635-1612659."
+      },
+      {
+        "name": "supplier",
+        "type": "object",
+        "evidence": "ItemScreen #39986 reads body-root item.supplier and, when present, item.supplier.name at 1612688-1612702.",
+        "fields": [
+          {
+            "name": "name",
+            "type": "unknown",
+            "evidence": "Direct read of item.supplier.name in #39986 at 1612694-1612702."
+          }
+        ]
+      },
+      {
+        "name": "description",
+        "type": "unknown",
+        "evidence": "ItemScreen #39986 reads body-root item.description at 1612707-1612729 and passes it through shopTranslate."
+      },
+      {
+        "name": "links",
+        "type": "array",
+        "evidence": "ItemScreen #39986 reads body-root item.links, checks its length, and maps the original value at 1612735-1612746. Link-item properties are not modeled."
+      },
+      {
+        "name": "original_price",
+        "type": "unknown",
+        "evidence": "ItemScreen #39986 reads body-root item.original_price at 1612787-1612792 and 1612857-1612859; truthiness only selects local display logic."
+      },
+      {
+        "name": "sales_price_gross",
+        "type": "unknown",
+        "evidence": "ItemScreen #39986 reads body-root item.sales_price_gross at 1612866-1612868; formatting does not prove the input's runtime type."
+      },
+      {
+        "name": "kindergarten_sales_price_gross",
+        "type": "unknown",
+        "evidence": "ItemScreen #39986 reads body-root item.kindergarten_sales_price_gross at 1612831-1612835."
+      },
+      {
+        "name": "rating",
+        "type": "unknown",
+        "evidence": "ItemScreen #39986 reads body-root item.rating for currentRating at 1612989-1612990."
+      },
+      {
+        "name": "my_rating",
+        "type": "unknown",
+        "evidence": "ItemScreen #39986 reads body-root item.my_rating for myRating at 1612991-1612994; its local zero fallback is not a response field."
+      },
+      {
+        "name": "id",
+        "type": "unknown",
+        "evidence": "ItemScreen #39986 tests body-root item.id before rendering the rating control at 1612966-1612968."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "The client treats the value as an item object, but no field has a proved primitive type here; all properties are optional in the partial model.",
+      "Image/link members and all unobserved response fields remain open and unresolved."
+    ]
+  },
+  {
+    "operationId": "KindergartenProduct",
+    "sourceFunctionId": 26733,
+    "kind": "object",
+    "evidence": "#26733 returns Axios response.data. The registered action #26618 selects kindergartenProduct when selectedKindergartenId is truthy, then #26619 dispatches its resolved value unchanged and #26581 stores action.data as selectedShopItem. The same ItemScreen reads that state root, preserving these fields at the HTTP body's root. Metro identity cross-check: service module 2294, action module 2293, shared ItemScreen module 4149.",
+    "trace": [
+      {
+        "functionId": 26580,
+        "line": 1031752,
+        "evidence": "Shop reducer module initializer #26580; its Metro registration at 11585-11588 identifies module 2292."
+      },
+      {
+        "functionId": 26601,
+        "line": 1032994,
+        "evidence": "Shop action module initializer #26601; its Metro registration at 11590-11593 identifies module 2293 and imports service module 2294."
+      },
+      {
+        "functionId": 26733,
+        "line": 1036417,
+        "evidence": "Axios GET for kindergarten product detail, chained to #26734."
+      },
+      {
+        "functionId": 26734,
+        "line": 1036444,
+        "evidence": "Returns the Axios response.data value."
+      },
+      {
+        "functionId": 26618,
+        "line": 1033550,
+        "evidence": "The getShopProduct action calls kindergartenProduct with selectedKindergartenId when that selector is truthy."
+      },
+      {
+        "functionId": 26619,
+        "line": 1033587,
+        "evidence": "Dispatches the resolved service value unchanged as SET_SELECTED_SHOP_ITEM.data."
+      },
+      {
+        "functionId": 26581,
+        "line": 1031834,
+        "evidence": "The SET_SELECTED_SHOP_ITEM reducer branch assigns action.data to state.selectedShopItem at 1032491-1032499."
+      },
+      {
+        "functionId": 39986,
+        "line": 1612260,
+        "evidence": "ItemScreen selects state.shop.selectedShopItem via #39995 and performs the listed item-root property reads at 1612582-1612604, 1612630-1612658, 1612707-1612745, 1612787-1612919, and 1612989-1612994."
+      },
+      {
+        "functionId": 26700,
+        "line": 1035406,
+        "evidence": "Shop service module initializer #26700; its Metro registration at 11595-11598 identifies module 2294."
+      },
+      {
+        "functionId": 26601,
+        "line": 1032994,
+        "evidence": "Shop action module initializer #26601; its Metro registration at 11590-11593 identifies module 2293 and imports service module 2294."
+      },
+      {
+        "functionId": 39983,
+        "line": 1611855,
+        "evidence": "Shared ItemScreen module initializer #39983; Metro registration at 20870-20873 identifies module 4149 and its service/action imports."
+      },
+      {
+        "functionId": 39999,
+        "line": 1613442,
+        "evidence": "Shared ItemScreen selector #39999 selects getShopProduct or getShopService according to route/item kind before the renderer reads selectedShopItem."
+      }
+    ],
+    "fields": [
+      {
+        "name": "images",
+        "type": "array",
+        "evidence": "#39986 reads the HTTP-body-root item.images and forwards that unchanged value as ImageThumbnails.images at 1612582-1612608. ImageThumbnails #40054 reads its images prop and calls map on the value at 1615171 and 1615236-1615241; this supports an observed array use without modeling image members."
+      },
+      {
+        "name": "name",
+        "type": "unknown",
+        "evidence": "ItemScreen #39986 passes body-root item.name through shopTranslate at 1612624-1612632."
+      },
+      {
+        "name": "code",
+        "type": "unknown",
+        "evidence": "ItemScreen #39986 reads body-root item.code at 1612635-1612659."
+      },
+      {
+        "name": "supplier",
+        "type": "object",
+        "evidence": "ItemScreen #39986 reads body-root item.supplier and item.supplier.name at 1612688-1612702.",
+        "fields": [
+          {
+            "name": "name",
+            "type": "unknown",
+            "evidence": "Direct read of item.supplier.name in #39986 at 1612694-1612702."
+          }
+        ]
+      },
+      {
+        "name": "description",
+        "type": "unknown",
+        "evidence": "ItemScreen #39986 reads body-root item.description at 1612707-1612729."
+      },
+      {
+        "name": "links",
+        "type": "array",
+        "evidence": "ItemScreen #39986 checks body-root item.links.length and maps the original value at 1612735-1612746."
+      },
+      {
+        "name": "original_price",
+        "type": "unknown",
+        "evidence": "ItemScreen #39986 reads body-root item.original_price at 1612787-1612792 and 1612857-1612859."
+      },
+      {
+        "name": "sales_price_gross",
+        "type": "unknown",
+        "evidence": "ItemScreen #39986 reads body-root item.sales_price_gross at 1612866-1612868."
+      },
+      {
+        "name": "kindergarten_sales_price_gross",
+        "type": "unknown",
+        "evidence": "ItemScreen #39986 reads body-root item.kindergarten_sales_price_gross at 1612831-1612835."
+      },
+      {
+        "name": "rating",
+        "type": "unknown",
+        "evidence": "ItemScreen #39986 reads body-root item.rating at 1612989-1612990."
+      },
+      {
+        "name": "my_rating",
+        "type": "unknown",
+        "evidence": "ItemScreen #39986 reads body-root item.my_rating at 1612991-1612994; the UI's zero fallback is excluded."
+      },
+      {
+        "name": "id",
+        "type": "unknown",
+        "evidence": "ItemScreen #39986 reads body-root item.id at 1612966-1612968."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Only client-observed fields are modeled; no primitive leaf type, presence, or server completeness is claimed.",
+      "Image/link members and any unobserved fields remain unresolved."
+    ]
+  },
+  {
+    "operationId": "Service",
+    "sourceFunctionId": 26735,
+    "kind": "object",
+    "evidence": "#26735 returns Axios response.data. The registered getShopService action #26622 chooses this service branch when selectedKindergartenId is falsy, and #26623 dispatches the value unchanged; #26581 stores action.data as selectedShopItem. ItemScreen's state.shop.selectedShopItem consumer reads the response-root properties below. Metro identity cross-check: service module 2294, action module 2293, shared ItemScreen module 4149.",
+    "trace": [
+      {
+        "functionId": 26580,
+        "line": 1031752,
+        "evidence": "Shop reducer module initializer #26580; its Metro registration at 11585-11588 identifies module 2292."
+      },
+      {
+        "functionId": 26601,
+        "line": 1032994,
+        "evidence": "Shop action module initializer #26601; its Metro registration at 11590-11593 identifies module 2293 and imports service module 2294."
+      },
+      {
+        "functionId": 26735,
+        "line": 1036455,
+        "evidence": "Axios GET for service detail, chained to #26736."
+      },
+      {
+        "functionId": 26736,
+        "line": 1036480,
+        "evidence": "Returns Axios response.data."
+      },
+      {
+        "functionId": 26622,
+        "line": 1033636,
+        "evidence": "Registered getShopService action calls service when selectedKindergartenId is falsy."
+      },
+      {
+        "functionId": 26623,
+        "line": 1033673,
+        "evidence": "Dispatches the resolved value unchanged as SET_SELECTED_SHOP_ITEM.data."
+      },
+      {
+        "functionId": 26581,
+        "line": 1031834,
+        "evidence": "SET_SELECTED_SHOP_ITEM stores action.data directly at 1032491-1032499."
+      },
+      {
+        "functionId": 39986,
+        "line": 1612260,
+        "evidence": "ItemScreen selects the shared selectedShopItem root and reads images/name/supplier/description/links/prices/rating/id in its render path at 1612582-1612604, 1612630-1612632, 1612688-1612702, 1612707-1612746, 1612787-1612919, and 1612966-1612994."
+      },
+      {
+        "functionId": 26700,
+        "line": 1035406,
+        "evidence": "Shop service module initializer #26700; its Metro registration at 11595-11598 identifies module 2294."
+      },
+      {
+        "functionId": 26601,
+        "line": 1032994,
+        "evidence": "Shop action module initializer #26601; its Metro registration at 11590-11593 identifies module 2293 and imports service module 2294."
+      },
+      {
+        "functionId": 39983,
+        "line": 1611855,
+        "evidence": "Shared ItemScreen module initializer #39983; Metro registration at 20870-20873 identifies module 4149 and its service/action imports."
+      },
+      {
+        "functionId": 39999,
+        "line": 1613442,
+        "evidence": "Shared ItemScreen selector #39999 selects getShopProduct or getShopService according to route/item kind before the renderer reads selectedShopItem."
+      }
+    ],
+    "fields": [
+      {
+        "name": "images",
+        "type": "array",
+        "evidence": "#39986 reads the HTTP-body-root item.images and forwards that unchanged value as ImageThumbnails.images at 1612582-1612608. ImageThumbnails #40054 reads its images prop and calls map on the value at 1615171 and 1615236-1615241; this supports an observed array use without modeling image members."
+      },
+      {
+        "name": "name",
+        "type": "unknown",
+        "evidence": "#39986 reads body-root item.name for shopTranslate at 1612624-1612632."
+      },
+      {
+        "name": "code",
+        "type": "unknown",
+        "evidence": "Shared ItemScreen #39986 directly reads body-root item.code for the product/service code display at 1612635-1612658."
+      },
+      {
+        "name": "supplier",
+        "type": "object",
+        "evidence": "#39986 reads body-root item.supplier and its name at 1612688-1612702.",
+        "fields": [
+          {
+            "name": "name",
+            "type": "unknown",
+            "evidence": "Direct nested item.supplier.name read at #39986 1612694-1612702."
+          }
+        ]
+      },
+      {
+        "name": "description",
+        "type": "unknown",
+        "evidence": "#39986 reads body-root item.description at 1612707-1612729."
+      },
+      {
+        "name": "links",
+        "type": "array",
+        "evidence": "#39986 checks body-root item.links.length and maps it at 1612735-1612746."
+      },
+      {
+        "name": "original_price",
+        "type": "unknown",
+        "evidence": "#39986 reads body-root item.original_price at 1612787-1612792 and 1612857-1612859."
+      },
+      {
+        "name": "sales_price_gross",
+        "type": "unknown",
+        "evidence": "#39986 reads body-root item.sales_price_gross at 1612866-1612868."
+      },
+      {
+        "name": "kindergarten_sales_price_gross",
+        "type": "unknown",
+        "evidence": "#39986 reads body-root item.kindergarten_sales_price_gross at 1612831-1612835."
+      },
+      {
+        "name": "rating",
+        "type": "unknown",
+        "evidence": "#39986 reads body-root item.rating at 1612989-1612990."
+      },
+      {
+        "name": "my_rating",
+        "type": "unknown",
+        "evidence": "#39986 reads body-root item.my_rating at 1612991-1612994; local fallback is not modeled."
+      },
+      {
+        "name": "id",
+        "type": "unknown",
+        "evidence": "#39986 tests body-root item.id at 1612966-1612968."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "No primitive leaf types or guaranteed presence are established; item-list/UI fallback values are excluded.",
+      "The shared detail UI also serves product responses; only properties directly read from the selected service result are included."
+    ]
+  },
+  {
+    "operationId": "KindergartenService",
+    "sourceFunctionId": 26737,
+    "kind": "object",
+    "evidence": "#26737 returns Axios response.data. The registered getShopService action #26622 chooses kindergartenService when selectedKindergartenId is truthy, and #26624 dispatches the result unchanged; #26581 stores action.data as selectedShopItem. ItemScreen reads the resulting root properties below. Metro identity cross-check: service module 2294, action module 2293, shared ItemScreen module 4149.",
+    "trace": [
+      {
+        "functionId": 26580,
+        "line": 1031752,
+        "evidence": "Shop reducer module initializer #26580; its Metro registration at 11585-11588 identifies module 2292."
+      },
+      {
+        "functionId": 26601,
+        "line": 1032994,
+        "evidence": "Shop action module initializer #26601; its Metro registration at 11590-11593 identifies module 2293 and imports service module 2294."
+      },
+      {
+        "functionId": 26737,
+        "line": 1036491,
+        "evidence": "Axios GET for kindergarten service detail, chained to #26738."
+      },
+      {
+        "functionId": 26738,
+        "line": 1036518,
+        "evidence": "Returns Axios response.data."
+      },
+      {
+        "functionId": 26622,
+        "line": 1033636,
+        "evidence": "Registered getShopService action calls kindergartenService with selectedKindergartenId when truthy."
+      },
+      {
+        "functionId": 26624,
+        "line": 1033691,
+        "evidence": "Dispatches the resolved service value unchanged as SET_SELECTED_SHOP_ITEM.data."
+      },
+      {
+        "functionId": 26581,
+        "line": 1031834,
+        "evidence": "SET_SELECTED_SHOP_ITEM stores action.data directly at 1032491-1032499."
+      },
+      {
+        "functionId": 39986,
+        "line": 1612260,
+        "evidence": "ItemScreen selects the shared selectedShopItem root and reads images/name/supplier/description/links/prices/rating/id at 1612582-1612608, 1612630-1612632, 1612688-1612702, 1612707-1612746, 1612787-1612919, and 1612966-1612994."
+      },
+      {
+        "functionId": 26700,
+        "line": 1035406,
+        "evidence": "Shop service module initializer #26700; its Metro registration at 11595-11598 identifies module 2294."
+      },
+      {
+        "functionId": 26601,
+        "line": 1032994,
+        "evidence": "Shop action module initializer #26601; its Metro registration at 11590-11593 identifies module 2293 and imports service module 2294."
+      },
+      {
+        "functionId": 39983,
+        "line": 1611855,
+        "evidence": "Shared ItemScreen module initializer #39983; Metro registration at 20870-20873 identifies module 4149 and its service/action imports."
+      },
+      {
+        "functionId": 39999,
+        "line": 1613442,
+        "evidence": "Shared ItemScreen selector #39999 selects getShopProduct or getShopService according to route/item kind before the renderer reads selectedShopItem."
+      }
+    ],
+    "fields": [
+      {
+        "name": "images",
+        "type": "array",
+        "evidence": "#39986 reads the HTTP-body-root item.images and forwards that unchanged value as ImageThumbnails.images at 1612582-1612608. ImageThumbnails #40054 reads its images prop and calls map on the value at 1615171 and 1615236-1615241; this supports an observed array use without modeling image members."
+      },
+      {
+        "name": "name",
+        "type": "unknown",
+        "evidence": "#39986 passes body-root item.name through shopTranslate at 1612624-1612632."
+      },
+      {
+        "name": "code",
+        "type": "unknown",
+        "evidence": "Shared ItemScreen #39986 directly reads body-root item.code for the product/service code display at 1612635-1612658."
+      },
+      {
+        "name": "supplier",
+        "type": "object",
+        "evidence": "#39986 reads item.supplier and item.supplier.name at 1612688-1612702.",
+        "fields": [
+          {
+            "name": "name",
+            "type": "unknown",
+            "evidence": "Direct item.supplier.name read in #39986 at 1612694-1612702."
+          }
+        ]
+      },
+      {
+        "name": "description",
+        "type": "unknown",
+        "evidence": "#39986 reads body-root item.description at 1612707-1612729."
+      },
+      {
+        "name": "links",
+        "type": "array",
+        "evidence": "#39986 checks item.links.length and maps the unchanged body-root value at 1612735-1612746."
+      },
+      {
+        "name": "original_price",
+        "type": "unknown",
+        "evidence": "#39986 reads body-root item.original_price at 1612787-1612792 and 1612857-1612859."
+      },
+      {
+        "name": "sales_price_gross",
+        "type": "unknown",
+        "evidence": "#39986 reads body-root item.sales_price_gross at 1612866-1612868."
+      },
+      {
+        "name": "kindergarten_sales_price_gross",
+        "type": "unknown",
+        "evidence": "#39986 reads body-root item.kindergarten_sales_price_gross at 1612831-1612835."
+      },
+      {
+        "name": "rating",
+        "type": "unknown",
+        "evidence": "#39986 reads body-root item.rating at 1612989-1612990."
+      },
+      {
+        "name": "my_rating",
+        "type": "unknown",
+        "evidence": "#39986 reads body-root item.my_rating at 1612991-1612994; the UI's zero fallback is not modeled."
+      },
+      {
+        "name": "id",
+        "type": "unknown",
+        "evidence": "#39986 tests body-root item.id at 1612966-1612968."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "No primitive leaf type, requiredness, or complete response shape is established.",
+      "Only properties observed on the shared detail consumer are modeled."
+    ]
+  },
+  {
+    "operationId": "UserCart",
+    "sourceFunctionId": 26769,
+    "kind": "array",
+    "evidence": "#26769 returns Axios response.data. Actual Metro action #26655 calls this service and #26656 dispatches the resolved value unchanged as SET_USER_CART.data; the SET_USER_CART reducer stores action.data as state.user_cart. MyCartScreen selects that state value, tests its length, and supplies it directly as FlatList.data. Each row is treated as a provider record by #40167. The standalone body is client-observed as an array via its direct FlatList.data use; the provider.items collection is separately observed through .map.",
+    "trace": [
+      {
+        "functionId": 26580,
+        "line": 1031752,
+        "evidence": "Shop reducer module initializer #26580; its Metro registration at 11585-11588 identifies module 2292."
+      },
+      {
+        "functionId": 26601,
+        "line": 1032994,
+        "evidence": "Shop action module initializer #26601; its Metro registration at 11590-11593 identifies module 2293 and imports service module 2294."
+      },
+      {
+        "functionId": 26769,
+        "line": 1037166,
+        "evidence": "Axios GET for the cart, chained to #26770."
+      },
+      {
+        "functionId": 26770,
+        "line": 1037185,
+        "evidence": "Returns Axios response.data."
+      },
+      {
+        "functionId": 26655,
+        "line": 1034339,
+        "evidence": "getUserCart action invokes service.userCart."
+      },
+      {
+        "functionId": 26656,
+        "line": 1034359,
+        "evidence": "Dispatches the resolved body unchanged as SET_USER_CART.data."
+      },
+      {
+        "functionId": 26581,
+        "line": 1031962,
+        "evidence": "SET_USER_CART reducer stores action.data as state.user_cart at 1032311-1032314."
+      },
+      {
+        "functionId": 40160,
+        "line": 1620178,
+        "evidence": "MyCartScreen selector #40161 returns state.shop.user_cart; the screen checks its length and supplies the unchanged value as FlatList.data at 1620202-1620206 and 1620257-1620287."
+      },
+      {
+        "functionId": 40167,
+        "line": 1620441,
+        "evidence": "FlatList row is forwarded as Provider.provider at 1620445-1620462."
+      },
+      {
+        "functionId": 40172,
+        "line": 1620790,
+        "evidence": "Provider consumer reads provider.name, provider.items, and maps provider.items at 1620790-1621069."
+      },
+      {
+        "functionId": 40177,
+        "line": 1621222,
+        "evidence": "For each provider.items row, the cart total helper reads either item.product.sales_price_gross or item.service.sales_price_gross and item.qty at 1621226-1621252."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "The client renders the response as an array of provider records, but no server completeness or leaf primitive types are established.",
+      "The reducer's initial local user_cart value is not used as response evidence."
+    ],
+    "items": {
+      "kind": "object",
+      "evidence": "The response-root value is supplied unchanged as FlatList.data; each FlatList row is passed unchanged as the provider record by #40167 at 1620445-1620462.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "unknown",
+          "evidence": "Cart row #40168 reads each provider-record item's id as FlatList key at 1620468-1620475."
+        },
+        {
+          "name": "name",
+          "type": "unknown",
+          "evidence": "Provider consumer #40172 reads provider.name at 1620790-1620830."
+        },
+        {
+          "name": "items",
+          "type": "array",
+          "evidence": "Provider consumer #40172 reads provider.items and calls map at 1620790-1620865.",
+          "items": {
+            "evidence": "Each provider.items value is rendered by ProviderItem #40189, which reads item fields at 1621890-1622220.",
+            "fields": [
+              {
+                "name": "product",
+                "type": "object",
+                "evidence": "Cart total helper #40177 reads item.product and item.product.sales_price_gross at 1621227-1621241.",
+                "fields": [
+                  {
+                    "name": "sales_price_gross",
+                    "type": "unknown",
+                    "evidence": "Direct nested read by #40177 at 1621243-1621245."
+                  }
+                ]
+              },
+              {
+                "name": "service",
+                "type": "object",
+                "evidence": "Cart total helper #40177 reads item.service and item.service.sales_price_gross at 1621227-1621241.",
+                "fields": [
+                  {
+                    "name": "sales_price_gross",
+                    "type": "unknown",
+                    "evidence": "Direct nested read by #40177 at 1621232-1621239."
+                  }
+                ]
+              },
+              {
+                "name": "qty",
+                "type": "unknown",
+                "evidence": "Cart total helper #40177 reads item.qty at 1621240-1621241 or 1621250-1621252."
+              }
+            ],
+            "kind": "object"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "operationId": "UserOrders",
+    "sourceFunctionId": 26779,
+    "kind": "object",
+    "evidence": "#26779 returns Axios response.data. Metro action #26676 calls userOrders and #26677 dispatches the resolved value unchanged as ADD_USER_ORDERS or SET_USER_ORDERS.data. The reducer either preserves the response object or merges its data collection with prior pages; OrdersList selects the resulting user_orders root and renders its data as FlatList.data.",
+    "trace": [
+      {
+        "functionId": 26580,
+        "line": 1031752,
+        "evidence": "Shop reducer module initializer #26580; its Metro registration at 11585-11588 identifies module 2292."
+      },
+      {
+        "functionId": 26601,
+        "line": 1032994,
+        "evidence": "Shop action module initializer #26601; its Metro registration at 11590-11593 identifies module 2293 and imports service module 2294."
+      },
+      {
+        "functionId": 26779,
+        "line": 1037336,
+        "evidence": "Axios GET for user orders, chained to #26780."
+      },
+      {
+        "functionId": 26780,
+        "line": 1037358,
+        "evidence": "Returns Axios response.data."
+      },
+      {
+        "functionId": 26676,
+        "line": 1034856,
+        "evidence": "getUserOrders action calls service.userOrders."
+      },
+      {
+        "functionId": 26677,
+        "line": 1034878,
+        "evidence": "Dispatches the response unchanged under ADD_USER_ORDERS or SET_USER_ORDERS depending on request current_page."
+      },
+      {
+        "functionId": 26581,
+        "line": 1031834,
+        "evidence": "SET_USER_ORDERS stores action.data at 1032302-1032310; ADD_USER_ORDERS appends action.data.data while preserving the outer fields at 1032276-1032301."
+      },
+      {
+        "functionId": 40204,
+        "line": 1622865,
+        "evidence": "OrdersList selects user_orders via #40205 and passes its data property unchanged as FlatList.data at 1622896-1622901 and 1623015-1623025; pagination consumer #40214 reads last_page."
+      },
+      {
+        "functionId": 40219,
+        "line": 1623438,
+        "evidence": "The OrdersList row renderer reads item.supplier.name at 1623478-1623480, doc_number at 1623491-1623493, status at 1623510-1623518, doc_date at 1623533-1623537, total_gross at 1623559-1623565, and id at 1623572-1623573."
+      }
+    ],
+    "fields": [
+      {
+        "name": "last_page",
+        "type": "unknown",
+        "evidence": "The pagination consumer #40214 reads user_orders.last_page (1623306-1623340); response-object preservation in #26581 is at 1032288-1032301."
+      },
+      {
+        "name": "data",
+        "type": "array",
+        "evidence": "OrdersList #40204 reads selected user_orders.data and supplies it unchanged to FlatList.data at 1623015-1623025; #26581's append branch also reads prior and incoming data at 1032276-1032294.",
+        "items": {
+          "evidence": "Each array member is rendered by OrdersList #40219 at 1623438-1623574.",
+          "fields": [
+            {
+              "name": "id",
+              "type": "unknown",
+              "evidence": "OrdersList row renderer #40219 reads item.id at 1623572-1623573."
+            },
+            {
+              "name": "doc_number",
+              "type": "unknown",
+              "evidence": "OrdersList row renderer #40219 reads item.doc_number at 1623491-1623493."
+            },
+            {
+              "name": "status",
+              "type": "unknown",
+              "evidence": "OrdersList row renderer #40219 reads item.status at 1623510-1623518."
+            },
+            {
+              "name": "doc_date",
+              "type": "unknown",
+              "evidence": "OrdersList row renderer #40219 reads item.doc_date at 1623533-1623537."
+            },
+            {
+              "name": "total_gross",
+              "type": "unknown",
+              "evidence": "OrdersList row renderer #40219 reads item.total_gross at 1623559-1623565."
+            },
+            {
+              "name": "supplier",
+              "type": "object",
+              "evidence": "OrdersList row renderer #40219 reads item.supplier.name at 1623478-1623480.",
+              "fields": [
+                {
+                  "name": "name",
+                  "type": "unknown",
+                  "evidence": "Direct nested item.supplier.name read by #40219 at 1623478-1623480."
+                }
+              ]
+            }
+          ],
+          "kind": "object"
+        }
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "The reducer's append path combines pages; only the server body fields retained by that merge and directly read by the UI are modeled.",
+      "Pagination leaf types and order item leaf types remain unknown; no requiredness or completeness is claimed."
+    ]
+  },
+  {
+    "operationId": "GetUserOrder",
+    "sourceFunctionId": 26781,
+    "kind": "object",
+    "evidence": "#26781 returns Axios response.data. OrderDetailsScreen Metro function #40230 selects getUserOrder for non-kindergarten orders, and its resolved value is passed unchanged to local order state by #40233; the same screen and child renderers read the response-root properties below. This detail route uses OrderDetailsScreen module 4170 and local order state; no Redux reducer is on this body handoff.",
+    "trace": [
+      {
+        "functionId": 26781,
+        "line": 1037369,
+        "evidence": "Axios GET for a user order, chained to #26782."
+      },
+      {
+        "functionId": 26782,
+        "line": 1037398,
+        "evidence": "Callback #26782 reads Axios response.data and returns that HTTP-body value at 1037398-1037399."
+      },
+      {
+        "functionId": 40227,
+        "line": 1624008,
+        "evidence": "OrderDetailsScreen registers detail loader #40230 and passes the resulting order state into its detail view."
+      },
+      {
+        "functionId": 40230,
+        "line": 1624732,
+        "evidence": "For route type other than kindergarten, calls getUserOrder with orderId; the kindergarten branch calls #26785 via getKindergartenOrder."
+      },
+      {
+        "functionId": 40233,
+        "line": 1624807,
+        "evidence": "Passes the resolved detail value to the screen's local order-state setter without projecting fields."
+      },
+      {
+        "functionId": 40244,
+        "line": 1625068,
+        "evidence": "orderInfo reads doc_number, rows, total_net, total_vat, and total_gross from the resolved order object at 1625105-1625108, 1625119-1625124, 1625180-1625186, 1625234-1625239, and 1625289-1625294."
+      },
+      {
+        "functionId": 40245,
+        "line": 1625309,
+        "evidence": "Order row renderer reads row.product_id, service_id, row_gross, qty, and nested product/service values at 1625320-1625323 and the remaining row render body."
+      },
+      {
+        "functionId": 40246,
+        "line": 1625580,
+        "evidence": "Customer/delivery renderer reads customer_name, email, phone, address, and nested delivery.customer_name/email/phone/address from the order value at 1625625-1625715."
+      },
+      {
+        "functionId": 40227,
+        "line": 1624008,
+        "evidence": "The enclosing view reads doc_date at 1624310, supplier.name at 1624358-1624360, status at 1624403-1624409, status_reason at 1624416-1624450, and notes at 1624522/1624561."
+      },
+      {
+        "functionId": 26700,
+        "line": 1035406,
+        "evidence": "Shop service module initializer #26700; its Metro registration at 11595-11598 identifies module 2294."
+      },
+      {
+        "functionId": 40224,
+        "line": 1623685,
+        "evidence": "OrderDetailsScreen module initializer #40224; Metro registration at 20975-20978 identifies module 4170 and its service import."
+      },
+      {
+        "functionId": 40230,
+        "line": 1624732,
+        "evidence": "OrderDetailsScreen selects this service by route type; #40231/#40233 assign the returned body unchanged to local order screen state, not Redux."
+      },
+      {
+        "functionId": 40245,
+        "line": 1625309,
+        "evidence": "Order row renderer reads each unchanged response.rows item; direct name/code reads are at 1625517-1625518 and 1625538-1625539."
+      }
+    ],
+    "fields": [
+      {
+        "name": "doc_number",
+        "type": "unknown",
+        "evidence": "Direct response-root read by #40244 at 1625105-1625108."
+      },
+      {
+        "name": "doc_date",
+        "type": "unknown",
+        "evidence": "Direct response-root read in #40227 at 1624310-1624311."
+      },
+      {
+        "name": "status",
+        "type": "unknown",
+        "evidence": "Direct response-root read in #40227 at 1624380-1624405."
+      },
+      {
+        "name": "status_reason",
+        "type": "unknown",
+        "evidence": "Direct response-root read in #40227 at 1624416-1624450."
+      },
+      {
+        "name": "notes",
+        "type": "unknown",
+        "evidence": "Direct response-root reads in #40227 at 1624522 and 1624561."
+      },
+      {
+        "name": "supplier",
+        "type": "object",
+        "evidence": "OrderDetailsScreen reads response-root supplier.name at 1624358-1624360.",
+        "fields": [
+          {
+            "name": "name",
+            "type": "unknown",
+            "evidence": "Direct nested supplier.name read by #40227 at 1624358-1624360."
+          },
+          {
+            "name": "logo",
+            "type": "unknown",
+            "evidence": "OrderDetailsScreen #40227 directly reads response-root order.supplier.logo at 1624173-1624187 and passes that value to a display prop."
+          }
+        ]
+      },
+      {
+        "name": "rows",
+        "type": "array",
+        "evidence": "#40244 reads order.rows and maps it at 1625119-1625124.",
+        "items": {
+          "evidence": "Each row is rendered by #40245, which reads row properties at 1625320-1625323 and later in the function.",
+          "fields": [
+            {
+              "name": "product_id",
+              "type": "unknown",
+              "evidence": "Direct read from the response row by #40245 at 1625320-1625323."
+            },
+            {
+              "name": "service_id",
+              "type": "unknown",
+              "evidence": "Direct read from the response row by #40245 at 1625320-1625323."
+            },
+            {
+              "name": "row_gross",
+              "type": "unknown",
+              "evidence": "Direct read from the response row by #40245 at 1625420 and 1625561."
+            },
+            {
+              "name": "qty",
+              "type": "unknown",
+              "evidence": "Direct response-row read by #40245 at 1625485-1625490."
+            },
+            {
+              "name": "name",
+              "type": "unknown",
+              "evidence": "Order-row renderer #40245 directly reads row.name at 1625517-1625518."
+            },
+            {
+              "name": "code",
+              "type": "unknown",
+              "evidence": "Order-row renderer #40245 directly reads row.code at 1625538-1625539."
+            }
+          ],
+          "kind": "object"
+        }
+      },
+      {
+        "name": "total_net",
+        "type": "unknown",
+        "evidence": "Direct response-root read by #40244 at 1625180-1625186."
+      },
+      {
+        "name": "total_vat",
+        "type": "unknown",
+        "evidence": "Direct response-root read by #40244 at 1625234-1625239."
+      },
+      {
+        "name": "total_gross",
+        "type": "unknown",
+        "evidence": "Direct response-root read by #40244 at 1625289-1625294."
+      },
+      {
+        "name": "customer_name",
+        "type": "unknown",
+        "evidence": "#40246 reads response-root customer_name in one display branch at 1625632; another branch reads delivery.customer_name at 1625629-1625630."
+      },
+      {
+        "name": "email",
+        "type": "unknown",
+        "evidence": "#40246 reads response-root email at 1625649; alternate display branch reads delivery.email at 1625646-1625647."
+      },
+      {
+        "name": "phone",
+        "type": "unknown",
+        "evidence": "#40246 reads response-root phone at 1625654; alternate branch reads delivery.phone at 1625658-1625659."
+      },
+      {
+        "name": "address",
+        "type": "unknown",
+        "evidence": "#40246 reads response-root address at 1625682; alternate branch reads delivery.address at 1625685-1625686."
+      },
+      {
+        "name": "delivery",
+        "type": "object",
+        "evidence": "#40246 directly reads nested delivery properties at 1625629-1625630, 1625646-1625647, 1625657-1625659, and 1625684-1625686.",
+        "fields": [
+          {
+            "name": "customer_name",
+            "type": "unknown",
+            "evidence": "Direct nested delivery.customer_name read by #40246 at 1625629-1625630."
+          },
+          {
+            "name": "email",
+            "type": "unknown",
+            "evidence": "Direct nested delivery.email read by #40246 at 1625646-1625647."
+          },
+          {
+            "name": "phone",
+            "type": "unknown",
+            "evidence": "Direct nested delivery.phone read by #40246 at 1625657-1625659."
+          },
+          {
+            "name": "address",
+            "type": "unknown",
+            "evidence": "Direct nested delivery.address read by #40246 at 1625684-1625686."
+          }
+        ]
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Client-rendered fields only; all properties are optional and primitive types remain unknown.",
+      "The screen also creates local translated labels, formatting, and fallback values, which are excluded."
+    ]
+  },
+  {
+    "operationId": "KindergartenOrders",
+    "sourceFunctionId": 26783,
+    "kind": "object",
+    "evidence": "#26783 returns Axios response.data. Metro action #26680 dispatches SET_KINDERGARTEN_ORDERS when current_page === 1; reducer #26581 stores action.data unchanged for that SET case. The OrdersList consumer then reads the response-root data for FlatList and last_page for pagination. The later-page ADD and optimistic UPDATE cases are separate paths, not the page-one SET projection.",
+    "trace": [
+      {
+        "functionId": 26783,
+        "line": 1037404,
+        "evidence": "Axios GET for kindergarten orders, chained to #26784."
+      },
+      {
+        "functionId": 26784,
+        "line": 1037437,
+        "evidence": "Callback #26784 reads Axios response.data and returns that HTTP-body value at 1037437-1037438."
+      },
+      {
+        "functionId": 26700,
+        "line": 1035406,
+        "evidence": "Shop service module initializer #26700; its Metro registration at 11595-11598 identifies module 2294."
+      },
+      {
+        "functionId": 26601,
+        "line": 1032994,
+        "evidence": "Shop action module initializer #26601; its Metro registration at 11590-11593 identifies module 2293 and imports service module 2294."
+      },
+      {
+        "functionId": 26679,
+        "line": 1034922,
+        "evidence": "getKindergartenOrders action invokes the service and attaches handler #26680."
+      },
+      {
+        "functionId": 26680,
+        "line": 1034954,
+        "evidence": "Tests current_page against 1; page one dispatches SET_KINDERGARTEN_ORDERS with the resolved service body unchanged as action.data, while later pages dispatch ADD_KINDERGARTEN_ORDERS."
+      },
+      {
+        "functionId": 26580,
+        "line": 1031752,
+        "evidence": "Shop reducer module initializer #26580; its Metro registration at 11585-11588 identifies module 2292."
+      },
+      {
+        "functionId": 26581,
+        "line": 1032243,
+        "evidence": "The SET_KINDERGARTEN_ORDERS reducer case assigns action.data directly to state.kindergartenOrders at 1032243-1032251. The map/Object.entries/fromEntries transformation at 1032193-1032216 belongs to UPDATE_KINDERGARTEN_ORDERS, not this SET case."
+      },
+      {
+        "functionId": 40204,
+        "line": 1622865,
+        "evidence": "OrdersList reads the selected kindergarten-orders object and supplies its data property to FlatList.data at 1623015-1623025."
+      },
+      {
+        "functionId": 40214,
+        "line": 1623306,
+        "evidence": "Pagination consumer reads root last_page at 1623306-1623340."
+      },
+      {
+        "functionId": 40219,
+        "line": 1623438,
+        "evidence": "OrdersList row renderer directly reads item id, supplier.name, doc_number, status, doc_date, and total_gross at 1623478-1623573."
+      }
+    ],
+    "fields": [
+      {
+        "name": "data",
+        "type": "array",
+        "evidence": "Page-one SET stores the response object unchanged; OrdersList #40204 supplies its root data property unchanged as FlatList.data at 1623015-1623025.",
+        "items": {
+          "evidence": "FlatList item is the order row rendered by #40219 at 1623438-1623574.",
+          "fields": [
+            {
+              "name": "id",
+              "type": "unknown",
+              "evidence": "OrdersList row renderer #40219 reads item.id at 1623572-1623573."
+            },
+            {
+              "name": "doc_number",
+              "type": "unknown",
+              "evidence": "OrdersList row renderer #40219 reads item.doc_number at 1623491-1623493."
+            },
+            {
+              "name": "status",
+              "type": "unknown",
+              "evidence": "OrdersList row renderer #40219 reads item.status at 1623510-1623518."
+            },
+            {
+              "name": "doc_date",
+              "type": "unknown",
+              "evidence": "OrdersList row renderer #40219 reads item.doc_date at 1623533-1623537."
+            },
+            {
+              "name": "total_gross",
+              "type": "unknown",
+              "evidence": "OrdersList row renderer #40219 reads item.total_gross at 1623559-1623565."
+            },
+            {
+              "name": "supplier",
+              "type": "object",
+              "evidence": "OrdersList row renderer #40219 reads item.supplier.name at 1623478-1623480.",
+              "fields": [
+                {
+                  "name": "name",
+                  "type": "unknown",
+                  "evidence": "Direct nested item.supplier.name read by #40219 at 1623478-1623480."
+                }
+              ]
+            }
+          ],
+          "kind": "object"
+        }
+      },
+      {
+        "name": "last_page",
+        "type": "unknown",
+        "evidence": "OrdersList pagination consumer #40214 reads body-root last_page at 1623306-1623340 after page-one SET stores the body unchanged."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Only the current_page === 1 SET_KINDERGARTEN_ORDERS path preserves the full HTTP body unchanged and supports this partial body-root model; every listed property is optional and the model is open/incomplete.",
+      "Later-page ADD_KINDERGARTEN_ORDERS applies a separate data merge. UPDATE_KINDERGARTEN_ORDERS is an optimistic local map/Object.entries/fromEntries branch at #26581 1032193-1032216 and is not response evidence.",
+      "The FlatList establishes client array use for data; all row leaves, including supplier.name and last_page, remain unknown. No requiredness, pagination contract, or completeness is claimed."
+    ]
+  },
+  {
+    "operationId": "GetKindergartenOrder",
+    "sourceFunctionId": 26785,
+    "kind": "object",
+    "evidence": "#26785 returns Axios response.data. OrderDetailsScreen #40230 selects getKindergartenOrder for route type kindergarten, then #40231 passes the resolved value unchanged to local order state. The shared detail view reads the same response-root order fields as the user-order detail path. This detail route uses OrderDetailsScreen module 4170 and local order state; no Redux reducer is on this body handoff.",
+    "trace": [
+      {
+        "functionId": 26785,
+        "line": 1037443,
+        "evidence": "Axios GET for a kindergarten order, chained to #26786."
+      },
+      {
+        "functionId": 26786,
+        "line": 1037474,
+        "evidence": "Callback #26786 reads Axios response.data and returns that HTTP-body value at 1037474-1037475."
+      },
+      {
+        "functionId": 40227,
+        "line": 1624008,
+        "evidence": "OrderDetailsScreen registers loader #40230 and passes local order state to its detail view."
+      },
+      {
+        "functionId": 40230,
+        "line": 1624732,
+        "evidence": "For route type kindergarten, calls getKindergartenOrder with selectedKindergartenId and orderId."
+      },
+      {
+        "functionId": 40231,
+        "line": 1624779,
+        "evidence": "Passes the resolved detail value to the local order-state setter unchanged."
+      },
+      {
+        "functionId": 40244,
+        "line": 1625068,
+        "evidence": "Reads doc_number, rows, total_net, total_vat, and total_gross from the order value."
+      },
+      {
+        "functionId": 40245,
+        "line": 1625309,
+        "evidence": "Reads response row product_id, service_id, row_gross, and qty."
+      },
+      {
+        "functionId": 40246,
+        "line": 1625580,
+        "evidence": "Reads root and delivery-nested customer_name, email, phone, and address values at 1625625-1625715."
+      },
+      {
+        "functionId": 40227,
+        "line": 1624008,
+        "evidence": "The enclosing screen reads doc_date at 1624310, supplier.name at 1624358-1624360, status at 1624403-1624409, status_reason at 1624416-1624450, and notes at 1624522/1624561."
+      },
+      {
+        "functionId": 26700,
+        "line": 1035406,
+        "evidence": "Shop service module initializer #26700; its Metro registration at 11595-11598 identifies module 2294."
+      },
+      {
+        "functionId": 40224,
+        "line": 1623685,
+        "evidence": "OrderDetailsScreen module initializer #40224; Metro registration at 20975-20978 identifies module 4170 and its service import."
+      },
+      {
+        "functionId": 40230,
+        "line": 1624732,
+        "evidence": "OrderDetailsScreen selects this service by route type; #40231/#40233 assign the returned body unchanged to local order screen state, not Redux."
+      },
+      {
+        "functionId": 40245,
+        "line": 1625309,
+        "evidence": "Order row renderer reads each unchanged response.rows item; direct name/code reads are at 1625517-1625518 and 1625538-1625539."
+      }
+    ],
+    "fields": [
+      {
+        "name": "doc_number",
+        "type": "unknown",
+        "evidence": "Direct response-root read by #40244 at 1625105-1625108."
+      },
+      {
+        "name": "doc_date",
+        "type": "unknown",
+        "evidence": "Direct response-root read by #40227 at 1624310-1624311."
+      },
+      {
+        "name": "status",
+        "type": "unknown",
+        "evidence": "Direct response-root read by #40227 at 1624380-1624405."
+      },
+      {
+        "name": "status_reason",
+        "type": "unknown",
+        "evidence": "Direct response-root read by #40227 at 1624416-1624450."
+      },
+      {
+        "name": "notes",
+        "type": "unknown",
+        "evidence": "Direct response-root reads by #40227 at 1624522 and 1624561."
+      },
+      {
+        "name": "supplier",
+        "type": "object",
+        "evidence": "OrderDetailsScreen reads response-root supplier.name at 1624358-1624360.",
+        "fields": [
+          {
+            "name": "name",
+            "type": "unknown",
+            "evidence": "Direct nested supplier.name read by #40227 at 1624358-1624360."
+          },
+          {
+            "name": "logo",
+            "type": "unknown",
+            "evidence": "OrderDetailsScreen #40227 directly reads response-root order.supplier.logo at 1624173-1624187 and passes that value to a display prop."
+          }
+        ]
+      },
+      {
+        "name": "rows",
+        "type": "array",
+        "evidence": "#40244 maps order.rows at 1625119-1625124.",
+        "items": {
+          "evidence": "Rows are consumed by #40245 at 1625320-1625323 and subsequent row rendering reads.",
+          "fields": [
+            {
+              "name": "product_id",
+              "type": "unknown",
+              "evidence": "Direct read by #40245 at 1625320-1625323."
+            },
+            {
+              "name": "service_id",
+              "type": "unknown",
+              "evidence": "Direct read by #40245 at 1625320-1625323."
+            },
+            {
+              "name": "row_gross",
+              "type": "unknown",
+              "evidence": "Direct read by #40245 at 1625420 and 1625561."
+            },
+            {
+              "name": "qty",
+              "type": "unknown",
+              "evidence": "Direct response-row read by #40245 at 1625485-1625490."
+            },
+            {
+              "name": "name",
+              "type": "unknown",
+              "evidence": "Order-row renderer #40245 directly reads row.name at 1625517-1625518."
+            },
+            {
+              "name": "code",
+              "type": "unknown",
+              "evidence": "Order-row renderer #40245 directly reads row.code at 1625538-1625539."
+            }
+          ],
+          "kind": "object"
+        }
+      },
+      {
+        "name": "total_net",
+        "type": "unknown",
+        "evidence": "Direct response-root read by #40244 at 1625180-1625186."
+      },
+      {
+        "name": "total_vat",
+        "type": "unknown",
+        "evidence": "Direct response-root read by #40244 at 1625234-1625239."
+      },
+      {
+        "name": "total_gross",
+        "type": "unknown",
+        "evidence": "Direct response-root read by #40244 at 1625289-1625294."
+      },
+      {
+        "name": "customer_name",
+        "type": "unknown",
+        "evidence": "#40246 reads response-root customer_name in one display branch at 1625632; another branch reads delivery.customer_name at 1625629-1625630."
+      },
+      {
+        "name": "email",
+        "type": "unknown",
+        "evidence": "#40246 reads response-root email at 1625649; alternate display branch reads delivery.email at 1625646-1625647."
+      },
+      {
+        "name": "phone",
+        "type": "unknown",
+        "evidence": "#40246 reads response-root phone at 1625654; alternate branch reads delivery.phone at 1625658-1625659."
+      },
+      {
+        "name": "address",
+        "type": "unknown",
+        "evidence": "#40246 reads response-root address at 1625682; alternate branch reads delivery.address at 1625685-1625686."
+      },
+      {
+        "name": "delivery",
+        "type": "object",
+        "evidence": "#40246 directly reads nested delivery fields at 1625629-1625630, 1625646-1625647, 1625657-1625659, and 1625684-1625686.",
+        "fields": [
+          {
+            "name": "customer_name",
+            "type": "unknown",
+            "evidence": "Direct nested delivery.customer_name read by #40246 at 1625629-1625630."
+          },
+          {
+            "name": "email",
+            "type": "unknown",
+            "evidence": "Direct nested delivery.email read by #40246 at 1625646-1625647."
+          },
+          {
+            "name": "phone",
+            "type": "unknown",
+            "evidence": "Direct nested delivery.phone read by #40246 at 1625657-1625659."
+          },
+          {
+            "name": "address",
+            "type": "unknown",
+            "evidence": "Direct nested delivery.address read by #40246 at 1625684-1625686."
+          }
+        ]
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "The detail value is passed through to the UI, but only client-observed fields are modeled; primitive types, requiredness, and completeness are unknown.",
+      "UI formatting and locally composed display values are excluded."
+    ]
+  },
+  {
+    "operationId": "Wishlist",
+    "sourceFunctionId": 26793,
+    "kind": "object",
+    "evidence": "#26793 returns Axios response.data. Metro action #26670 calls this service and #26671 directly reads response-root wishlists and contacts: wishlists is dispatched to the status-selected pending/ordered/deleted wishlist action, and contacts is dispatched separately. Those properties are direct HTTP-body projections, not request fields or optimistic state.",
+    "trace": [
+      {
+        "functionId": 26793,
+        "line": 1037594,
+        "evidence": "Axios GET for kindergarten wishlist, chained to #26794."
+      },
+      {
+        "functionId": 26794,
+        "line": 1037627,
+        "evidence": "Callback #26794 reads Axios response.data and returns that HTTP-body value at 1037627-1037628."
+      },
+      {
+        "functionId": 26670,
+        "line": 1034690,
+        "evidence": "getKindergartenWishlist action calls service.wishlist with selectedKindergartenId and the status query."
+      },
+      {
+        "functionId": 26671,
+        "line": 1034719,
+        "evidence": "Reads response.wishlists and dispatches it under one status-specific wishlist action; then reads response.contacts and dispatches it as SET_KINDERGARTEN_CONTACTS at 1034734-1034771."
+      },
+      {
+        "functionId": 26581,
+        "line": 1031834,
+        "evidence": "Wishlist reducer cases transform/store the dispatched values under pending/ordered/deleted state; these local buckets are not HTTP-root properties."
+      },
+      {
+        "functionId": 40255,
+        "line": 1626173,
+        "evidence": "WishlistPendingScreen selects the state bucket and uses it for display; this consumer is downstream of the action's response-root projections."
+      }
+    ],
+    "fields": [
+      {
+        "name": "wishlists",
+        "type": "unknown",
+        "evidence": "Direct response-root property read in #26671 and assigned unchanged to the status-selected action's data at 1034734-1034762; reducer normalization prevents a more specific value shape claim."
+      },
+      {
+        "name": "contacts",
+        "type": "unknown",
+        "evidence": "Direct response-root property read in #26671 and dispatched as SET_KINDERGARTEN_CONTACTS.data at 1034763-1034771; no item shape/type is established."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Only two properties read by the action are modeled; body completeness, types, and remaining properties are unknown.",
+      "Status buckets, pending/ordered/deleted derivations, and local fallback values are not modeled as response fields."
+    ]
+  }
+]

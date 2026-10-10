@@ -4,6 +4,8 @@ import { fileURLToPath } from "node:url";
 
 const methods = new Set(["get", "post", "put", "patch", "delete", "head", "options"]);
 const types = new Set(["unknown", "string", "boolean", "integer", "number", "string[]", "unknown[]"]);
+const responseKinds = new Set(["object", "array", "scalar", "unknown", "binary"]);
+const responseFieldTypes = new Set(["unknown", "object", "array", "string", "boolean", "integer", "number"]);
 const compare = (a, b) => a < b ? -1 : a > b ? 1 : 0;
 const fail = (message) => { throw new Error(message); };
 const nonempty = (value) => typeof value === "string" && value.trim().length > 0;
@@ -111,6 +113,226 @@ export function validateRecord(record, context = "record") {
   }
 }
 
+const responseSchemaShape = (entry) => ({
+  kind: entry.kind,
+  scalarType: entry.scalarType,
+  fields: entry.fields?.map(responseFieldSchemaShape),
+  items: entry.items ? responseItemSchemaShape(entry.items) : undefined,
+});
+const responseFieldSchemaShape = (field) => ({
+  name: field.name, type: field.type,
+  fields: field.fields?.map(responseFieldSchemaShape),
+  items: field.items ? responseItemSchemaShape(field.items) : undefined,
+});
+const responseItemSchemaShape = (item) => ({
+  kind: item.kind, scalarType: item.scalarType,
+  fields: item.fields?.map(responseFieldSchemaShape),
+  items: item.items ? responseItemSchemaShape(item.items) : undefined,
+});
+const responseFieldEvidenceShape = (field) => ({ name: field.name, evidence: field.evidence, fields: field.fields?.map(responseFieldEvidenceShape), items: field.items ? responseItemEvidenceShape(field.items) : undefined });
+const responseItemEvidenceShape = (item) => ({ evidence: item.evidence, fields: item.fields?.map(responseFieldEvidenceShape), items: item.items ? responseItemEvidenceShape(item.items) : undefined });
+const responseEvidenceShape = (entry) => ({ evidence: entry.evidence, fields: entry.fields?.map(responseFieldEvidenceShape), items: entry.items ? responseItemEvidenceShape(entry.items) : undefined });
+
+function validateResponseFields(fields, context) {
+  if (!Array.isArray(fields)) fail(`${context}: fields must be an array`);
+  const names = new Set();
+  for (const field of fields) {
+    if (!field || typeof field !== "object" || Array.isArray(field) || !identifier(field.name ?? "")) fail(`${context}: invalid response field name`);
+    if (names.has(field.name)) fail(`${context}: duplicate response field ${field.name}`);
+    names.add(field.name);
+    if (!responseFieldTypes.has(field.type) || !nonempty(field.evidence)) fail(`${context}.${field.name}: unsupported type or missing field evidence`);
+    for (const key of Object.keys(field)) if (!["name", "type", "evidence", "fields", "items"].includes(key)) fail(`${context}.${field.name}: unsupported response field metadata ${key}`);
+    if (field.type === "object") {
+      if (field.fields !== undefined) validateResponseFields(field.fields, `${context}.${field.name}`);
+    } else if (field.fields !== undefined) fail(`${context}.${field.name}: fields are only valid for object fields`);
+    if (field.type === "array") {
+      if (field.items !== undefined) validateResponseItem(field.items, `${context}.${field.name}[]`);
+    } else if (field.items !== undefined) fail(`${context}.${field.name}: items are only valid for array fields`);
+  }
+}
+
+function validateResponseItem(item, context) {
+  if (!item || typeof item !== "object" || Array.isArray(item) || !["object", "array", "scalar", "unknown"].includes(item.kind) || !nonempty(item.evidence)) fail(`${context}: invalid response item shape/evidence`);
+  for (const key of Object.keys(item)) if (!["kind", "fields", "evidence", "items", "scalarType"].includes(key)) fail(`${context}: unsupported response item metadata ${key}`);
+  if (item.kind === "object") {
+    if (item.fields !== undefined) validateResponseFields(item.fields, context);
+  } else if (item.fields !== undefined) fail(`${context}: fields only allowed on object items`);
+  if (item.kind === "array") {
+    if (item.items !== undefined) validateResponseItem(item.items, `${context}[]`);
+  } else if (item.items !== undefined) fail(`${context}: items only allowed on array items`);
+  if (item.kind === "scalar" && !["string", "boolean", "integer", "number"].includes(item.scalarType)) fail(`${context}: scalar item needs a supported scalarType`);
+  if (item.kind !== "scalar" && item.scalarType !== undefined) fail(`${context}: scalarType only allowed on scalar items`);
+}
+
+export function validateResponseAnalysis(entry, context = "response") {
+  if (!entry || typeof entry !== "object" || Array.isArray(entry)) fail(`${context}: analysis must be an object`);
+  const allowed = new Set(["operationId", "sourceFunctionId", "kind", "evidence", "trace", "fields", "complete", "limitations", "scalarType", "items"]);
+  for (const key of Object.keys(entry)) if (!allowed.has(key)) fail(`${context}: unsupported response analysis metadata ${key}`);
+  if (!identifier(entry.operationId ?? "") || !Number.isInteger(entry.sourceFunctionId) || entry.sourceFunctionId < 0) fail(`${context}: invalid operation/source key`);
+  if (!responseKinds.has(entry.kind) || !nonempty(entry.evidence)) fail(`${context}: kind and evidence are required`);
+  if (!Array.isArray(entry.trace) || entry.trace.some((item) => !item || !Number.isInteger(item.functionId) || item.functionId < 0 || (item.line !== undefined && (!Number.isInteger(item.line) || item.line < 1)) || !nonempty(item.evidence) || Object.keys(item).some((key) => !["functionId", "line", "evidence"].includes(key)))) fail(`${context}: invalid response trace evidence`);
+  if (!Array.isArray(entry.fields) || !Array.isArray(entry.limitations) || entry.limitations.some((value) => typeof value !== "string") || entry.complete !== false) fail(`${context}: fields, limitations, and complete:false are required`);
+  if (entry.kind === "object") validateResponseFields(entry.fields, context);
+  else if (entry.fields.length) fail(`${context}: non-object response kinds cannot have fields`);
+  if (entry.kind === "scalar" && !["string", "boolean", "integer", "number"].includes(entry.scalarType)) fail(`${context}: scalar response needs a supported scalarType`);
+  if (entry.kind !== "scalar" && entry.scalarType !== undefined) fail(`${context}: scalarType only allowed for scalar responses`);
+  if (entry.kind === "array") {
+    if (entry.items !== undefined) validateResponseItem(entry.items, `${context}[]`);
+  } else if (entry.items !== undefined) fail(`${context}: items only allowed for array responses`);
+  if (entry.kind === "binary" && entry.fields.length) fail(`${context}: binary transport metadata must not become body fields`);
+  return entry;
+}
+
+/** Match static response rows one-to-one with research observations, then safely resolve aliases. */
+export function makeResponseCatalog(catalog, responseFiles = [], { strict = true } = {}) {
+  const expectedRows = catalog.operations.flatMap((op) => op.records.map((record) => ({ operationId: record.operationId, sourceFunctionId: record.source.functionId, op, record })));
+  const expectedKeys = new Map();
+  for (const row of expectedRows) {
+    const key = `${row.operationId}\0${row.sourceFunctionId}`;
+    if (expectedKeys.has(key)) fail(`Research observations are not uniquely keyed by operationId/sourceFunctionId: ${row.operationId}/${row.sourceFunctionId}`);
+    expectedKeys.set(key, row);
+  }
+  const analyses = new Map();
+  for (const file of responseFiles) {
+    if (!Array.isArray(file.entries)) fail(`${file.name}: response JSON must be an array`);
+    for (const raw of file.entries) {
+      const entry = validateResponseAnalysis(raw, `${file.name}:${raw?.operationId ?? "?"}`);
+      const key = `${entry.operationId}\0${entry.sourceFunctionId}`;
+      if (!expectedKeys.has(key)) fail(`${file.name}: unexpected response analysis ${entry.operationId}/${entry.sourceFunctionId}`);
+      if (analyses.has(key)) fail(`${file.name}: duplicate response analysis ${entry.operationId}/${entry.sourceFunctionId}`);
+      analyses.set(key, entry);
+    }
+  }
+  const missing = [...expectedKeys.keys()].filter((key) => !analyses.has(key));
+  if (strict && missing.length) fail(`Missing static response analysis for ${missing.length} research observation(s): ${missing.map((key) => key.replace("\0", "/")).join(", ")}`);
+  const operations = catalog.operations.map((op) => {
+    const observations = op.records.map((record) => ({ operationId: record.operationId, sourceFunctionId: record.source.functionId, analysis: analyses.get(`${record.operationId}\0${record.source.functionId}`) ?? null }));
+    const present = observations.map((item) => item.analysis).filter(Boolean);
+    let disposition = "unknown";
+    let analysis = null;
+    let reason = "No static response analysis is available.";
+    if (!present.length && !strict) reason = "Legacy mode: evidence/responses is absent; response remains unresolved.";
+    else if (present.length !== observations.length) reason = "One or more route-alias observations lack static response analysis.";
+    else {
+      const first = present[0];
+      const same = present.every((item) => equal(responseSchemaShape(item), responseSchemaShape(first)) && equal(responseEvidenceShape(item), responseEvidenceShape(first)));
+      if (!same) reason = "Alias response analyses conflict in shape or evidence; no merged body model is emitted.";
+      else if (first.kind === "object" || first.kind === "array" || first.kind === "scalar") {
+        disposition = "modeled";
+        analysis = first;
+        reason = "Partial static-derived client-observed body view; not a complete or guaranteed server contract.";
+      } else if (first.kind === "binary") {
+        disposition = "binary";
+        reason = "Opaque binary/native download body; native job metadata is not the HTTP body.";
+      }
+      else reason = "Static analysis explicitly leaves the response body unknown.";
+    }
+    return { operationId: op.operationId, disposition, reason, analysis, observations };
+  });
+  const recordCount = expectedRows.length;
+  return { schemaVersion: 1, analysisRequired: strict, researchObservationCount: recordCount, canonicalOperationCount: catalog.operationCount, analyzedObservationCount: analyses.size, missingObservationCount: missing.length, modeledOperationCount: operations.filter((op) => op.disposition === "modeled").length, unknownOperationCount: operations.filter((op) => op.disposition === "unknown").length, binaryOperationCount: operations.filter((op) => op.disposition === "binary").length, operations, missing: missing.map((key) => key.replace("\0", "/")) };
+}
+
+function responseFieldType(field, name, models) {
+  if (["string", "boolean", "integer", "number"].includes(field.type)) return field.type === "number" ? "numeric" : field.type;
+  if (field.type === "unknown") return "unknown";
+  if (field.type === "object") return renderResponseObject(name, field.fields ?? [], models);
+  return `${field.items ? responseItemType(field.items, `${name}Item`, models) : "unknown"}[]`;
+}
+
+function responseItemType(item, name, models) {
+  if (item.kind === "unknown") return "unknown";
+  if (item.kind === "scalar") return item.scalarType === "number" ? "numeric" : item.scalarType;
+  if (item.kind === "array") return `${item.items ? responseItemType(item.items, `${name}Item`, models) : "unknown"}[]`;
+  return renderResponseObject(name, item.fields ?? [], models);
+}
+
+function renderResponseObject(name, fields, models) {
+  const lines = [`model ${name} extends Record<unknown> {`];
+  for (const field of fields) lines.push(`  ${extension("x-static-field-evidence", field.evidence)}`, `  ${tspPropertyName(field.name)}?: ${responseFieldType(field, `${name}_${field.name}`, models)};`);
+  lines.push("}");
+  models.push(lines.join("\n"));
+  return name;
+}
+
+/** Emit named body and default-response types for analyzed operations only. */
+export function renderResponseModels(responseCatalog, catalog = undefined) {
+  const output = ['// Generated by scripts/generate.mjs. Edit evidence/responses, not this file.', 'using TypeSpec.Http;', 'using TypeSpec.OpenAPI;', 'namespace Eliis;'];
+  const names = new Set();
+  const operationTypes = new Map();
+  const claim = (name) => {
+    if (names.has(name)) fail(`Response model name collision: ${name}`);
+    names.add(name);
+  };
+  for (const name of ["UnresolvedResponse", "EliisCookieAuth"]) names.add(name);
+  const reserveRequestNested = (modelName, fields) => {
+    for (const field of fields ?? []) if (field.fields) {
+      const nested = `${modelName}_${field.name}`;
+      names.add(nested);
+      reserveRequestNested(nested, field.fields);
+    }
+  };
+  for (const op of catalog?.operations ?? []) {
+    if (op.body?.kind === "object" || (op.body?.kind === "multipart" && op.body.fields.length)) {
+      names.add(`${op.operationId}Body`);
+      reserveRequestNested(`${op.operationId}Body`, op.body.fields);
+    }
+    for (const query of op.query.filter(isDeepObjectQuery)) {
+      const queryModel = `${op.operationId}Query_${query.name}`;
+      names.add(queryModel);
+      reserveRequestNested(queryModel, query.fields);
+    }
+  }
+  for (const item of responseCatalog.operations) {
+    if (item.disposition !== "modeled") continue;
+    const base = `${item.operationId}ResponseBody`;
+    claim(base);
+    const generated = [];
+    // Every response-side model, including nested object/array item models, uses
+    // names disjoint from request models; claim names as the types are emitted.
+    const responseTypeNames = new Set([base]);
+    const collectFieldNames = (prefix, fields) => {
+      for (const field of fields ?? []) {
+        if (field.type === "object") { const nested = `${prefix}_${field.name}`; responseTypeNames.add(nested); collectFieldNames(nested, field.fields); }
+        if (field.type === "array") collectItemNames(`${prefix}_${field.name}Item`, field.items);
+      }
+    };
+    const collectItemNames = (prefix, itemShape) => {
+      if (!itemShape) return;
+      if (itemShape.kind === "object") { responseTypeNames.add(prefix); collectFieldNames(prefix, itemShape.fields); }
+      if (itemShape.kind === "array") collectItemNames(`${prefix}Item`, itemShape.items);
+    };
+    if (item.analysis.kind === "object") collectFieldNames(base, item.analysis.fields);
+    if (item.analysis.kind === "array") collectItemNames(`${base}Item`, item.analysis.items);
+    for (const name of responseTypeNames) {
+      if (name !== base) claim(name);
+      if (catalog && [...catalog.operations].some((op) => ((op.body?.kind === "object" || op.body?.kind === "multipart") && `${op.operationId}Body` === name) || op.query.some((query) => isDeepObjectQuery(query) && `${op.operationId}Query_${query.name}` === name))) fail(`Response model name collides with generated request type: ${name}`);
+    }
+    const analysis = item.analysis;
+    let bodyType;
+    if (analysis.kind === "object") bodyType = renderResponseObject(base, analysis.fields ?? [], generated);
+    else if (analysis.kind === "scalar") {
+      bodyType = base;
+      generated.push(`alias ${base} = ${analysis.scalarType === "number" ? "numeric" : analysis.scalarType};`);
+    } else {
+      bodyType = `${analysis.items ? responseItemType(analysis.items, `${base}Item`, generated) : "unknown"}[]`;
+      generated.push(`alias ${base} = ${bodyType};`);
+    }
+    const scope = { scope: "client-observed partial static-derived view; not guaranteed accepted server contract", complete: false };
+    if (analysis.kind === "object") {
+      const rootIndex = generated.findIndex((line) => line.startsWith(`model ${base} `));
+      generated.splice(rootIndex, 0, extension("x-static-client-observed", scope));
+      generated.splice(rootIndex + 1, 0, extension("x-static-response-evidence", item.observations.map((observation) => observation.analysis)));
+    }
+    const wrapper = `${item.operationId}StaticResponse`;
+    claim(wrapper);
+    generated.push(`@defaultResponse`, `${extension("x-static-client-observed", scope)}`, `model ${wrapper} {`, `  @header contentType: "*/*";`, `  @body body: ${base};`, `}`);
+    output.push(generated.join("\n"));
+    operationTypes.set(item.operationId, wrapper);
+  }
+  return { tsp: `${output.join("\n\n")}\n`, operationTypes };
+}
+
 const fieldShape = (field) => ({ ...field, evidence: undefined, fields: field.fields?.map(fieldShape) });
 const bodyShape = (body) => body === null ? null : { ...body, evidence: undefined, fields: body.fields.map(fieldShape) };
 
@@ -187,7 +409,7 @@ export function makeCatalog(records) {
   return { schemaVersion: 1, researchRecordCount: records.length, operationCount: operations.length, operations };
 }
 
-export function renderCatalog(catalog) {
+export function renderCatalog(catalog, responseCatalog = undefined) {
   const prelude = '// Generated by scripts/generate.mjs. Edit research evidence, not this file.\nusing TypeSpec.Http;\nusing TypeSpec.OpenAPI;\nnamespace Eliis;\n';
   const models = [prelude];
   const routes = [prelude];
@@ -211,6 +433,7 @@ export function renderCatalog(catalog) {
     models.push("}\n");
   }
   for (const op of catalog.operations) {
+    const responseInfo = responseCatalog?.operations.find((item) => item.operationId === op.operationId);
     let bodyType = "unknown";
     if (op.body?.kind === "object" || (op.body?.kind === "multipart" && op.body.fields.length)) {
       bodyType = `${op.operationId}Body`;
@@ -225,7 +448,11 @@ export function renderCatalog(catalog) {
     if (clientVariants.length) routes.push(extension("x-client-request-variants", clientVariants));
     const clientResponseObservations = op.records.flatMap((record) => record.clientResponseObservations ?? []);
     if (clientResponseObservations.length) routes.push(extension("x-client-response-observations", clientResponseObservations));
-    routes.push(extension("x-unresolved-response", { statusCodes: "unknown", mediaTypes: "unknown", body: "unknown", evidence: op.records.map((r) => r.response) }));
+    routes.push(extension("x-unresolved-response", { statusCodes: "unknown", mediaTypes: "unknown", body: responseInfo?.disposition === "modeled" ? "partial" : "unknown", evidence: op.records.map((r) => r.response) }));
+    if (responseInfo) {
+      routes.push(extension("x-static-response-evidence", responseInfo));
+      routes.push(extension("x-static-client-observed", { scope: "client-observed partial static-derived view; not guaranteed accepted server contract", complete: false, disposition: responseInfo.disposition, reason: responseInfo.reason }));
+    }
     if (op.queryPassthrough) routes.push(extension("x-unresolved-query", { reason: "Client forwards an untraced params object; no additional named parameters inferred.", sources: op.records.filter((r) => r.queryPassthrough).map((r) => r.source) }));
     if (op.body) routes.push(extension("x-request-body-evidence", { variants: op.records.map((r) => r.body), complete: op.body.complete, serverValidation: "unknown", unresolved: op.body.kind === "unknown" || op.body.kind === "multipart" || !op.body.complete || op.bodyVariantsUnresolved }));
     const params = [];
@@ -246,7 +473,8 @@ export function renderCatalog(catalog) {
       routes.push(extension("x-client-body-presence", op.bodyOptional ? "not present in every observed alias; server requiredness unknown" : "supplied by observed client call; server requiredness unknown"));
       params.push(`${extension("x-evidence", op.records.map((r) => r.body))} @body requestBody?: ${bodyType}`);
     }
-    routes.push(`op ${tspName(op.operationId)}(\n  ${params.join(",\n  ")}\n): UnresolvedResponse;\n`);
+    const responseType = responseInfo?.disposition === "modeled" ? `${op.operationId}StaticResponse` : "UnresolvedResponse";
+    routes.push(`op ${tspName(op.operationId)}(\n  ${params.join(",\n  ")}\n): ${responseType};\n`);
   }
   return { models: models.join("\n"), routes: routes.join("\n") };
 }
@@ -283,19 +511,29 @@ export async function generate(root = process.cwd()) {
     for (const record of data) { validateRecord(record, file); records.push(record); }
   }
   const catalog = makeCatalog(records);
+  const responseDir = resolve(root, "evidence/responses");
+  let responseFiles;
+  try { responseFiles = (await readdir(responseDir)).filter((file) => file.endsWith(".json")).sort(compare); }
+  catch (error) { if (error.code !== "ENOENT") throw error; }
+  const responseCatalog = responseFiles
+    ? makeResponseCatalog(catalog, await Promise.all(responseFiles.map(async (name) => ({ name, entries: JSON.parse(await readFile(resolve(responseDir, name), "utf8")) }))), { strict: true })
+    : makeResponseCatalog(catalog, [], { strict: false });
   const exclusions = await optionalJson(resolve(root, "evidence/coverage-exclusions.json"), []);
   const inventory = await optionalJson(resolve(root, "evidence/inventory.json"), { candidateFunctions: [] });
   const coverage = makeCoverage(catalog, inventory, exclusions);
-  const rendered = renderCatalog(catalog);
+  const rendered = renderCatalog(catalog, responseCatalog.analysisRequired ? responseCatalog : undefined);
+  const renderedResponses = renderResponseModels(responseCatalog, catalog);
   for (const dir of ["models", "routes", "scripts"]) await mkdir(resolve(root, dir), { recursive: true });
   await Promise.all([
     writeFile(resolve(root, "models/generated.tsp"), rendered.models),
+    writeFile(resolve(root, "models/responses.tsp"), renderedResponses.tsp),
     writeFile(resolve(root, "routes/generated.tsp"), rendered.routes),
     writeFile(resolve(root, "scripts/operation-catalog.json"), JSON.stringify(catalog, null, 2) + "\n"),
     writeFile(resolve(root, "scripts/coverage.json"), JSON.stringify(coverage, null, 2) + "\n"),
+    writeFile(resolve(root, "scripts/response-coverage.json"), JSON.stringify(responseCatalog, null, 2) + "\n"),
   ]);
-  console.log(`Generated ${catalog.operationCount} operations from ${catalog.researchRecordCount} evidence records; ${coverage.missingCount} inventory functions missing.`);
-  return { catalog, coverage };
+  console.log(`Generated ${catalog.operationCount} operations from ${catalog.researchRecordCount} evidence records; ${responseCatalog.modeledOperationCount} partial response models, ${responseCatalog.unknownOperationCount} unknown, ${responseCatalog.binaryOperationCount} opaque binary; ${coverage.missingCount} inventory functions missing.`);
+  return { catalog, coverage, responseCatalog };
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await generate();

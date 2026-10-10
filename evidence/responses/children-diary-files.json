@@ -1,0 +1,3917 @@
+[
+  {
+    "operationId": "GuardianUpdateSettings",
+    "sourceFunctionId": 25485,
+    "kind": "unknown",
+    "evidence": "Original helper #25485 at full-disassembly line 998999 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25485,
+        "line": 998999,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25486,
+        "line": 999027,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25480,
+        "line": 998825,
+        "evidence": "Action/thunk function reads the imported `updateSettings` member at full-disassembly line 998835, invokes it, attaches `.then`, and creates success callback #25481 at line 998843 (exact caller association)."
+      },
+      {
+        "functionId": 25481,
+        "line": 998850,
+        "evidence": "Success callback #25481 is attached to the `updateSettings` call in #25480. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25481 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "Store",
+    "sourceFunctionId": 25487,
+    "kind": "unknown",
+    "evidence": "Original helper #25487 at full-disassembly line 999038 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25487,
+        "line": 999038,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25488,
+        "line": 999066,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Only the service projection to response.data is established; downstream action/saga/reducer/UI property reads were not established in this record.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "Update",
+    "sourceFunctionId": 25489,
+    "kind": "unknown",
+    "evidence": "Original helper #25489 at full-disassembly line 999077 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25489,
+        "line": 999077,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25490,
+        "line": 999106,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Only the service projection to response.data is established; downstream action/saga/reducer/UI property reads were not established in this record.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "Detach",
+    "sourceFunctionId": 25491,
+    "kind": "unknown",
+    "evidence": "Original helper #25491 at full-disassembly line 999117 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25491,
+        "line": 999117,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25492,
+        "line": 999146,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Only the service projection to response.data is established; downstream action/saga/reducer/UI property reads were not established in this record.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "Delete",
+    "sourceFunctionId": 25493,
+    "kind": "unknown",
+    "evidence": "Original helper #25493 at full-disassembly line 999157 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25493,
+        "line": 999157,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25494,
+        "line": 999186,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Only the service projection to response.data is established; downstream action/saga/reducer/UI property reads were not established in this record.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GetMap",
+    "sourceFunctionId": 25611,
+    "kind": "unknown",
+    "evidence": "The service returns response.data; the actual map success callback sends the whole body unchanged as SET_MAP.data and mapReducer consumes it. No response fields are read.",
+    "trace": [
+      {
+        "functionId": 25611,
+        "line": 1002683,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25612,
+        "line": 1002711,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26420,
+        "line": 1026441,
+        "evidence": "Map action module exports getMap as an async thunk."
+      },
+      {
+        "functionId": 26421,
+        "line": 1026456,
+        "evidence": "Thunk calls imported getMap API member and attaches callback #26422."
+      },
+      {
+        "functionId": 26422,
+        "line": 1026484,
+        "evidence": "Success callback forwards resolved body unchanged as SET_MAP.data."
+      },
+      {
+        "functionId": 26417,
+        "line": 1026294,
+        "evidence": "mapReducer handles SET_MAP and consumes action.data."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Verified action/reducer path is raw body passthrough; no map properties or nested object shape are established.",
+      "Do not use request/UI map properties as response fields.",
+      "Body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "ApproveMap",
+    "sourceFunctionId": 25613,
+    "kind": "unknown",
+    "evidence": "Original helper #25613 at full-disassembly line 1002722 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25613,
+        "line": 1002722,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25614,
+        "line": 1002752,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26424,
+        "line": 1026515,
+        "evidence": "Action/thunk function reads the imported `approveMap` member at full-disassembly line 1026529, invokes it, attaches `.then`, and creates success callback #26425 at line 1026539 (exact caller association)."
+      },
+      {
+        "functionId": 26425,
+        "line": 1026546,
+        "evidence": "Success callback #26425 is attached to the `approveMap` call in #26424. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26425 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "DisapproveMap",
+    "sourceFunctionId": 25615,
+    "kind": "unknown",
+    "evidence": "Original helper #25615 at full-disassembly line 1002763 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25615,
+        "line": 1002763,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25616,
+        "line": 1002795,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26427,
+        "line": 1026577,
+        "evidence": "Action/thunk function reads the imported `disapproveMap` member at full-disassembly line 1026591, invokes it, attaches `.then`, and creates success callback #26428 at line 1026601 (exact caller association)."
+      },
+      {
+        "functionId": 26428,
+        "line": 1026608,
+        "evidence": "Success callback #26428 is attached to the `disapproveMap` call in #26427. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26428 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "PublishMap",
+    "sourceFunctionId": 25617,
+    "kind": "object",
+    "evidence": "Service #25617 returns response.data via #25618. Exact action callback #25564 reads the HTTP body’s top-level published property and forwards it; no other body shape is established.",
+    "trace": [
+      {
+        "functionId": 25617,
+        "line": 1002806,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25618,
+        "line": 1002836,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25563,
+        "line": 1001500,
+        "evidence": "Action/thunk function reads the imported `publishMap` member at full-disassembly line 1001514, invokes it, attaches `.then`, and creates success callback #25564 at line 1001523 (exact caller association)."
+      },
+      {
+        "functionId": 25564,
+        "line": 1001530,
+        "evidence": "Attached to service #25617 by #25563; reads response-body published at 1001544-1001546 and dispatches it as SET_MAP_PUBLISHED.data."
+      }
+    ],
+    "fields": [
+      {
+        "name": "published",
+        "type": "unknown",
+        "evidence": "Callback #25564 reads response-body p1.published at full-disassembly line 1001544 and dispatches that value; value type is unknown."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25564 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GetChild",
+    "sourceFunctionId": 25622,
+    "kind": "unknown",
+    "evidence": "GET getChild returns Axios response.data via #25623; #25513 forwards that body unchanged as SET_CHILD.data and #25684 stores it as child. No response property is statically read in this call path.",
+    "trace": [
+      {
+        "functionId": 25622,
+        "line": 1003117,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25623,
+        "line": 1003143,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25511,
+        "line": 1000331,
+        "evidence": "Child action creator captures child arguments and returns the async thunk."
+      },
+      {
+        "functionId": 25512,
+        "line": 1000346,
+        "evidence": "Thunk invokes the imported getChild API helper and attaches a continuation."
+      },
+      {
+        "functionId": 25513,
+        "line": 1000373,
+        "evidence": "Success callback forwards its result unchanged as SET_CHILD action.data; no response properties are read."
+      },
+      {
+        "functionId": 25684,
+        "line": 1004424,
+        "evidence": "childReducer handles SET_CHILD and stores action.data as child state."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Verified caller path is raw response-body passthrough into child state; no response field/item model is established from this path.",
+      "Other writers/UI reads of child state are not attributed because they may merge, replace, or optimistically alter it.",
+      "Body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "GetChildCourses",
+    "sourceFunctionId": 25624,
+    "kind": "unknown",
+    "evidence": "Service returns response.data; the actual course success callback forwards the body unchanged to the child reducer. No response properties are read in this path.",
+    "trace": [
+      {
+        "functionId": 25624,
+        "line": 1003154,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25625,
+        "line": 1003181,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25521,
+        "line": 1000614,
+        "evidence": "Child action module exports getChildCourses thunk."
+      },
+      {
+        "functionId": 25522,
+        "line": 1000629,
+        "evidence": "Thunk calls imported getChildCourses and attaches callback #25523."
+      },
+      {
+        "functionId": 25523,
+        "line": 1000652,
+        "evidence": "Success callback forwards the resolved body unchanged as SET_MY_CHILD_PLANS_COURSES.data."
+      },
+      {
+        "functionId": 25684,
+        "line": 1004424,
+        "evidence": "childReducer handles the course action and consumes action.data."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Verified action/reducer consumer is raw body passthrough; no body field/item structure is established.",
+      "Do not infer course object shape from UI labels or request parameters.",
+      "Body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "GetChildCoursePlanTypes",
+    "sourceFunctionId": 25626,
+    "kind": "unknown",
+    "evidence": "Service returns response.data; the verified success callback forwards it unchanged as plan-type action data. It reads no response fields.",
+    "trace": [
+      {
+        "functionId": 25626,
+        "line": 1003192,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25627,
+        "line": 1003224,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25524,
+        "line": 1000670,
+        "evidence": "Child action module exports getChildCoursePlanTypes thunk."
+      },
+      {
+        "functionId": 25525,
+        "line": 1000687,
+        "evidence": "Thunk calls imported getChildCoursePlanTypes and attaches callback #25526."
+      },
+      {
+        "functionId": 25526,
+        "line": 1000711,
+        "evidence": "Success callback forwards the resolved body unchanged as SET_MY_CHILD_PLAN_TYPES.data."
+      },
+      {
+        "functionId": 25684,
+        "line": 1004424,
+        "evidence": "childReducer handles the plan-types action and consumes action.data."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Actual action/reducer path is raw body passthrough; no response field or collection item shape is established.",
+      "Request course_id and reducer defaults are excluded.",
+      "Body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "GetChildPlansList",
+    "sourceFunctionId": 25628,
+    "kind": "unknown",
+    "evidence": "Service returns response.data; the success callback forwards the body unchanged as plan-list action data and the child reducer consumes it. No response property is read.",
+    "trace": [
+      {
+        "functionId": 25628,
+        "line": 1003235,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25629,
+        "line": 1003269,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25527,
+        "line": 1000729,
+        "evidence": "Child action module exports getChildPlansList thunk."
+      },
+      {
+        "functionId": 25528,
+        "line": 1000748,
+        "evidence": "Thunk invokes imported getChildPlansList and attaches callback #25529."
+      },
+      {
+        "functionId": 25529,
+        "line": 1000774,
+        "evidence": "Success callback forwards its body unchanged as SET_MY_CHILD_PLANS.data."
+      },
+      {
+        "functionId": 25684,
+        "line": 1004424,
+        "evidence": "childReducer handles the plans action and consumes action.data."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "No field/item schema is established by the actual pass-through path.",
+      "Do not infer an array from “plans” in the action name or request/UI data.",
+      "Body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "GetGuardianDiary",
+    "sourceFunctionId": 25630,
+    "kind": "unknown",
+    "evidence": "The helper returns response.data, but the inspected full disassembly contains only the ChildServices registration for getGuardianDiary; no callsite/action callback consuming this export was established. No response fields are attributed.",
+    "trace": [
+      {
+        "functionId": 25630,
+        "line": 1003280,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25631,
+        "line": 1003307,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25620,
+        "line": 1002896,
+        "evidence": "ChildServices registers getGuardianDiary (#25630) in its exported service table at full-disassembly lines 1002932–1002935."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Exported service has no located import/action/saga/reducer consumer in the inspected full disassembly; this is an explicit unconsumed unknown disposition.",
+      "No response fields or collection shape are inferred from the diary path or UI.",
+      "Body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "GetGuardianFeed",
+    "sourceFunctionId": 25632,
+    "kind": "unknown",
+    "evidence": "The service returns response.data and the action callback forwards that body unchanged into the guardian-feed reducer path. Callback page bookkeeping is local state, not an HTTP body field. No body property read is established.",
+    "trace": [
+      {
+        "functionId": 25632,
+        "line": 1003318,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25633,
+        "line": 1003348,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25514,
+        "line": 1000403,
+        "evidence": "Guardian-feed action creator captures child/query state and returns the async thunk."
+      },
+      {
+        "functionId": 25515,
+        "line": 1000422,
+        "evidence": "Thunk calls imported getGuardianFeed and attaches callback #25516."
+      },
+      {
+        "functionId": 25516,
+        "line": 1000474,
+        "evidence": "Success callback forwards its body parameter unchanged as guardian-feed action.data; page metadata is separately taken from captured action state."
+      },
+      {
+        "functionId": 25684,
+        "line": 1004424,
+        "evidence": "childReducer handles SET_GUARDIAN_DIARY_FEED / SET_MY_CHILD_GUARDIAN_DIARY_FEED and consumes action.data."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Verified consumer path is raw body passthrough; no field/item shape is established.",
+      "Page metadata in the action is local state and is excluded from the body model.",
+      "Body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "GetChildProfile",
+    "sourceFunctionId": 25634,
+    "kind": "object",
+    "evidence": "The helper returns response.data. In the traced child-profile success path #25519 reads top-level active_courses from that body, dispatches it separately, then locally copies/deletes that property and dispatches the remainder as child data. This is a partial observed body view.",
+    "trace": [
+      {
+        "functionId": 25634,
+        "line": 1003359,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25635,
+        "line": 1003386,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25517,
+        "line": 1000508,
+        "evidence": "Named child-profile action creator returns the async thunk."
+      },
+      {
+        "functionId": 25519,
+        "line": 1000548,
+        "evidence": "Success callback reads response-body active_courses at 1000562/1000566, dispatches it as SET_CHILD_COURSES.data, then locally copies the body and deletes active_courses before dispatching the remainder as SET_CHILD.data."
+      },
+      {
+        "functionId": 25518,
+        "line": 1000525,
+        "evidence": "Thunk invokes the imported getChildProfile helper and attaches success callback #25519."
+      },
+      {
+        "functionId": 25684,
+        "line": 1004424,
+        "evidence": "childReducer consumes SET_CHILD_COURSES and SET_CHILD actions; the latter stores callback data as child state."
+      }
+    ],
+    "fields": [
+      {
+        "name": "active_courses",
+        "type": "unknown",
+        "evidence": "In #25519, response-body parameter p1 is read at full-disassembly line 1000562 (offset +0x22) and again at 1000566 (+0x33), then dispatched as SET_CHILD_COURSES.data. No item or primitive type is established."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "The remainder is copied and locally mutated (active_courses removed) before SET_CHILD; it is not modeled as additional named fields.",
+      "No type or nested shape is established for active_courses.",
+      "Partial/open client view; body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateChildProfile",
+    "sourceFunctionId": 25636,
+    "kind": "unknown",
+    "evidence": "Original helper #25636 at full-disassembly line 1003397 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25636,
+        "line": 1003397,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25637,
+        "line": 1003424,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25537,
+        "line": 1000949,
+        "evidence": "Action/thunk function reads the imported `updateChildProfile` member at full-disassembly line 1000959, invokes it, attaches `.then`, and creates success callback #25538 at line 1000966 (exact caller association)."
+      },
+      {
+        "functionId": 25538,
+        "line": 1000973,
+        "evidence": "Success callback #25538 is attached to the `updateChildProfile` call in #25537. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25538 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GetMaps",
+    "sourceFunctionId": 25638,
+    "kind": "object",
+    "evidence": "The helper returns response.data. In the verified getChildMaps thunk, #25532 reads the HTTP body’s top-level cards property and dispatches that value. Request-side sorting/query values are not part of this model.",
+    "trace": [
+      {
+        "functionId": 25638,
+        "line": 1003435,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25639,
+        "line": 1003465,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25530,
+        "line": 1000792,
+        "evidence": "getChildMaps action creator is exported by the child action module."
+      },
+      {
+        "functionId": 25531,
+        "line": 1000807,
+        "evidence": "Thunk calls imported getMaps and attaches success callback #25532."
+      },
+      {
+        "functionId": 25532,
+        "line": 1000836,
+        "evidence": "Success callback reads top-level response-body cards at lines 1000850/1000853 and dispatches that value as SET_CHILD_MAPS.data."
+      },
+      {
+        "functionId": 25684,
+        "line": 1004424,
+        "evidence": "childReducer handles SET_CHILD_MAPS and consumes action.data."
+      }
+    ],
+    "fields": [
+      {
+        "name": "cards",
+        "type": "unknown",
+        "evidence": "In #25532 callback parameter p1 (service response body) is read at full-disassembly lines 1000850/1000853 (offsets +0x22/+0x2e), then dispatched as SET_CHILD_MAPS.data. No array/item or primitive type is proven."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Only top-level cards is observed; no collection element structure or primitive type is established.",
+      "Request-side sortBy/sortDir/child_id values and reducer defaults are excluded.",
+      "Partial/open client view; body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "GetChildApprovals",
+    "sourceFunctionId": 25640,
+    "kind": "unknown",
+    "evidence": "The API helper returns response.data; the action callback forwards that body unchanged to the approval reducer. No response properties are read in this verified success path.",
+    "trace": [
+      {
+        "functionId": 25640,
+        "line": 1003476,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25641,
+        "line": 1003503,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25533,
+        "line": 1000862,
+        "evidence": "getChildApprovals action creator captures its arguments."
+      },
+      {
+        "functionId": 25534,
+        "line": 1000879,
+        "evidence": "Thunk calls imported getChildApprovals and attaches success callback #25535."
+      },
+      {
+        "functionId": 25535,
+        "line": 1000908,
+        "evidence": "Success callback forwards its result unchanged as SET_CHILD_APPROVALS or SET_MY_CHILD_APPROVALS action.data."
+      },
+      {
+        "functionId": 25684,
+        "line": 1004424,
+        "evidence": "childReducer handles the approval action types and consumes action.data."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Verified response consumer is raw passthrough; no body fields or item structure are established.",
+      "Do not reuse approval request payload/UI labels as response fields.",
+      "Body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateApprovalAnswers",
+    "sourceFunctionId": 25642,
+    "kind": "unknown",
+    "evidence": "Original helper #25642 at full-disassembly line 1003514 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25642,
+        "line": 1003514,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25643,
+        "line": 1003544,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25546,
+        "line": 1001145,
+        "evidence": "Action/thunk function reads the imported `updateApprovalAnswers` member at full-disassembly line 1001159, invokes it, attaches `.then`, and creates success callback #25547 at line 1001166 (exact caller association)."
+      },
+      {
+        "functionId": 25547,
+        "line": 1001173,
+        "evidence": "Success callback #25547 is attached to the `updateApprovalAnswers` call in #25546. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25547 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GetChildCalendar",
+    "sourceFunctionId": 25644,
+    "kind": "object",
+    "evidence": "The helper returns response.data. The traced absence-calendar action callback reads top-level access and forwards the entire body to the calendar reducer. No other named response properties are attributed.",
+    "trace": [
+      {
+        "functionId": 25644,
+        "line": 1003555,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25645,
+        "line": 1003585,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26401,
+        "line": 1025917,
+        "evidence": "Calendar action loads child absence-calendar state and calls imported getChildCalendar."
+      },
+      {
+        "functionId": 26402,
+        "line": 1025968,
+        "evidence": "Success callback reads response-body access at line 1025977, then dispatches the whole body unchanged as SET_CHILD_ABSENCE_CALENDAR_DATA at 1025982–1025985."
+      },
+      {
+        "functionId": 26394,
+        "line": 1025591,
+        "evidence": "Calendar childReducer includes SET_CHILD_ABSENCE_CALENDAR_DATA and consumes action.data."
+      }
+    ],
+    "fields": [
+      {
+        "name": "access",
+        "type": "unknown",
+        "evidence": "Success callback #26402 reads `access` from its resolved service result at full-disassembly line 1025977 (offset +0x11); it then dispatches the unchanged whole result at 1025982–1025985. Value type is unknown."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Only top-level access is observed; its type/nesting is unknown.",
+      "Whole body dispatch does not establish any additional field names.",
+      "Partial/open client view; body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "SaveChildCalendarDays",
+    "sourceFunctionId": 25646,
+    "kind": "array",
+    "evidence": "Service #25646 returns response.data via #25647. The exact success callback #26408 invokes forEach on the HTTP body and #26409 dispatches each iterated value unchanged; this proves root-array traversal but not item fields or types.",
+    "trace": [
+      {
+        "functionId": 25646,
+        "line": 1003596,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25647,
+        "line": 1003624,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26407,
+        "line": 1026072,
+        "evidence": "Action/thunk function reads the imported `saveChildCalendarDays` member at full-disassembly line 1026086, invokes it, attaches `.then`, and creates success callback #26408 at line 1026093 (exact caller association)."
+      },
+      {
+        "functionId": 26408,
+        "line": 1026100,
+        "evidence": "Attached to service #25646 by #26407; invokes response-body forEach at 1026105 and passes each item to #26409."
+      },
+      {
+        "functionId": 26409,
+        "line": 1026115,
+        "evidence": "ForEach callback dispatches each iterated response-body item unchanged as SET_CHILD_CALENDAR_DAY_ABSENCE.data at 1026124-1026127; no item properties are read."
+      }
+    ],
+    "items": {
+      "kind": "unknown",
+      "evidence": "#26408 traverses the root body with forEach and #26409 forwards each item unchanged; item type/shape remains unknown."
+    },
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26408 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "SaveChildCalendarSingleDay",
+    "sourceFunctionId": 25648,
+    "kind": "unknown",
+    "evidence": "Original helper #25648 at full-disassembly line 1003635 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25648,
+        "line": 1003635,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25649,
+        "line": 1003663,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26411,
+        "line": 1026148,
+        "evidence": "Action/thunk function reads the imported `saveChildCalendarSingleDay` member at full-disassembly line 1026162, invokes it, attaches `.then`, and creates success callback #26412 at line 1026169 (exact caller association)."
+      },
+      {
+        "functionId": 26412,
+        "line": 1026176,
+        "evidence": "Success callback #26412 is attached to the `saveChildCalendarSingleDay` call in #26411. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26412 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GetStatusLogs",
+    "sourceFunctionId": 25650,
+    "kind": "unknown",
+    "evidence": "The GET helper returns response.data; the status-log success callback passes that body unchanged into calendar state and inspects no response properties.",
+    "trace": [
+      {
+        "functionId": 25650,
+        "line": 1003674,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25651,
+        "line": 1003706,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26403,
+        "line": 1025991,
+        "evidence": "Calendar-log action creator returns thunk #26404."
+      },
+      {
+        "functionId": 26404,
+        "line": 1026004,
+        "evidence": "Thunk calls imported getStatusLogs and attaches callback #26405."
+      },
+      {
+        "functionId": 26405,
+        "line": 1026039,
+        "evidence": "Success callback forwards the resolved response body unchanged as SET_CHILD_CALENDAR_LOG.data."
+      },
+      {
+        "functionId": 26394,
+        "line": 1025591,
+        "evidence": "Calendar childReducer handles SET_CHILD_CALENDAR_LOG and consumes action.data."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Verified action/reducer path is raw body passthrough; no log row fields or array shape are established.",
+      "Do not infer a response array from the operation name or local reset-to-empty action.",
+      "Body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "GetAbsenceModalData",
+    "sourceFunctionId": 25652,
+    "kind": "object",
+    "evidence": "The helper returns response.data. The absence-modal success callback reads top-level min_date from that body and dispatches it to the calendar reducer; no other body properties are observed.",
+    "trace": [
+      {
+        "functionId": 25652,
+        "line": 1003717,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25653,
+        "line": 1003749,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26413,
+        "line": 1026194,
+        "evidence": "Calendar action creator exports getAbsenceModalData as thunk #26414."
+      },
+      {
+        "functionId": 26414,
+        "line": 1026207,
+        "evidence": "Thunk calls imported getAbsenceModalData with user_id routing/query context and attaches callback #26415."
+      },
+      {
+        "functionId": 26415,
+        "line": 1026238,
+        "evidence": "Success callback reads body min_date at full-disassembly line 1026248 and dispatches that value as SET_CHILD_CALENDAR_MODAL_MIN_DATE.data."
+      },
+      {
+        "functionId": 26394,
+        "line": 1025591,
+        "evidence": "Calendar childReducer handles SET_CHILD_CALENDAR_MODAL_MIN_DATE and consumes action.data."
+      }
+    ],
+    "fields": [
+      {
+        "name": "min_date",
+        "type": "unknown",
+        "evidence": "Callback #26415 reads response-body p1.min_date at full-disassembly line 1026248 (offset +0x11), renames the value to Redux action data.date, and dispatches it. The source property is min_date; its value type is unknown."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Only the top-level min_date read is modeled; Redux rename date is not an HTTP field.",
+      "No primitive/date serialization type is established.",
+      "Partial/open client view; body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "UploadChildProfilePicture",
+    "sourceFunctionId": 25654,
+    "kind": "object",
+    "evidence": "Service #25654 returns response.data via #25655. Exact callback #25541 reads HTTP-body profile_picture and forwards it to child-picture actions; no other response fields are modeled.",
+    "trace": [
+      {
+        "functionId": 25654,
+        "line": 1003760,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25655,
+        "line": 1003793,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25540,
+        "line": 1001012,
+        "evidence": "Action/thunk function reads the imported `uploadChildProfilePicture` member at full-disassembly line 1001022, invokes it, attaches `.then`, and creates success callback #25541 at line 1001029 (exact caller association)."
+      },
+      {
+        "functionId": 25541,
+        "line": 1001036,
+        "evidence": "Attached to service #25654 by #25540; reads response-body profile_picture at 1001046 and again at 1001057, forwarding the value into actions."
+      }
+    ],
+    "fields": [
+      {
+        "name": "profile_picture",
+        "type": "unknown",
+        "evidence": "Callback #25541 reads p1.profile_picture at full-disassembly lines 1001046 and 1001057. The value is forwarded to action payloads; type is unknown."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25541 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "DeleteChildProfilePicture",
+    "sourceFunctionId": 25656,
+    "kind": "unknown",
+    "evidence": "Original helper #25656 at full-disassembly line 1003804 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25656,
+        "line": 1003804,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25657,
+        "line": 1003831,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25543,
+        "line": 1001081,
+        "evidence": "Action/thunk function reads the imported `deleteChildProfilePicture` member at full-disassembly line 1001091, invokes it, attaches `.then`, and creates success callback #25544 at line 1001097 (exact caller association)."
+      },
+      {
+        "functionId": 25544,
+        "line": 1001104,
+        "evidence": "Success callback #25544 is attached to the `deleteChildProfilePicture` call in #25543. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25544 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GetGuardians",
+    "sourceFunctionId": 25658,
+    "kind": "object",
+    "evidence": "The helper returns response.data. The actual guardians callback reads top-level door_card_enabled and guardians properties from that body and dispatches them separately; no nested guardian fields are established.",
+    "trace": [
+      {
+        "functionId": 25658,
+        "line": 1003842,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25659,
+        "line": 1003869,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25550,
+        "line": 1001227,
+        "evidence": "getChildGuardians action creator returns thunk #25551."
+      },
+      {
+        "functionId": 25551,
+        "line": 1001240,
+        "evidence": "Thunk calls imported getGuardians and attaches callback #25552."
+      },
+      {
+        "functionId": 25552,
+        "line": 1001267,
+        "evidence": "Callback reads top-level response-body door_card_enabled at 1001277 and guardians at 1001284, dispatching them separately."
+      },
+      {
+        "functionId": 25684,
+        "line": 1004424,
+        "evidence": "childReducer handles SET_DOOR_CARD_ENABLED and SET_CHILD_GUARDIANS action payloads."
+      }
+    ],
+    "fields": [
+      {
+        "name": "door_card_enabled",
+        "type": "unknown",
+        "evidence": "Callback #25552 reads p1.door_card_enabled at full-disassembly line 1001277 (offset +0x14) and dispatches it as SET_DOOR_CARD_ENABLED.data; value type is unknown."
+      },
+      {
+        "name": "guardians",
+        "type": "unknown",
+        "evidence": "Callback #25552 reads p1.guardians at full-disassembly line 1001284 (offset +0x2f) and dispatches it as SET_CHILD_GUARDIANS.data; no array/item type is established."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Only two top-level properties are observed; guardian item shape and field types remain unknown.",
+      "The surrounding reducer state/defaults are not treated as response properties.",
+      "Partial/open client view; body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "GetFiles",
+    "sourceFunctionId": 25660,
+    "kind": "unknown",
+    "evidence": "Unlike other helpers, #25660 returns its Axios GET result unchanged. The child-files thunk #25566 then reads Axios .data in #25567 and forwards that HTTP body unchanged to SET_CHILD_FILES; no response fields are read.",
+    "trace": [
+      {
+        "functionId": 25660,
+        "line": 1003880,
+        "evidence": "GET helper constructs the request and returns the Axios result unchanged; no response continuation."
+      },
+      {
+        "functionId": 25565,
+        "line": 1001554,
+        "evidence": "getChildFiles action creator returns a thunk for the imported child-files service."
+      },
+      {
+        "functionId": 25566,
+        "line": 1001569,
+        "evidence": "Thunk calls imported getFiles and attaches a success continuation to the Axios promise."
+      },
+      {
+        "functionId": 25567,
+        "line": 1001596,
+        "evidence": "Success callback reads Axios result .data at line 1001610 and forwards that value unchanged as SET_CHILD_FILES action.data."
+      },
+      {
+        "functionId": 25684,
+        "line": 1004424,
+        "evidence": "childReducer handles SET_CHILD_FILES and consumes action.data."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "HTTP body is passed through without property inspection; no root/item field model is established.",
+      "Do not model the Axios wrapper or request pagination as response-body fields.",
+      "Body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "UploadFile",
+    "sourceFunctionId": 25661,
+    "kind": "unknown",
+    "evidence": "Original helper #25661 at full-disassembly line 1003910 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25661,
+        "line": 1003910,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25662,
+        "line": 1003943,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25575,
+        "line": 1001845,
+        "evidence": "Action/thunk function reads the imported `uploadFile` member at full-disassembly line 1001856, invokes it, attaches `.then`, and creates success callback #25576 at line 1001865 (exact caller association)."
+      },
+      {
+        "functionId": 25576,
+        "line": 1001872,
+        "evidence": "Success callback #25576 is attached to the `uploadFile` call in #25575. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25576 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "DeleteChildFile",
+    "sourceFunctionId": 25663,
+    "kind": "unknown",
+    "evidence": "Original helper #25663 at full-disassembly line 1003954 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25663,
+        "line": 1003954,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25664,
+        "line": 1003982,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25578,
+        "line": 1001901,
+        "evidence": "Action/thunk function reads the imported `deleteChildFile` member at full-disassembly line 1001915, invokes it, attaches `.then`, and creates success callback #25579 at line 1001922 (exact caller association)."
+      },
+      {
+        "functionId": 25579,
+        "line": 1001929,
+        "evidence": "Success callback #25579 is attached to the `deleteChildFile` call in #25578. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25579 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateChildFile",
+    "sourceFunctionId": 25665,
+    "kind": "unknown",
+    "evidence": "Original helper #25665 at full-disassembly line 1003993 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25665,
+        "line": 1003993,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25666,
+        "line": 1004022,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25581,
+        "line": 1001969,
+        "evidence": "Action/thunk function reads the imported `updateChildFile` member at full-disassembly line 1001979, invokes it, attaches `.then`, and creates success callback #25582 at line 1001989 (exact caller association)."
+      },
+      {
+        "functionId": 25582,
+        "line": 1001996,
+        "evidence": "Success callback #25582 is attached to the `updateChildFile` call in #25581. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25582 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "AddChildDates",
+    "sourceFunctionId": 25667,
+    "kind": "unknown",
+    "evidence": "Original helper #25667 at full-disassembly line 1004033 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25667,
+        "line": 1004033,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25668,
+        "line": 1004061,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25584,
+        "line": 1002032,
+        "evidence": "Action/thunk function reads the imported `addChildDates` member at full-disassembly line 1002046, invokes it, attaches `.then`, and creates success callback #25585 at line 1002053 (exact caller association)."
+      },
+      {
+        "functionId": 25585,
+        "line": 1002060,
+        "evidence": "Success callback #25585 is attached to the `addChildDates` call in #25584. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25585 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateChildDates",
+    "sourceFunctionId": 25669,
+    "kind": "unknown",
+    "evidence": "Original helper #25669 at full-disassembly line 1004072 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25669,
+        "line": 1004072,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25670,
+        "line": 1004101,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25587,
+        "line": 1002091,
+        "evidence": "Action/thunk function reads the imported `updateChildDates` member at full-disassembly line 1002105, invokes it, attaches `.then`, and creates success callback #25588 at line 1002112 (exact caller association)."
+      },
+      {
+        "functionId": 25588,
+        "line": 1002119,
+        "evidence": "Success callback #25588 is attached to the `updateChildDates` call in #25587. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25588 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GetGuardianInvoices",
+    "sourceFunctionId": 25671,
+    "kind": "object",
+    "evidence": "The API helper returns response.data. Callback #25591 reads top-level invoices, settings, and (within its settings branch) services from that body and dispatches them separately; request query parameters/action envelope are not response fields.",
+    "trace": [
+      {
+        "functionId": 25671,
+        "line": 1004112,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25672,
+        "line": 1004142,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25589,
+        "line": 1002137,
+        "evidence": "Invoice action creator unwraps childId/queryObj into thunk state."
+      },
+      {
+        "functionId": 25590,
+        "line": 1002155,
+        "evidence": "Thunk calls imported getGuardianInvoices and attaches callback #25591."
+      },
+      {
+        "functionId": 25591,
+        "line": 1002183,
+        "evidence": "Callback reads response-body invoices at 1002197-1002198, response-body services at 1002211-1002213, and response-body settings at 1002221-1002223. The access at 1002202 is from captured environment state, not the response."
+      },
+      {
+        "functionId": 25684,
+        "line": 1004424,
+        "evidence": "childReducer handles SET_CHILD_GUARDIAN_INVOICES / SETTINGS / SERVICES and consumes their action.data payloads; corresponding cases are at 1004565 and 1004577 plus neighboring branches."
+      }
+    ],
+    "fields": [
+      {
+        "name": "invoices",
+        "type": "unknown",
+        "evidence": "Callback #25591 reads p1.invoices at 1002197-1002198 and dispatches it as SET_CHILD_GUARDIAN_INVOICES.data. Reducer #25684 then reads action.data.current_page and action.data.data at 1004697-1004707, proving client-observed nested paths invoices.current_page and invoices.data only. The container type, data collection shape, and item fields are unknown."
+      },
+      {
+        "name": "settings",
+        "type": "unknown",
+        "evidence": "Callback #25591 reads response-body p1.settings at 1002221-1002223 and dispatches it separately. The access at 1002202 reads captured environment state; nested response properties are not read."
+      },
+      {
+        "name": "services",
+        "type": "unknown",
+        "evidence": "Callback #25591 reads response-body p1.services at 1002211-1002213 as a top-level property and dispatches it separately; it is not nested under response settings. No collection/item type is established."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "The callback proves root invoices/settings/services and reducer-observed invoices.current_page/invoices.data paths. Invoices/settings/services containers, primitive values, and collection/item shapes remain unknown; no last_page read is established.",
+      "Caller-built query values and reducer defaults are not modeled as body fields.",
+      "Partial/open client view; body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "GetGuardianInvoice",
+    "sourceFunctionId": 25673,
+    "kind": "unknown",
+    "evidence": "The helper returns response.data and the actual invoice thunk forwards that body unchanged to childReducer; no response property is read in the success callback.",
+    "trace": [
+      {
+        "functionId": 25673,
+        "line": 1004153,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25674,
+        "line": 1004181,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25592,
+        "line": 1002229,
+        "evidence": "Guardian-invoice action creator captures invoice/child identifiers and returns thunk #25593."
+      },
+      {
+        "functionId": 25593,
+        "line": 1002249,
+        "evidence": "Thunk calls imported getGuardianInvoice helper and attaches callback #25594."
+      },
+      {
+        "functionId": 25594,
+        "line": 1002282,
+        "evidence": "Success callback forwards the resolved body unchanged as SET_CHILD_GUARDIAN_INVOICE or SET_MY_CHILD_GUARDIAN_INVOICE action.data."
+      },
+      {
+        "functionId": 25684,
+        "line": 1004424,
+        "evidence": "childReducer handles the corresponding single-invoice action types and consumes action.data."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Verified consumer path is raw response-body passthrough; no invoice fields or nested service shape are established.",
+      "Do not infer response fields from invoice request forms or reducer defaults.",
+      "Body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "AddGuardianInvoiceService",
+    "sourceFunctionId": 25675,
+    "kind": "unknown",
+    "evidence": "Original helper #25675 at full-disassembly line 1004192 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25675,
+        "line": 1004192,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25676,
+        "line": 1004220,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25605,
+        "line": 1002512,
+        "evidence": "Action/thunk function reads the imported `addGuardianInvoiceService` member at full-disassembly line 1002526, invokes it, attaches `.then`, and creates success callback #25606 at line 1002533 (exact caller association)."
+      },
+      {
+        "functionId": 25606,
+        "line": 1002540,
+        "evidence": "Success callback #25606 is attached to the `addGuardianInvoiceService` call in #25605. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25606 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateGuardianInvoiceService",
+    "sourceFunctionId": 25677,
+    "kind": "unknown",
+    "evidence": "Original helper #25677 at full-disassembly line 1004231 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25677,
+        "line": 1004231,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25678,
+        "line": 1004260,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25602,
+        "line": 1002448,
+        "evidence": "Action/thunk function reads the imported `updateGuardianInvoiceService` member at full-disassembly line 1002462, invokes it, attaches `.then`, and creates success callback #25603 at line 1002471 (exact caller association)."
+      },
+      {
+        "functionId": 25603,
+        "line": 1002478,
+        "evidence": "Success callback #25603 is attached to the `updateGuardianInvoiceService` call in #25602. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25603 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "DeleteGuardianInvoiceService",
+    "sourceFunctionId": 25679,
+    "kind": "unknown",
+    "evidence": "Original helper #25679 at full-disassembly line 1004271 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25679,
+        "line": 1004271,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25680,
+        "line": 1004299,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25596,
+        "line": 1002320,
+        "evidence": "Action/thunk function reads the imported `deleteGuardianInvoiceService` member at full-disassembly line 1002334, invokes it, attaches `.then`, and creates success callback #25597 at line 1002341 (exact caller association)."
+      },
+      {
+        "functionId": 25597,
+        "line": 1002348,
+        "evidence": "Success callback #25597 is attached to the `deleteGuardianInvoiceService` call in #25596. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25597 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateChildGuardianFee",
+    "sourceFunctionId": 25681,
+    "kind": "unknown",
+    "evidence": "Original helper #25681 at full-disassembly line 1004310 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25681,
+        "line": 1004310,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25682,
+        "line": 1004338,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25599,
+        "line": 1002384,
+        "evidence": "Action/thunk function reads the imported `updateChildGuardianFee` member at full-disassembly line 1002398, invokes it, attaches `.then`, and creates success callback #25600 at line 1002405 (exact caller association)."
+      },
+      {
+        "functionId": 25600,
+        "line": 1002412,
+        "evidence": "Success callback #25600 is attached to the `updateChildGuardianFee` call in #25599. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25600 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GetEmployeeActiveCourses",
+    "sourceFunctionId": 25723,
+    "kind": "unknown",
+    "evidence": "Original helper #25723 at full-disassembly line 1006084 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25723,
+        "line": 1006084,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25724,
+        "line": 1006111,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25795,
+        "line": 1009085,
+        "evidence": "Employee screen load wrapper creates/starts generator #25797 for active-course refresh."
+      },
+      {
+        "functionId": 25797,
+        "line": 1009114,
+        "evidence": "Generator calls the imported getEmployeeActiveCourses member at line 1009132 and awaits it; it tests the resolved result for truthiness, then reads employee.employee_active_courses from selected state. No response-body property is read."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "The actual generator caller awaits the response but does not inspect body properties; its employee_active_courses read is from Redux state, not the HTTP response.",
+      "No response fields, array type, or item structure are established.",
+      "Body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "GetEmployeeCourses",
+    "sourceFunctionId": 25725,
+    "kind": "array",
+    "evidence": "The employee courses service returns response.data. Its action caller #25714 passes that result into #25715, which reads its length, calls find, indexes an element, and #25716 reads the element id. This proves an array-shaped client result and one observed item property only.",
+    "trace": [
+      {
+        "functionId": 25725,
+        "line": 1006122,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25726,
+        "line": 1006152,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25714,
+        "line": 1005821,
+        "evidence": "Action/thunk function reads the imported `getEmployeeCourses` member at full-disassembly line 1005837, invokes it, attaches `.then`, and creates success callback #25715 at line 1005844 (exact caller association)."
+      },
+      {
+        "functionId": 25715,
+        "line": 1005851,
+        "evidence": "Success callback #25715 is attached to the `getEmployeeCourses` call in #25714. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      },
+      {
+        "functionId": 25711,
+        "line": 1005761,
+        "evidence": "Employee action module has a getEmployeeAllCourses thunk which calls imported getEmployeeCourses and attaches callback #25712."
+      },
+      {
+        "functionId": 25712,
+        "line": 1005789,
+        "evidence": "That branch forwards its resolved body to the employee-course action closure; no response property read occurs in #25712."
+      },
+      {
+        "functionId": 25714,
+        "line": 1005821,
+        "evidence": "The employee active-course selection thunk also calls imported getEmployeeCourses with active/future filters and attaches response callback #25715."
+      },
+      {
+        "functionId": 25715,
+        "line": 1005851,
+        "evidence": "Callback uses the resolved body as a collection: reads length, calls find, and reads an indexed item before its selection callback."
+      },
+      {
+        "functionId": 25716,
+        "line": 1005902,
+        "evidence": "find callback reads each candidate response item id at 1005907 and compares it to locally selected_course_id."
+      },
+      {
+        "functionId": 25702,
+        "line": 1005471,
+        "evidence": "employeeReducer consumes the selected employee-course action; response items are not otherwise expanded into a server schema."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "The observed root is used as an array and one item property id is read; item completeness and all other item fields remain unknown.",
+      "The selected-course action stores a local selection derived from the response array; it is not the response shape.",
+      "Partial/open client view; body completeness and server contract remain unknown."
+    ],
+    "items": {
+      "kind": "object",
+      "evidence": "Callback #25715 uses the response body as a collection (length/find/index at full-disassembly lines 1005865–1005885); callback #25716 reads id from an iterated/found response item at line 1005907. The item model is partial.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "unknown",
+          "evidence": "Callback #25716 reads response-array item property id at full-disassembly line 1005907 (offset +0x03) for comparison with selected_course_id. No primitive type is established."
+        }
+      ]
+    }
+  },
+  {
+    "operationId": "UpdateData",
+    "sourceFunctionId": 25730,
+    "kind": "unknown",
+    "evidence": "Original helper #25730 at full-disassembly line 1006259 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25730,
+        "line": 1006259,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25731,
+        "line": 1006285,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25708,
+        "line": 1005694,
+        "evidence": "Action/thunk function reads the imported `updateData` member at full-disassembly line 1005704, invokes it, attaches `.then`, and creates success callback #25709 at line 1005711 (exact caller association)."
+      },
+      {
+        "functionId": 25709,
+        "line": 1005718,
+        "evidence": "Success callback #25709 is attached to the `updateData` call in #25708. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25709 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "EmployeeUpdateSettings",
+    "sourceFunctionId": 25732,
+    "kind": "unknown",
+    "evidence": "Original helper #25732 at full-disassembly line 1006296 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25732,
+        "line": 1006296,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25733,
+        "line": 1006322,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25718,
+        "line": 1005929,
+        "evidence": "Action/thunk function reads the imported `updateSettings` member at full-disassembly line 1005939, invokes it, attaches `.then`, and creates success callback #25719 at line 1005946 (exact caller association)."
+      },
+      {
+        "functionId": 25719,
+        "line": 1005953,
+        "evidence": "Success callback #25719 is attached to the `updateSettings` call in #25718. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25719 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GetDiaryData",
+    "sourceFunctionId": 25935,
+    "kind": "object",
+    "evidence": "The getDiaryData service returns response.data. In the traced employee diary thunk #25783 directly reads these top-level properties from that HTTP body and dispatches them; statuses items are accessed by #25784. Root nesting is preserved: these are body-level properties, not Axios/Redux wrapper keys.",
+    "trace": [
+      {
+        "functionId": 25935,
+        "line": 1012899,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25936,
+        "line": 1012932,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25781,
+        "line": 1008600,
+        "evidence": "getDiaryData action accepts selector/query input and returns its thunk."
+      },
+      {
+        "functionId": 25782,
+        "line": 1008630,
+        "evidence": "Thunk calls imported getDiaryData and attaches #25783; request course/date/reset construction is separate from response."
+      },
+      {
+        "functionId": 25783,
+        "line": 1008685,
+        "evidence": "Success callback reads listed top-level properties from its response-body parameter and dispatches selected values as diary Redux actions; local fallbacks are distinguished."
+      },
+      {
+        "functionId": 25784,
+        "line": 1008861,
+        "evidence": "statuses forEach callback reads item.used_in_course and item.type and places original items into local arrays."
+      },
+      {
+        "functionId": 25735,
+        "line": 1006419,
+        "evidence": "diaryReducer handles SET_DIARY and SET_DIARY_ENTRIES (case tests at 1006463/1006481) and consumes the action data in state; other listed values flow through corresponding action cases."
+      }
+    ],
+    "fields": [
+      {
+        "name": "diary",
+        "type": "unknown",
+        "evidence": "#25783 reads response-body p1.diary and dispatches it unchanged as SET_DIARY.data. Original bytecode line 1008696; other types/nesting remain unknown."
+      },
+      {
+        "name": "entries",
+        "type": "unknown",
+        "evidence": "#25783 reads response-body p1.entries and dispatches it unchanged as SET_DIARY_ENTRIES.data. Original bytecode line 1008703; other types/nesting remain unknown."
+      },
+      {
+        "name": "feedback_type_options",
+        "type": "unknown",
+        "evidence": "#25783 reads p1.feedback_type_options and, when truthy, dispatches it as SET_FEEDBACK_TYPE_OPTIONS.data. Original bytecode line 1008706; other types/nesting remain unknown."
+      },
+      {
+        "name": "leave_type_option",
+        "type": "unknown",
+        "evidence": "#25783 reads p1.leave_type_option and, when truthy, dispatches it as SET_LEAVE_TYPE_OPTION.data. Original bytecode line 1008715; other types/nesting remain unknown."
+      },
+      {
+        "name": "statuses",
+        "type": "array",
+        "evidence": "#25783 reads p1.statuses and invokes its forEach; #25784 reads item.used_in_course and item.type before putting original items in local arrays. Original bytecode line 1008728; other types/nesting remain unknown.",
+        "items": {
+          "kind": "object",
+          "evidence": "Callback #25783 invokes statuses.forEach and passes each iterated value to #25784, which reads its used_in_course and type properties (full-disassembly lines 1008866–1008875). This proves an object-like item with these client-read paths, not a complete item model.",
+          "fields": [
+            {
+              "name": "used_in_course",
+              "type": "unknown",
+              "evidence": "ForEach callback #25784 reads each statuses item property used_in_course at full-disassembly line 1008866 (offset +0x03) to select a local destination array."
+            },
+            {
+              "name": "type",
+              "type": "unknown",
+              "evidence": "ForEach callback #25784 reads each statuses item property type at full-disassembly lines 1008868/1008875 (offsets +0x0c/+0x29) and compares with local branch constants; no enum/type claim follows."
+            }
+          ]
+        }
+      },
+      {
+        "name": "settings",
+        "type": "unknown",
+        "evidence": "#25783 reads p1.settings and dispatches the value as SET_DIARY_SETTINGS.data. Original bytecode line 1008752; other types/nesting remain unknown."
+      },
+      {
+        "name": "meals",
+        "type": "unknown",
+        "evidence": "#25783 reads p1.meals and dispatches the value as SET_DIARY_MEALS.data. Original bytecode line 1008759; other types/nesting remain unknown."
+      },
+      {
+        "name": "images",
+        "type": "unknown",
+        "evidence": "#25783 reads p1.images and substitutes a local empty array if falsy before SET_DIARY_IMAGES. Original bytecode line 1008765; other types/nesting remain unknown."
+      },
+      {
+        "name": "documents",
+        "type": "unknown",
+        "evidence": "#25783 reads p1.documents and substitutes a local empty array if falsy before SET_DIARY_DOCUMENTS. Original bytecode line 1008774; other types/nesting remain unknown."
+      },
+      {
+        "name": "daily_comments",
+        "type": "unknown",
+        "evidence": "#25783 reads p1.daily_comments and substitutes a local empty array if falsy. Original bytecode line 1008783; other types/nesting remain unknown."
+      },
+      {
+        "name": "analysis_comments",
+        "type": "unknown",
+        "evidence": "#25783 reads p1.analysis_comments and substitutes a local empty array if falsy. Original bytecode line 1008792; other types/nesting remain unknown."
+      },
+      {
+        "name": "daily_notes",
+        "type": "unknown",
+        "evidence": "#25783 reads p1.daily_notes and substitutes a local empty array if falsy. Original bytecode line 1008801; other types/nesting remain unknown."
+      },
+      {
+        "name": "holidays",
+        "type": "unknown",
+        "evidence": "#25783 reads p1.holidays and dispatches it as SET_DIARY_HOLIDAYS.data. Original bytecode line 1008810; other types/nesting remain unknown."
+      },
+      {
+        "name": "likes",
+        "type": "unknown",
+        "evidence": "#25783 reads p1.likes; undefined triggers a locally constructed {liked:false,users:[]} fallback, otherwise the observed value is dispatched. Original bytecode line 1008823; other types/nesting remain unknown."
+      },
+      {
+        "name": "integrations",
+        "type": "unknown",
+        "evidence": "#25783 reads p1.integrations and dispatches it only when not undefined. Original bytecode line 1008846; other types/nesting remain unknown."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Observed fields are partial client reads, not a complete diary body schema.",
+      "Fallback [] values for falsy images/documents/comments/notes and the local likes object are not response fields.",
+      "The callback derives selected_date/timestamps from local state; those are not attributed to this response.",
+      "Only statuses iteration and the two listed item reads are established; no other item properties or value types are inferred.",
+      "No nested diary/entry/meal/image/document object shape is established."
+    ]
+  },
+  {
+    "operationId": "CreateDiary",
+    "sourceFunctionId": 25937,
+    "kind": "object",
+    "evidence": "Service #25937 returns response.data via #25938. Exact callback #25766 reads the HTTP body’s top-level diary property and dispatches it as SET_DIARY.data.",
+    "trace": [
+      {
+        "functionId": 25937,
+        "line": 1012943,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25938,
+        "line": 1012969,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25765,
+        "line": 1008125,
+        "evidence": "Action/thunk function reads the imported `createDiary` member at full-disassembly line 1008141, invokes it, attaches `.then`, and creates success callback #25766 at line 1008162 (exact caller association)."
+      },
+      {
+        "functionId": 25766,
+        "line": 1008169,
+        "evidence": "Attached to service #25937 by #25765; reads response-body diary at 1008179-1008180 and dispatches it as SET_DIARY.data."
+      }
+    ],
+    "fields": [
+      {
+        "name": "diary",
+        "type": "unknown",
+        "evidence": "Callback #25766 reads p1.diary at full-disassembly line 1008179 and dispatches it unchanged. Value type and nested shape are unknown."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25766 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateComment",
+    "sourceFunctionId": 25939,
+    "kind": "object",
+    "evidence": "Service #25939 returns response.data via #25940. Exact callback #25779 reads HTTP-body type in several branches; comparisons do not establish an enum or primitive type.",
+    "trace": [
+      {
+        "functionId": 25939,
+        "line": 1012980,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25940,
+        "line": 1013010,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25778,
+        "line": 1008420,
+        "evidence": "Action/thunk function reads the imported `updateComment` member at full-disassembly line 1008472, invokes it, attaches `.then`, and creates success callback #25779 at line 1008478 (exact caller association)."
+      },
+      {
+        "functionId": 25779,
+        "line": 1008488,
+        "evidence": "Attached to service #25939 by #25778; reads response-body type at 1008493, 1008518, and 1008541 in branch checks."
+      }
+    ],
+    "fields": [
+      {
+        "name": "type",
+        "type": "unknown",
+        "evidence": "Callback #25779 reads p1.type at full-disassembly lines 1008493, 1008518, and 1008541. Branch comparisons do not establish the value type or enum."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25779 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UploadMedia",
+    "sourceFunctionId": 25941,
+    "kind": "object",
+    "evidence": "Service #25941 returns response.data via #25942. Exact callback #25804 reads the HTTP body’s top-level file property in media-upload processing; no further body schema is established.",
+    "trace": [
+      {
+        "functionId": 25941,
+        "line": 1013021,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25942,
+        "line": 1013055,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25803,
+        "line": 1009251,
+        "evidence": "Action/thunk function reads the imported `uploadMedia` member at full-disassembly line 1009312, invokes it, attaches `.then`, and creates success callback #25804 at line 1009318 (exact caller association)."
+      },
+      {
+        "functionId": 25804,
+        "line": 1009328,
+        "evidence": "Attached to service #25941 by #25803; reads response-body file at 1009333, 1009354, and 1009366."
+      }
+    ],
+    "fields": [
+      {
+        "name": "file",
+        "type": "unknown",
+        "evidence": "Callback #25804 reads p1.file at full-disassembly lines 1009333, 1009354, and 1009366; it uses the value in local/action processing. Value type and nested shape are unknown."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25804 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UploadDocument",
+    "sourceFunctionId": 25943,
+    "kind": "object",
+    "evidence": "Service #25943 returns response.data via #25944. Exact callback #25816 reads the HTTP body’s top-level file property in document-upload processing; no further body schema is established.",
+    "trace": [
+      {
+        "functionId": 25943,
+        "line": 1013066,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25944,
+        "line": 1013100,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25815,
+        "line": 1009626,
+        "evidence": "Action/thunk function reads the imported `uploadDocument` member at full-disassembly line 1009691, invokes it, attaches `.then`, and creates success callback #25816 at line 1009697 (exact caller association)."
+      },
+      {
+        "functionId": 25816,
+        "line": 1009707,
+        "evidence": "Attached to service #25943 by #25815; reads response-body file at 1009712, 1009733, and 1009745."
+      }
+    ],
+    "fields": [
+      {
+        "name": "file",
+        "type": "unknown",
+        "evidence": "Callback #25816 reads p1.file at full-disassembly lines 1009712, 1009733, and 1009745; it uses the value in local/action processing. Value type and nested shape are unknown."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25816 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "Publish",
+    "sourceFunctionId": 25945,
+    "kind": "unknown",
+    "evidence": "Original helper #25945 at full-disassembly line 1013111 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25945,
+        "line": 1013111,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25946,
+        "line": 1013138,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25771,
+        "line": 1008246,
+        "evidence": "Action/thunk function reads the imported `publish` member at full-disassembly line 1008289, invokes it, attaches `.then`, and creates success callback #25772 at line 1008294 (exact caller association)."
+      },
+      {
+        "functionId": 25772,
+        "line": 1008304,
+        "evidence": "Success callback #25772 is attached to the `publish` call in #25771. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25772 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateDiaryFile",
+    "sourceFunctionId": 25947,
+    "kind": "unknown",
+    "evidence": "Original helper #25947 at full-disassembly line 1013149 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25947,
+        "line": 1013149,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25948,
+        "line": 1013176,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25833,
+        "line": 1010185,
+        "evidence": "Action/thunk function reads the imported `updateDiaryFile` member at full-disassembly line 1010195, invokes it, attaches `.then`, and creates success callback #25834 at line 1010203 (exact caller association)."
+      },
+      {
+        "functionId": 25834,
+        "line": 1010210,
+        "evidence": "Success callback #25834 is attached to the `updateDiaryFile` call in #25833. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25834 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "DeleteDiaryFile",
+    "sourceFunctionId": 25949,
+    "kind": "unknown",
+    "evidence": "Original helper #25949 at full-disassembly line 1013187 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25949,
+        "line": 1013187,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25950,
+        "line": 1013213,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25824,
+        "line": 1009956,
+        "evidence": "Action/thunk function reads the imported `deleteDiaryFile` member at full-disassembly line 1009971, invokes it, attaches `.then`, and creates success callback #25825 at line 1009977 (exact caller association)."
+      },
+      {
+        "functionId": 25825,
+        "line": 1009984,
+        "evidence": "Success callback #25825 is attached to the `deleteDiaryFile` call in #25824. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25825 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "DeleteDiaryFiles",
+    "sourceFunctionId": 25951,
+    "kind": "unknown",
+    "evidence": "Original helper #25951 at full-disassembly line 1013224 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25951,
+        "line": 1013224,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25952,
+        "line": 1013254,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25829,
+        "line": 1010084,
+        "evidence": "Action/thunk function reads the imported `deleteDiaryFiles` member at full-disassembly line 1010121, invokes it, attaches `.then`, and creates success callback #25830 at line 1010127 (exact caller association)."
+      },
+      {
+        "functionId": 25830,
+        "line": 1010137,
+        "evidence": "Success callback #25830 is attached to the `deleteDiaryFiles` call in #25829. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25830 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "LikeDiary",
+    "sourceFunctionId": 25953,
+    "kind": "unknown",
+    "evidence": "Original helper #25953 at full-disassembly line 1013265 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25953,
+        "line": 1013265,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25954,
+        "line": 1013292,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25839,
+        "line": 1010290,
+        "evidence": "Action/thunk function reads the imported `likeDiary` member at full-disassembly line 1010323, invokes it, attaches `.then`, and creates success callback #25840 at line 1010329 (exact caller association)."
+      },
+      {
+        "functionId": 25840,
+        "line": 1010339,
+        "evidence": "Success callback #25840 is attached to the `likeDiary` call in #25839. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25840 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateEntryStatus",
+    "sourceFunctionId": 25955,
+    "kind": "unknown",
+    "evidence": "Original helper #25955 at full-disassembly line 1013303 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25955,
+        "line": 1013303,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25956,
+        "line": 1013331,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25845,
+        "line": 1010412,
+        "evidence": "Action/thunk function reads the imported `updateEntryStatus` member at full-disassembly line 1010450, invokes it, attaches `.then`, and creates success callback #25846 at line 1010460 (exact caller association)."
+      },
+      {
+        "functionId": 25846,
+        "line": 1010470,
+        "evidence": "Success callback #25846 is attached to the `updateEntryStatus` call in #25845. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25846 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateEntryStatuses",
+    "sourceFunctionId": 25957,
+    "kind": "object",
+    "evidence": "Service #25957 returns response.data via #25958. Exact callback #25854 reads response-body map at 1010658; no array/item type is established.",
+    "trace": [
+      {
+        "functionId": 25957,
+        "line": 1013342,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25958,
+        "line": 1013370,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25851,
+        "line": 1010561,
+        "evidence": "Action/thunk function reads the imported `updateEntryStatuses` member at full-disassembly line 1010608, invokes it, attaches `.then`, and creates success callback #25854 at line 1010617 (exact caller association)."
+      },
+      {
+        "functionId": 25854,
+        "line": 1010650,
+        "evidence": "Attached to service #25957 through #25851; reads response-body map at full-disassembly line 1010658 and uses it to update local diary entries."
+      }
+    ],
+    "fields": [
+      {
+        "name": "map",
+        "type": "unknown",
+        "evidence": "Callback #25854 reads p1.map at full-disassembly line 1010658. The name/use does not establish an array or map data type."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25854 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateEntryMeal",
+    "sourceFunctionId": 25959,
+    "kind": "unknown",
+    "evidence": "Original helper #25959 at full-disassembly line 1013381 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25959,
+        "line": 1013381,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25960,
+        "line": 1013409,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25861,
+        "line": 1010804,
+        "evidence": "Action/thunk function reads the imported `updateEntryMeal` member at full-disassembly line 1010842, invokes it, attaches `.then`, and creates success callback #25862 at line 1010855 (exact caller association)."
+      },
+      {
+        "functionId": 25862,
+        "line": 1010865,
+        "evidence": "Success callback #25862 is attached to the `updateEntryMeal` call in #25861. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25862 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "AddEntryFeedback",
+    "sourceFunctionId": 25961,
+    "kind": "unknown",
+    "evidence": "Original helper #25961 at full-disassembly line 1013420 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25961,
+        "line": 1013420,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25962,
+        "line": 1013448,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25867,
+        "line": 1010964,
+        "evidence": "Action/thunk function reads the imported `addEntryFeedback` member at full-disassembly line 1011002, invokes it, attaches `.then`, and creates success callback #25868 at line 1011015 (exact caller association)."
+      },
+      {
+        "functionId": 25868,
+        "line": 1011025,
+        "evidence": "Success callback #25868 is attached to the `addEntryFeedback` call in #25867. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25868 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateEntryFeedback",
+    "sourceFunctionId": 25963,
+    "kind": "unknown",
+    "evidence": "Original helper #25963 at full-disassembly line 1013459 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25963,
+        "line": 1013459,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25964,
+        "line": 1013488,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25873,
+        "line": 1011126,
+        "evidence": "Action/thunk function reads the imported `updateEntryFeedback` member at full-disassembly line 1011164, invokes it, attaches `.then`, and creates success callback #25874 at line 1011181 (exact caller association)."
+      },
+      {
+        "functionId": 25874,
+        "line": 1011191,
+        "evidence": "Success callback #25874 is attached to the `updateEntryFeedback` call in #25873. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25874 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "DeleteEntryFeedback",
+    "sourceFunctionId": 25965,
+    "kind": "unknown",
+    "evidence": "Original helper #25965 at full-disassembly line 1013499 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25965,
+        "line": 1013499,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25966,
+        "line": 1013527,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25879,
+        "line": 1011290,
+        "evidence": "Action/thunk function reads the imported `deleteEntryFeedback` member at full-disassembly line 1011328, invokes it, attaches `.then`, and creates success callback #25880 at line 1011334 (exact caller association)."
+      },
+      {
+        "functionId": 25880,
+        "line": 1011344,
+        "evidence": "Success callback #25880 is attached to the `deleteEntryFeedback` call in #25879. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25880 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "StartTimeTracking",
+    "sourceFunctionId": 25967,
+    "kind": "unknown",
+    "evidence": "Original helper #25967 at full-disassembly line 1013538 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25967,
+        "line": 1013538,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25968,
+        "line": 1013566,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25885,
+        "line": 1011441,
+        "evidence": "Action/thunk function reads the imported `startTimeTracking` member at full-disassembly line 1011479, invokes it, attaches `.then`, and creates success callback #25886 at line 1011487 (exact caller association)."
+      },
+      {
+        "functionId": 25886,
+        "line": 1011497,
+        "evidence": "Success callback #25886 is attached to the `startTimeTracking` call in #25885. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25886 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "StopTimeTracking",
+    "sourceFunctionId": 25969,
+    "kind": "unknown",
+    "evidence": "Original helper #25969 at full-disassembly line 1013577 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25969,
+        "line": 1013577,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25970,
+        "line": 1013605,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25891,
+        "line": 1011586,
+        "evidence": "Action/thunk function reads the imported `stopTimeTracking` member at full-disassembly line 1011624, invokes it, attaches `.then`, and creates success callback #25892 at line 1011632 (exact caller association)."
+      },
+      {
+        "functionId": 25892,
+        "line": 1011642,
+        "evidence": "Success callback #25892 is attached to the `stopTimeTracking` call in #25891. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25892 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "AddTimeLog",
+    "sourceFunctionId": 25971,
+    "kind": "unknown",
+    "evidence": "Original helper #25971 at full-disassembly line 1013616 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25971,
+        "line": 1013616,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25972,
+        "line": 1013644,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25897,
+        "line": 1011733,
+        "evidence": "Action/thunk function reads the imported `addTimeLog` member at full-disassembly line 1011771, invokes it, attaches `.then`, and creates success callback #25898 at line 1011784 (exact caller association)."
+      },
+      {
+        "functionId": 25898,
+        "line": 1011794,
+        "evidence": "Success callback #25898 is attached to the `addTimeLog` call in #25897. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25898 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateTimeLog",
+    "sourceFunctionId": 25973,
+    "kind": "unknown",
+    "evidence": "Original helper #25973 at full-disassembly line 1013655 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25973,
+        "line": 1013655,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25974,
+        "line": 1013684,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25904,
+        "line": 1011936,
+        "evidence": "Action/thunk function reads the imported `updateTimeLog` member at full-disassembly line 1011974, invokes it, attaches `.then`, and creates success callback #25905 at line 1011982 (exact caller association)."
+      },
+      {
+        "functionId": 25905,
+        "line": 1011992,
+        "evidence": "Success callback #25905 is attached to the `updateTimeLog` call in #25904. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25905 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "DeleteTimeLog",
+    "sourceFunctionId": 25975,
+    "kind": "unknown",
+    "evidence": "Original helper #25975 at full-disassembly line 1013695 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25975,
+        "line": 1013695,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25976,
+        "line": 1013723,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25912,
+        "line": 1012144,
+        "evidence": "Action/thunk function reads the imported `deleteTimeLog` member at full-disassembly line 1012182, invokes it, attaches `.then`, and creates success callback #25913 at line 1012188 (exact caller association)."
+      },
+      {
+        "functionId": 25913,
+        "line": 1012198,
+        "evidence": "Success callback #25913 is attached to the `deleteTimeLog` call in #25912. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25913 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateEntryLeaveType",
+    "sourceFunctionId": 25977,
+    "kind": "unknown",
+    "evidence": "Original helper #25977 at full-disassembly line 1013734 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 25977,
+        "line": 1013734,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25978,
+        "line": 1013762,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25929,
+        "line": 1012574,
+        "evidence": "Action/thunk function reads the imported `updateEntryLeaveType` member at full-disassembly line 1012612, invokes it, attaches `.then`, and creates success callback #25930 at line 1012622 (exact caller association)."
+      },
+      {
+        "functionId": 25930,
+        "line": 1012632,
+        "evidence": "Success callback #25930 is attached to the `updateEntryLeaveType` call in #25929. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25930 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateEntryLeaveTypes",
+    "sourceFunctionId": 25979,
+    "kind": "object",
+    "evidence": "Service #25979 returns response.data via #25980. Exact callback #25922 reads response-body map at 1012428; the property name does not establish an array response.",
+    "trace": [
+      {
+        "functionId": 25979,
+        "line": 1013773,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25980,
+        "line": 1013801,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25920,
+        "line": 1012345,
+        "evidence": "Action/thunk function reads the imported `updateEntryLeaveTypes` member at full-disassembly line 1012389, invokes it, attaches `.then`, and creates success callback #25922 at line 1012398 (exact caller association)."
+      },
+      {
+        "functionId": 25922,
+        "line": 1012420,
+        "evidence": "Attached to service #25979 through #25920; reads response-body map at full-disassembly line 1012428 and applies local diary-entry processing."
+      }
+    ],
+    "fields": [
+      {
+        "name": "map",
+        "type": "unknown",
+        "evidence": "Callback #25922 reads p1.map at full-disassembly line 1012428. The field name does not establish an array or object type."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #25922 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GetDayMenu",
+    "sourceFunctionId": 26007,
+    "kind": "unknown",
+    "evidence": "Service returns response.data; the verified food-menu callback forwards the body unchanged to SET_DAY_MENU and the reducer stores that payload. It reads no response fields, so the response remains unknown.",
+    "trace": [
+      {
+        "functionId": 26007,
+        "line": 1014569,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26008,
+        "line": 1014595,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25991,
+        "line": 1014199,
+        "evidence": "Food-menu action creator returns thunk #25992."
+      },
+      {
+        "functionId": 25992,
+        "line": 1014212,
+        "evidence": "Thunk calls imported getDayMenu and attaches callback #25993."
+      },
+      {
+        "functionId": 25993,
+        "line": 1014239,
+        "evidence": "Success callback forwards the entire response body unchanged as SET_DAY_MENU.data."
+      },
+      {
+        "functionId": 25989,
+        "line": 1014050,
+        "evidence": "foodmenuReducer handles SET_DAY_MENU and consumes action.data."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Actual action/reducer path is body passthrough; no fields, array shape, or item properties are read.",
+      "Do not infer menu response fields/arrays from operation names or UI state.",
+      "Body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "GetWeekMenu",
+    "sourceFunctionId": 26009,
+    "kind": "unknown",
+    "evidence": "Service returns response.data; the verified food-menu callback forwards the body unchanged to SET_WEEK_MENU and the reducer stores that payload. It reads no response fields, so the response remains unknown.",
+    "trace": [
+      {
+        "functionId": 26009,
+        "line": 1014606,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26010,
+        "line": 1014632,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25994,
+        "line": 1014257,
+        "evidence": "Food-menu action creator returns thunk #25995."
+      },
+      {
+        "functionId": 25995,
+        "line": 1014270,
+        "evidence": "Thunk calls imported getWeekMenu and attaches callback #25996."
+      },
+      {
+        "functionId": 25996,
+        "line": 1014297,
+        "evidence": "Success callback forwards the entire response body unchanged as SET_WEEK_MENU.data."
+      },
+      {
+        "functionId": 25989,
+        "line": 1014050,
+        "evidence": "foodmenuReducer handles SET_WEEK_MENU and consumes action.data."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Actual action/reducer path is body passthrough; no fields, array shape, or item properties are read.",
+      "Do not infer menu response fields/arrays from operation names or UI state.",
+      "Body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "GetEmployeeMeals",
+    "sourceFunctionId": 26011,
+    "kind": "object",
+    "evidence": "Foodmenu service #26011 returns Axios response.data via #26012. Its Foodmenu caller #25998 invokes this service and attaches #25999; that callback reads HTTP-body employees, sorts it, and dispatches it. Comparator #26000 reads user_id from the compared employee values. This identifies the observed path employees[*].user_id but does not establish the employees container or item type.",
+    "trace": [
+      {
+        "functionId": 26011,
+        "line": 1014643,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 25990,
+        "line": 1014145,
+        "evidence": "Foodmenu action-module initializer is registered as Metro module 2253 with dependency 2254 (registration around disassembly lines 11290-11398)."
+      },
+      {
+        "functionId": 26004,
+        "line": 1014455,
+        "evidence": "Foodmenu service-module initializer is Metro module 2254 and its service table maps getEmployeeMeals to #26011."
+      },
+      {
+        "functionId": 26012,
+        "line": 1014671,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 25998,
+        "line": 1014328,
+        "evidence": "Action/thunk function reads the imported `getEmployeeMeals` member at full-disassembly line 1014343, invokes it, attaches `.then`, and creates success callback #25999 at line 1014349 (exact caller association)."
+      },
+      {
+        "functionId": 25999,
+        "line": 1014356,
+        "evidence": "Callback reads response-body employees at 1014367, sorts the value at 1014368-1014370 with comparator #26000, then dispatches it as SET_EMPLOYEE_MEALS.data."
+      },
+      {
+        "functionId": 26000,
+        "line": 1014383,
+        "evidence": "Sort comparator directly reads user_id on both compared values at 1014387-1014401; equality against current user id does not prove the item's runtime type."
+      }
+    ],
+    "fields": [
+      {
+        "name": "employees",
+        "type": "unknown",
+        "evidence": "Response-body path employees is read by #25999 at full-disassembly line 1014367 and passed to sort at 1014368-1014370. The comparator #26000 reads compared entries' user_id at 1014387-1014401, observing employees[*].user_id; neither sort nor those reads establish the container or item type."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "The exact Foodmenu action/comparator path is traced. employees and its item shape remain unknown despite the observed employees[*].user_id read; no array/object type is asserted.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GetEmployeeMealsSettings",
+    "sourceFunctionId": 26013,
+    "kind": "unknown",
+    "evidence": "Original helper #26013 at full-disassembly line 1014682 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 26013,
+        "line": 1014682,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26014,
+        "line": 1014707,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Only the service projection to response.data is established; downstream action/saga/reducer/UI property reads were not established in this record.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "SaveEmployeeMeal",
+    "sourceFunctionId": 26015,
+    "kind": "unknown",
+    "evidence": "Original helper #26015 at full-disassembly line 1014718 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 26015,
+        "line": 1014718,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26016,
+        "line": 1014744,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26002,
+        "line": 1014420,
+        "evidence": "Action/thunk function reads the imported `saveEmployeeMeal` member at full-disassembly line 1014431, invokes it, attaches `.then`, and creates success callback #26003 at line 1014438 (exact caller association)."
+      },
+      {
+        "functionId": 26003,
+        "line": 1014445,
+        "evidence": "Success callback #26003 is attached to the `saveEmployeeMeal` call in #26002. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26003 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GalleryGetIndexFolders",
+    "sourceFunctionId": 26134,
+    "kind": "object",
+    "evidence": "GET service returns response.data. The verified gallery action callback reads the body’s top-level folders and settings properties and dispatches them; pagination actions/reducer state are consumer plumbing, not additional HTTP fields.",
+    "trace": [
+      {
+        "functionId": 26134,
+        "line": 1018505,
+        "evidence": "API helper GET continuation #26135 returns Axios response.data."
+      },
+      {
+        "functionId": 26135,
+        "line": 1018533,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26132,
+        "line": 1018452,
+        "evidence": "GalleryService registry maps getIndexFolders to endpoint helper #26134."
+      },
+      {
+        "functionId": 26107,
+        "line": 1017850,
+        "evidence": "getGalleryIndexFolders action creator returns thunk #26108."
+      },
+      {
+        "functionId": 26108,
+        "line": 1017863,
+        "evidence": "Thunk calls imported getIndexFolders and attaches #26109."
+      },
+      {
+        "functionId": 26109,
+        "line": 1017919,
+        "evidence": "Callback reads response-body folders at 1017929-1017933 and settings at 1017950-1017951, then dispatches those values to gallery actions."
+      },
+      {
+        "functionId": 26094,
+        "line": 1017052,
+        "evidence": "galleryReducer consumes the resulting index-album/pages/settings action payloads."
+      }
+    ],
+    "fields": [
+      {
+        "name": "folders",
+        "type": "unknown",
+        "evidence": "Callback #26109 reads response-body p1.folders at full-disassembly lines 1017929-1017933 and 1017940-1017944, then dispatches folders-derived values. No item/container type is established."
+      },
+      {
+        "name": "settings",
+        "type": "unknown",
+        "evidence": "Callback #26109 reads response-body p1.settings at full-disassembly lines 1017950-1017951 and dispatches it as SET_FOLDER_SETTINGS.data; nested properties are not read."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "The verified #26109 callback reads only the listed root folders/settings properties; no folder item schema is established.",
+      "SET_GALLERY_PAGES and selection/reducer values do not prove server pagination or extra response fields.",
+      "Partial/open client view; body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "DeleteGalleryFile",
+    "sourceFunctionId": 26136,
+    "kind": "unknown",
+    "evidence": "Original helper #26136 at full-disassembly line 1018544 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 26136,
+        "line": 1018544,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26137,
+        "line": 1018570,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26126,
+        "line": 1018300,
+        "evidence": "Action/thunk function reads the imported `deleteGalleryFile` member at full-disassembly line 1018314, invokes it, attaches `.then`, and creates success callback #26127 at line 1018320 (exact caller association)."
+      },
+      {
+        "functionId": 26127,
+        "line": 1018327,
+        "evidence": "Success callback #26127 is attached to the `deleteGalleryFile` call in #26126. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26127 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateGalleryFile",
+    "sourceFunctionId": 26138,
+    "kind": "unknown",
+    "evidence": "Original helper #26138 at full-disassembly line 1018581 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 26138,
+        "line": 1018581,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26139,
+        "line": 1018608,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26129,
+        "line": 1018360,
+        "evidence": "Action/thunk function reads the imported `updateGalleryFile` member at full-disassembly line 1018370, invokes it, attaches `.then`, and creates success callback #26130 at line 1018378 (exact caller association)."
+      },
+      {
+        "functionId": 26130,
+        "line": 1018385,
+        "evidence": "Success callback #26130 is attached to the `updateGalleryFile` call in #26129. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26130 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GetFolderData",
+    "sourceFunctionId": 26143,
+    "kind": "object",
+    "evidence": "The endpoint response.data body is read by the folder-data callback: it observes top-level subfolders and also forwards the whole body as action data. No other response properties are asserted.",
+    "trace": [
+      {
+        "functionId": 26143,
+        "line": 1018787,
+        "evidence": "GET helper returns response.data via its local continuation."
+      },
+      {
+        "functionId": 26144,
+        "line": 1018816,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26110,
+        "line": 1017958,
+        "evidence": "Gallery getFolderData action creator returns its thunk."
+      },
+      {
+        "functionId": 26111,
+        "line": 1017973,
+        "evidence": "Thunk calls imported getFolderData and attaches success callback #26112."
+      },
+      {
+        "functionId": 26141,
+        "line": 1018668,
+        "evidence": "FolderService export maps key getFolderData to #26143 (CreateClosure at line 1018681)."
+      },
+      {
+        "functionId": 26112,
+        "line": 1018025,
+        "evidence": "Success callback reads top-level body subfolders at 1018035-1018036 and forwards the whole body as SET_GALLERY_FOLDER and SET_GALLERY_DATA data."
+      },
+      {
+        "functionId": 26094,
+        "line": 1017052,
+        "evidence": "galleryReducer consumes SET_GALLERY_FOLDER/SET_GALLERY_DATA action.data."
+      },
+      {
+        "functionId": 26251,
+        "line": 1021334,
+        "evidence": "Metro module 2269 is initialized with dependency module 2267 at registration lines 11470-11473; #26234 loads dependency index 3 into environment slot 4 at 1020910-1020914. FolderService module 2267 registers getFolderData as #26143 at 1018668-1018682. This thunk reads that method at 1021372, calls it at 1021377, and attaches #26252 at 1021379."
+      },
+      {
+        "functionId": 26252,
+        "line": 1021386,
+        "evidence": "Callback reads response-body subfolders at 1021396-1021397 and forwards the whole body as SET_DOCUMENTS_FOLDER and SET_DOCUMENTS_DATA at 1021401-1021409."
+      },
+      {
+        "functionId": 26566,
+        "line": 1031014,
+        "evidence": "documentsReducer consumes SET_DOCUMENTS_DATA and reads response-body paths subfolders.data/current_page/last_page and root files at 1031406-1031426 and 1031444-1031446."
+      }
+    ],
+    "fields": [
+      {
+        "name": "subfolders",
+        "type": "unknown",
+        "evidence": "Callback #26112 reads response-body p1.subfolders at 1018035-1018036 and #26252 independently reads the same path at 1021396-1021397. After the same #26143 body is forwarded, reducers #26094/#26566 read nested subfolders.data (1017428-1017435; 1031406-1031415), subfolders.current_page (1017438-1017440; 1031416-1031418), and subfolders.last_page (1017441-1017443; 1031419-1031421). These remain client property-read paths only; subfolders container and item types are unknown."
+      },
+      {
+        "name": "files",
+        "type": "unknown",
+        "evidence": "The exact #26143 response body is forwarded by #26112/#26252. galleryReducer #26094 reads body.files at 1017447-1017448 and 1017466-1017468; documentsReducer #26566 reads it at 1031425-1031426 and 1031444-1031446. Value and item shape are unknown."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "The two exact callers forward the same FolderService #26143 HTTP body to gallery/documents reducers, which read the nested subfolders paths and root files listed in the field evidence. These observations do not prove container/item schemas.",
+      "Reducer-created wrappers/state keys such as folder, media, images, folderData, and folderFilesLoaded are not response properties.",
+      "Partial/open client view; body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "GetSubfolders",
+    "sourceFunctionId": 26145,
+    "kind": "object",
+    "evidence": "The API returns response.data. The actual gallery success callback forwards the body and, in its ADD_GALLERY_ALBUMS branch, reads its top-level data property. This branch-specific client read does not prove a complete folder-list model.",
+    "trace": [
+      {
+        "functionId": 26145,
+        "line": 1018827,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26146,
+        "line": 1018857,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26141,
+        "line": 1018668,
+        "evidence": "FolderService export maps key getSubfolders to #26145 (CreateClosure at line 1018688)."
+      },
+      {
+        "functionId": 26114,
+        "line": 1018066,
+        "evidence": "Gallery action creator getSubfolders returns thunk #26115."
+      },
+      {
+        "functionId": 26115,
+        "line": 1018083,
+        "evidence": "Thunk calls imported getSubfolders helper and attaches callback #26116."
+      },
+      {
+        "functionId": 26116,
+        "line": 1018111,
+        "evidence": "Success callback forwards whole body as SET_GALLERY_PAGES or SET_FILTERED_GALLERY_FOLDERS; in the add-albums branch it reads top-level body.data at 1018131 and forwards that property."
+      },
+      {
+        "functionId": 26094,
+        "line": 1017052,
+        "evidence": "galleryReducer consumes the corresponding page/folder action data."
+      },
+      {
+        "functionId": 26239,
+        "line": 1021103,
+        "evidence": "Action/thunk function reads the imported `getSubfolders` member at full-disassembly line 1021117, invokes it, attaches `.then`, and creates success callback #26240 at line 1021124 (exact caller association)."
+      },
+      {
+        "functionId": 26240,
+        "line": 1021131,
+        "evidence": "Documents callback also forwards the response body to SET_DOCUMENTS_PAGES; in its ADD_DOCUMENTS_DATA branch it reads response-body data at 1021151-1021153."
+      },
+      {
+        "functionId": 26566,
+        "line": 1031014,
+        "evidence": "documentsReducer handles ADD_DOCUMENTS_DATA at 1031052-1031057 and consumes its action.data payload. For this callback, that payload is the HTTP-body p1.data read by #26240 at 1021151; no additional item shape is inferred."
+      }
+    ],
+    "fields": [
+      {
+        "name": "data",
+        "type": "unknown",
+        "evidence": "Gallery callback #26116 reads response-body p1.data at 1018131 only in the ADD_GALLERY_ALBUMS branch; the documents callback #26240 reads p1.data at 1021151-1021153 only in ADD_DOCUMENTS_DATA. Other branches forward the whole body. No array/item type is established."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26240 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "The callback also has a raw-body branch; branch/consumer coverage is partial.",
+      "Partial/open client view; body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "AddFolder",
+    "sourceFunctionId": 26147,
+    "kind": "unknown",
+    "evidence": "Original helper #26147 at full-disassembly line 1018868 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 26147,
+        "line": 1018868,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26148,
+        "line": 1018894,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26173,
+        "line": 1019513,
+        "evidence": "Action/thunk function reads the imported `addFolder` member at full-disassembly line 1019524, invokes it, attaches `.then`, and creates success callback #26174 at line 1019531 (exact caller association)."
+      },
+      {
+        "functionId": 26174,
+        "line": 1019538,
+        "evidence": "Success callback #26174 is attached to the `addFolder` call in #26173. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26174 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateFolder",
+    "sourceFunctionId": 26149,
+    "kind": "object",
+    "evidence": "Service #26149 returns response.data via #26150. Exact callback #26177 reads the response body's top-level data property in both documents and gallery branches and dispatches that value; this does not prove a generic wrapper or data type.",
+    "trace": [
+      {
+        "functionId": 26149,
+        "line": 1018905,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26150,
+        "line": 1018932,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26176,
+        "line": 1019563,
+        "evidence": "Action/thunk function reads the imported `updateFolder` member at full-disassembly line 1019577, invokes it, attaches `.then`, and creates success callback #26177 at line 1019583 (exact caller association)."
+      },
+      {
+        "functionId": 26177,
+        "line": 1019590,
+        "evidence": "Attached to service #26149 by #26176; reads response-body data at 1019604-1019605 in the documents branch and 1019614-1019615 in the gallery branch."
+      }
+    ],
+    "fields": [
+      {
+        "name": "data",
+        "type": "unknown",
+        "evidence": "Callback #26177 reads p1.data at full-disassembly lines 1019604 and 1019614 in branch-specific dispatches. Value type and nested shape are unknown."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26177 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "DeleteFolder",
+    "sourceFunctionId": 26151,
+    "kind": "unknown",
+    "evidence": "Original helper #26151 at full-disassembly line 1018943 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 26151,
+        "line": 1018943,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26152,
+        "line": 1018969,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26179,
+        "line": 1019636,
+        "evidence": "Action/thunk function reads the imported `deleteFolder` member at full-disassembly line 1019647, invokes it, attaches `.then`, and creates success callback #26180 at line 1019654 (exact caller association)."
+      },
+      {
+        "functionId": 26180,
+        "line": 1019661,
+        "evidence": "Success callback #26180 is attached to the `deleteFolder` call in #26179. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26180 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UploadFiles",
+    "sourceFunctionId": 26153,
+    "kind": "unknown",
+    "evidence": "Original helper #26153 at full-disassembly line 1018980 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 26153,
+        "line": 1018980,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26154,
+        "line": 1019013,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26188,
+        "line": 1019776,
+        "evidence": "Action/thunk function reads the imported `uploadFiles` member at full-disassembly line 1019787, invokes it, attaches `.then`, and creates success callback #26189 at line 1019795 (exact caller association)."
+      },
+      {
+        "functionId": 26189,
+        "line": 1019802,
+        "evidence": "Success callback #26189 is attached to the `uploadFiles` call in #26188. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26189 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GetUserTargetGroups",
+    "sourceFunctionId": 26155,
+    "kind": "unknown",
+    "evidence": "Original helper #26155 at full-disassembly line 1019024 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 26155,
+        "line": 1019024,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26156,
+        "line": 1019049,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26200,
+        "line": 1020148,
+        "evidence": "Action/thunk function reads the imported `getUserTargetGroups` member at full-disassembly line 1020162, invokes it, attaches `.then`, and creates success callback #26201 at line 1020166 (exact caller association)."
+      },
+      {
+        "functionId": 26201,
+        "line": 1020173,
+        "evidence": "Success callback #26201 is attached to the `getUserTargetGroups` call in #26200. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26201 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "MoveFolders",
+    "sourceFunctionId": 26157,
+    "kind": "unknown",
+    "evidence": "Original helper #26157 at full-disassembly line 1019060 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 26157,
+        "line": 1019060,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26158,
+        "line": 1019088,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26219,
+        "line": 1020453,
+        "evidence": "Action/thunk function reads the imported `moveFolders` member at full-disassembly line 1020467, invokes it, attaches `.then`, and creates success callback #26220 at line 1020474 (exact caller association)."
+      },
+      {
+        "functionId": 26220,
+        "line": 1020484,
+        "evidence": "Success callback #26220 is attached to the `moveFolders` call in #26219. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26220 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "MoveFiles",
+    "sourceFunctionId": 26159,
+    "kind": "unknown",
+    "evidence": "Original helper #26159 at full-disassembly line 1019099 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 26159,
+        "line": 1019099,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26160,
+        "line": 1019127,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26223,
+        "line": 1020561,
+        "evidence": "Action/thunk function reads the imported `moveFiles` member at full-disassembly line 1020575, invokes it, attaches `.then`, and creates success callback #26224 at line 1020582 (exact caller association)."
+      },
+      {
+        "functionId": 26224,
+        "line": 1020592,
+        "evidence": "Success callback #26224 is attached to the `moveFiles` call in #26223. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26224 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "DeleteFiles",
+    "sourceFunctionId": 26161,
+    "kind": "unknown",
+    "evidence": "Original helper #26161 at full-disassembly line 1019138 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 26161,
+        "line": 1019138,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26162,
+        "line": 1019168,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26227,
+        "line": 1020669,
+        "evidence": "Action/thunk function reads the imported `deleteFiles` member at full-disassembly line 1020683, invokes it, attaches `.then`, and creates success callback #26228 at line 1020690 (exact caller association)."
+      },
+      {
+        "functionId": 26228,
+        "line": 1020700,
+        "evidence": "Success callback #26228 is attached to the `deleteFiles` call in #26227. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26228 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GetBuiltinChildProfile",
+    "sourceFunctionId": 26163,
+    "kind": "unknown",
+    "evidence": "Original helper #26163 at full-disassembly line 1019179 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 26163,
+        "line": 1019179,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26164,
+        "line": 1019208,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Only the service projection to response.data is established; downstream action/saga/reducer/UI property reads were not established in this record.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GetBuiltinDiaryFolders",
+    "sourceFunctionId": 26165,
+    "kind": "unknown",
+    "evidence": "Original helper #26165 at full-disassembly line 1019219 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 26165,
+        "line": 1019219,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26166,
+        "line": 1019247,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Only the service projection to response.data is established; downstream action/saga/reducer/UI property reads were not established in this record.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GetBuiltinDiaryFiles",
+    "sourceFunctionId": 26167,
+    "kind": "unknown",
+    "evidence": "Original helper #26167 at full-disassembly line 1019258 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 26167,
+        "line": 1019258,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26168,
+        "line": 1019287,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Only the service projection to response.data is established; downstream action/saga/reducer/UI property reads were not established in this record.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GetFolderFiles",
+    "sourceFunctionId": 26169,
+    "kind": "unknown",
+    "evidence": "The API returns response.data and the verified gallery callback forwards that HTTP body unchanged to the gallery reducer. No body properties are read in the success callback.",
+    "trace": [
+      {
+        "functionId": 26169,
+        "line": 1019298,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26170,
+        "line": 1019328,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26141,
+        "line": 1018668,
+        "evidence": "FolderService export maps key getFolderFiles to #26169 (CreateClosure at line 1018760)."
+      },
+      {
+        "functionId": 26117,
+        "line": 1018144,
+        "evidence": "getFolderFiles action creator returns thunk #26118."
+      },
+      {
+        "functionId": 26118,
+        "line": 1018159,
+        "evidence": "Thunk calls imported getFolderFiles and attaches callback #26119."
+      },
+      {
+        "functionId": 26119,
+        "line": 1018187,
+        "evidence": "Success callback forwards its body unchanged as SET_FILTERED_GALLERY_MEDIA action.data."
+      },
+      {
+        "functionId": 26094,
+        "line": 1017052,
+        "evidence": "galleryReducer consumes SET_FILTERED_GALLERY_MEDIA action.data."
+      },
+      {
+        "functionId": 26242,
+        "line": 1021179,
+        "evidence": "Action/thunk function reads the imported `getFolderFiles` member at full-disassembly line 1021193, invokes it, attaches `.then`, and creates success callback #26243 at line 1021200 (exact caller association)."
+      },
+      {
+        "functionId": 26243,
+        "line": 1021207,
+        "evidence": "Success callback #26243 is attached to the `getFolderFiles` call in #26242. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26243 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "No collection type is inferred from files naming or pagination state.",
+      "Body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "DocumentsGetIndexFolders",
+    "sourceFunctionId": 26268,
+    "kind": "object",
+    "evidence": "The documents index endpoint returns response.data. The traced action callback reads the body’s top-level folders and settings properties and routes them to document index/page/settings actions; wrapper/reducer code does not establish item schemas.",
+    "trace": [
+      {
+        "functionId": 26268,
+        "line": 1021765,
+        "evidence": "Endpoint helper GET continuation returns Axios response.data."
+      },
+      {
+        "functionId": 26269,
+        "line": 1021793,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26234,
+        "line": 1020850,
+        "evidence": "Documents action module exports getDocumentsIndexFolders through action creator #26235 at 1020951–1020952."
+      },
+      {
+        "functionId": 26236,
+        "line": 1020989,
+        "evidence": "Thunk calls imported getIndexFolders at 1021036 and attaches callback #26237 at 1021037-1021039."
+      },
+      {
+        "functionId": 26266,
+        "line": 1021694,
+        "evidence": "DocumentsService registry maps getIndexFolders to endpoint helper #26268."
+      },
+      {
+        "functionId": 26237,
+        "line": 1021045,
+        "evidence": "Callback reads body folders at 1021055/1021059/1021068/1021071, root fallback data at 1021057, nested folders.data at 1021060, and settings at 1021078; then dispatches document actions."
+      },
+      {
+        "functionId": 26566,
+        "line": 1031014,
+        "evidence": "documentsReducer consumes the corresponding index/folder/settings action payloads."
+      }
+    ],
+    "fields": [
+      {
+        "name": "folders",
+        "type": "unknown",
+        "evidence": "Callback #26237 reads response-body p1.folders at 1021055/1021059 and 1021068/1021071, and nested p1.folders.data at 1021060 when folders is truthy. These are partial client property-read observations; container/item types are unknown."
+      },
+      {
+        "name": "data",
+        "type": "unknown",
+        "evidence": "Callback #26237 reads the actual HTTP-body p1.data at 1021057 when p1.folders is falsy. This is a root body property, not a locally synthesized fallback and not proved equivalent to folders.data."
+      },
+      {
+        "name": "settings",
+        "type": "unknown",
+        "evidence": "Callback #26237 reads response-body p1.settings at full-disassembly lines 1021078-1021079 and dispatches it as SET_FOLDER_SETTINGS.data; nested properties are not read."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "The exact callback #26237 reads root folders/settings, nested folders.data, and root data as listed. folders.data and root data are distinct response paths; equivalence and value/container shape are unresolved.",
+      "No folder item fields or files collection are inferred from these observations.",
+      "Partial/open client view; body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "GetDocumentsFolderData",
+    "sourceFunctionId": 26270,
+    "kind": "unknown",
+    "evidence": "The DocumentsService member table maps getDocumentsFolderData to #26270, and DocumentsFolderScreen’s #39598 refresh callback calls that imported member. The service resolves response.data, but the caller only attaches a finally cleanup callback and reads no response properties; the HTTP body remains unknown.",
+    "trace": [
+      {
+        "functionId": 26270,
+        "line": 1021804,
+        "evidence": "GET service helper returns Axios response.data through continuation #26271."
+      },
+      {
+        "functionId": 26271,
+        "line": 1021833,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26266,
+        "line": 1021694,
+        "evidence": "DocumentsService module table registers member getDocumentsFolderData to endpoint helper #26270 at 1021712–1714, confirming the same imported member name."
+      },
+      {
+        "functionId": 26228,
+        "line": 1020700,
+        "evidence": "The documents-mode branch calls getDocumentsFolderData at 1020711-1020723 and returns its promise without reading resolved response properties."
+      },
+      {
+        "functionId": 26229,
+        "line": 1020744,
+        "evidence": "The documents-mode catch branch calls the same getDocumentsFolderData member at 1020748-1020781; no resolved-body property is read."
+      },
+      {
+        "functionId": 39578,
+        "line": 1595489,
+        "evidence": "DocumentsFolderScreen creates and invokes the folder-refresh callback chain that contains #39598 (closure at full-disassembly line 1595743)."
+      },
+      {
+        "functionId": 39598,
+        "line": 1596328,
+        "evidence": "Actual screen callback reads the imported member getDocumentsFolderData at full-disassembly line 1596376, calls it at 1596378, then attaches only a finally cleanup callback #39599; it does not read response properties."
+      },
+      {
+        "functionId": 39599,
+        "line": 1596389,
+        "evidence": "Finally callback updates local loading/timestamp state; it does not receive or inspect the response body."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Verified caller is a UI refresh callback, not a Redux action/reducer: it returns/awaits the service promise and only performs finally cleanup; no response property path is observed.",
+      "No response fields, item shape, or primitive types are attributable from this call path. Although #26270 and FolderService #26143 share the same route shape, #26252/#26566 is proven only for #26143; retain this same-path alias conflict and do not transfer its fields.",
+      "Body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "DeleteDocument",
+    "sourceFunctionId": 26272,
+    "kind": "unknown",
+    "evidence": "Original helper #26272 at full-disassembly line 1021844 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 26272,
+        "line": 1021844,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26273,
+        "line": 1021870,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26254,
+        "line": 1021428,
+        "evidence": "Action/thunk function reads the imported `deleteDocument` member at full-disassembly line 1021442, invokes it, attaches `.then`, and creates success callback #26255 at line 1021448 (exact caller association)."
+      },
+      {
+        "functionId": 26255,
+        "line": 1021455,
+        "evidence": "Success callback #26255 is attached to the `deleteDocument` call in #26254. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26255 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "UpdateDocumentFile",
+    "sourceFunctionId": 26274,
+    "kind": "unknown",
+    "evidence": "Original helper #26274 at full-disassembly line 1021881 invokes Axios and attaches a continuation that returns `response.data`; this identifies the HTTP-body boundary only. Downstream shape is not complete or established.",
+    "trace": [
+      {
+        "functionId": 26274,
+        "line": 1021881,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26275,
+        "line": 1021908,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26260,
+        "line": 1021535,
+        "evidence": "Action/thunk function reads the imported `updateDocumentFile` member at full-disassembly line 1021549, invokes it, attaches `.then`, and creates success callback #26261 at line 1021556 (exact caller association)."
+      },
+      {
+        "functionId": 26261,
+        "line": 1021563,
+        "evidence": "Success callback #26261 is attached to the `updateDocumentFile` call in #26260. It is recorded as the immediate consumer; no additional body fields are attributed here unless separately listed in this record."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Service projection and immediate action success callback #26261 are traced; any further response-property/action-to-reducer projection is unresolved here. No additional fields are inferred.",
+      "Do not infer fields from request bodies, Redux action envelopes, optimistic updates, local fallbacks, or UI props.",
+      "Partial/open client view only; completeness and server contract are unknown."
+    ]
+  },
+  {
+    "operationId": "GetDocumentAcl",
+    "sourceFunctionId": 26276,
+    "kind": "unknown",
+    "evidence": "The API returns response.data; #26258 forwards the body unchanged. The Documents screen’s success consumer accepts either a root array or a non-array value. In the non-array branch #39655 reads top-level body.view and body.edit (lines 1598277 and 1598290); these are branch-specific client observations, not a normative object schema because the root array branch remains possible.",
+    "trace": [
+      {
+        "functionId": 26276,
+        "line": 1021919,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26277,
+        "line": 1021946,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26266,
+        "line": 1021694,
+        "evidence": "DocumentsService export table maps getDocumentAcl to API helper #26276 (registration at 1021729–1021733)."
+      },
+      {
+        "functionId": 26256,
+        "line": 1021474,
+        "evidence": "getDocumentAcl action creator returns thunk #26257."
+      },
+      {
+        "functionId": 26257,
+        "line": 1021487,
+        "evidence": "Thunk calls imported getDocumentAcl and attaches its data-projection continuation #26258."
+      },
+      {
+        "functionId": 26258,
+        "line": 1021512,
+        "evidence": "Action callback returns its resolved body parameter unchanged."
+      },
+      {
+        "functionId": 39654,
+        "line": 1598238,
+        "evidence": "Documents screen consumer calls imported getDocumentAcl and attaches callback #39655."
+      },
+      {
+        "functionId": 39655,
+        "line": 1598264,
+        "evidence": "Consumer accepts a root array branch; on the non-array branch it reads top-level body.view at 1598277 and body.edit at 1598290, then passes values through local target-group utilities."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "The consumer explicitly has a root-array branch and an object-property branch; this unresolved union is why root kind remains unknown.",
+      "The view/edit property reads are retained as branch-specific evidence above, but not declared as normative response fields because the same consumer accepts a root array branch. No nested target-group shape is inferred.",
+      "Body completeness and server contract remain unknown."
+    ]
+  },
+  {
+    "operationId": "GetSharedDocuments",
+    "sourceFunctionId": 26278,
+    "kind": "object",
+    "evidence": "The helper returns response.data. The verified documents callback forwards the whole body and also reads its top-level data property for a second action. The root data field remains unknown and is not inferred to be an array.",
+    "trace": [
+      {
+        "functionId": 26278,
+        "line": 1021957,
+        "evidence": "Service invokes Axios; promise continuation is attached to the result."
+      },
+      {
+        "functionId": 26279,
+        "line": 1021985,
+        "evidence": "Promise continuation reads the resolved Axios response `.data` property and returns it unchanged; this is the HTTP response body, not the Axios wrapper."
+      },
+      {
+        "functionId": 26266,
+        "line": 1021694,
+        "evidence": "DocumentsService export table maps getSharedDocuments to endpoint helper #26278 (registration at full-disassembly lines 1021735–1021738)."
+      },
+      {
+        "functionId": 26262,
+        "line": 1021581,
+        "evidence": "getSharedDocuments action creator returns thunk #26263."
+      },
+      {
+        "functionId": 26263,
+        "line": 1021594,
+        "evidence": "Thunk calls imported getSharedDocuments and attaches callback #26264."
+      },
+      {
+        "functionId": 26264,
+        "line": 1021621,
+        "evidence": "Success callback dispatches the whole body as SET_SHARED_DOCUMENTS.data and separately reads body.data at 1021637 for SET_SHARED_DOCUMENTS_FILES.data."
+      },
+      {
+        "functionId": 26566,
+        "line": 1031014,
+        "evidence": "documentsReducer handles shared-document actions and consumes their data payloads."
+      }
+    ],
+    "fields": [
+      {
+        "name": "data",
+        "type": "unknown",
+        "evidence": "Callback #26264 reads resolved body parameter p1.data at full-disassembly line 1021637 (offset +0x29), dispatching that value as SET_SHARED_DOCUMENTS_FILES.data. No item or primitive type is established."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Only top-level data is observed; root sibling fields and nested/item shape remain unestablished.",
+      "The whole body is separately forwarded to another action; reducer/UI transformations are not treated as schema.",
+      "Partial/open client view; body completeness and server contract remain unknown."
+    ]
+  }
+]

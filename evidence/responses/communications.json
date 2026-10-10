@@ -1,0 +1,2730 @@
+[
+  {
+    "operationId": "GetReceivedMessages",
+    "sourceFunctionId": 25218,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #25218 at 990212 registers fulfillment handler #25219 at 990237; that handler projects Axios response.data. The traced Metro caller/reducer path establishes only the listed client-observed body-root property reads; response model remains partial.",
+    "trace": [
+      {
+        "functionId": 25218,
+        "line": 990212,
+        "evidence": "Service function #25218 constructs the assigned URL/request and attaches fulfillment handler #25219; see its exact block in /data/data/com.termux/files/home/eliis-analysis/eliis.hasm."
+      },
+      {
+        "functionId": 25219,
+        "line": 990237,
+        "evidence": "Fulfillment handler #25219 reads the resolved Axios value's `data` property and returns it; this is the HTTP body projection, not a claim that body itself has an outer `data` field."
+      },
+      {
+        "functionId": 25155,
+        "line": 988672,
+        "evidence": "Saga #25155 receives the projected body and reads current_page and last_page directly; it conditionally reads unread_count when that property exists, then dispatches the unmodified body to SET_MESSAGES/SET_MORE_MESSAGES. Reducer #25141 stores action.data as the messages state value."
+      },
+      {
+        "functionId": 25141,
+        "line": 987571,
+        "evidence": "Reducer #25141 stores the body forwarded by saga #25155 as the messages value; it does not introduce a response wrapper."
+      }
+    ],
+    "fields": [
+      {
+        "name": "current_page",
+        "type": "unknown",
+        "evidence": "Saga #25155 reads response.data.current_page at 988720-988726 and sends that value to SET_MESSAGES_CURRENT_PAGE."
+      },
+      {
+        "name": "last_page",
+        "type": "unknown",
+        "evidence": "Saga #25155 reads response.data.last_page at 988727-988733 and sends that value to SET_MESSAGES_LAST_PAGE."
+      },
+      {
+        "name": "unread_count",
+        "type": "unknown",
+        "evidence": "Saga #25155 tests whether unread_count is present and, only in that branch, reads it from the projected body at 988700-988711."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "The response.data expression in service handler #25219 is the Axios body projection; the listed property names are root HTTP-body properties, not Axios response-envelope fields. Their value types and full response shape are not established. unread_count is conditionally read; no item schema is modeled."
+    ]
+  },
+  {
+    "operationId": "GetRecentMessages",
+    "sourceFunctionId": 25221,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #25221 at 990258 registers fulfillment handler #25222 at 990277; that handler projects Axios response.data. The traced Metro caller/reducer path establishes only the listed client-observed body-root property reads; response model remains partial.",
+    "trace": [
+      {
+        "functionId": 25221,
+        "line": 990258,
+        "evidence": "Service function #25221 constructs the assigned URL/request and attaches fulfillment handler #25222; see its exact block in /data/data/com.termux/files/home/eliis-analysis/eliis.hasm."
+      },
+      {
+        "functionId": 25222,
+        "line": 990277,
+        "evidence": "Fulfillment handler #25222 reads the resolved Axios value's `data` property and returns it; this is the HTTP body projection, not a claim that body itself has an outer `data` field."
+      },
+      {
+        "functionId": 25168,
+        "line": 989048,
+        "evidence": "Saga #25168 reads response.data.unread_count at 989052-989067 and dispatches that value to SET_UNREAD_MESSAGE_COUNT; no other body property is read on this path."
+      },
+      {
+        "functionId": 25141,
+        "line": 987571,
+        "evidence": "Reducer #25141 consumes the SET_UNREAD_MESSAGE_COUNT action created from the direct response.data.unread_count read by #25168; the action envelope is not modeled as body."
+      }
+    ],
+    "fields": [
+      {
+        "name": "unread_count",
+        "type": "unknown",
+        "evidence": "Saga #25168 directly reads the projected HTTP body property unread_count at 989052-989067."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "The property is on response.data (HTTP body), not on the Axios envelope. Value type and complete response shape are unresolved."
+    ]
+  },
+  {
+    "operationId": "GetSentMessages",
+    "sourceFunctionId": 25223,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #25223 at 990288 registers fulfillment handler #25224 at 990310; that handler projects Axios response.data. The traced Metro caller/reducer path establishes only the listed client-observed body-root property reads; response model remains partial.",
+    "trace": [
+      {
+        "functionId": 25223,
+        "line": 990288,
+        "evidence": "Service function #25223 constructs the assigned URL/request and attaches fulfillment handler #25224; see its exact block in /data/data/com.termux/files/home/eliis-analysis/eliis.hasm."
+      },
+      {
+        "functionId": 25224,
+        "line": 990310,
+        "evidence": "Fulfillment handler #25224 reads the resolved Axios value's `data` property and returns it; this is the HTTP body projection, not a claim that body itself has an outer `data` field."
+      },
+      {
+        "functionId": 25159,
+        "line": 988801,
+        "evidence": "Saga #25159 reads current_page and last_page directly from the projected body and dispatches those values to pagination actions; it also forwards the body to the messages reducer."
+      },
+      {
+        "functionId": 25141,
+        "line": 987571,
+        "evidence": "Reducer #25141 receives the unchanged body from #25159 under SET_SENT_MESSAGES; pagination reads were already made directly from the projected body."
+      }
+    ],
+    "fields": [
+      {
+        "name": "current_page",
+        "type": "unknown",
+        "evidence": "Saga #25159 reads response.data.current_page at 988829-988837."
+      },
+      {
+        "name": "last_page",
+        "type": "unknown",
+        "evidence": "Saga #25159 reads response.data.last_page at 988838-988844."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "These are root HTTP-body property reads after service handler #25224 returns Axios response.data. Value types, message-list shape, and completeness are not established."
+    ]
+  },
+  {
+    "operationId": "GetDeletedMessages",
+    "sourceFunctionId": 25225,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #25225 at 990321 registers fulfillment handler #25226 at 990343; that handler projects Axios response.data. The traced Metro caller/reducer path establishes only the listed client-observed body-root property reads; response model remains partial.",
+    "trace": [
+      {
+        "functionId": 25225,
+        "line": 990321,
+        "evidence": "Service function #25225 constructs the assigned URL/request and attaches fulfillment handler #25226; see its exact block in /data/data/com.termux/files/home/eliis-analysis/eliis.hasm."
+      },
+      {
+        "functionId": 25226,
+        "line": 990343,
+        "evidence": "Fulfillment handler #25226 reads the resolved Axios value's `data` property and returns it; this is the HTTP body projection, not a claim that body itself has an outer `data` field."
+      },
+      {
+        "functionId": 25162,
+        "line": 988892,
+        "evidence": "Saga #25162 reads current_page and last_page directly from the projected body and dispatches those values to pagination actions; it also forwards the body to the messages reducer."
+      },
+      {
+        "functionId": 25141,
+        "line": 987571,
+        "evidence": "Reducer #25141 receives the unchanged body from #25162 under SET_DELETED_MESSAGES; pagination reads were already made directly from the projected body."
+      }
+    ],
+    "fields": [
+      {
+        "name": "current_page",
+        "type": "unknown",
+        "evidence": "Saga #25162 reads response.data.current_page at 988920-988928."
+      },
+      {
+        "name": "last_page",
+        "type": "unknown",
+        "evidence": "Saga #25162 reads response.data.last_page at 988929-988935."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "These are root HTTP-body property reads after service handler #25226 returns Axios response.data. Value types, message-list shape, and completeness are not established."
+    ]
+  },
+  {
+    "operationId": "UpdateMessage",
+    "sourceFunctionId": 25227,
+    "kind": "unknown",
+    "evidence": "Original Hermes bytecode: service #25227 attaches #25228, which projects Axios response.data. Caller #25165 dispatches that whole fulfillment value unchanged, and reducer #25141 assigns action.data itself to a local message's recipient_read slot. The reducer does not read a recipient_read property from the HTTP body, so the body shape and fields remain unknown. The unread_messages_count branch instead reads captured Redux state and is not a body field.",
+    "trace": [
+      {
+        "functionId": 25227,
+        "line": 990354,
+        "evidence": "Service function #25227 constructs the request and attaches fulfillment handler #25228."
+      },
+      {
+        "functionId": 25228,
+        "line": 990379,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25164,
+        "line": 988953,
+        "evidence": "Metro action/saga function #25164 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25165,
+        "line": 988980,
+        "evidence": "Continuation #25165 handles the service result, dispatches UPDATE_MESSAGE_SEEN with the returned body, and separately reads captured unread_messages_count state to decrement the badge; that captured count is not attributed to the HTTP body."
+      },
+      {
+        "functionId": 25141,
+        "line": 988065,
+        "evidence": "Reducer #25141 assigns action.data itself to the local message recipient_read state property at 988065-988066; it does not read a recipient_read property from action.data."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "The reducer assigns the entire body value to a local recipient_read destination; this does not prove that the body has a recipient_read field or is an object. No unread_messages_count body property is inferred from the captured local state.",
+      "Response body shape and fields remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or complete response shape is inferred."
+    ]
+  },
+  {
+    "operationId": "DeleteMessage",
+    "sourceFunctionId": 25229,
+    "kind": "unknown",
+    "evidence": "Service function #25229 attaches fulfillment handler #25230, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25229,
+        "line": 990390,
+        "evidence": "Service function #25229 constructs the request and attaches fulfillment handler #25230."
+      },
+      {
+        "functionId": 25230,
+        "line": 990414,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25169,
+        "line": 989073,
+        "evidence": "Metro action/saga function #25169 (`deleteMessage`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25170,
+        "line": 989086,
+        "evidence": "Action continuation #25170, created by wrapper #25169, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25171,
+        "line": 989106,
+        "evidence": "Fulfillment callback #25171 returns its first argument unchanged. It reads no named response-body property, so the body remains opaque."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25169 at 989073 and continuation #25170 at 989086; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetMessageTargetGroups",
+    "sourceFunctionId": 25231,
+    "kind": "unknown",
+    "evidence": "Service function #25231 attaches fulfillment handler #25232, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25231,
+        "line": 990425,
+        "evidence": "Service function #25231 constructs the request and attaches fulfillment handler #25232."
+      },
+      {
+        "functionId": 25232,
+        "line": 990444,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25178,
+        "line": 989250,
+        "evidence": "Metro action/saga function #25178 (`getUserTargetGroups`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25179,
+        "line": 989261,
+        "evidence": "Action continuation #25179, created by wrapper #25178, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25180,
+        "line": 989281,
+        "evidence": "Fulfillment callback #25180 dispatches its first argument unchanged as SET_MESSAGE_TARGETGROUPS.data; it reads no named body property."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25178 at 989250 and continuation #25179 at 989261; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "SendMessage",
+    "sourceFunctionId": 25233,
+    "kind": "unknown",
+    "evidence": "Service function #25233 attaches fulfillment handler #25234, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25233,
+        "line": 990455,
+        "evidence": "Service function #25233 constructs the request and attaches fulfillment handler #25234."
+      },
+      {
+        "functionId": 25234,
+        "line": 990490,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25172,
+        "line": 989116,
+        "evidence": "Metro action/saga function #25172 (`sendMessage`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25173,
+        "line": 989129,
+        "evidence": "Action continuation #25173, created by wrapper #25172, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25174,
+        "line": 989156,
+        "evidence": "Fulfillment callback #25174 dispatches its first argument unchanged as SET_SENT_MESSAGE.data; it reads no named body property."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25172 at 989116 and continuation #25173 at 989129; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "SendMessageDraft",
+    "sourceFunctionId": 25235,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #25235 attaches #25236, which projects Axios response.data. Caller #25175/#25176 routes the body to fulfillment continuation #25177, which truthiness-tests its root error property and otherwise dispatches the body as a sent-message value.",
+    "trace": [
+      {
+        "functionId": 25235,
+        "line": 990501,
+        "evidence": "Service function #25235 constructs the request and attaches fulfillment handler #25236."
+      },
+      {
+        "functionId": 25236,
+        "line": 990530,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25175,
+        "line": 989174,
+        "evidence": "Metro action/saga function #25175 (`sendMessageDraft`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25176,
+        "line": 989190,
+        "evidence": "Continuation #25176 calls sendMessageDraft and attaches #25177 as the fulfillment callback."
+      },
+      {
+        "functionId": 25177,
+        "line": 989223,
+        "evidence": "Fulfillment callback #25177 reads the projected body's root error property at 989227-989229 as a truthiness branch; on the other branch it dispatches the body unchanged as SET_SENT_MESSAGE."
+      }
+    ],
+    "fields": [
+      {
+        "name": "error",
+        "type": "unknown",
+        "evidence": "Fulfillment callback #25177 reads body.error at 989227-989229 only for a truthiness branch. This proves a client-observed root property read, not an error wrapper, its type, or any guarantee of presence."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "The truthiness read of root error does not establish an error-wrapper schema or a Boolean/string type; the alternate branch forwards the full body. The response remains partial and open."
+    ]
+  },
+  {
+    "operationId": "GetMessageDrafts",
+    "sourceFunctionId": 25237,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #25237 at 990541 registers fulfillment handler #25238 at 990563; that handler projects Axios response.data. The traced Metro caller/reducer path establishes only the listed client-observed body-root property reads; response model remains partial.",
+    "trace": [
+      {
+        "functionId": 25237,
+        "line": 990541,
+        "evidence": "Service function #25237 constructs the assigned URL/request and attaches fulfillment handler #25238; see its exact block in /data/data/com.termux/files/home/eliis-analysis/eliis.hasm."
+      },
+      {
+        "functionId": 25238,
+        "line": 990563,
+        "evidence": "Fulfillment handler #25238 reads the resolved Axios value's `data` property and returns it; this is the HTTP body projection, not a claim that body itself has an outer `data` field."
+      },
+      {
+        "functionId": 25183,
+        "line": 989342,
+        "evidence": "Saga #25183 reads current_page and last_page directly from the projected body and dispatches those values to pagination actions; it also forwards the body to the drafts reducer."
+      },
+      {
+        "functionId": 25141,
+        "line": 987571,
+        "evidence": "Reducer #25141 receives the unchanged body from #25183 under SET_MESSAGE_DRAFTS; pagination reads were already made directly from the projected body."
+      }
+    ],
+    "fields": [
+      {
+        "name": "current_page",
+        "type": "unknown",
+        "evidence": "Saga #25183 reads response.data.current_page at 989370-989378."
+      },
+      {
+        "name": "last_page",
+        "type": "unknown",
+        "evidence": "Saga #25183 reads response.data.last_page at 989379-989385."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "These are root HTTP-body property reads after service handler #25238 returns Axios response.data. Value types, draft-list shape, and completeness are not established."
+    ]
+  },
+  {
+    "operationId": "GetMessageDraftById",
+    "sourceFunctionId": 25239,
+    "kind": "unknown",
+    "evidence": "Service function #25239 attaches fulfillment handler #25240, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25239,
+        "line": 990574,
+        "evidence": "Service function #25239 constructs the request and attaches fulfillment handler #25240."
+      },
+      {
+        "functionId": 25240,
+        "line": 990598,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25184,
+        "line": 989390,
+        "evidence": "Metro action/saga function #25184 (`getMessageDraft`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25185,
+        "line": 989403,
+        "evidence": "Action continuation #25185, created by wrapper #25184, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25186,
+        "line": 989423,
+        "evidence": "Fulfillment callback #25186 returns its first argument unchanged. It reads no named response-body property, so the body remains opaque."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25184 at 989390 and continuation #25185 at 989403; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetDraftById",
+    "sourceFunctionId": 25241,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #25241 attaches #25242, which projects Axios response.data. Success callback #25189 reads root id, subject, files, and created_at to build a local draft-state value; files_count is computed locally from files.length and is not modeled as an HTTP field.",
+    "trace": [
+      {
+        "functionId": 25241,
+        "line": 990609,
+        "evidence": "Service function #25241 constructs the request and attaches fulfillment handler #25242."
+      },
+      {
+        "functionId": 25242,
+        "line": 990633,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25187,
+        "line": 989433,
+        "evidence": "Metro action/saga function #25187 (`getDraft`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25188,
+        "line": 989446,
+        "evidence": "Continuation #25188 invokes getDraft and attaches fulfillment callback #25189."
+      },
+      {
+        "functionId": 25189,
+        "line": 989468,
+        "evidence": "Fulfillment callback #25189 directly reads id, subject, files (then files.length), and created_at from the projected body at 989472-989493 before dispatching a local UPDATE_MESSAGE_DRAFT action."
+      },
+      {
+        "functionId": 25141,
+        "line": 987571,
+        "evidence": "Reducer #25141 consumes UPDATE_MESSAGE_DRAFT as locally projected state; it does not turn the derived files_count field into an HTTP-body property."
+      }
+    ],
+    "fields": [
+      {"name":"id","type":"unknown","evidence":"Callback #25189 directly reads body.id at 989479-989480; value type and complete item shape are unresolved."},
+      {"name":"subject","type":"unknown","evidence":"Callback #25189 directly reads body.subject at 989481-989482; value type is unresolved."},
+      {"name":"files","type":"unknown","evidence":"Callback #25189 directly reads body.files and then its length at 989483-989490. Length use does not prove an array, and the locally derived files_count is not modeled as a server field."},
+      {"name":"created_at","type":"unknown","evidence":"Callback #25189 directly reads body.created_at at 989491-989492; value type is unresolved."}
+    ],
+    "complete": false,
+    "limitations": [
+      "Only these four body-root reads are modeled. files.length is used to derive a client-side files_count; files remains unknown rather than array, and files_count is not an HTTP-body field."
+    ]
+  },
+  {
+    "operationId": "CreateDraft",
+    "sourceFunctionId": 25243,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #25243 attaches #25244, which projects Axios response.data. Success callback #25195 reads root id, subject, files, and created_at to build a local draft-state value; files_count is computed locally from files.length and is not modeled as an HTTP field.",
+    "trace": [
+      {
+        "functionId": 25243,
+        "line": 990644,
+        "evidence": "Service function #25243 constructs the request and attaches fulfillment handler #25244."
+      },
+      {
+        "functionId": 25244,
+        "line": 990664,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25193,
+        "line": 989555,
+        "evidence": "Metro action/saga function #25193 (`createMessageDraft`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25194,
+        "line": 989568,
+        "evidence": "Continuation #25194 invokes createDraft and attaches fulfillment callback #25195."
+      },
+      {
+        "functionId": 25195,
+        "line": 989590,
+        "evidence": "Fulfillment callback #25195 directly reads id, subject, files (then files.length), and created_at from the projected body at 989594-989615 before dispatching a local ADD_MESSAGE_DRAFT action."
+      },
+      {
+        "functionId": 25141,
+        "line": 987571,
+        "evidence": "Reducer #25141 consumes ADD_MESSAGE_DRAFT as locally projected state; it does not make the derived files_count an HTTP-body property."
+      }
+    ],
+    "fields": [
+      {"name":"id","type":"unknown","evidence":"Callback #25195 directly reads body.id at 989601-989602; value type and complete item shape are unresolved."},
+      {"name":"subject","type":"unknown","evidence":"Callback #25195 directly reads body.subject at 989603-989604; value type is unresolved."},
+      {"name":"files","type":"unknown","evidence":"Callback #25195 directly reads body.files and then its length at 989605-989612. Length use does not prove an array, and the locally derived files_count is not modeled as a server field."},
+      {"name":"created_at","type":"unknown","evidence":"Callback #25195 directly reads body.created_at at 989613-989614; value type is unresolved."}
+    ],
+    "complete": false,
+    "limitations": [
+      "Only these four body-root reads are modeled. files.length is used to derive a client-side files_count; files remains unknown rather than array, and files_count is not an HTTP-body field."
+    ]
+  },
+  {
+    "operationId": "SaveDraft",
+    "sourceFunctionId": 25245,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #25245 attaches #25246, which projects Axios response.data. Success callback #25198 reads root id, subject, files, and created_at to build a local draft-state value; files_count is computed locally from files.length and is not modeled as an HTTP field.",
+    "trace": [
+      {
+        "functionId": 25245,
+        "line": 990675,
+        "evidence": "Service function #25245 constructs the request and attaches fulfillment handler #25246."
+      },
+      {
+        "functionId": 25246,
+        "line": 990700,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25196,
+        "line": 989622,
+        "evidence": "Metro action/saga function #25196 (`updateMessageDraft`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25197,
+        "line": 989638,
+        "evidence": "Continuation #25197 invokes saveDraft and attaches fulfillment callback #25198."
+      },
+      {
+        "functionId": 25198,
+        "line": 989661,
+        "evidence": "Fulfillment callback #25198 directly reads id, subject, files (then files.length), and created_at from the projected body at 989665-989686 before dispatching a local UPDATE_MESSAGE_DRAFT action."
+      },
+      {
+        "functionId": 25141,
+        "line": 987571,
+        "evidence": "Reducer #25141 consumes UPDATE_MESSAGE_DRAFT as locally projected state; it does not make the derived files_count an HTTP-body property."
+      }
+    ],
+    "fields": [
+      {"name":"id","type":"unknown","evidence":"Callback #25198 directly reads body.id at 989672-989673; value type and complete item shape are unresolved."},
+      {"name":"subject","type":"unknown","evidence":"Callback #25198 directly reads body.subject at 989674-989675; value type is unresolved."},
+      {"name":"files","type":"unknown","evidence":"Callback #25198 directly reads body.files and then its length at 989676-989683. Length use does not prove an array, and the locally derived files_count is not modeled as a server field."},
+      {"name":"created_at","type":"unknown","evidence":"Callback #25198 directly reads body.created_at at 989684-989685; value type is unresolved."}
+    ],
+    "complete": false,
+    "limitations": [
+      "Only these four body-root reads are modeled. files.length is used to derive a client-side files_count; files remains unknown rather than array, and files_count is not an HTTP-body field."
+    ]
+  },
+  {
+    "operationId": "DeleteDraft",
+    "sourceFunctionId": 25247,
+    "kind": "unknown",
+    "evidence": "Service function #25247 attaches fulfillment handler #25248, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25247,
+        "line": 990711,
+        "evidence": "Service function #25247 constructs the request and attaches fulfillment handler #25248."
+      },
+      {
+        "functionId": 25248,
+        "line": 990738,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25190,
+        "line": 989500,
+        "evidence": "Metro action/saga function #25190 (`deleteMessageDraft`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25191,
+        "line": 989513,
+        "evidence": "Action continuation #25191, created by wrapper #25190, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25192,
+        "line": 989535,
+        "evidence": "Fulfillment callback #25192 dispatches DELETE_MESSAGE_DRAFT with a draft id from its captured environment, then returns its first argument unchanged; the captured id is not response data and no body property is read."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25190 at 989500 and continuation #25191 at 989513; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "UploadDraftAttachment",
+    "sourceFunctionId": 25249,
+    "kind": "unknown",
+    "evidence": "Service function #25249 attaches fulfillment handler #25250, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25249,
+        "line": 990749,
+        "evidence": "Service function #25249 constructs the request and attaches fulfillment handler #25250."
+      },
+      {
+        "functionId": 25250,
+        "line": 990782,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25199,
+        "line": 989693,
+        "evidence": "Metro action/saga function #25199 (`uploadDraftAttachment`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25200,
+        "line": 989709,
+        "evidence": "Action continuation #25200, created by wrapper #25199, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25201,
+        "line": 989742,
+        "evidence": "Fulfillment callback #25201 dispatches a local add-files-count action using a captured draft id, then returns its first argument unchanged; it reads no response-body property."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25199 at 989693 and continuation #25200 at 989709; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "DeleteDraftAttachment",
+    "sourceFunctionId": 25251,
+    "kind": "unknown",
+    "evidence": "Service function #25251 attaches fulfillment handler #25252, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25251,
+        "line": 990793,
+        "evidence": "Service function #25251 constructs the request and attaches fulfillment handler #25252."
+      },
+      {
+        "functionId": 25252,
+        "line": 990823,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25202,
+        "line": 989766,
+        "evidence": "Metro action/saga function #25202 (`deleteDraftAttachment`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25203,
+        "line": 989782,
+        "evidence": "Action continuation #25203, created by wrapper #25202, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25204,
+        "line": 989805,
+        "evidence": "Fulfillment callback #25204 dispatches a local remove-files-count action using a captured draft id, then returns its first argument unchanged; it reads no response-body property."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25202 at 989766 and continuation #25203 at 989782; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "UpdateSentMessage",
+    "sourceFunctionId": 25253,
+    "kind": "unknown",
+    "evidence": "Service function #25253 attaches fulfillment handler #25254, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25253,
+        "line": 990834,
+        "evidence": "Service function #25253 constructs the request and attaches fulfillment handler #25254."
+      },
+      {
+        "functionId": 25254,
+        "line": 990864,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25206,
+        "line": 989843,
+        "evidence": "Metro action/saga function #25206 (`updateSentMessage`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25207,
+        "line": 989859,
+        "evidence": "Action continuation #25207, created by wrapper #25206, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25208,
+        "line": 989882,
+        "evidence": "Fulfillment callback #25208 dispatches its first argument unchanged as UPDATE_SENT_MESSAGE.data; it reads no named body property."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25206 at 989843 and continuation #25207 at 989859; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "DeleteSentMessage",
+    "sourceFunctionId": 25255,
+    "kind": "unknown",
+    "evidence": "Service function #25255 attaches fulfillment handler #25256, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25255,
+        "line": 990875,
+        "evidence": "Service function #25255 constructs the request and attaches fulfillment handler #25256."
+      },
+      {
+        "functionId": 25256,
+        "line": 990899,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25209,
+        "line": 989900,
+        "evidence": "Metro action/saga function #25209 (`deleteSentMessage`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25210,
+        "line": 989913,
+        "evidence": "Action continuation #25210, created by wrapper #25209, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25211,
+        "line": 989935,
+        "evidence": "Fulfillment callback #25211 dispatches DELETE_SENT_MESSAGE with an id from its captured environment; this id is not response data, and the callback does not read the body."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25209 at 989900 and continuation #25210 at 989913; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "RecallSentMessage",
+    "sourceFunctionId": 25257,
+    "kind": "unknown",
+    "evidence": "Service function #25257 attaches fulfillment handler #25258, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25257,
+        "line": 990910,
+        "evidence": "Service function #25257 constructs the request and attaches fulfillment handler #25258."
+      },
+      {
+        "functionId": 25258,
+        "line": 990934,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25212,
+        "line": 989954,
+        "evidence": "Metro action/saga function #25212 (`recallSentMessage`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25213,
+        "line": 989967,
+        "evidence": "Action continuation #25213, created by wrapper #25212, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25214,
+        "line": 989989,
+        "evidence": "Fulfillment callback #25214 dispatches RECALL_SENT_MESSAGE with an id from its captured environment; this id is not response data, and the callback does not read the body."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25212 at 989954 and continuation #25213 at 989967; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetUserApplications",
+    "sourceFunctionId": 25292,
+    "kind": "unknown",
+    "evidence": "Service function #25292 attaches fulfillment handler #25293, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25292,
+        "line": 991904,
+        "evidence": "Service function #25292 constructs the request and attaches fulfillment handler #25293."
+      },
+      {
+        "functionId": 25293,
+        "line": 991923,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25266,
+        "line": 991347,
+        "evidence": "Metro action/saga function #25266 (`getUserApplications`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25267,
+        "line": 991360,
+        "evidence": "Action continuation #25267, created by wrapper #25266, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25268,
+        "line": 991382,
+        "evidence": "Fulfillment callback #25268 dispatches its first argument unchanged as SET_USER_APPLICATIONS.data; it reads no named response-body property."
+      },
+      {
+        "functionId": 25260,
+        "line": 990995,
+        "evidence": "Applications reducer #25260 handles SET_USER_APPLICATIONS at 991027-991032 and consumes action.data into local user_applications state; this state write does not establish a body schema."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25266 at 991347 and continuation #25267 at 991360; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "StoreApplication",
+    "sourceFunctionId": 25294,
+    "kind": "unknown",
+    "evidence": "Service function #25294 attaches fulfillment handler #25295, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25294,
+        "line": 991934,
+        "evidence": "Service function #25294 constructs the request and attaches fulfillment handler #25295."
+      },
+      {
+        "functionId": 25295,
+        "line": 991954,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25284,
+        "line": 991704,
+        "evidence": "Metro action/saga function #25284 (`saveApplication`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25285,
+        "line": 991717,
+        "evidence": "Action continuation #25285, created by wrapper #25284, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25286,
+        "line": 991737,
+        "evidence": "Fulfillment callback #25286 returns its first argument unchanged and does not dispatch it or read a named response-body property; no #25260 reducer hop occurs on this callback path."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25284 at 991704 and continuation #25285 at 991717; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetKindergartenApplications",
+    "sourceFunctionId": 25296,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #25296 at 991965 registers fulfillment handler #25297 at 991993; that handler projects Axios response.data. The traced Metro caller/reducer path establishes only the listed client-observed body-root property reads; response model remains partial.",
+    "trace": [
+      {
+        "functionId": 25296,
+        "line": 991965,
+        "evidence": "Service function #25296 constructs the assigned URL/request and attaches fulfillment handler #25297; see its exact block in /data/data/com.termux/files/home/eliis-analysis/eliis.hasm."
+      },
+      {
+        "functionId": 25297,
+        "line": 991993,
+        "evidence": "Fulfillment handler #25297 reads the resolved Axios value's `data` property and returns it; this is the HTTP body projection, not a claim that body itself has an outer `data` field."
+      },
+      {
+        "functionId": 25270,
+        "line": 991413,
+        "evidence": "Saga #25270 calls service #25296 and attaches success continuation #25271 for the projected response."
+      },
+      {
+        "functionId": 25271,
+        "line": 991440,
+        "evidence": "Success continuation #25271 dispatches the projected body unchanged as SET_KINDERGARTEN_APPLICATIONS; reducer #25260 reads root current_page and data and enumerates/maps data."
+      },
+      {
+        "functionId": 25260,
+        "line": 990995,
+        "evidence": "Reducer #25260 is the consumer that reads root current_page/data from the body dispatched unchanged by #25271."
+      }
+    ],
+    "fields": [
+      {
+        "name": "current_page",
+        "type": "unknown",
+        "evidence": "Reducer #25260 reads action.data.current_page at 991116-991118 in the SET_KINDERGARTEN_APPLICATIONS branch; action.data is the unchanged service-projected HTTP body from #25271."
+      },
+      {
+        "name": "data",
+        "type": "unknown",
+        "evidence": "Reducer #25260 reads action.data.data and passes it to Object.entries/map in the SET_KINDERGARTEN_APPLICATIONS branch at 991119-991149; its element/key domain is not established, so field type remains unknown."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Root data and current_page belong to the HTTP body because #25297 returns Axios response.data and #25271 forwards it unchanged. Object.entries/map does not establish an array or object domain here. No application-item properties are attributed from state merges or local transformations."
+    ]
+  },
+  {
+    "operationId": "GetApplication",
+    "sourceFunctionId": 25298,
+    "kind": "unknown",
+    "evidence": "Service function #25298 attaches fulfillment handler #25299, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25298,
+        "line": 992004,
+        "evidence": "Service function #25298 constructs the request and attaches fulfillment handler #25299."
+      },
+      {
+        "functionId": 25299,
+        "line": 992031,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25272,
+        "line": 991458,
+        "evidence": "Metro action/saga function #25272 (`getApplication`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25273,
+        "line": 991471,
+        "evidence": "Action continuation #25273, created by wrapper #25272, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25274,
+        "line": 991498,
+        "evidence": "Fulfillment callback #25274 dispatches its first argument unchanged as SET_APPLICATION.data; it reads no named response-body property."
+      },
+      {
+        "functionId": 25260,
+        "line": 990995,
+        "evidence": "Applications reducer #25260 handles SET_APPLICATION at 991045-991050 and consumes action.data into local application state; this state write does not establish a body schema."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25272 at 991458 and continuation #25273 at 991471; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "RejectApplication",
+    "sourceFunctionId": 25300,
+    "kind": "unknown",
+    "evidence": "Service function #25300 attaches fulfillment handler #25301, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25300,
+        "line": 992042,
+        "evidence": "Service function #25300 constructs the request and attaches fulfillment handler #25301."
+      },
+      {
+        "functionId": 25301,
+        "line": 992070,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25275,
+        "line": 991516,
+        "evidence": "Metro action/saga function #25275 (`rejectApplication`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25276,
+        "line": 991532,
+        "evidence": "Action continuation #25276, created by wrapper #25275, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25277,
+        "line": 991560,
+        "evidence": "Fulfillment callback #25277 dispatches its first argument as CONFIRM_OR_REJECT_KINDERGARTEN_APPLICATION.data and separately dispatches a local null refresh timestamp; the timestamp is not response data, and no named body property is read."
+      },
+      {
+        "functionId": 25260,
+        "line": 990995,
+        "evidence": "Applications reducer #25260 handles CONFIRM_OR_REJECT_KINDERGARTEN_APPLICATION at 991051-991056; this reducer hop consumes the dispatched action in local application state without changing this unknown response disposition."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25275 at 991516 and continuation #25276 at 991532; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "ConfirmApplication",
+    "sourceFunctionId": 25302,
+    "kind": "unknown",
+    "evidence": "Service function #25302 attaches fulfillment handler #25303, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25302,
+        "line": 992081,
+        "evidence": "Service function #25302 constructs the request and attaches fulfillment handler #25303."
+      },
+      {
+        "functionId": 25303,
+        "line": 992109,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25278,
+        "line": 991580,
+        "evidence": "Metro action/saga function #25278 (`confirmApplication`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25279,
+        "line": 991596,
+        "evidence": "Action continuation #25279, created by wrapper #25278, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25280,
+        "line": 991624,
+        "evidence": "Fulfillment callback #25280 dispatches its first argument as CONFIRM_OR_REJECT_KINDERGARTEN_APPLICATION.data and separately dispatches a local null refresh timestamp; the timestamp is not response data, and no named body property is read."
+      },
+      {
+        "functionId": 25260,
+        "line": 990995,
+        "evidence": "Applications reducer #25260 handles CONFIRM_OR_REJECT_KINDERGARTEN_APPLICATION at 991051-991056; this reducer hop consumes the dispatched action in local application state without changing this unknown response disposition."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25278 at 991580 and continuation #25279 at 991596; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "AddOrRemoveApplicationChild",
+    "sourceFunctionId": 25304,
+    "kind": "unknown",
+    "evidence": "Service function #25304 attaches fulfillment handler #25305, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25304,
+        "line": 992120,
+        "evidence": "Service function #25304 constructs the request and attaches fulfillment handler #25305."
+      },
+      {
+        "functionId": 25305,
+        "line": 992148,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25281,
+        "line": 991644,
+        "evidence": "Metro action/saga function #25281 (`addOrRemoveChild`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25282,
+        "line": 991657,
+        "evidence": "Action continuation #25282, created by wrapper #25281, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25283,
+        "line": 991686,
+        "evidence": "Fulfillment callback #25283 dispatches its first argument unchanged as UPDATE_KINDERGARTEN_APPLICATION.data; it reads no named response-body property."
+      },
+      {
+        "functionId": 25260,
+        "line": 990995,
+        "evidence": "Applications reducer #25260 handles UPDATE_KINDERGARTEN_APPLICATION at 991039-991044 and consumes that action in local application state; this reducer hop does not alter the unknown body disposition."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25281 at 991644 and continuation #25282 at 991657; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetReceivedAnnouncements",
+    "sourceFunctionId": 25330,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #25330 at 992941 registers fulfillment handler #25331 at 992969; that handler projects Axios response.data. The traced Metro caller/reducer path establishes only the listed client-observed body-root property reads; response model remains partial.",
+    "trace": [
+      {
+        "functionId": 25330,
+        "line": 992941,
+        "evidence": "Service function #25330 constructs the assigned URL/request and attaches fulfillment handler #25331; see its exact block in /data/data/com.termux/files/home/eliis-analysis/eliis.hasm."
+      },
+      {
+        "functionId": 25331,
+        "line": 992969,
+        "evidence": "Fulfillment handler #25331 reads the resolved Axios value's `data` property and returns it; this is the HTTP body projection, not a claim that body itself has an outer `data` field."
+      },
+      {
+        "functionId": 25312,
+        "line": 992515,
+        "evidence": "Saga #25312 calls #25330 and attaches success continuation #25313 to the projected HTTP body."
+      },
+      {
+        "functionId": 25313,
+        "line": 992544,
+        "evidence": "Success continuation #25313 directly reads announcements and has_more from the projected body at 992548-992563 and dispatches each separately."
+      }
+    ],
+    "fields": [
+      {
+        "name": "announcements",
+        "type": "unknown",
+        "evidence": "Saga #25313 directly reads response.data.announcements at 992548-992557 and dispatches the value to SET_ANNOUNCEMENTS."
+      },
+      {
+        "name": "has_more",
+        "type": "unknown",
+        "evidence": "Saga #25313 directly reads response.data.has_more at 992558-992563 and dispatches the value to SET_HAS_MORE_ANNOUNCEMENTS."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "These are root HTTP-body properties after handler #25331 returns Axios response.data. Do not infer Boolean from conditional/truthiness consumers; announcements value/item shape is not established by this trace."
+    ]
+  },
+  {
+    "operationId": "GetSentAnnouncements",
+    "sourceFunctionId": 25332,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #25332 at 992980 registers fulfillment handler #25333 at 993008; that handler projects Axios response.data. The traced Metro caller/reducer path establishes only the listed client-observed body-root property reads; response model remains partial.",
+    "trace": [
+      {
+        "functionId": 25332,
+        "line": 992980,
+        "evidence": "Service function #25332 constructs the assigned URL/request and attaches fulfillment handler #25333; see its exact block in /data/data/com.termux/files/home/eliis-analysis/eliis.hasm."
+      },
+      {
+        "functionId": 25333,
+        "line": 993008,
+        "evidence": "Fulfillment handler #25333 reads the resolved Axios value's `data` property and returns it; this is the HTTP body projection, not a claim that body itself has an outer `data` field."
+      },
+      {
+        "functionId": 25316,
+        "line": 992594,
+        "evidence": "Saga #25316 calls #25332 and attaches success continuation #25317 to the projected HTTP body."
+      },
+      {
+        "functionId": 25317,
+        "line": 992620,
+        "evidence": "Success continuation #25317 directly reads announcements and has_more from the projected body at 992624-992639 and dispatches each separately."
+      }
+    ],
+    "fields": [
+      {
+        "name": "announcements",
+        "type": "unknown",
+        "evidence": "Saga #25317 directly reads response.data.announcements at 992624-992633 and dispatches the value to SET_SENT_ANNOUNCEMENTS."
+      },
+      {
+        "name": "has_more",
+        "type": "unknown",
+        "evidence": "Saga #25317 directly reads response.data.has_more at 992634-992639 and dispatches the value to SET_HAS_MORE_SENT_ANNOUNCEMENTS."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "These are root HTTP-body properties after handler #25333 returns Axios response.data. Do not infer Boolean from conditional/truthiness consumers; announcements value/item shape is not established by this trace."
+    ]
+  },
+  {
+    "operationId": "MarkAnnouncementRead",
+    "sourceFunctionId": 25334,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #25334 attaches #25335, which projects Axios response.data. Success continuation #25326 reads root seen and combines it with a locally captured announcement id to dispatch UPDATE_ANNOUNCEMENT; only seen is a body property read.",
+    "trace": [
+      {
+        "functionId": 25334,
+        "line": 993019,
+        "evidence": "Service function #25334 constructs the request and attaches fulfillment handler #25335."
+      },
+      {
+        "functionId": 25335,
+        "line": 993046,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25324,
+        "line": 992757,
+        "evidence": "Metro action/saga function #25324 (`updateAnnouncementAsRead`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25325,
+        "line": 992770,
+        "evidence": "Continuation #25325 invokes updateAnnouncementAsRead and attaches fulfillment callback #25326."
+      },
+      {
+        "functionId": 25326,
+        "line": 992797,
+        "evidence": "Fulfillment callback #25326 directly reads body.seen at 992811-992812; it obtains id from its captured local environment, not from the response body, and dispatches both in a locally composed action."
+      }
+    ],
+    "fields": [
+      {
+        "name": "seen",
+        "type": "unknown",
+        "evidence": "Callback #25326 directly reads the projected body root property seen at 992811-992812. The separately supplied local id is not a response field; seen's type remains unresolved."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "The local announcement id placed beside seen in a Redux action is not attributed to the HTTP body. Only seen is modeled; the response shape remains partial and open."
+    ]
+  },
+  {
+    "operationId": "GetAnnouncementTargetGroups",
+    "sourceFunctionId": 25336,
+    "kind": "unknown",
+    "evidence": "Service function #25336 attaches fulfillment handler #25337, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25336,
+        "line": 993057,
+        "evidence": "Service function #25336 constructs the request and attaches fulfillment handler #25337."
+      },
+      {
+        "functionId": 25337,
+        "line": 993082,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25318,
+        "line": 992645,
+        "evidence": "Metro action/saga function #25318 (`getAnnouncementsTargetGroups`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25319,
+        "line": 992656,
+        "evidence": "Action continuation #25319, created by wrapper #25318, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25320,
+        "line": 992681,
+        "evidence": "Fulfillment callback #25320 dispatches its first argument unchanged as SET_ANNOUNCEMENT_TARGET_GROUPS.data; it reads no named response-body property."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25318 at 992645 and continuation #25319 at 992656; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "SendAnnouncement",
+    "sourceFunctionId": 25338,
+    "kind": "unknown",
+    "evidence": "Service function #25338 attaches fulfillment handler #25339, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25338,
+        "line": 993093,
+        "evidence": "Service function #25338 constructs the request and attaches fulfillment handler #25339."
+      },
+      {
+        "functionId": 25339,
+        "line": 993131,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25321,
+        "line": 992699,
+        "evidence": "Metro action/saga function #25321 (`sendAnnouncement`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25322,
+        "line": 992712,
+        "evidence": "Action continuation #25322, created by wrapper #25321, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25323,
+        "line": 992739,
+        "evidence": "Fulfillment callback #25323 dispatches its first argument unchanged as SET_SENT_ANNOUNCEMENT.data; it reads no named response-body property."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25321 at 992699 and continuation #25322 at 992712; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "DeleteAnnouncement",
+    "sourceFunctionId": 25341,
+    "kind": "unknown",
+    "evidence": "Service function #25341 attaches fulfillment handler #25342, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25341,
+        "line": 993152,
+        "evidence": "Service function #25341 constructs the request and attaches fulfillment handler #25342."
+      },
+      {
+        "functionId": 25342,
+        "line": 993176,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25328,
+        "line": 992870,
+        "evidence": "Feature service registry #25328 exposes its `delete` key as a wrapper for #25341. No response-body property consumer was traced from that delete entrypoint; response remains unknown."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Only the feature registry at function #25328 line 992870 is identified for this service entry; no downstream caller/property-read path was located in the assigned source slice. Keep the HTTP body explicitly unknown rather than treating the registry, action envelope, or local state as response shape.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetRecentEvents",
+    "sourceFunctionId": 25401,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #25401 at 995306 registers fulfillment handler #25402 at 995331; that handler projects Axios response.data. The traced Metro caller/reducer path establishes only the listed client-observed body-root property reads; response model remains partial.",
+    "trace": [
+      {
+        "functionId": 25401,
+        "line": 995306,
+        "evidence": "Service function #25401 constructs the assigned URL/request and attaches fulfillment handler #25402; see its exact block in /data/data/com.termux/files/home/eliis-analysis/eliis.hasm."
+      },
+      {
+        "functionId": 25402,
+        "line": 995331,
+        "evidence": "Fulfillment handler #25402 reads the resolved Axios value's `data` property and returns it; this is the HTTP body projection, not a claim that body itself has an outer `data` field."
+      },
+      {
+        "functionId": 25371,
+        "line": 994605,
+        "evidence": "Saga #25371 calls #25401 and attaches success continuation #25372 to the projected HTTP body."
+      },
+      {
+        "functionId": 25372,
+        "line": 994630,
+        "evidence": "Success continuation #25372 reads events and count at 994634-994650 and dispatches those values separately."
+      }
+    ],
+    "fields": [
+      {
+        "name": "events",
+        "type": "unknown",
+        "evidence": "Saga #25372 reads response.data.events at 994634-994643 and passes that value to SET_RECENT_EVENTS."
+      },
+      {
+        "name": "count",
+        "type": "unknown",
+        "evidence": "Saga #25372 reads response.data.count at 994644-994650 and passes that value to SET_RECENT_EVENTS_COUNT."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "These are root HTTP-body properties after handler #25402 projects Axios response.data. Types, event item fields, and completeness are unresolved."
+    ]
+  },
+  {
+    "operationId": "GetEvents",
+    "sourceFunctionId": 25403,
+    "kind": "unknown",
+    "evidence": "Service function #25403 attaches fulfillment handler #25404, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25403,
+        "line": 995342,
+        "evidence": "Service function #25403 constructs the request and attaches fulfillment handler #25404."
+      },
+      {
+        "functionId": 25404,
+        "line": 995383,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25374,
+        "line": 994668,
+        "evidence": "Metro action/saga function #25374 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25375,
+        "line": 994704,
+        "evidence": "Action continuation #25375, created by wrapper #25374, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25374 at 994668 and continuation #25375 at 994704; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "CreateEvent",
+    "sourceFunctionId": 25405,
+    "kind": "unknown",
+    "evidence": "Service function #25405 attaches fulfillment handler #25406, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25405,
+        "line": 995394,
+        "evidence": "Service function #25405 constructs the request and attaches fulfillment handler #25406."
+      },
+      {
+        "functionId": 25406,
+        "line": 995420,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25377,
+        "line": 994757,
+        "evidence": "Metro action/saga function #25377 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25378,
+        "line": 994789,
+        "evidence": "Action continuation #25378, created by wrapper #25377, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25377 at 994757 and continuation #25378 at 994789; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "UpdateEvent",
+    "sourceFunctionId": 25407,
+    "kind": "unknown",
+    "evidence": "Service function #25407 attaches fulfillment handler #25408, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25407,
+        "line": 995431,
+        "evidence": "Service function #25407 constructs the request and attaches fulfillment handler #25408."
+      },
+      {
+        "functionId": 25408,
+        "line": 995458,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25379,
+        "line": 994813,
+        "evidence": "Metro action/saga function #25379 (`updateEvent`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25380,
+        "line": 994826,
+        "evidence": "Action continuation #25380, created by wrapper #25379, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25381,
+        "line": 994860,
+        "evidence": "Continuation wrapper #25381 creates async generator #25382/#25383 and closure #25384 at 994869-994873; the response-result handling is in #25383."
+      },
+      {
+        "functionId": 25383,
+        "line": 994889,
+        "evidence": "Generator #25383 resumes with the update-event service result and uses that whole fulfillment as local SET_EVENT.data.items at 994916-994923; the local timezone is read from captured user state. No named property is read from the response body, and local items/tz are not HTTP-body fields."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25379 at 994813 and continuation #25380 at 994826; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "DeleteEvent",
+    "sourceFunctionId": 25409,
+    "kind": "unknown",
+    "evidence": "Service function #25409 attaches fulfillment handler #25410, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 25409,
+        "line": 995469,
+        "evidence": "Service function #25409 constructs the request and attaches fulfillment handler #25410."
+      },
+      {
+        "functionId": 25410,
+        "line": 995503,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 25385,
+        "line": 994951,
+        "evidence": "Metro action/saga function #25385 (`deleteEvent`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 25386,
+        "line": 994964,
+        "evidence": "Action continuation #25386, created by wrapper #25385, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 25387,
+        "line": 994986,
+        "evidence": "Fulfillment callback #25387 builds local event-removal actions from captured change_mode, ids, and unique_id; it does not read its response argument. Those captured values are state/request context, not response data."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #25385 at 994951 and continuation #25386 at 994964; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetKindergartenContacts",
+    "sourceFunctionId": 26039,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #26039 at 1015514 registers fulfillment handler #26040 at 1015539; that handler projects Axios response.data. The traced Metro caller/reducer path establishes only the listed client-observed body-root property reads; response model remains partial.",
+    "trace": [
+      {
+        "functionId": 26039,
+        "line": 1015514,
+        "evidence": "Service function #26039 constructs the assigned URL/request and attaches fulfillment handler #26040; see its exact block in /data/data/com.termux/files/home/eliis-analysis/eliis.hasm."
+      },
+      {
+        "functionId": 26040,
+        "line": 1015539,
+        "evidence": "Fulfillment handler #26040 reads the resolved Axios value's `data` property and returns it; this is the HTTP body projection, not a claim that body itself has an outer `data` field."
+      },
+      {
+        "functionId": 26022,
+        "line": 1015114,
+        "evidence": "Saga #26022 attaches the fulfillment continuation #26023 to service #26039."
+      },
+      {
+        "functionId": 26023,
+        "line": 1015139,
+        "evidence": "Fulfillment callback #26023 reads root kindergarten and courses from the projected body at 1015143-1015157, dispatches them separately, then uses courses.length, courses[0], and its id at 1015159-1015169 to select a local course."
+      }
+    ],
+    "fields": [
+      {
+        "name": "kindergarten",
+        "type": "unknown",
+        "evidence": "Saga #26023 reads response.data.kindergarten at 1015143-1015152 and dispatches the unchanged value to SET_CONTACTS_KINDERGARTEN."
+      },
+      {
+        "name": "courses",
+        "type": "array",
+        "evidence": "Saga #26023 reads response.data.courses and then uses its length and index zero/id at 1015159-1015171. Array typing records the client’s array expectation only; there is no validation establishing all server cases.",
+        "items": {
+          "kind": "object",
+          "evidence": "Client traversal reads these properties from elements of root courses.",
+          "fields": [
+            {
+              "name": "id",
+              "type": "unknown",
+              "evidence": "Saga #26023 reads courses[0].id at 1015162-1015169; this is a client-observed item property, not a complete course model."
+            }
+          ]
+        }
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "The service handler #26040 projects Axios response.data; kindergarten and courses are root HTTP-body properties. `courses` is an array expectation from .length/index use only; no Array.isArray check or complete item shape is established."
+    ]
+  },
+  {
+    "operationId": "GetEmployeeContacts",
+    "sourceFunctionId": 26041,
+    "kind": "unknown",
+    "evidence": "Service function #26041 attaches fulfillment handler #26042, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 26041,
+        "line": 1015550,
+        "evidence": "Service function #26041 constructs the request and attaches fulfillment handler #26042."
+      },
+      {
+        "functionId": 26042,
+        "line": 1015578,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26025,
+        "line": 1015187,
+        "evidence": "Metro action/saga function #26025 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26026,
+        "line": 1015212,
+        "evidence": "Action continuation #26026, created by wrapper #26025, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #26025 at 1015187 and continuation #26026 at 1015212; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetGuardianContacts",
+    "sourceFunctionId": 26043,
+    "kind": "unknown",
+    "evidence": "Service function #26043 attaches fulfillment handler #26044, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 26043,
+        "line": 1015589,
+        "evidence": "Service function #26043 constructs the request and attaches fulfillment handler #26044."
+      },
+      {
+        "functionId": 26044,
+        "line": 1015617,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26028,
+        "line": 1015243,
+        "evidence": "Metro action/saga function #26028 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26029,
+        "line": 1015270,
+        "evidence": "Action continuation #26029, created by wrapper #26028, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #26028 at 1015243 and continuation #26029 at 1015270; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetCourseGuardianContacts",
+    "sourceFunctionId": 26045,
+    "kind": "unknown",
+    "evidence": "Service function #26045 attaches fulfillment handler #26046, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 26045,
+        "line": 1015628,
+        "evidence": "Service function #26045 constructs the request and attaches fulfillment handler #26046."
+      },
+      {
+        "functionId": 26046,
+        "line": 1015655,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26031,
+        "line": 1015299,
+        "evidence": "Metro action/saga function #26031 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26032,
+        "line": 1015326,
+        "evidence": "Action continuation #26032, created by wrapper #26031, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #26031 at 1015299 and continuation #26032 at 1015326; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetCourseEmployeeContacts",
+    "sourceFunctionId": 26047,
+    "kind": "unknown",
+    "evidence": "Service function #26047 attaches fulfillment handler #26048, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 26047,
+        "line": 1015666,
+        "evidence": "Service function #26047 constructs the request and attaches fulfillment handler #26048."
+      },
+      {
+        "functionId": 26048,
+        "line": 1015693,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26034,
+        "line": 1015355,
+        "evidence": "Metro action/saga function #26034 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26035,
+        "line": 1015382,
+        "evidence": "Action continuation #26035, created by wrapper #26034, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #26034 at 1015355 and continuation #26035 at 1015382; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetRecentNotifications",
+    "sourceFunctionId": 26069,
+    "kind": "unknown",
+    "evidence": "Service function #26069 attaches fulfillment handler #26070, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 26069,
+        "line": 1016283,
+        "evidence": "Service function #26069 constructs the request and attaches fulfillment handler #26070."
+      },
+      {
+        "functionId": 26070,
+        "line": 1016302,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26067,
+        "line": 1016230,
+        "evidence": "Notification service registry #26067 includes getRecentNotifications bound to #26069. No downstream response-body property consumer was traced for this call; response remains unknown."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Only the feature registry at function #26067 line 1016230 is identified for this service entry; no downstream caller/property-read path was located in the assigned source slice. Keep the HTTP body explicitly unknown rather than treating the registry, action envelope, or local state as response shape.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetNotifications",
+    "sourceFunctionId": 26071,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #26071 at 1016313 registers fulfillment handler #26072 at 1016335; that handler projects Axios response.data. The traced Metro caller/reducer path establishes only the listed client-observed body-root property reads; response model remains partial.",
+    "trace": [
+      {
+        "functionId": 26071,
+        "line": 1016313,
+        "evidence": "Service function #26071 constructs the assigned URL/request and attaches fulfillment handler #26072; see its exact block in /data/data/com.termux/files/home/eliis-analysis/eliis.hasm."
+      },
+      {
+        "functionId": 26072,
+        "line": 1016335,
+        "evidence": "Fulfillment handler #26072 reads the resolved Axios value's `data` property and returns it; this is the HTTP body projection, not a claim that body itself has an outer `data` field."
+      },
+      {
+        "functionId": 26064,
+        "line": 1016117,
+        "evidence": "Generator saga #26064 resumes with the projected body, reads notifications and has_more, and dispatches these values separately. Reducer #26050 concatenates notifications with existing state."
+      },
+      {
+        "functionId": 26050,
+        "line": 1015748,
+        "evidence": "Reducer #26050 consumes notifications/has_more actions from #26064 and concatenates the forwarded notifications body value; it does not make Axios action-envelope fields into HTTP fields."
+      }
+    ],
+    "fields": [
+      {
+        "name": "notifications",
+        "type": "unknown",
+        "evidence": "Saga #26064 reads response.data.notifications and forwards it; reducer #26050 concatenates the value with a locally created empty array at 1015814-1015831. This concat operation accepts non-array values too, so it does not prove the server field is an array."
+      },
+      {
+        "name": "has_more",
+        "type": "unknown",
+        "evidence": "Saga #26064 directly reads response.data.has_more at 1016144-1016158 and dispatches the value to SET_NOTIFICATIONS_HAS_MORE."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "These are root HTTP-body properties after handler #26072 returns Axios response.data. notifications stays unknown because concat with an empty local array does not prove an array server value; has_more stays unknown because truthiness use does not prove Boolean. Notification item fields remain unresolved."
+    ]
+  },
+  {
+    "operationId": "GetUnseenNotificationCount",
+    "sourceFunctionId": 26073,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #26073 at 1016346 registers fulfillment handler #26074 at 1016365; that handler projects Axios response.data. The traced Metro caller/reducer path establishes only the listed client-observed body-root property reads; response model remains partial.",
+    "trace": [
+      {
+        "functionId": 26073,
+        "line": 1016346,
+        "evidence": "Service function #26073 constructs the assigned URL/request and attaches fulfillment handler #26074; see its exact block in /data/data/com.termux/files/home/eliis-analysis/eliis.hasm."
+      },
+      {
+        "functionId": 26074,
+        "line": 1016365,
+        "evidence": "Fulfillment handler #26074 reads the resolved Axios value's `data` property and returns it; this is the HTTP body projection, not a claim that body itself has an outer `data` field."
+      },
+      {
+        "functionId": 26055,
+        "line": 1015972,
+        "evidence": "Saga #26055 calls #26073; its continuation reads notifications_count from the projected body and dispatches the value as the recent/unseen notifications count."
+      }
+    ],
+    "fields": [
+      {
+        "name": "notifications_count",
+        "type": "unknown",
+        "evidence": "Saga #26055 reads response.data.notifications_count at 1015986-1015995."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "This field is at HTTP-body root after handler #26074 returns Axios response.data. Its scalar type is not established by the property read or its use as a count."
+    ]
+  },
+  {
+    "operationId": "DeleteIdea",
+    "sourceFunctionId": 26363,
+    "kind": "unknown",
+    "evidence": "Service function #26363 attaches fulfillment handler #26364, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 26363,
+        "line": 1024691,
+        "evidence": "Service function #26363 constructs the request and attaches fulfillment handler #26364."
+      },
+      {
+        "functionId": 26364,
+        "line": 1024717,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26322,
+        "line": 1023767,
+        "evidence": "Metro action/saga function #26322 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26323,
+        "line": 1023794,
+        "evidence": "Action continuation #26323, created by wrapper #26322, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #26322 at 1023767 and continuation #26323 at 1023794; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "DeleteIdeaComment",
+    "sourceFunctionId": 26365,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #26365 attaches #26366, which projects Axios response.data. Success callback #26359 directly reads the root deleted property and uses it to select a local reducer action; the rest of the HTTP-body shape is not established.",
+    "trace": [
+      {
+        "functionId": 26365,
+        "line": 1024728,
+        "evidence": "Service function #26365 constructs the request and attaches fulfillment handler #26366."
+      },
+      {
+        "functionId": 26366,
+        "line": 1024756,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26357,
+        "line": 1024453,
+        "evidence": "Metro action/saga function #26357 (`deleteIdeaComment`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26358,
+        "line": 1024468,
+        "evidence": "Continuation #26358 calls deleteIdeaComment and attaches fulfillment callback #26359."
+      },
+      {
+        "functionId": 26359,
+        "line": 1024496,
+        "evidence": "Callback #26359 directly reads response-body root deleted at 1024500-1024505 and branches between reducer actions; action fields constructed locally are not body fields."
+      },
+      {
+        "functionId": 26292,
+        "line": 1022393,
+        "evidence": "Ideas reducer #26292 consumes the callback's UPDATE_IDEA_COMMENT or REMOVE_IDEA_COMMENT action; callback-built commentId is local state metadata, not an HTTP response field."
+      }
+    ],
+    "fields": [
+      {
+        "name": "deleted",
+        "type": "unknown",
+        "evidence": "Callback #26359 directly reads body.deleted at 1024500-1024505 for a truthiness branch. Truthiness does not establish a Boolean type or a complete deletion-result wrapper."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "Only deleted is directly read from the body; locally built reducer action fields and the remainder of the response are unresolved. No Boolean type or generic deletion wrapper is inferred."
+    ]
+  },
+  {
+    "operationId": "DeleteIdeaImage",
+    "sourceFunctionId": 26367,
+    "kind": "unknown",
+    "evidence": "Service function #26367 attaches fulfillment handler #26368, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 26367,
+        "line": 1024767,
+        "evidence": "Service function #26367 constructs the request and attaches fulfillment handler #26368."
+      },
+      {
+        "functionId": 26368,
+        "line": 1024793,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26327,
+        "line": 1023857,
+        "evidence": "Metro action/saga function #26327 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26328,
+        "line": 1023884,
+        "evidence": "Action continuation #26328, created by wrapper #26327, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #26327 at 1023857 and continuation #26328 at 1023884; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetIdea",
+    "sourceFunctionId": 26369,
+    "kind": "unknown",
+    "evidence": "Service function #26369 attaches fulfillment handler #26370, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 26369,
+        "line": 1024804,
+        "evidence": "Service function #26369 constructs the request and attaches fulfillment handler #26370."
+      },
+      {
+        "functionId": 26370,
+        "line": 1024830,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26345,
+        "line": 1024201,
+        "evidence": "Metro action/saga function #26345 (`getIdea`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26346,
+        "line": 1024214,
+        "evidence": "Action continuation #26346, created by wrapper #26345, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 26347,
+        "line": 1024241,
+        "evidence": "Fulfillment callback #26347 dispatches its first argument unchanged as SET_IDEA.data; it reads no named response-body property."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #26345 at 1024201 and continuation #26346 at 1024214; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetIdeas",
+    "sourceFunctionId": 26371,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #26371 attaches #26372, which projects Axios response.data. Success continuation #26331 forwards that body unchanged as SET_IDEAS; the ideas pagination consumer reads root current_page/data and enumerates/maps data before building local state.",
+    "trace": [
+      {
+        "functionId": 26371,
+        "line": 1024841,
+        "evidence": "Service function #26371 constructs the request and attaches fulfillment handler #26372."
+      },
+      {
+        "functionId": 26372,
+        "line": 1024869,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26330,
+        "line": 1023917,
+        "evidence": "Metro action/saga function #26330 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26331,
+        "line": 1023944,
+        "evidence": "Success continuation #26331 dispatches the projected body unchanged as SET_IDEAS at 1023948-1023957."
+      },
+      {
+        "functionId": 26292,
+        "line": 1022393,
+        "evidence": "Ideas reducer #26292 consumes SET_IDEAS and branches on body.data.current_page at 1022803-1022805; it concatenates/maps body.data at 1022806-1022835. The concatenation and Object.entries/map steps do not establish an array type for server data."
+      }
+    ],
+    "fields": [
+      {"name":"current_page","type":"unknown","evidence":"Reducer #26292 reads action.data.current_page at 1022803-1022805; action.data is the unchanged projected HTTP body dispatched by #26331. The value type is unresolved."},
+      {"name":"data","type":"unknown","evidence":"Reducer #26292 reads action.data.data at 1022814-1022816 and 1022821-1022825 while concatenating and enumerating it. Those client operations do not prove an array or object server type."}
+    ],
+    "complete": false,
+    "limitations": [
+      "The current_page/data reads are client observations at the HTTP-body root. Object.entries/map and local concatenation do not prove data is an array; other body properties and full shape are unresolved."
+    ]
+  },
+  {
+    "operationId": "GetIdeaAgeGroups",
+    "sourceFunctionId": 26373,
+    "kind": "unknown",
+    "evidence": "Service function #26373 attaches fulfillment handler #26374, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 26373,
+        "line": 1024880,
+        "evidence": "Service function #26373 constructs the request and attaches fulfillment handler #26374."
+      },
+      {
+        "functionId": 26374,
+        "line": 1024908,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26337,
+        "line": 1024037,
+        "evidence": "Metro action/saga function #26337 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26338,
+        "line": 1024064,
+        "evidence": "Action continuation #26338, created by wrapper #26337, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #26337 at 1024037 and continuation #26338 at 1024064; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetIdeaCategories",
+    "sourceFunctionId": 26375,
+    "kind": "unknown",
+    "evidence": "Service function #26375 attaches fulfillment handler #26376, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 26375,
+        "line": 1024919,
+        "evidence": "Service function #26375 constructs the request and attaches fulfillment handler #26376."
+      },
+      {
+        "functionId": 26376,
+        "line": 1024947,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26340,
+        "line": 1024095,
+        "evidence": "Metro action/saga function #26340 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26341,
+        "line": 1024122,
+        "evidence": "Action continuation #26341, created by wrapper #26340, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #26340 at 1024095 and continuation #26341 at 1024122; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetIdeaComments",
+    "sourceFunctionId": 26377,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #26377 attaches #26378, which projects Axios response.data. Success continuation #26344 forwards that body unchanged as SET_IDEA_COMMENTS; the comments pagination consumer reads root current_page/data and uses Object.entries/concat while assembling local state.",
+    "trace": [
+      {
+        "functionId": 26377,
+        "line": 1024958,
+        "evidence": "Service function #26377 constructs the request and attaches fulfillment handler #26378."
+      },
+      {
+        "functionId": 26378,
+        "line": 1024988,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26343,
+        "line": 1024155,
+        "evidence": "Metro action/saga function #26343 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26344,
+        "line": 1024183,
+        "evidence": "Success continuation #26344 dispatches the projected body unchanged as SET_IDEA_COMMENTS at 1024187-1024196."
+      },
+      {
+        "functionId": 26292,
+        "line": 1022393,
+        "evidence": "Ideas reducer #26292 consumes SET_IDEA_COMMENTS and reads body.data.current_page at 1022724-1022726 and body.data.data at 1022735-1022738; it also enumerates/maps comment data at 1022741-1022756. These operations do not establish an array type for the server field."
+      }
+    ],
+    "fields": [
+      {"name":"current_page","type":"unknown","evidence":"Reducer #26292 reads action.data.current_page at 1022724-1022726; action.data is the unchanged projected HTTP body dispatched by #26344. The value type is unresolved."},
+      {"name":"data","type":"unknown","evidence":"Reducer #26292 reads action.data.data at 1022735-1022738 and enumerates/maps it at 1022741-1022756. These client operations do not prove an array type for the server field."}
+    ],
+    "complete": false,
+    "limitations": [
+      "The current_page/data reads are client observations at the HTTP-body root. Object.entries/concat does not prove data is an array; other body properties and full shape are unresolved."
+    ]
+  },
+  {
+    "operationId": "SaveIdeaComment",
+    "sourceFunctionId": 26379,
+    "kind": "unknown",
+    "evidence": "Service function #26379 attaches fulfillment handler #26380, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 26379,
+        "line": 1024999,
+        "evidence": "Service function #26379 constructs the request and attaches fulfillment handler #26380."
+      },
+      {
+        "functionId": 26380,
+        "line": 1025027,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26354,
+        "line": 1024393,
+        "evidence": "Metro action/saga function #26354 (`saveIdeaComment`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26355,
+        "line": 1024406,
+        "evidence": "Action continuation #26355, created by wrapper #26354, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      },
+      {
+        "functionId": 26356,
+        "line": 1024435,
+        "evidence": "Fulfillment callback #26356 dispatches its first argument unchanged as ADD_IDEA_COMMENT.data; it reads no named response-body property."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #26354 at 1024393 and continuation #26355 at 1024406; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "AddIdeaToFavorites",
+    "sourceFunctionId": 26381,
+    "kind": "unknown",
+    "evidence": "Service function #26381 attaches fulfillment handler #26382, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 26381,
+        "line": 1025038,
+        "evidence": "Service function #26381 constructs the request and attaches fulfillment handler #26382."
+      },
+      {
+        "functionId": 26382,
+        "line": 1025065,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26352,
+        "line": 1024341,
+        "evidence": "Metro action/saga function #26352 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26353,
+        "line": 1024368,
+        "evidence": "Action continuation #26353, created by wrapper #26352, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #26352 at 1024341 and continuation #26353 at 1024368; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "LikeIdea",
+    "sourceFunctionId": 26383,
+    "kind": "unknown",
+    "evidence": "Service function #26383 attaches fulfillment handler #26384, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 26383,
+        "line": 1025076,
+        "evidence": "Service function #26383 constructs the request and attaches fulfillment handler #26384."
+      },
+      {
+        "functionId": 26384,
+        "line": 1025103,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26349,
+        "line": 1024274,
+        "evidence": "Metro action/saga function #26349 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26350,
+        "line": 1024301,
+        "evidence": "Action continuation #26350, created by wrapper #26349, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #26349 at 1024274 and continuation #26350 at 1024301; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "StoreIdea",
+    "sourceFunctionId": 26385,
+    "kind": "unknown",
+    "evidence": "Service function #26385 attaches fulfillment handler #26386, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 26385,
+        "line": 1025114,
+        "evidence": "Service function #26385 constructs the request and attaches fulfillment handler #26386."
+      },
+      {
+        "functionId": 26386,
+        "line": 1025145,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26316,
+        "line": 1023648,
+        "evidence": "Metro action/saga function #26316 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26317,
+        "line": 1023675,
+        "evidence": "Action continuation #26317, created by wrapper #26316, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #26316 at 1023648 and continuation #26317 at 1023675; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "UpdateIdea",
+    "sourceFunctionId": 26387,
+    "kind": "unknown",
+    "evidence": "Service function #26387 attaches fulfillment handler #26388, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 26387,
+        "line": 1025156,
+        "evidence": "Service function #26387 constructs the request and attaches fulfillment handler #26388."
+      },
+      {
+        "functionId": 26388,
+        "line": 1025188,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26319,
+        "line": 1023708,
+        "evidence": "Metro action/saga function #26319 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26320,
+        "line": 1023736,
+        "evidence": "Action continuation #26320, created by wrapper #26319, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #26319 at 1023708 and continuation #26320 at 1023736; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetPollById",
+    "sourceFunctionId": 26454,
+    "kind": "unknown",
+    "evidence": "Function #26454 is a generator that awaits Axios GET and returns the fulfillment value’s `data` property (eliis.hasm 1027492-1027522); the subsequent action/reducer/consumer survey did not establish an attributable response-body field or complete response kind.",
+    "trace": [
+      {
+        "functionId": 26454,
+        "line": 1027492,
+        "evidence": "Generator service function builds the GET request and yields its Axios promise."
+      },
+      {
+        "functionId": 26454,
+        "line": 1027492,
+        "evidence": "Generator resumes with the Axios fulfillment value, reads its `data` property, and returns that value as the HTTP body; no body fields are read here."
+      },
+      {
+        "functionId": 26438,
+        "line": 1027076,
+        "evidence": "Generator caller #26438 invokes service #26454 with the selected kindergarten and poll id at 1027090-1027094, then dispatches its resolved value unchanged as SET_POLL.data at 1027100-1027104."
+      },
+      {
+        "functionId": 26430,
+        "line": 1026676,
+        "evidence": "Poll reducer #26430 handles SET_POLL at 1026707-1026712 and stores that action's data value as local poll state at 1026861-1026869; it reads no property from the body itself."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller #26438 dispatches the whole resolved body as SET_POLL.data, and reducer #26430 stores that value as local poll without reading body properties. Keep the response explicitly unknown; no poll field or body type follows from whole-value storage.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetPolls",
+    "sourceFunctionId": 26455,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #26455 at 1027527 registers fulfillment handler #26456 at 1027555; that handler projects Axios response.data. The traced Metro caller/reducer path establishes only the listed client-observed body-root property reads; response model remains partial.",
+    "trace": [
+      {
+        "functionId": 26455,
+        "line": 1027527,
+        "evidence": "Service function #26455 constructs the assigned URL/request and attaches fulfillment handler #26456; see its exact block in /data/data/com.termux/files/home/eliis-analysis/eliis.hasm."
+      },
+      {
+        "functionId": 26456,
+        "line": 1027555,
+        "evidence": "Fulfillment handler #26456 reads the resolved Axios value's `data` property and returns it; this is the HTTP body projection, not a claim that body itself has an outer `data` field."
+      },
+      {
+        "functionId": 26442,
+        "line": 1027174,
+        "evidence": "Saga #26442 receives the projected body, reads current_page, and iterates body.data by length/index while reading each element.id to update a separate locally constructed usersOpenedPolls list; it separately dispatches the projected body."
+      }
+    ],
+    "fields": [
+      {
+        "name": "current_page",
+        "type": "unknown",
+        "evidence": "Saga #26442 directly reads response.data.current_page at 1027184-1027186."
+      },
+      {
+        "name": "data",
+        "type": "array",
+        "evidence": "Saga #26442 reads response.data.data, loops by its length/index, and reads each element.id at 1027192-1027214. This is an array expectation only; no Array.isArray validation or full item shape is established.",
+        "items": {
+          "kind": "object",
+          "evidence": "Client traversal reads these properties from elements of root data.",
+          "fields": [
+            {
+              "name": "id",
+              "type": "unknown",
+              "evidence": "Saga #26442 reads data[index].id at 1027202-1027206; item property type and remaining item shape are unresolved."
+            }
+          ]
+        }
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "These are root HTTP-body properties after handler #26456 returns Axios response.data. The local usersOpenedPolls result and user settings are not server fields. No generic pagination envelope or additional fields are inferred."
+    ]
+  },
+  {
+    "operationId": "FillPollQuestion",
+    "sourceFunctionId": 26457,
+    "kind": "unknown",
+    "evidence": "Service function #26457 attaches fulfillment handler #26458, which returns Axios response.data as the HTTP body. An associated Metro action/saga entrypoint is recorded where located, but no body property is attributed in this response disposition; downstream consumption remains unresolved.",
+    "trace": [
+      {
+        "functionId": 26457,
+        "line": 1027566,
+        "evidence": "Service function #26457 constructs the request and attaches fulfillment handler #26458."
+      },
+      {
+        "functionId": 26458,
+        "line": 1027593,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26444,
+        "line": 1027271,
+        "evidence": "Metro action/saga function #26444 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26445,
+        "line": 1027297,
+        "evidence": "Action continuation #26445, created by wrapper #26444, is the next bytecode path in the service invocation/success handoff. No additional HTTP-body property is attributed from this continuation."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Caller boundary traced through feature function #26444 at 1027271 and continuation #26445 at 1027297; beyond the recorded service-body handoff, no HTTP-body field is attributed for this operation. The downstream result shape and any untraced consumer branches remain unresolved; this is not a claim of a complete response schema.",
+      "The response kind and complete shape remain unknown; no generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetQuestionnaires",
+    "sourceFunctionId": 26488,
+    "kind": "object",
+  "evidence": "Service function #26488 attaches fulfillment handler #26489, which returns Axios response.data as the HTTP body. Caller #26466 passes that body to callback #26467, which dispatches it according to captured view. Reducer #26460 then directly reads body-root current_page and data in questionnaire-category branches. These are partial client-observed fields; the list concatenation does not establish data's type or a complete response schema.",
+    "trace": [
+      {
+        "functionId": 26488,
+        "line": 1028671,
+        "evidence": "Service function #26488 constructs the request and attaches fulfillment handler #26489."
+      },
+      {
+        "functionId": 26489,
+        "line": 1028699,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26466,
+        "line": 1028135,
+        "evidence": "Metro action/saga function #26466 (`anonymous continuation`) in the assigned feature module is the caller path associated with this service operation. Its response-property attribution remains unresolved here; no local action, request, optimistic-update, or UI-derived value is promoted to an HTTP field."
+      },
+      {
+        "functionId": 26467,
+        "line": 1028162,
+        "evidence": "Success callback #26467 receives the service's unchanged HTTP body and dispatches it under the questionnaire-category action selected from captured local view; reducer #26460 then reads its current_page and data properties."
+      },
+      {
+        "functionId": 26460,
+        "line": 1027661,
+        "evidence": "Questionnaire reducer #26460 receives the category action created by #26467 and handles SET_UNANSWERED/SET_ANSWERED/SET_FINISHED_QUESTIONNAIRES. Its reducer logic reads action.data.current_page and action.data.data in category branches at source lines 1027863-1027876, 1027899-1027912, 1027935-1027948; action.data is the unchanged HTTP body forwarded by #26467."
+      }
+    ],
+    "fields": [
+      {
+        "name": "current_page",
+        "type": "unknown",
+        "evidence": "Reducer #26460 directly reads action.data.current_page at source lines 1027863-1027865, 1027900, and 1027936. Callback #26467 dispatches the unchanged Axios-unwrapped body as action.data; the client's branch comparisons do not establish the field's type, presence, or value domain."
+      },
+      {
+        "name": "data",
+        "type": "unknown",
+        "evidence": "Reducer #26460 directly reads action.data.data at source lines 1027873-1027875, 1027909-1027911, and 1027945-1027947. Callback #26467 dispatches the unchanged Axios-unwrapped body as action.data; subsequent concat/list updates do not establish this body's field as an array or any other type."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "The reducer's category branches read current_page/data directly from the body, while captured view selects local handling; the fields' presence and types remain unresolved. The response model is partial and open.",
+      "The client's concat/list updates do not establish data as an array. No generic Laravel pagination/error wrapper, status, nullability, or item schema is inferred."
+    ]
+  },
+  {
+    "operationId": "GetQuestionnaire",
+    "sourceFunctionId": 26490,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #26490 at 1028710 registers fulfillment handler #26491 at 1028736; that handler projects Axios response.data. The traced Metro caller/reducer path establishes only the listed client-observed body-root property reads; response model remains partial.",
+    "trace": [
+      {
+        "functionId": 26490,
+        "line": 1028710,
+        "evidence": "Service function #26490 constructs the assigned URL/request and attaches fulfillment handler #26491; see its exact block in /data/data/com.termux/files/home/eliis-analysis/eliis.hasm."
+      },
+      {
+        "functionId": 26491,
+        "line": 1028736,
+        "evidence": "Fulfillment handler #26491 reads the resolved Axios value's `data` property and returns it; this is the HTTP body projection, not a claim that body itself has an outer `data` field."
+      },
+      {
+        "functionId": 26469,
+        "line": 1028222,
+        "evidence": "Saga #26469 calls #26490 and attaches success handler #26470 to its projected HTTP body."
+      },
+      {
+        "functionId": 26470,
+        "line": 1028249,
+        "evidence": "Success handler #26470 directly reads survey and page at 1028253-1028269 and dispatches each value separately."
+      }
+    ],
+    "fields": [
+      {
+        "name": "survey",
+        "type": "unknown",
+        "evidence": "Saga #26470 directly reads response.data.survey at 1028253-1028262 and dispatches that value to SET_QUESTIONNAIRE."
+      },
+      {
+        "name": "page",
+        "type": "unknown",
+        "evidence": "Saga #26470 directly reads response.data.page at 1028263-1028269 and dispatches that value to SET_QUESTION_PAGE."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "These are root HTTP-body properties after handler #26491 returns Axios response.data. The survey object is stored without a traced complete field projection; page type and full response shape are unresolved."
+    ]
+  },
+  {
+    "operationId": "GetQuestionnaireQuestions",
+    "sourceFunctionId": 26492,
+    "kind": "object",
+    "evidence": "Original Hermes bytecode: service #26492 at 1028747 registers fulfillment handler #26493 at 1028777; that handler projects Axios response.data. The traced Metro caller/reducer path establishes only the listed client-observed body-root property reads; response model remains partial.",
+    "trace": [
+      {
+        "functionId": 26492,
+        "line": 1028747,
+        "evidence": "Service function #26492 constructs the assigned URL/request and attaches fulfillment handler #26493; see its exact block in /data/data/com.termux/files/home/eliis-analysis/eliis.hasm."
+      },
+      {
+        "functionId": 26493,
+        "line": 1028777,
+        "evidence": "Fulfillment handler #26493 reads the resolved Axios value's `data` property and returns it; this is the HTTP body projection, not a claim that body itself has an outer `data` field."
+      },
+      {
+        "functionId": 26472,
+        "line": 1028287,
+        "evidence": "Saga #26472 calls #26492 and attaches fulfillment continuation #26473, which dispatches the projected body unchanged. Reducer #26460 reads current_page/data and concatenates or wraps data into local question state."
+      },
+      {
+        "functionId": 26473,
+        "line": 1028316,
+        "evidence": "Fulfillment continuation #26473 dispatches its response-body argument unchanged as SET_QUESTIONNAIRE_QUESTIONS at 1028320-1028328."
+      },
+      {
+        "functionId": 26460,
+        "line": 1027661,
+        "evidence": "Reducer #26460 is the consumer that reads current_page and data from the body dispatched unchanged by #26473."
+      }
+    ],
+    "fields": [
+      {
+        "name": "current_page",
+        "type": "unknown",
+        "evidence": "Reducer #26460 reads action.data.current_page at 1027863-1027865, 1027899-1027901, 1027935-1027937, and 1027935-1027937 across category branches."
+      },
+      {
+        "name": "data",
+        "type": "unknown",
+        "evidence": "Reducer #26460 reads action.data.data and concatenates or wraps it into locally accumulated question lists at 1027873-1027876, 1027909-1027912, and 1027945-1027948. Concatenation with an empty local array does not prove that the server value itself is an array."
+      }
+    ],
+    "complete": false,
+    "limitations": [
+      "The service handler #26493 returns Axios response.data and callback #26473 forwards it unchanged. data remains unknown because reducer concat/wrapping is compatible with non-array input; no object-item/question field is established."
+    ]
+  },
+  {
+    "operationId": "FillQuestionnaireQuestion",
+    "sourceFunctionId": 26494,
+    "kind": "unknown",
+    "evidence": "Original Hermes bytecode: questionnaire mutation service #26494 attaches #26495, which returns Axios response.data. The actual survey-question caller #26475 passes survey_id/question_id and request data into the service; its success continuation #26476 returns the body without reading a property.",
+    "trace": [
+      {
+        "functionId": 26494,
+        "line": 1028788,
+        "evidence": "Service function #26494 constructs the request and attaches fulfillment handler #26495."
+      },
+      {
+        "functionId": 26495,
+        "line": 1028817,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26475,
+        "line": 1028347,
+        "evidence": "Survey caller #26475 invokes fillQuestionnaireQuestion with selected kindergarten, survey_id, question_id, and its request payload at 1028351-1028366; these are request/call values, not response fields."
+      },
+      {
+        "functionId": 26476,
+        "line": 1028376,
+        "evidence": "Success continuation #26476 is an identity callback: it returns its fulfillment argument at 1028376-1028381 and reads no response property."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "This is the survey-question fill mutation path. The response body is forwarded by an identity continuation and has no observed property reads; retain an explicitly analyzed unknown disposition rather than infer fields from survey UI/request values."
+    ]
+  },
+  {
+    "operationId": "SubmitQuestionnaire",
+    "sourceFunctionId": 26496,
+    "kind": "unknown",
+    "evidence": "Original Hermes bytecode: submit-questionnaire service #26496 attaches #26497, which returns Axios response.data. The actual survey action #26478 passes the service result to success callback #26479; callback forwards the whole value to a local submitted-at action without reading body properties.",
+    "trace": [
+      {
+        "functionId": 26496,
+        "line": 1028828,
+        "evidence": "Service function #26496 constructs the request and attaches fulfillment handler #26497."
+      },
+      {
+        "functionId": 26497,
+        "line": 1028855,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26478,
+        "line": 1028399,
+        "evidence": "Survey action #26478 calls submitQuestionnaire for the selected kindergarten at 1028403-1028417 and attaches fulfillment callback #26479."
+      },
+      {
+        "functionId": 26479,
+        "line": 1028426,
+        "evidence": "Success callback #26479 forwards its whole fulfillment value as the local SET_SUBMITTED_AT action at 1028426-1028439; it reads no HTTP-body property."
+      },
+      {
+        "functionId": 26460,
+        "line": 1027661,
+        "evidence": "Questionnaire reducer #26460 consumes SET_SUBMITTED_AT as local questionnaire state. This reducer does not establish an HTTP-body property because the action receives the whole response body as its data value."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "This is the survey submission path. The resolved body is passed wholesale into local submitted-at state without property projection; that consumer does not establish body kind or fields."
+    ]
+  },
+  {
+    "operationId": "UnsubmitQuestionnaire",
+    "sourceFunctionId": 26498,
+    "kind": "unknown",
+    "evidence": "Original Hermes bytecode: unsubmit-questionnaire service #26498 attaches #26499, which returns Axios response.data. The actual survey action #26481 attaches callback #26482, dispatching a local null submitted-at value and returning the resolved body without inspecting it.",
+    "trace": [
+      {
+        "functionId": 26498,
+        "line": 1028866,
+        "evidence": "Service function #26498 constructs the request and attaches fulfillment handler #26499."
+      },
+      {
+        "functionId": 26499,
+        "line": 1028893,
+        "evidence": "Handler reads the fulfilled Axios response's `data` property and returns it. That Axios unwrap does not establish any body fields."
+      },
+      {
+        "functionId": 26481,
+        "line": 1028457,
+        "evidence": "Survey action #26481 calls unsubmitQuestionnaire for the selected kindergarten at 1028461-1028475 and attaches fulfillment callback #26482."
+      },
+      {
+        "functionId": 26482,
+        "line": 1028484,
+        "evidence": "Callback #26482 locally dispatches SET_SUBMITTED_AT with null, then returns its fulfillment argument at 1028484-1028494; it reads no HTTP-body property."
+      },
+      {
+        "functionId": 26460,
+        "line": 1027661,
+        "evidence": "Questionnaire reducer #26460 consumes the locally dispatched SET_SUBMITTED_AT action. The null fallback comes from the client callback and is not a response field."
+      }
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "This is the survey unsubmission path. The local null fallback is not a response field; the returned body is not inspected and remains explicitly unknown."
+    ]
+  }
+]

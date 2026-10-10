@@ -15,6 +15,12 @@ import { bracketQueryEncoding, isDeepObjectQuery } from "./generate.mjs";
  */
 export function normalizeOpenApi(document, catalog) {
   for (const expected of catalog.operations) {
+    const response = document.paths[expected.path]?.[expected.method]?.responses;
+    if (response) {
+      assert.deepEqual(Object.keys(response), ["default"], `${expected.operationId}: only the explicitly unresolved default response is allowed`);
+      const responseContent = response.default.content;
+      assert.ok(responseContent && Object.keys(responseContent).length === 1 && responseContent["*/*"], `${expected.operationId}: response media must remain wildcard/unknown`);
+    }
     // QueryOptions in TypeSpec HTTP 1.17 supports explode, but not deepObject
     // style. Preserve the emitted open partial model and logical name, changing
     // only style/explode for explicitly reviewed bracket-serializer metadata.

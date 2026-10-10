@@ -1,0 +1,186 @@
+[
+  {
+    "operationId": "DownloadMessageAttachment",
+    "sourceFunctionId": 34111,
+    "kind": "binary",
+    "evidence": "#34111 constructs the download options (eliis.hasm:1335255-1335263); its continuation #34112 overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1335282-1335297). Native implementation evidence: RNFSManager.java:779-792 maps fromUrl to DownloadParams.src; Downloader.java:64-74 opens and connects an HttpURLConnection, then Downloader.java:131-135 obtains its input stream and opens the destination FileOutputStream, and 141-203 copies the input bytes into that file. This establishes an opaque downloaded transport body, not a JSON result. The message-attachment label and filename do not prove actual media type.",
+    "trace": [
+      {"functionId": 34111, "line": 1335255, "evidence": "Parent function constructs RNFS fromUrl/toFile and cookie headers (eliis.hasm:1335255-1335263)."},
+      {"functionId": 34112, "line": 1335297, "evidence": "Continuation overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1335282-1335297)."}
+    ],
+    "fields": [],
+    "complete": false,
+    "limitations": ["Opaque streamed response body only; no runtime payload was captured.", "Actual MIME type, HTTP status, and response headers are unknown; attachment naming is not media-type evidence.", "RNFS jobId/statusCode/bytesWritten are native download metadata, not fields of the HTTP response body, and are not modeled."]
+  },
+  {
+    "operationId": "DownloadDiaryFile",
+    "sourceFunctionId": 37887,
+    "kind": "binary",
+    "evidence": "#37887 constructs the diary_documents branch's fromUrl/toFile and headers (eliis.hasm:1515750-1515757); continuation #37888 overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1515779-1515794). Native implementation evidence: RNFSManager.java:779-792 maps fromUrl to DownloadParams.src; Downloader.java:64-74 opens and connects an HttpURLConnection, then Downloader.java:131-135 obtains its input stream and opens the destination FileOutputStream, and 141-203 copies the input bytes into that file. This establishes an opaque downloaded transport body, not a JSON result. The diary-file label and filename do not prove actual media type.",
+    "trace": [
+      {"functionId": 37887, "line": 1515750, "evidence": "Parent builds the diary_documents download URL/options (eliis.hasm:1515750-1515757)."},
+      {"functionId": 37888, "line": 1515794, "evidence": "Continuation overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1515779-1515794)."}
+    ],
+    "fields": [], "complete": false,
+    "limitations": ["Opaque streamed response body only; no runtime payload was captured.", "Actual MIME type, HTTP status, and response headers are unknown; the route/filename label does not prove media type.", "RNFS jobId/statusCode/bytesWritten are native download metadata, not HTTP-body fields, and are not modeled."]
+  },
+  {
+    "operationId": "DownloadDocumentFile",
+    "sourceFunctionId": 37887,
+    "kind": "binary",
+    "evidence": "#37887 constructs the documents branch's fromUrl/toFile and headers (eliis.hasm:1515750-1515757); continuation #37888 overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1515779-1515794). Native implementation evidence: RNFSManager.java:779-792 maps fromUrl to DownloadParams.src; Downloader.java:64-74 opens and connects an HttpURLConnection, then Downloader.java:131-135 obtains its input stream and opens the destination FileOutputStream, and 141-203 copies the input bytes into that file. This establishes an opaque downloaded transport body, not a JSON result. The document-file label and filename do not prove actual media type.",
+    "trace": [
+      {"functionId": 37887, "line": 1515750, "evidence": "Parent builds the documents download URL/options (eliis.hasm:1515750-1515757)."},
+      {"functionId": 37888, "line": 1515794, "evidence": "Continuation overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1515779-1515794)."}
+    ],
+    "fields": [], "complete": false,
+    "limitations": ["Opaque streamed response body only; no runtime payload was captured.", "Actual MIME type, HTTP status, and response headers are unknown; the route/filename label does not prove media type.", "RNFS jobId/statusCode/bytesWritten are native download metadata, not HTTP-body fields, and are not modeled."]
+  },
+  {
+    "operationId": "DownloadChildFile",
+    "sourceFunctionId": 37887,
+    "kind": "binary",
+    "evidence": "#37887 constructs the child_files/child_documents branch's fromUrl/toFile and headers (eliis.hasm:1515750-1515757); continuation #37888 overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1515779-1515794). Native implementation evidence: RNFSManager.java:779-792 maps fromUrl to DownloadParams.src; Downloader.java:64-74 opens and connects an HttpURLConnection, then Downloader.java:131-135 obtains its input stream and opens the destination FileOutputStream, and 141-203 copies the input bytes into that file. This establishes an opaque downloaded transport body, not a JSON result. The child-file label and filename do not prove actual media type.",
+    "trace": [
+      {"functionId": 37887, "line": 1515750, "evidence": "Parent builds the child_files/child_documents download URL/options (eliis.hasm:1515750-1515757)."},
+      {"functionId": 37888, "line": 1515794, "evidence": "Continuation overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1515779-1515794)."}
+    ],
+    "fields": [], "complete": false,
+    "limitations": ["Opaque streamed response body only; no runtime payload was captured.", "Actual MIME type, HTTP status, and response headers are unknown; route/filename labels do not prove media type.", "RNFS jobId/statusCode/bytesWritten are native download metadata, not HTTP-body fields, and are not modeled."]
+  },
+  {
+    "operationId": "DownloadFoodmenuFile",
+    "sourceFunctionId": 37318,
+    "kind": "binary",
+    "evidence": "#37318 builds the food-menu download URL/options (eliis.hasm:1489780-1489795); continuation #37319 overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1489815-1489830). Native implementation evidence: RNFSManager.java:779-792 maps fromUrl to DownloadParams.src; Downloader.java:64-74 opens and connects an HttpURLConnection, then Downloader.java:131-135 obtains its input stream and opens the destination FileOutputStream, and 141-203 copies the input bytes into that file. This establishes an opaque downloaded transport body, not a JSON result. The food-menu/download path and local filename do not prove actual media type.",
+    "trace": [
+      {"functionId": 37318, "line": 1489780, "evidence": "Parent builds the food-menu download URL/options (eliis.hasm:1489780-1489795)."},
+      {"functionId": 37319, "line": 1489830, "evidence": "Continuation overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1489815-1489830)."}
+    ],
+    "fields": [], "complete": false,
+    "limitations": ["Opaque streamed response body only; no runtime payload was captured.", "Actual MIME type, HTTP status, and response headers are unknown; route naming and local filename are not media-type evidence.", "RNFS jobId/statusCode/bytesWritten are native download metadata, not HTTP-body fields, and are not modeled."]
+  },
+  {
+    "operationId": "DownloadPlanPdf",
+    "sourceFunctionId": 41207,
+    "kind": "binary",
+    "evidence": "#41207 builds its plan-PDF download URL/options (eliis.hasm:1674271-1674289); continuation #41208 overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1674312-1674327). Alias handler #41299 separately builds equivalent URL/options (eliis.hasm:1677611-1677629), then continuation #41300 invokes RNFS downloadFile (eliis.hasm:1677645-1677659). Native implementation evidence: RNFSManager.java:779-792 maps fromUrl to DownloadParams.src; Downloader.java:64-74 opens and connects an HttpURLConnection, then Downloader.java:131-135 obtains its input stream and opens the destination FileOutputStream, and 141-203 copies the input bytes into that file. This establishes an opaque downloaded transport body, not a JSON result. The /pdf suffix and local .pdf filename do not prove actual media type.",
+    "trace": [
+      {"functionId": 41207, "line": 1674284, "evidence": "Primary handler builds the plan-PDF fromUrl/toFile and headers (eliis.hasm:1674271-1674289)."},
+      {"functionId": 41208, "line": 1674327, "evidence": "Primary handler continuation overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1674312-1674327)."},
+      {"functionId": 41299, "line": 1677624, "evidence": "Alias handler builds an equivalent plan-PDF fromUrl/toFile and headers (eliis.hasm:1677611-1677629)."},
+      {"functionId": 41300, "line": 1677659, "evidence": "Alias continuation overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1677645-1677659)."}
+    ],
+    "fields": [], "complete": false,
+    "limitations": ["Opaque streamed response body only; no runtime payload was captured.", "Actual MIME type, HTTP status, and response headers are unknown; /pdf and local extension are not proof of actual media type.", "RNFS jobId/statusCode/bytesWritten are native download metadata, not HTTP-body fields, and are not modeled."]
+  },
+  {
+    "operationId": "DownloadChildMapPdf",
+    "sourceFunctionId": 44191,
+    "kind": "binary",
+    "evidence": "#44191 constructs the child-map download URL/options (eliis.hasm:1803165-1803172); continuation #44192 overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1803192-1803207). Native implementation evidence: RNFSManager.java:779-792 maps fromUrl to DownloadParams.src; Downloader.java:64-74 opens and connects an HttpURLConnection, then Downloader.java:131-135 obtains its input stream and opens the destination FileOutputStream, and 141-203 copies the input bytes into that file. This establishes an opaque downloaded transport body, not a JSON result. The /pdf suffix and query labels do not prove actual media type.",
+    "trace": [
+      {"functionId": 44191, "line": 1803167, "evidence": "Parent builds the child-map fromUrl/toFile and headers (eliis.hasm:1803165-1803172)."},
+      {"functionId": 44192, "line": 1803207, "evidence": "Continuation overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1803192-1803207)."}
+    ],
+    "fields": [], "complete": false,
+    "limitations": ["Opaque streamed response body only; no runtime payload was captured.", "Actual MIME type, HTTP status, and response headers are unknown; /pdf and query labels are not media-type evidence.", "RNFS jobId/statusCode/bytesWritten are native download metadata, not HTTP-body fields, and are not modeled."]
+  },
+  {
+    "operationId": "DownloadChildPlanPdf",
+    "sourceFunctionId": 44291,
+    "kind": "binary",
+    "evidence": "#44291 constructs the child-plan download URL/options (eliis.hasm:1807660-1807665); continuation #44292 overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1807685-1807700). Native implementation evidence: RNFSManager.java:779-792 maps fromUrl to DownloadParams.src; Downloader.java:64-74 opens and connects an HttpURLConnection, then Downloader.java:131-135 obtains its input stream and opens the destination FileOutputStream, and 141-203 copies the input bytes into that file. This establishes an opaque downloaded transport body, not a JSON result. The /pdf suffix and local filename do not prove actual media type.",
+    "trace": [
+      {"functionId": 44291, "line": 1807660, "evidence": "Parent builds the child-plan fromUrl/toFile and headers (eliis.hasm:1807660-1807665)."},
+      {"functionId": 44292, "line": 1807700, "evidence": "Continuation overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1807685-1807700)."}
+    ],
+    "fields": [], "complete": false,
+    "limitations": ["Opaque streamed response body only; no runtime payload was captured.", "Actual MIME type, HTTP status, and response headers are unknown; /pdf and local filename are not media-type evidence.", "RNFS jobId/statusCode/bytesWritten are native download metadata, not HTTP-body fields, and are not modeled."]
+  },
+  {
+    "operationId": "GetIdeaImage",
+    "sourceFunctionId": 35188,
+    "kind": "binary",
+    "evidence": "#35188 tests selectedMedia.url, constructs the imageUrl/filename fallback and RNFS options only on the falsy-url branch (eliis.hasm:1404427-1404447); continuation #35189 overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1404481-1404496). Native implementation evidence: RNFSManager.java:779-792 maps fromUrl to DownloadParams.src; Downloader.java:64-74 opens and connects an HttpURLConnection, then Downloader.java:131-135 obtains its input stream and opens the destination FileOutputStream, and 141-203 copies the input bytes into that file. This establishes an opaque downloaded transport body, not a JSON result. The image label, URL fallback, and filename do not prove actual media type.",
+    "trace": [
+      {"functionId": 35188, "line": 1404427, "evidence": "Parent tests selectedMedia.url and conditionally builds the fallback URL and RNFS options (eliis.hasm:1404427-1404447)."},
+      {"functionId": 35189, "line": 1404496, "evidence": "Continuation overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1404481-1404496)."}
+    ],
+    "fields": [], "complete": false,
+    "limitations": ["Disposition covers only this concrete native fallback download; the remote selectedMedia.url branch is not this operation.", "Opaque streamed response body only; no runtime payload was captured.", "Actual MIME type, HTTP status, and response headers are unknown; image naming and fallback selection are not media-type evidence.", "RNFS jobId/statusCode/bytesWritten are native download metadata, not HTTP-body fields, and are not modeled."]
+  },
+  {
+    "operationId": "DownloadEmployeeMealsXls",
+    "sourceFunctionId": 40704,
+    "kind": "binary",
+    "evidence": "#40704 builds the report download options from downloadUrl (eliis.hasm:1648213-1648224); continuation #40705 appends the language cookie and invokes RNFS downloadFile (eliis.hasm:1648241-1648260). Native implementation evidence: RNFSManager.java:779-792 maps fromUrl to DownloadParams.src; Downloader.java:64-74 opens and connects an HttpURLConnection, then Downloader.java:131-135 obtains its input stream and opens the destination FileOutputStream, and 141-203 copies the input bytes into that file. This establishes an opaque downloaded transport body, not a JSON result. The /xls path and local .xlsx suffix do not prove actual media type.",
+    "trace": [
+      {"functionId": 40704, "line": 1648219, "evidence": "Parent builds RNFS fromUrl/toFile and cookie headers using the report downloadUrl (eliis.hasm:1648213-1648224)."},
+      {"functionId": 40705, "line": 1648260, "evidence": "Continuation appends the language cookie and invokes RNFS downloadFile (eliis.hasm:1648241-1648260)."}
+    ],
+    "fields": [], "complete": false,
+    "limitations": ["Opaque streamed response body only; no runtime payload was captured.", "Actual MIME type, HTTP status, and response headers are unknown; /xls and local .xlsx are not proof of actual media type.", "RNFS jobId/statusCode/bytesWritten are native download metadata, not HTTP-body fields, and are not modeled."]
+  },
+  {
+    "operationId": "DownloadTodaysMealsPdf",
+    "sourceFunctionId": 40704,
+    "kind": "binary",
+    "evidence": "#40704 builds the report download options from downloadUrl (eliis.hasm:1648213-1648224); continuation #40705 appends the language cookie and invokes RNFS downloadFile (eliis.hasm:1648241-1648260). Native implementation evidence: RNFSManager.java:779-792 maps fromUrl to DownloadParams.src; Downloader.java:64-74 opens and connects an HttpURLConnection, then Downloader.java:131-135 obtains its input stream and opens the destination FileOutputStream, and 141-203 copies the input bytes into that file. This establishes an opaque downloaded transport body, not a JSON result. The PDF report path and local filename do not prove actual media type.",
+    "trace": [
+      {"functionId": 40704, "line": 1648219, "evidence": "Parent builds RNFS fromUrl/toFile and cookie headers using the report downloadUrl (eliis.hasm:1648213-1648224)."},
+      {"functionId": 40705, "line": 1648260, "evidence": "Continuation appends the language cookie and invokes RNFS downloadFile (eliis.hasm:1648241-1648260)."}
+    ],
+    "fields": [], "complete": false,
+    "limitations": ["Opaque streamed response body only; no runtime payload was captured.", "Actual MIME type, HTTP status, and response headers are unknown; report naming and PDF extension are not proof of actual media type.", "RNFS jobId/statusCode/bytesWritten are native download metadata, not HTTP-body fields, and are not modeled."]
+  },
+  {
+    "operationId": "DownloadTodaysMealsXls",
+    "sourceFunctionId": 40704,
+    "kind": "binary",
+    "evidence": "#40704 builds the report download options from downloadUrl (eliis.hasm:1648213-1648224); continuation #40705 appends the language cookie and invokes RNFS downloadFile (eliis.hasm:1648241-1648260). Native implementation evidence: RNFSManager.java:779-792 maps fromUrl to DownloadParams.src; Downloader.java:64-74 opens and connects an HttpURLConnection, then Downloader.java:131-135 obtains its input stream and opens the destination FileOutputStream, and 141-203 copies the input bytes into that file. This establishes an opaque downloaded transport body, not a JSON result. The /xls path and local .xlsx suffix do not prove actual media type.",
+    "trace": [
+      {"functionId": 40704, "line": 1648219, "evidence": "Parent builds RNFS fromUrl/toFile and cookie headers using the report downloadUrl (eliis.hasm:1648213-1648224)."},
+      {"functionId": 40705, "line": 1648260, "evidence": "Continuation appends the language cookie and invokes RNFS downloadFile (eliis.hasm:1648241-1648260)."}
+    ],
+    "fields": [], "complete": false,
+    "limitations": ["Opaque streamed response body only; no runtime payload was captured.", "Actual MIME type, HTTP status, and response headers are unknown; /xls and local .xlsx are not proof of actual media type.", "RNFS jobId/statusCode/bytesWritten are native download metadata, not HTTP-body fields, and are not modeled."]
+  },
+  {
+    "operationId": "DownloadTodaysMealsPerCoursePdf",
+    "sourceFunctionId": 40704,
+    "kind": "binary",
+    "evidence": "#40704 builds the report download options from downloadUrl (eliis.hasm:1648213-1648224); continuation #40705 appends the language cookie and invokes RNFS downloadFile (eliis.hasm:1648241-1648260). Native implementation evidence: RNFSManager.java:779-792 maps fromUrl to DownloadParams.src; Downloader.java:64-74 opens and connects an HttpURLConnection, then Downloader.java:131-135 obtains its input stream and opens the destination FileOutputStream, and 141-203 copies the input bytes into that file. This establishes an opaque downloaded transport body, not a JSON result. The per-course/PDF labels do not prove actual media type.",
+    "trace": [
+      {"functionId": 40704, "line": 1648219, "evidence": "Parent builds RNFS fromUrl/toFile and cookie headers using the report downloadUrl (eliis.hasm:1648213-1648224)."},
+      {"functionId": 40705, "line": 1648260, "evidence": "Continuation appends the language cookie and invokes RNFS downloadFile (eliis.hasm:1648241-1648260)."}
+    ],
+    "fields": [], "complete": false,
+    "limitations": ["Opaque streamed response body only; no runtime payload was captured.", "Actual MIME type, HTTP status, and response headers are unknown; per-course/PDF naming is not proof of actual media type.", "RNFS jobId/statusCode/bytesWritten are native download metadata, not HTTP-body fields, and are not modeled."]
+  },
+  {
+    "operationId": "DownloadTodaysMealsPerCourseXls",
+    "sourceFunctionId": 40704,
+    "kind": "binary",
+    "evidence": "#40704 builds the report download options from downloadUrl (eliis.hasm:1648213-1648224); continuation #40705 appends the language cookie and invokes RNFS downloadFile (eliis.hasm:1648241-1648260). Native implementation evidence: RNFSManager.java:779-792 maps fromUrl to DownloadParams.src; Downloader.java:64-74 opens and connects an HttpURLConnection, then Downloader.java:131-135 obtains its input stream and opens the destination FileOutputStream, and 141-203 copies the input bytes into that file. This establishes an opaque downloaded transport body, not a JSON result. The per-course /xls path and local .xlsx suffix do not prove actual media type.",
+    "trace": [
+      {"functionId": 40704, "line": 1648219, "evidence": "Parent builds RNFS fromUrl/toFile and cookie headers using the report downloadUrl (eliis.hasm:1648213-1648224)."},
+      {"functionId": 40705, "line": 1648260, "evidence": "Continuation appends the language cookie and invokes RNFS downloadFile (eliis.hasm:1648241-1648260)."}
+    ],
+    "fields": [], "complete": false,
+    "limitations": ["Opaque streamed response body only; no runtime payload was captured.", "Actual MIME type, HTTP status, and response headers are unknown; /xls and local .xlsx are not proof of actual media type.", "RNFS jobId/statusCode/bytesWritten are native download metadata, not HTTP-body fields, and are not modeled."]
+  },
+  {
+    "operationId": "DownloadPlanFile",
+    "sourceFunctionId": 34111,
+    "kind": "binary",
+    "evidence": "#44303 builds the plan-file downloadUrl (eliis.hasm:1808290-1808299); shared options builder #34111 constructs fromUrl/toFile and headers (eliis.hasm:1335255-1335263); continuation #34112 overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1335282-1335297). Native implementation evidence: RNFSManager.java:779-792 maps fromUrl to DownloadParams.src; Downloader.java:64-74 opens and connects an HttpURLConnection, then Downloader.java:131-135 obtains its input stream and opens the destination FileOutputStream, and 141-203 copies the input bytes into that file. This establishes an opaque downloaded transport body, not a JSON result. The plans-file path and filename do not prove actual media type.",
+    "trace": [
+      {"functionId": 44303, "line": 1808290, "evidence": "Parent plan-file renderer builds the plan-file downloadUrl (eliis.hasm:1808290-1808299)."},
+      {"functionId": 34111, "line": 1335255, "evidence": "Shared options builder constructs RNFS fromUrl/toFile and headers using the supplied downloadUrl (eliis.hasm:1335255-1335263)."},
+      {"functionId": 34112, "line": 1335297, "evidence": "Shared continuation overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1335282-1335297)."}
+    ],
+    "fields": [], "complete": false,
+    "limitations": ["Opaque streamed response body only; no runtime payload was captured.", "Actual MIME type, HTTP status, and response headers are unknown; path and filename do not prove media type.", "RNFS jobId/statusCode/bytesWritten are native download metadata, not HTTP-body fields, and are not modeled."]
+  }
+]
