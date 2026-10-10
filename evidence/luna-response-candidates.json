@@ -1,0 +1,266 @@
+{
+  "documentKind": "client-response-observation-candidates",
+  "createdOn": "2026-10-10",
+  "scope": [
+    "GetUserProfile (#16346)",
+    "GetUserSettings (#16367)",
+    "GetLanguages (#12709)",
+    "GetCountries (#26289)"
+  ],
+  "normativeContractChanges": false,
+  "policy": {
+    "candidateOnly": "These observations are not server-complete schemas and do not change the normative unknown responses in evidence/research/auth-common.json.",
+    "layers": "response.data is the Axios response-body projection; action.data and Redux state are application-level forwarding/storage layers, not additional HTTP response wrappers.",
+    "typesAndPresence": "Unknown unless established by a specific public sample. Client property reads do not establish server requiredness, nullability, universal presence, or response completeness.",
+    "coverage": "Bounded bytecode tracing of the four named endpoints only. No dynamic app/API activity was performed."
+  },
+  "clientResponseObservations": [
+    {
+      "operationId": "GetLanguages",
+      "method": "get",
+      "path": "/api/lang/languages",
+      "service": {
+        "functionId": 12709,
+        "functionName": "getLanguages",
+        "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:509969-509983",
+        "evidence": "Calls the default Axios client's get with /api/lang/languages and returns the promise."
+      },
+      "axiosProjection": {
+        "functionId": 12710,
+        "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:509988-509994",
+        "evidence": "Fulfillment handler reads response.data and returns it unchanged. This is the HTTP response-body projection, not a property of that body."
+      },
+      "consumerChain": [
+        {
+          "functionId": 12696,
+          "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:509592-509607",
+          "evidence": "Calls getLanguages and passes its fulfillment value to #12697."
+        },
+        {
+          "functionId": 12697,
+          "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:509612-509642",
+          "evidence": "Reads the fulfillment value's langs and country properties, then dispatches SET_LANGUAGES(data=langs) and SET_COUNTRY(data=country).",
+          "responseBodyPropertyReads": [
+            {
+              "path": "langs",
+              "type": "unknown",
+              "evidence": "#12697 +0x14-+0x1a reads property langs from the value returned by #12710; that value is response.data."
+            },
+            {
+              "path": "country",
+              "type": "unknown",
+              "evidence": "#12697 +0x2f-+0x35 reads property country from the value returned by #12710; that value is response.data."
+            }
+          ],
+          "responseFieldsNotReadByThisChain": ["lang", "domain", "countryLanguages"]
+        }
+      ],
+      "candidateInterpretation": "Only langs and country are bytecode-proven client reads from this endpoint's projected response body in the traced chain. Their presence on every server response and their value types are unproven."
+    },
+    {
+      "operationId": "GetUserProfile",
+      "method": "get",
+      "path": "/api/common/user/profile",
+      "service": {
+        "functionId": 16346,
+        "functionName": "getUserProfile",
+        "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:649508-649527",
+        "evidence": "Calls the default Axios client's get with /api/common/user/profile and chains fulfillment handler #16347."
+      },
+      "axiosProjection": {
+        "functionId": 16347,
+        "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:649527-649535",
+        "evidence": "Fulfillment handler reads response.data and returns it unchanged. This establishes no property of the HTTP response body."
+      },
+      "consumerChain": [
+        {
+          "functionId": 40867,
+          "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:1657482-1657505",
+          "evidence": "The UserProfileScreen path calls getUserProfile; fulfillment callback #40868 only clears its loading state and does not read or store the fulfillment value."
+        }
+      ],
+      "responseBodyPropertyReads": [],
+      "candidateInterpretation": "No HTTP-body member is established by the traced callsite. UI fields read from separate Redux state are not attributed to this endpoint. Keep the response unknown."
+    },
+    {
+      "operationId": "GetUserSettings",
+      "method": "get",
+      "path": "/api/common/user/settings",
+      "service": {
+        "functionId": 16367,
+        "functionName": "getUserSettings",
+        "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:649839-649858",
+        "evidence": "Calls the default Axios client's get with /api/common/user/settings and chains fulfillment handler #16368."
+      },
+      "axiosProjection": {
+        "functionId": 16368,
+        "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:649858-649865",
+        "evidence": "Fulfillment handler reads response.data and returns it unchanged."
+      },
+      "consumerChain": [
+        {
+          "functionId": 16214,
+          "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:646522-646537",
+          "evidence": "Calls getUserSettings and passes its fulfillment value to #16215."
+        },
+        {
+          "functionId": 16215,
+          "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:646542-646555",
+          "evidence": "Dispatches SET_USER_SETTINGS with data equal to the fulfillment value (response.data), without reading a body member."
+        },
+        {
+          "functionId": 25102,
+          "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:986102-986127 and 986224-986225, 986377-986385",
+          "evidence": "The userReducer SET_USER_SETTINGS branch stores action.data unchanged at state.user_settings. Redux state field name is not an HTTP response-body property."
+        },
+        {
+          "functionId": 41035,
+          "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:1664588-1664596",
+          "evidence": "A selector reads state.user.user_settings; it does not inspect a member of that stored value."
+        }
+      ],
+      "responseBodyPropertyReads": [],
+      "applicationStateForwarding": [
+        {
+          "from": "response.data",
+          "via": "SET_USER_SETTINGS action.data",
+          "to": "Redux state.user.user_settings",
+          "kind": "unchanged-value forwarding/storage",
+          "evidence": "#16368 -> #16215 -> userReducer #25102. This is not evidence for a response property named user_settings."
+        }
+      ],
+      "candidateInterpretation": "The traced endpoint result is forwarded and stored opaquely. No HTTP-body member or value type is established; keep the response unknown."
+    },
+    {
+      "operationId": "GetCountries",
+      "method": "get",
+      "path": "/api/auth/countries",
+      "service": {
+        "functionId": 26289,
+        "functionName": "getCountries",
+        "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:1022267-1022281",
+        "evidence": "Calls the default Axios client's get with /api/auth/countries and chains fulfillment handler #26290."
+      },
+      "axiosProjection": {
+        "functionId": 26290,
+        "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:1022286-1022292",
+        "evidence": "Fulfillment handler reads response.data and returns it unchanged."
+      },
+      "consumerChain": [
+        {
+          "functionId": 26284,
+          "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:1022139-1022154",
+          "evidence": "Calls getCountries and passes its fulfillment value to #26285."
+        },
+        {
+          "functionId": 26285,
+          "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:1022159-1022172",
+          "evidence": "Dispatches SET_COUNTRIES with data equal to the fulfillment value (response.data), without reading a body member."
+        },
+        {
+          "functionId": 26281,
+          "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:1022037-1022084",
+          "evidence": "The countriesReducer stores action.data unchanged at state.countries and separately derives lastFetch from the local clock. Its initial countries value is an empty array, which does not establish the response type."
+        },
+        {
+          "functionId": 40856,
+          "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm:1657222-1657229",
+          "evidence": "A selector reads state.countries.countries; this traced selector does not inspect a member of the stored response value."
+        }
+      ],
+      "responseBodyPropertyReads": [],
+      "applicationStateForwarding": [
+        {
+          "from": "response.data",
+          "via": "SET_COUNTRIES action.data",
+          "to": "Redux state.countries.countries",
+          "kind": "unchanged-value forwarding/storage",
+          "evidence": "#26290 -> #26285 -> countriesReducer #26281. lastFetch is locally derived and is not part of the HTTP body."
+        }
+      ],
+      "candidateInterpretation": "No HTTP-body member or collection/item type is established by the traced chain; keep the response unknown."
+    }
+  ],
+  "observedPublicSamples": [
+    {
+      "operationId": "GetLanguages",
+      "sampleId": "PublicLanguagesObservation2026-10-09",
+      "sourceFile": "evidence/public-languages-observation.json",
+      "observedOn": "2026-10-09",
+      "request": {
+        "method": "GET",
+        "url": "https://api.eliis.eu/api/lang/languages",
+        "credentialsUsed": false
+      },
+      "sampleOnly": true,
+      "response": {
+        "status": 200,
+        "contentType": "application/json",
+        "body": {
+          "langs": {
+            "et": "Eesti",
+            "ru": "Русский",
+            "en": "English",
+            "lv": "Latviešu",
+            "lt": "Lietuvių",
+            "fi": "Suomi",
+            "de": "Deutsch",
+            "ja": "日本語",
+            "pl": "Polski",
+            "uk": "Українська",
+            "ar": "العربية",
+            "ro": "Română",
+            "tr": "Türkçe",
+            "az": "Azərbaycan",
+            "cs": "Čeština",
+            "no": "Norsk",
+            "sv": "Svenska"
+          },
+          "lang": "lt",
+          "country": "lt",
+          "domain": "lt",
+          "countryLanguages": {
+            "ee": ["et"],
+            "lv": ["lv"],
+            "lt": ["lt"],
+            "pl": ["pl"]
+          }
+        }
+      },
+      "sampleObservations": [
+        {
+          "path": "langs",
+          "observedValueShape": "object with the 17 shown keys and string values",
+          "limits": "One sample only; keys/values are not closed enums and the mapping is not asserted complete."
+        },
+        {
+          "path": "lang",
+          "observedValue": "lt",
+          "observedValueType": "string",
+          "limits": "Single sample value; not a default or enum."
+        },
+        {
+          "path": "country",
+          "observedValue": "lt",
+          "observedValueType": "string",
+          "limits": "Single sample value; not a default or enum."
+        },
+        {
+          "path": "domain",
+          "observedValue": "lt",
+          "observedValueType": "string",
+          "limits": "Single sample value; not a default or enum."
+        },
+        {
+          "path": "countryLanguages",
+          "observedValueShape": "object with the four shown keys and string-array values",
+          "limits": "One sample only; keys/values are not closed enums and the mapping is not asserted complete."
+        }
+      ],
+      "limits": [
+        "This is an observed public response, not a normative response model or evidence of universal fields/presence.",
+        "The client chain above reads langs and country; lang, domain, and countryLanguages are present in this sample but are not read by that chain."
+      ]
+    }
+  ]
+}

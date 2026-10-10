@@ -363,6 +363,20 @@ model UploadChildProfilePictureBody extends Record<unknown> {
   `profile_picture`?: unknown;
 }
 
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "course_id", `type`: "unknown", `evidence`: "#25765 +0x48-0x54 writes the captured course argument when non-nullish; otherwise reads diary.selected_course_id, then assigns course_id."}, #{`name`: "date", `type`: "unknown", `evidence`: "#25765 +0x59-0x6d writes the captured date argument when non-nullish; otherwise reads diary.selected_date, then assigns date."}, #{`name`: "published", `type`: "integer", `value`: 0, `evidence`: "#25765 +0x71 LoadConstZero and +0x73 writes numeric literal 0. This is an observed client value only; no server type/default/enum claim."}], `complete`: false, `evidence`: "#25765 locally constructs the whole data object and passes it as createDiary's body argument at +0x78-0x7e. #25937 POSTs its p2 directly as Axios data (+0x30-0x39)."}]})
+model CreateDiaryBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "course_id", `type`: "unknown", `evidence`: "#25765 +0x48-0x54 writes the captured course argument when non-nullish; otherwise reads diary.selected_course_id, then assigns course_id."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `course_id`?: unknown;
+  @extension("x-evidence", #[#{`name`: "date", `type`: "unknown", `evidence`: "#25765 +0x59-0x6d writes the captured date argument when non-nullish; otherwise reads diary.selected_date, then assigns date."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `date`?: unknown;
+  @extension("x-evidence", #[#{`name`: "published", `type`: "integer", `value`: 0, `evidence`: "#25765 +0x71 LoadConstZero and +0x73 writes numeric literal 0. This is an observed client value only; no server type/default/enum claim."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  @extension("x-client-observed-value", 0)
+  `published`?: integer;
+}
+
 @extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "child_id", `type`: "unknown", `evidence`: "#25867 +0x91-0x9a constructs base child_id from captured action argument 1 (UI route childId); Object.assign later source +0xa3 can overwrite for arbitrary action input."}, #{`name`: "diary_feedback_type_id", `type`: "unknown", `evidence`: "#43534 +0x28-0x2c copies captured selected feedback type, merged into final body by #25867."}, #{`name`: "comment", `type`: "unknown", `evidence`: "#43534 +0x31-0x35 copies captured editor state, merged by #25867."}, #{`name`: "visible_to_guardians", `type`: "integer", `evidence`: "#43534 +0x3a-0x46 constructs numeric 0/1 by truthiness; #25867 merges UI source. Client branch values, not server enum."}], `evidence`: "Axios post data argument is input parameter 3. #43534 -> exported #25864/#25865/#25866/#25867 -> M2249 installed #25961 verifies four final app-callsite keys, including action-added child_id. Arbitrary later Object.assign source can add keys/overwrite child_id; partial endpoint model.", `complete`: false}]})
 model AddEntryFeedbackBody extends Record<unknown> {
   @extension("x-evidence", #[#{`name`: "child_id", `type`: "unknown", `evidence`: "#25867 +0x91-0x9a constructs base child_id from captured action argument 1 (UI route childId); Object.assign later source +0xa3 can overwrite for arbitrary action input."}])
@@ -407,6 +421,39 @@ model UploadMediaBody extends Record<unknown> {
   @extension("x-evidence", #[#{`name`: "uploaded_at", `type`: "unknown", `evidence`: "#25803 +0x99-0xcb appends UTC formatter result under literal uploaded_at; return type/server interpretation unresolved."}])
   @extension("x-client-presence", "present in traced construction; server requiredness unknown")
   `uploaded_at`?: unknown;
+}
+
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "child_id", `type`: "unknown", `evidence`: "#25897 +0x91-0x9a creates this key from the child ID argument before Object.assign."}, #{`name`: "started_at", `type`: "unknown", `evidence`: "#43884 +0x1ca-0x1dd creates the body property from the start-time value formatted with YYYY-MM-DD HH:mm:ss."}, #{`name`: "ended_at", `type`: "unknown", `optional`: true, `evidence`: "#43884 +0x1e8-0x1fb assigns ended_at only on the truthy end-time branch; value is formatted with YYYY-MM-DD HH:mm:ss."}], `complete`: false, `evidence`: "The named UI caller constructs started_at and conditionally ended_at; action #25897 merges that object with child_id using Object.assign (+0x84-0xa9). Other callers can forward arbitrary keys through that merge. #25971 POSTs p3 as Axios data (+0x35-0x3e)."}]})
+model AddTimeLogBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "child_id", `type`: "unknown", `evidence`: "#25897 +0x91-0x9a creates this key from the child ID argument before Object.assign."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `child_id`?: unknown;
+  @extension("x-evidence", #[#{`name`: "started_at", `type`: "unknown", `evidence`: "#43884 +0x1ca-0x1dd creates the body property from the start-time value formatted with YYYY-MM-DD HH:mm:ss."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `started_at`?: unknown;
+  @extension("x-evidence", #[#{`name`: "ended_at", `type`: "unknown", `optional`: true, `evidence`: "#43884 +0x1e8-0x1fb assigns ended_at only on the truthy end-time branch; value is formatted with YYYY-MM-DD HH:mm:ss."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `ended_at`?: unknown;
+}
+
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "date", `type`: "unknown", `evidence`: "#37349 +0x0e-0x19 copies context.day.date to the constructed body."}, #{`name`: "employee_id", `type`: "unknown", `evidence`: "#37349 +0x1d-0x23 copies context.employee_id to the constructed body."}], `complete`: false, `evidence`: "#37349 also assigns a computed property via PutByVal at +0x4c, with the key obtained from context.meal at +0x28-0x2e; that dynamic wire key is unresolved. #26002 passes the constructed object to #26015, which POSTs p2 directly as Axios data (+0x23-0x39)."}]})
+model SaveEmployeeMealBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "date", `type`: "unknown", `evidence`: "#37349 +0x0e-0x19 copies context.day.date to the constructed body."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `date`?: unknown;
+  @extension("x-evidence", #[#{`name`: "employee_id", `type`: "unknown", `evidence`: "#37349 +0x1d-0x23 copies context.employee_id to the constructed body."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `employee_id`?: unknown;
+}
+
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "start_time", `type`: "unknown", `optional`: true, `evidence`: "#25377 passes its opaque event through #25369; the helper copies input and conditionally UTC-formats a truthy start_time as HH:mm:ss. A missing input key is not added."}, #{`name`: "end_time", `type`: "unknown", `optional`: true, `evidence`: "#25377 passes its opaque event through #25369; the helper copies input and conditionally UTC-formats a truthy end_time as HH:mm:ss. A missing input key is not added."}], `evidence`: "#25377 calls #25369 convertTimesToUtc before #25405. The helper starts with Object.assign({}, input), conditionally projects start_time/end_time, and returns the copy; #25405 sends its second argument as Axios POST data. Remaining incoming properties are opaque, so this is a partial client-observed body, not a complete schema.", `complete`: false}]})
+model CreateEventBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "start_time", `type`: "unknown", `optional`: true, `evidence`: "#25377 passes its opaque event through #25369; the helper copies input and conditionally UTC-formats a truthy start_time as HH:mm:ss. A missing input key is not added."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `start_time`?: unknown;
+  @extension("x-evidence", #[#{`name`: "end_time", `type`: "unknown", `optional`: true, `evidence`: "#25377 passes its opaque event through #25369; the helper copies input and conditionally UTC-formats a truthy end_time as HH:mm:ss. A missing input key is not added."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `end_time`?: unknown;
 }
 
 @extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "multipart", `fields`: #[#{`name`: "file", `type`: "unknown", `evidence`: "#26195 +0x41-0x4b appends original selected item under literal file; unknown value, no nested API fields."}, #{`name`: "type", `type`: "unknown", `evidence`: "#26195 +0x51-0x62 appends captured uploadFolderFiles p2 under literal type, loaded depth 4 slot 1 +0x57-0x5a and captured #26190 +0x09-0x0c. Not item.type; accepted type unresolved."}, #{`name`: "uploaded_at", `type`: "unknown", `evidence`: "#26195 +0x68-0x9a appends UTC formatter result under literal uploaded_at loaded +0x96; return type/server interpretation unresolved."}], `evidence`: "Actual nested constructor #26195 -> uploadFolderFile #26187/#26188 -> installed #26153(kindergarten,FormData,folderId); POST data=p2 +0x46-0x49, route p3 +0x2a. Three proved literal parts, partial endpoint/caller coverage.", `complete`: false}]})
@@ -504,6 +551,50 @@ model SendMessageBody extends Record<unknown> {
   @extension("x-client-presence", "present in traced construction; server requiredness unknown")
   @extension("x-client-observed-value", "message")
   `type`?: string;
+}
+
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "question_id", `type`: "unknown", `evidence`: "#38981 copies the source object's id to question_id; request value remains unknown."}, #{`name`: "survey_id", `type`: "unknown", `evidence`: "#38981 copies source survey_id to survey_id; request value remains unknown."}, #{`name`: "option_id", `type`: "unknown", `evidence`: "#38981 unconditionally assigns one of two branch-selected source values to option_id; request value remains unknown."}, #{`name`: "type", `type`: "unknown", `evidence`: "#38981 copies source type to type; request value remains unknown."}, #{`name`: "value", `type`: "unknown", `evidence`: "#38981 copies a captured answer value to value; request value remains unknown."}, #{`name`: "other_id", `type`: "unknown", `evidence`: "#38981 always assigns this own property from options.find(...).id or undefined if no result is found; Axios #5842 JSON.stringify omits it in the undefined case, so a wire key is not guaranteed."}], `evidence`: "The traced #38981 constructor makes the six own properties and its fill branch forwards the object via #26444 to #26457. This is a partial client-observed JSON body. In the no-match branch other_id is own-but-undefined and is omitted by Axios's JSON.stringify transform; it is not guaranteed on the wire.", `complete`: false}]})
+model FillPollQuestionBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "question_id", `type`: "unknown", `evidence`: "#38981 copies the source object's id to question_id; request value remains unknown."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `question_id`?: unknown;
+  @extension("x-evidence", #[#{`name`: "survey_id", `type`: "unknown", `evidence`: "#38981 copies source survey_id to survey_id; request value remains unknown."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `survey_id`?: unknown;
+  @extension("x-evidence", #[#{`name`: "option_id", `type`: "unknown", `evidence`: "#38981 unconditionally assigns one of two branch-selected source values to option_id; request value remains unknown."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `option_id`?: unknown;
+  @extension("x-evidence", #[#{`name`: "type", `type`: "unknown", `evidence`: "#38981 copies source type to type; request value remains unknown."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `type`?: unknown;
+  @extension("x-evidence", #[#{`name`: "value", `type`: "unknown", `evidence`: "#38981 copies a captured answer value to value; request value remains unknown."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `value`?: unknown;
+  @extension("x-evidence", #[#{`name`: "other_id", `type`: "unknown", `evidence`: "#38981 always assigns this own property from options.find(...).id or undefined if no result is found; Axios #5842 JSON.stringify omits it in the undefined case, so a wire key is not guaranteed."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `other_id`?: unknown;
+}
+
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "question_id", `type`: "unknown", `evidence`: "Both traced constructors copy question.id to question_id."}, #{`name`: "survey_id", `type`: "unknown", `evidence`: "Both traced constructors copy question.survey_id to survey_id."}, #{`name`: "required", `type`: "unknown", `evidence`: "Both traced constructors copy question.required as a body property; name/value do not imply server-requiredness."}, #{`name`: "type", `type`: "unknown", `evidence`: "Both traced constructors copy question.type to type."}, #{`name`: "value", `type`: "unknown", `evidence`: "Both constructors write value, with their respective dynamic/null branches."}, #{`name`: "option_id", `type`: "unknown", `optional`: true, `evidence`: "#39490 unconditionally writes option_id as the selected option id or null; the separately traced #39489 text-answer route sends its complete five-key body without option_id (see clientRequestVariants evidence). This is client-constructor variation, not server requiredness or nullability."}], `evidence`: "Both caller variants are traced to #26494: #39484 stores #39491 at +0x161-0x166; #39489 calls it with its five-key object at +0x49, and #39490 calls its captured #39491 handler at +0x7c-0x88 in one branch (1591690-1778, 1592085-2109, 1592151-2154). In #39490's direct-import branch, it accesses dependency slot 15 and invokes that import with the six-key body (+0xc9-+0xe2; 1592168-2178). #39491 also reads component #39481's dependency-array slot 15 and invokes that import with its body (1592199-2215). The ID-bearing Metro bridge is explicit in original eliis.hasm: component factory #39481 is registered as module 4125 with dependency slot 15 = module 2286 (20750-20753); module 2286 is factory #26464 with dependencies [1,2287] (11555-11558), and module 2287 is factory #26485 (11560-11563). Factory #26464 exports action creator #26474, which returns thunk #26475 (1028044-8110, 1028334-8342); #26475 forwards each body to user.default.fillQuestionnaireQuestion (1028347-8371). QuestionnaireService factory #26486 registers that service key to #26494 (1028600-8649), which posts it (1028788-8815). Both constructor variants remain separate; the union is six client-observed candidate fields, not a complete endpoint schema.", `complete`: false}]})
+model FillQuestionnaireQuestionBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "question_id", `type`: "unknown", `evidence`: "Both traced constructors copy question.id to question_id."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `question_id`?: unknown;
+  @extension("x-evidence", #[#{`name`: "survey_id", `type`: "unknown", `evidence`: "Both traced constructors copy question.survey_id to survey_id."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `survey_id`?: unknown;
+  @extension("x-evidence", #[#{`name`: "required", `type`: "unknown", `evidence`: "Both traced constructors copy question.required as a body property; name/value do not imply server-requiredness."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `required`?: unknown;
+  @extension("x-evidence", #[#{`name`: "type", `type`: "unknown", `evidence`: "Both traced constructors copy question.type to type."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `type`?: unknown;
+  @extension("x-evidence", #[#{`name`: "value", `type`: "unknown", `evidence`: "Both constructors write value, with their respective dynamic/null branches."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `value`?: unknown;
+  @extension("x-evidence", #[#{`name`: "option_id", `type`: "unknown", `optional`: true, `evidence`: "#39490 unconditionally writes option_id as the selected option id or null; the separately traced #39489 text-answer route sends its complete five-key body without option_id (see clientRequestVariants evidence). This is client-constructor variation, not server requiredness or nullability."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `option_id`?: unknown;
 }
 
 @extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "supplier_id", `type`: "unknown", `evidence`: "#40448 +0x3c-0x45 copies captured supplier.id."}, #{`name`: "reg_number", `type`: "unknown", `evidence`: "#40448 +0x4a-0x50 copies submitted reg_number."}, #{`name`: "email", `type`: "unknown", `evidence`: "#40448 +0x55-0x5b renames submitted e_mail to email."}, #{`name`: "phone", `type`: "unknown", `evidence`: "#40448 +0x60-0x66 copies submitted phone."}, #{`name`: "address", `type`: "unknown", `evidence`: "#40448 +0x6b-0x71 forwards submitted address."}, #{`name`: "delivery_contacts", `type`: "unknown", `evidence`: "#40448 +0x76-0x7c copies submitted delivery_contacts."}, #{`name`: "delivery_customer_name", `type`: "unknown", `evidence`: "#40448 +0x81-0x97 assigns truthy submitted customer_name or ''; independent of delivery_contacts."}, #{`name`: "delivery_reg_number", `type`: "unknown", `evidence`: "#40448 +0x9c-0xae tests delivery_contacts, then submitted delivery_reg_number or ''."}, #{`name`: "delivery_email", `type`: "unknown", `evidence`: "#40448 +0xb3-0xc5 tests delivery_contacts, renames delivery_e_mail or assigns ''."}, #{`name`: "delivery_phone", `type`: "unknown", `evidence`: "#40448 +0xca-0xdc tests delivery_contacts, copies delivery_phone or assigns ''."}, #{`name`: "delivery_address", `type`: "unknown", `evidence`: "#40448 +0xe1-0xf0 tests delivery_contacts, copies delivery_address or assigns ''."}, #{`name`: "notes", `type`: "unknown", `evidence`: "#40448 +0xf5-0xfb renames order_notes to notes."}, #{`name`: "conditions_accept", `type`: "unknown", `evidence`: "#40448 +0x100-0x106 copies conditions_accept; no boolean conversion."}, #{`name`: "items", `type`: "unknown", `evidence`: "#40448 +0x0c-0x3a wishlist branch maps #40449 only for truthy captured collection; falsy value passes through; +0x10b assigns both. Branch-specific nested named item fields retained in clientRequestVariants, not an unconditional array type."}], `evidence`: "The POST call forwards a function argument as request data; construction is not in helper #26787. #40448 wishlist -> #26687/#26688 -> M2294 installed #26787 proves 14 outer keys. Known union is partial; nested items may be mapped array or falsy passthrough and other endpoint inputs remain unresolved.", `complete`: false}]})
@@ -989,6 +1080,66 @@ model UpdateEntryStatusesBody extends Record<unknown> {
   @extension("x-evidence", #[#{`name`: "status", `type`: "unknown", `evidence`: "#25851 +0xb6-0xbd copies captured action argument 1; no enum."}])
   @extension("x-client-presence", "present in traced construction; server requiredness unknown")
   `status`?: unknown;
+}
+
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "start_time", `type`: "unknown", `optional`: true, `evidence`: "#25380 passes selectedEvent through #25369; the helper copies input and conditionally UTC-formats a truthy start_time as HH:mm:ss. A missing input key is not added."}, #{`name`: "end_time", `type`: "unknown", `optional`: true, `evidence`: "#25380 passes selectedEvent through #25369; the helper copies input and conditionally UTC-formats a truthy end_time as HH:mm:ss. A missing input key is not added."}], `evidence`: "#25380 calls #25369 convertTimesToUtc before #25407. The helper starts with Object.assign({}, input), conditionally projects start_time/end_time, and returns the copy; #25407 sends its first argument as Axios PUT data. Remaining incoming properties are opaque, so this is a partial client-observed body, not a complete schema.", `complete`: false}]})
+model UpdateEventBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "start_time", `type`: "unknown", `optional`: true, `evidence`: "#25380 passes selectedEvent through #25369; the helper copies input and conditionally UTC-formats a truthy start_time as HH:mm:ss. A missing input key is not added."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `start_time`?: unknown;
+  @extension("x-evidence", #[#{`name`: "end_time", `type`: "unknown", `optional`: true, `evidence`: "#25380 passes selectedEvent through #25369; the helper copies input and conditionally UTC-formats a truthy end_time as HH:mm:ss. A missing input key is not added."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `end_time`?: unknown;
+}
+
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "name", `type`: "unknown", `evidence`: "#43639 +0x4a-0x51 copies the submitted name into the nested form passed as HTTP data."}, #{`name`: "description", `type`: "unknown", `evidence`: "#43639 +0x55-0x60 copies the submitted description into the nested form passed as HTTP data."}], `complete`: false, `evidence`: "#43639 constructs form with only name and description, places it in an action envelope, and #25833 unwraps form before calling #25947. The endpoint receives that inner form as p3/Axios PUT data; envelope kindergartenId and filename are used for URL routing, not included in this body's constructor."}]})
+model UpdateDiaryFileBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "name", `type`: "unknown", `evidence`: "#43639 +0x4a-0x51 copies the submitted name into the nested form passed as HTTP data."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `name`?: unknown;
+  @extension("x-evidence", #[#{`name`: "description", `type`: "unknown", `evidence`: "#43639 +0x55-0x60 copies the submitted description into the nested form passed as HTTP data."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `description`?: unknown;
+}
+
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "name", `type`: "unknown", `evidence`: "#39657 +0x2c-0x37 copies submitted name into the object forwarded to the document update action."}, #{`name`: "filename", `type`: "unknown", `evidence`: "#39657 +0x37-0x3f copies the captured filename into the object forwarded to the action; that object is also passed unchanged as service body data."}, #{`name`: "view", `type`: "unknown", `evidence`: "#39657 +0x3f-0x4a copies viewTargetGroups into the body object."}, #{`name`: "edit", `type`: "unknown", `optional`: true, `evidence`: "#39657 +0x4a-0x5d assigns editTargetGroups only when the captured state flag is truthy. #39655 sets that flag from !Array.isArray(getDocumentAclResponse); this is an ACL-response-shape/client form branch, not an authorization decision."}], `complete`: false, `evidence`: "Unlike diary/gallery wrappers, the document thunk forwards the entire locally constructed form object to #26274 as data. It also reads filename from that object to form the URL. The body therefore includes filename for this caller; filename is not merely an envelope field here."}]})
+model UpdateDocumentFileBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "name", `type`: "unknown", `evidence`: "#39657 +0x2c-0x37 copies submitted name into the object forwarded to the document update action."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `name`?: unknown;
+  @extension("x-evidence", #[#{`name`: "filename", `type`: "unknown", `evidence`: "#39657 +0x37-0x3f copies the captured filename into the object forwarded to the action; that object is also passed unchanged as service body data."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `filename`?: unknown;
+  @extension("x-evidence", #[#{`name`: "view", `type`: "unknown", `evidence`: "#39657 +0x3f-0x4a copies viewTargetGroups into the body object."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `view`?: unknown;
+  @extension("x-evidence", #[#{`name`: "edit", `type`: "unknown", `optional`: true, `evidence`: "#39657 +0x4a-0x5d assigns editTargetGroups only when the captured state flag is truthy. #39655 sets that flag from !Array.isArray(getDocumentAclResponse); this is an ACL-response-shape/client form branch, not an authorization decision."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `edit`?: unknown;
+}
+
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "name", `type`: "unknown", `evidence`: "#38003 +0x4a-0x51 copies submitted name into the nested form passed as HTTP data."}, #{`name`: "description", `type`: "unknown", `evidence`: "#38003 +0x55-0x60 copies submitted description into the nested form passed as HTTP data."}], `complete`: false, `evidence`: "#38003 constructs form with only name and description; the action wrapper forwards this form separately from the route filename. #26129 calls #26138 with p3=form, and #26138 passes p3 as PUT data (+0x34-0x3d)."}]})
+model UpdateGalleryFileBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "name", `type`: "unknown", `evidence`: "#38003 +0x4a-0x51 copies submitted name into the nested form passed as HTTP data."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `name`?: unknown;
+  @extension("x-evidence", #[#{`name`: "description", `type`: "unknown", `evidence`: "#38003 +0x55-0x60 copies submitted description into the nested form passed as HTTP data."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `description`?: unknown;
+}
+
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "file_ids", `type`: "unknown", `evidence`: "#43269 +0xe6-0xf1 creates the body property file_ids from routeParams.items unchanged; no ID mapping or array element type is established."}], `complete`: false, `evidence`: "The cited bulk-move caller constructs a one-key body object. #26223 forwards its body argument to #26159; service #26159 PUTs p3 directly as Axios data (+0x35-0x3e). The folderId in the route is separate from file_ids."}]})
+model MoveFilesBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "file_ids", `type`: "unknown", `evidence`: "#43269 +0xe6-0xf1 creates the body property file_ids from routeParams.items unchanged; no ID mapping or array element type is established."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `file_ids`?: unknown;
+}
+
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "folder_ids", `type`: "unknown", `evidence`: "#43269 +0x79-0x82 creates the body property folder_ids from routeParams.items unchanged; no ID mapping or array element type is established."}], `complete`: false, `evidence`: "The cited bulk-move caller constructs a one-key body object. #26219 forwards its body argument to #26157; service #26157 PUTs p3 directly as Axios data (+0x35-0x3e). The folderId in the route is a separate argument, not the body field."}]})
+model MoveFoldersBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "folder_ids", `type`: "unknown", `evidence`: "#43269 +0x79-0x82 creates the body property folder_ids from routeParams.items unchanged; no ID mapping or array element type is established."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `folder_ids`?: unknown;
 }
 
 @extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "setting_id", `type`: "unknown", `evidence`: "#41002 +0x55 writes parameter 3 into inner form.setting_id."}, #{`name`: "value", `type`: "unknown", `evidence`: "#41002 +0x5a-0x5d writes parameter 4 into inner form.value."}], `evidence`: "Axios put data argument is input parameter 3. #41002 -> M2236 #25479/#25480 -> M2237 installed #25485 proves inner form {setting_id,value}; IDs stay outside body. Partial caller coverage; arbitrary remainder unresolved.", `complete`: false}]})

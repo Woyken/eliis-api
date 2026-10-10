@@ -1,0 +1,314 @@
+{
+  "phase": "bounded-luna-search",
+  "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm",
+  "candidateOperations": [
+    {
+      "targetSourceFunctionId": 25218,
+      "operationId": "GetReceivedMessages",
+      "placement": "query",
+      "complete": true,
+      "fields": [
+        {
+          "name": "page",
+          "type": "unknown",
+          "evidence": "Saga #25154 copies its first captured argument into the newly constructed query object's page property."
+        },
+        {
+          "name": "perPage",
+          "type": "integer",
+          "value": 50,
+          "evidence": "Saga #25154 writes numeric constant 50 to perPage."
+        },
+        {
+          "name": "term",
+          "type": "unknown",
+          "evidence": "Saga #25154 copies its second captured argument into the newly constructed query object's term property."
+        }
+      ],
+      "variants": [
+        {
+          "constructorFunctionIds": [25154],
+          "constructorFunctionName": "anonymous getMessages saga continuation",
+          "fullSourceLines": "988641-988667",
+          "localOffsets": ["0x09-0x23", "0x28-0x3a"],
+          "trace": "The continuation constructs a fresh object with own page, perPage, and term properties and passes it to MessageServices.messages (#25218); the endpoint assigns it to Axios config.params (990212-990225). This proves the local own-key set, not wire-key presence: Axios #5675 skips null/undefined values and its #5676/#5677 serializer recursively emits arrays/objects with nested bracketed keys. Unknown page/term values therefore do not prove literal scalar page/term wire keys; scalar perPage=50 is serialized.",
+          "callerCoverage": "This is one traced saga caller, not an exhaustive endpoint caller inventory. The captured values are traced to the saga's two arguments; their upstream UI-origin value types are not established. SDK serialization evidence is eliis.hasm #5675 lines 257487-257532, #5676/#5677 lines 257537-257653, and #5683 lines 257758-257827."
+        }
+      ]
+    },
+    {
+      "targetSourceFunctionId": 25223,
+      "operationId": "GetSentMessages",
+      "placement": "query",
+      "complete": true,
+      "fields": [
+        {
+          "name": "page",
+          "type": "unknown",
+          "evidence": "Saga #25158 copies its first captured argument into the newly constructed query object's page property."
+        },
+        {
+          "name": "perPage",
+          "type": "integer",
+          "value": 50,
+          "evidence": "Saga #25158 writes numeric constant 50 to perPage."
+        },
+        {
+          "name": "term",
+          "type": "unknown",
+          "evidence": "Saga #25158 copies its second captured argument into the newly constructed query object's term property."
+        }
+      ],
+      "variants": [
+        {
+          "constructorFunctionIds": [25158],
+          "constructorFunctionName": "anonymous getSentMessages saga continuation",
+          "fullSourceLines": "988773-988796",
+          "localOffsets": ["0x09-0x23", "0x28-0x3a"],
+          "trace": "The continuation constructs a fresh object with own page, perPage, and term properties and passes it to MessageServices.sentMessages (#25223); the endpoint assigns it to Axios config.params (990288-990300). This proves the local own-key set, not wire-key presence: Axios #5675 skips null/undefined values and its #5676/#5677 serializer recursively emits arrays/objects with nested bracketed keys. Unknown page/term values therefore do not prove literal scalar page/term wire keys; scalar perPage=50 is serialized.",
+          "callerCoverage": "This is one traced saga caller, not an exhaustive endpoint caller inventory. The captured values are traced to the saga's two arguments; their upstream UI-origin value types are not established. SDK serialization evidence is eliis.hasm #5675 lines 257487-257532, #5676/#5677 lines 257537-257653, and #5683 lines 257758-257827."
+        }
+      ]
+    },
+    {
+      "targetSourceFunctionId": 25225,
+      "operationId": "GetDeletedMessages",
+      "placement": "query",
+      "complete": true,
+      "fields": [
+        {
+          "name": "page",
+          "type": "unknown",
+          "evidence": "Saga #25161 copies its first captured argument into the newly constructed query object's page property."
+        },
+        {
+          "name": "perPage",
+          "type": "integer",
+          "value": 50,
+          "evidence": "Saga #25161 writes numeric constant 50 to perPage."
+        },
+        {
+          "name": "term",
+          "type": "unknown",
+          "evidence": "Saga #25161 copies its second captured argument into the newly constructed query object's term property."
+        }
+      ],
+      "variants": [
+        {
+          "constructorFunctionIds": [25161],
+          "constructorFunctionName": "anonymous getDeletedMessages saga continuation",
+          "fullSourceLines": "988864-988887",
+          "localOffsets": ["0x09-0x23", "0x28-0x3a"],
+          "trace": "The continuation constructs a fresh object with own page, perPage, and term properties and passes it to MessageServices.deletedMessages (#25225); the endpoint assigns it to Axios config.params (990321-990333). This proves the local own-key set, not wire-key presence: Axios #5675 skips null/undefined values and its #5676/#5677 serializer recursively emits arrays/objects with nested bracketed keys. Unknown page/term values therefore do not prove literal scalar page/term wire keys; scalar perPage=50 is serialized.",
+          "callerCoverage": "This is one traced saga caller, not an exhaustive endpoint caller inventory. The captured values are traced to the saga's two arguments; their upstream UI-origin value types are not established. SDK serialization evidence is eliis.hasm #5675 lines 257487-257532, #5676/#5677 lines 257537-257653, and #5683 lines 257758-257827."
+        }
+      ]
+    },
+    {
+      "targetSourceFunctionId": 25237,
+      "operationId": "GetMessageDrafts",
+      "placement": "query",
+      "complete": true,
+      "fields": [
+        {
+          "name": "page",
+          "type": "unknown",
+          "evidence": "Saga #25182 copies its first captured argument into the newly constructed query object's page property."
+        },
+        {
+          "name": "perPage",
+          "type": "integer",
+          "value": 50,
+          "evidence": "Saga #25182 writes numeric constant 50 to perPage."
+        },
+        {
+          "name": "term",
+          "type": "unknown",
+          "evidence": "Saga #25182 copies its second captured argument into the newly constructed query object's term property."
+        }
+      ],
+      "variants": [
+        {
+          "constructorFunctionIds": [25182],
+          "constructorFunctionName": "anonymous getMessageDrafts saga continuation",
+          "fullSourceLines": "989314-989337",
+          "localOffsets": ["0x09-0x23", "0x28-0x3a"],
+          "trace": "The continuation constructs a fresh object with own page, perPage, and term properties and passes it to MessageServices.getMessageDrafts (#25237); the endpoint assigns it to Axios config.params (990541-990553). This proves the local own-key set, not wire-key presence: Axios #5675 skips null/undefined values and its #5676/#5677 serializer recursively emits arrays/objects with nested bracketed keys. Unknown page/term values therefore do not prove literal scalar page/term wire keys; scalar perPage=50 is serialized.",
+          "callerCoverage": "This is one traced saga caller, not an exhaustive endpoint caller inventory. The captured values are traced to the saga's two arguments; their upstream UI-origin value types are not established. SDK serialization evidence is eliis.hasm #5675 lines 257487-257532, #5676/#5677 lines 257537-257653, and #5683 lines 257758-257827."
+        }
+      ]
+    },
+    {
+      "targetSourceFunctionId": 25405,
+      "operationId": "CreateEvent",
+      "placement": "body",
+      "complete": false,
+      "fields": [
+        {"name":"start_time","type":"unknown","optional":true,"evidence":"Saga #25377 calls #25369 convertTimesToUtc before #25405. #25369 begins with Object.assign({}, input), then only rewrites start_time when its copied value is truthy using timezone conversion and UTC HH:mm:ss formatting (eliis.hasm 994508-994589, especially 994555-994571). A missing incoming key is not added; the rest of the copied object remains opaque."},
+        {"name":"end_time","type":"unknown","optional":true,"evidence":"Saga #25377 calls #25369 convertTimesToUtc before #25405. #25369 begins with Object.assign({}, input), then only rewrites end_time when its copied value is truthy using timezone conversion and UTC HH:mm:ss formatting (eliis.hasm 994508-994589, especially 994572-994588). A missing incoming key is not added; the rest of the copied object remains opaque."}
+      ],
+      "variants": [
+        {"constructorFunctionIds":[25369],"constructorFunctionName":"convertTimesToUtc","fullSourceLines":"994508-994589","localOffsets":["0x08-0x18","0xb0-0xfb","0x101-0x14c"],"callerFunctionIds":[25377],"callerLines":"994757-994808","targetSourceLines":"995394-995415","trace":"#25377 passes its opaque event through #25369 and then invokes createEvent; #25405 sends the second argument as Axios POST data. Object.assign preserves untraced incoming keys, so this is only a partial body projection.","callerCoverage":"Partial caller trace; do not infer any body fields beyond the helper's two conditional time projections or claim a complete object."}
+      ],
+      "unresolved": "The incoming event object and all fields beyond the helper's conditional start_time/end_time projections remain unknown. Do not infer kindergarten_id, id, or any other fields from unrelated property reads."
+    },
+    {
+      "targetSourceFunctionId": 25407,
+      "operationId": "UpdateEvent",
+      "placement": "body",
+      "complete": false,
+      "fields": [
+        {"name":"start_time","type":"unknown","optional":true,"evidence":"Saga #25380 calls #25369 convertTimesToUtc on selectedEvent before #25407. #25369 begins with Object.assign({}, input), then only rewrites start_time when its copied value is truthy using timezone conversion and UTC HH:mm:ss formatting (eliis.hasm 994508-994589, especially 994555-994571). A missing incoming key is not added; the rest of the copied object remains opaque."},
+        {"name":"end_time","type":"unknown","optional":true,"evidence":"Saga #25380 calls #25369 convertTimesToUtc on selectedEvent before #25407. #25369 begins with Object.assign({}, input), then only rewrites end_time when its copied value is truthy using timezone conversion and UTC HH:mm:ss formatting (eliis.hasm 994508-994589, especially 994572-994588). A missing incoming key is not added; the rest of the copied object remains opaque."}
+      ],
+      "variants": [
+        {"constructorFunctionIds":[25369],"constructorFunctionName":"convertTimesToUtc","fullSourceLines":"994508-994589","localOffsets":["0x08-0x18","0xb0-0xfb","0x101-0x14c"],"callerFunctionIds":[25380],"callerLines":"994826-994855","targetSourceLines":"995431-995453","trace":"#25380 passes selectedEvent through #25369 and then invokes updateEvent; #25407 sends the first argument as Axios PUT data and reads kindergarten_id/id for URL construction only. Object.assign preserves untraced incoming keys, so this is only a partial body projection.","callerCoverage":"Partial caller trace; do not infer any body fields beyond the helper's two conditional time projections or claim a complete object."}
+      ],
+      "unresolved": "The incoming selectedEvent object and all fields beyond the helper's conditional start_time/end_time projections remain unknown. URL reads of kindergarten_id/id do not establish body fields."
+    },
+    {
+      "targetSourceFunctionId": 26457,
+      "operationId": "FillPollQuestion",
+      "placement": "body",
+      "complete": true,
+      "fields": [
+        {
+          "name": "question_id",
+          "type": "unknown",
+          "evidence": "Constructor #38981 copies the source answer/question object's id property to question_id."
+        },
+        {
+          "name": "survey_id",
+          "type": "unknown",
+          "evidence": "Constructor #38981 copies the source object's survey_id property to survey_id."
+        },
+        {
+          "name": "option_id",
+          "type": "unknown",
+          "evidence": "Constructor #38981 unconditionally assigns option_id from one of two source values selected by the question type branch."
+        },
+        {
+          "name": "type",
+          "type": "unknown",
+          "evidence": "Constructor #38981 copies the source object's type property to type."
+        },
+        {
+          "name": "value",
+          "type": "unknown",
+          "evidence": "Constructor #38981 copies a captured value to value."
+        },
+        {
+          "name": "other_id",
+          "type": "unknown",
+          "evidence": "Constructor #38981 assigns the id property of an options.find result to other_id; when no result is found, it unconditionally assigns undefined. Axios #5842 JSON.stringify transformation omits an undefined-valued object property, so own assignment does not guarantee a wire key."
+        }
+      ],
+      "variants": [
+        {
+          "constructorFunctionIds": [38981],
+          "constructorFunctionName": "anonymous poll-answer handler",
+          "fullSourceLines": "1567429-1567502",
+          "localOffsets": ["0x14-0x93"],
+          "trace": "The handler constructs the six-own-key object before branching. On the fill branch, it passes through #26444 to API function #26457; #26444 derives the poll path value from body.survey_id and forwards the same object (1027271-1027292). Axios #5842 applies JSON.stringify to plain object request data; if no options.find result exists, other_id is own-but-undefined and is omitted from serialized JSON (263038-263183). The alternate branch adds skip to its object and invokes submitDashboardPoll, not FillPollQuestion; skip is excluded.",
+          "callerCoverage": "The constructor-to-operation branch and body forwarding are traced; dynamic source values remain unknown."
+        }
+      ]
+    },
+    {
+      "targetSourceFunctionId": 26494,
+      "operationId": "FillQuestionnaireQuestion",
+      "placement": "body",
+      "complete": true,
+      "fields": [],
+      "variants": [
+        {
+          "constructorFunctionIds": [39489],
+          "constructorFunctionName": "answerTextHandler",
+          "fullSourceLines": "1592085-1592109",
+          "callerFunctionIds": [39484, 39491, 26475],
+          "callerLines": "1591690-1591778, 1592199-1592215, 1028347-1028371",
+          "targetSourceLines": "1028788-1028815",
+          "localOffsets": ["0x00-0x4f"],
+          "fields": [
+            {
+              "name": "question_id",
+              "type": "unknown",
+              "evidence": "Copies the question object's id property."
+            },
+            {
+              "name": "survey_id",
+              "type": "unknown",
+              "evidence": "Copies the question object's survey_id property."
+            },
+            {
+              "name": "required",
+              "type": "unknown",
+              "evidence": "Copies the question object's required property; this records the client body key only and makes no server-requiredness claim."
+            },
+            {
+              "name": "type",
+              "type": "unknown",
+              "evidence": "Copies the question object's type property."
+            },
+            {
+              "name": "value",
+              "type": "unknown",
+              "evidence": "Assigns the handler value argument when truthy, otherwise assigns null."
+            }
+          ],
+          "trace": "#39484 creates and stores closure #39491 as fillQuestionHandler (+0x161-0x166; eliis.hasm 1591773-1778). #39489 constructs this five-key object, loads the captured handler at +0x41, and calls it with the object at +0x49 (1592085-2109). #39491 reads the enclosing Metro dependency array at slot 15, gets fillQuestionnaireQuestion, and calls it with the body (1592199-2215). The ID-bearing Metro bridge is explicit in original eliis.hasm: component factory #39481 is registered as module 4125 with dependency slot 15 = module 2286 (20750-20753); module 2286 is factory #26464 with dependencies [1,2287] (11555-11558), and module 2287 is factory #26485 (11560-11563). Factory #26464 exports action creator #26474, which returns thunk #26475 (1028044-8110, 1028334-8342); #26475 forwards the same body to user.default.fillQuestionnaireQuestion (1028347-8371). QuestionnaireService factory #26486 registers that service key to closure #26494 (1028600-8649), which posts the body (1028788-8815). Thus the route is established through registered module IDs, not export-name matching. Thus the five-key variant reaches #26494 through registered module IDs; no server contract is inferred.",
+          "callerCoverage": "The five-key constructor-to-operation path is traced; this is not an exhaustive endpoint caller inventory and dynamic values remain unknown."
+        },
+        {
+          "constructorFunctionIds": [39490],
+          "constructorFunctionName": "answerHandler",
+          "fullSourceLines": "1592114-1592194",
+          "localOffsets": ["0x09-0x5e", "0x8a-0xe2"],
+          "fields": [
+            {
+              "name": "question_id",
+              "type": "unknown",
+              "evidence": "Copies the question object's id property."
+            },
+            {
+              "name": "survey_id",
+              "type": "unknown",
+              "evidence": "Copies the question object's survey_id property."
+            },
+            {
+              "name": "required",
+              "type": "unknown",
+              "evidence": "Copies the question object's required property; this records the client body key only and makes no server-requiredness claim."
+            },
+            {
+              "name": "type",
+              "type": "unknown",
+              "evidence": "Copies the question object's type property."
+            },
+            {
+              "name": "option_id",
+              "type": "unknown",
+              "evidence": "Unconditionally assigns either the fourth handler argument's id property or null according to the branch at local offsets 0x3b-0x47."
+            },
+            {
+              "name": "value",
+              "type": "unknown",
+              "evidence": "Unconditionally assigns a captured value or null according to the branches at local offsets 0x4c-0x5e."
+            }
+          ],
+          "trace": "#39490 constructs this six-key body. In one branch it invokes captured handler #39491 at +0x82 (1592151-2154); in its direct-import branch it reads dependency slot 15 (+0xc9-0xd2), gets fillQuestionnaireQuestion (+0xd7), calls it with the body (+0xdd), and dispatches the result (+0xe2; 1592168-2178). The ID-bearing Metro bridge is explicit in original eliis.hasm: component factory #39481 is registered as module 4125 with dependency slot 15 = module 2286 (20750-20753); module 2286 is factory #26464 with dependencies [1,2287] (11555-11558), and module 2287 is factory #26485 (11560-11563). Factory #26464 exports action creator #26474 -> thunk #26475 (1028044-8110, 1028334-8342); #26475 reads survey_id/question_id for URL construction and forwards this six-key body to user.default.fillQuestionnaireQuestion (1028347-8371). QuestionnaireService factory #26486 registers that service key to #26494 (1028600-8649), which posts it (1028788-8815). Thus the six-key variant reaches #26494 through registered module IDs, not export-name matching; no additional body keys are added in that API chain.",
+          "callerCoverage": "Body-to-operation chain is traced; the values of conditional branches remain unknown."
+        }
+      ],
+      "evidenceNote": "The operation-level fields array is intentionally empty because there are distinct body constructor variants; use each variant's complete fields list without merging their key sets. Both variants reach #26494 through captured handler #39491 and the ID-bearing Metro bridge: #39481 is module 4125 with slot 15 = 2286 (20750-20753); 2286 is factory #26464 with dependencies [1,2287] (11555-11558); 2287 is factory #26485 (11560-11563); action #26474/#26475 forwards to the service closure registered to #26494 (1028044-8110, 1028334-8371, 1028600-8649, 1028788-8815)."
+    }
+  ],
+  "unresolvedTargets": [
+    {
+      "targetSourceFunctionIds": [25243, 25245, 25247],
+      "operationIds": ["CreateDraft", "SaveDraft", "DeleteDraft"],
+      "placement": "body",
+      "evidence": "API functions #25243 and #25245 forward their data arguments directly to Axios; #25247 wraps its second argument as Axios config.data. No body constructors are established in the inspected caller slice, so no field candidates are recorded."
+    }
+  ]
+}

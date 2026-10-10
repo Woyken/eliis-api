@@ -14,6 +14,7 @@ This project is for education, research, and authorized personal integration. It
 - [`scripts/coverage.json`](scripts/coverage.json) and [`scripts/operation-catalog.json`](scripts/operation-catalog.json): generated source-function coverage and canonical operation/alias accounting.
 - [`evidence/reviews/`](evidence/reviews/): independent review findings, corrections, and the two-consecutive-clean-run publication gate.
 - [2026-10-10 field additions](evidence/ADDITIONS-2026-10-10.md): bounded follow-up adding 51 body-property occurrences and 12 query-parameter occurrences across 13 existing operations, with separate source reviews. The original frozen publication reviews do not certify later changes.
+- [Luna-only additions](evidence/LUNA-ADDITIONS-2026-10-10.md): further bounded message, poll, event, diary/file payload evidence and explicitly non-normative response observations, with separate medium search and xhigh review sessions.
 
 **Unknown request and response shapes are deliberately unconstrained.** Forwarded objects are not filled with guessed fields. Named payload field coverage means only fields whose construction or serialization is proven in bytecode; it does not establish complete server schemas. Requiredness, status codes, enums, defaults, nullability, pagination, and error wrappers must not be invented. Transport path parameters do not establish server domain types. Field models remain subject to review; this project does not claim all models are fully verified.
 

@@ -9,9 +9,13 @@ index; its `evidence` points to the corresponding function block in
 ## Evidence boundaries and notable call semantics
 
 - List/filter functions that pass an argument through Axios `config.params` are
-  marked `queryPassthrough: true`; their key sets and value types remain
-  unresolved. `getEvents` shallow-copies its optional second argument to a new
-  params object, or uses an empty object when it is absent/undefined.
+  marked `queryPassthrough: true`. Four traced message-list saga variants
+  construct own `page`, `perPage=50`, and `term` keys; local own writes do not
+  guarantee literal wire keys because Axios omits null/undefined values and can
+  serialize array/object values as nested bracketed keys. `getEvents`
+  shallow-copies its optional second argument to a new params object, or uses
+  an empty object when it is absent/undefined. The `perPage=50` value is a
+  client construction constant, not an API default.
 - Dynamic `/api/{scope}/...` paths in `sendMessageDraft` and
   `uploadDraftAttachment` use an arbitrary scope argument; no fixed scope set
   was inferred.
@@ -22,7 +26,16 @@ index; its `evidence` points to the corresponding function block in
   not treated as query or body fields beyond the traced construction.
 - Event update/delete URLs read `kindergarten_id` and `id` from the first
   argument object. Their path parameter labels reflect those source properties,
-  not claims about server identifier semantics.
+  not claims about server identifier semantics. Event create/update caller
+  traces additionally establish only conditional `start_time`/`end_time`
+  projections through `convertTimesToUtc` (#25369); the helper copies the
+  opaque incoming object, so other body keys remain unknown. Its UTC
+  `HH:mm:ss` formatting is client behavior, not a server constraint.
+- Poll-answer construction traces six local keys. `other_id` is unconditionally
+  assigned but is `undefined` when no option matches; Axios JSON serialization
+  omits that property in that case. Questionnaire answer constructors remain
+  distinct five-key and six-key variants; `required` is a copied body key, not
+  server-requiredness evidence.
 - Multipart services explicitly set Content-Type and forward their data.
   Later bounded caller traces now prove partial literal-part models for
   SendMessage, UploadDraftAttachment, UpdateSentMessage, SendAnnouncement,

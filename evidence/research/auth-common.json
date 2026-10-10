@@ -19,6 +19,25 @@
       "kind": "unknown",
       "evidence": "Function #12710 returns response.data."
     },
+    "clientResponseObservations": [
+      {
+        "evidence": "#12710 returns Axios response.data unchanged; consumer #12697 reads langs and country from that fulfillment value. These client reads do not establish guaranteed presence, value types, or response completeness.",
+        "source": 12697,
+        "propertyReads": [
+          {
+            "path": "langs",
+            "type": "unknown",
+            "evidence": "#12697 +0x14-+0x1a reads langs from the value returned by #12710, which is response.data."
+          },
+          {
+            "path": "country",
+            "type": "unknown",
+            "evidence": "#12697 +0x2f-+0x35 reads country from the value returned by #12710, which is response.data."
+          }
+        ],
+        "coverage": "partial; traced client reads only, not server-complete or guaranteed response fields"
+      }
+    ],
     "auth": "cookie",
     "notes": []
   },

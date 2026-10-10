@@ -20,7 +20,7 @@ This is an unofficial TypeSpec/OpenAPI description of the Eliis 2.69 Android cli
 - No invented universal pagination/error wrappers. Do not apply Bearer auth: the main API uses an `eliis_csrf` cookie.
 - Do not make login/write requests, access private records, or commit credentials/APKs/full third-party decompiled sources.
 - Keep code changes focused on real evidence, coverage, or compiler/test problems. Do not do cosmetic rewrites during reviews.
-- Agents may be delegated as requested by the user. Exploration uses `github-copilot/gpt-6-luna`; implementation uses `github-copilot/gpt-6.1-sol`.
+- Agents may be delegated as requested by the user. Current user override: **only Luna subagents**. Search and implementation use `github-copilot/gpt-6-luna#medium`; independent reviews use `github-copilot/gpt-6-luna#xhigh`. The earlier Sol implementation/review sessions are historical, not authorization to spawn more Sol agents.
 
 ## Research JSON contract
 
@@ -52,6 +52,7 @@ Each `evidence/research/<domain>.json` is an array of operation records. Fields:
 - `body`: null (no body), or `{kind:"unknown"|"object"|"multipart", fields:[], evidence:"...", complete:false}`. Fields: `{name,type,evidence,optional?,value?,fields?}`. `complete:true` only for a locally constructed object whose whole construction is traced. Unknown forwarded objects must not have fabricated fields.
 - Responses: unknown by default. Proven public samples may be modeled separately, labeled as observed samples, not assumed universal.
 - `auth`: `cookie`, `none` (only when isolated login client / verified public call), or `unknown`.
+- Optional `clientResponseObservations`: nonempty array of `{evidence, source?, propertyReads: [{path, type, evidence}], coverage}`. These are non-normative client reads; they must not alter the unknown/default response schema, claim guaranteed field presence, or conflate Axios/Redux wrapper properties with HTTP body fields.
 - If a function supports multiple genuinely different URLs, create one operation for each with a suffix, same source function ID, and exact branch evidence.
 - Distinguish parameter serialization/call evidence from assertions about server validation.
 

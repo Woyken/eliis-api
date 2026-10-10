@@ -63,6 +63,8 @@ export function checkOpenApi(document, catalog) {
     assert.deepEqual(op["x-operation-aliases"], expected.aliases);
     const variants = expected.records.flatMap((record) => record.clientRequestVariants ?? []);
     if (variants.length) assert.deepEqual(op["x-client-request-variants"], variants);
+    const responseObservations = expected.records.flatMap((record) => record.clientResponseObservations ?? []);
+    assert.deepEqual(op["x-client-response-observations"], responseObservations.length ? responseObservations : undefined, `${expected.operationId}: client response observation metadata differs`);
     assert.deepEqual(op["x-unresolved-response"], { statusCodes: "unknown", mediaTypes: "unknown", body: "unknown", evidence: expected.records.map((r) => r.response) }, `${expected.operationId}: response unresolved extension missing`);
     assert.deepEqual(Object.keys(op.responses), ["default"], `${expected.operationId}: invented response status`);
     const response = dereference(op.responses.default);

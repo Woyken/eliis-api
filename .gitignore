@@ -3,6 +3,7 @@ tsp-output/
 dist/
 coverage/
 tests/.generated-fixture-*/
+tests/.luna-observations-*/
 *.log
 
 # Local research inputs and full third-party source/disassembly.

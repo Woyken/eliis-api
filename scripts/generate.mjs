@@ -53,7 +53,7 @@ function validateFields(fields, context, query = false, multipart = false) {
 
 export function validateRecord(record, context = "record") {
   if (!record || typeof record !== "object" || Array.isArray(record)) fail(`${context}: operation record must be an object`);
-  const allowed = new Set(["operationId", "method", "path", "tag", "summary", "source", "evidence", "pathParams", "query", "queryPassthrough", "body", "response", "auth", "notes", "clientRequestVariants"]);
+  const allowed = new Set(["operationId", "method", "path", "tag", "summary", "source", "evidence", "pathParams", "query", "queryPassthrough", "body", "response", "auth", "notes", "clientRequestVariants", "clientResponseObservations"]);
   for (const key of Object.keys(record)) if (!allowed.has(key)) fail(`${context}: unsupported operation metadata ${key}`);
   if (!identifier(record.operationId ?? "")) fail(`${context}: invalid operationId`);
   if (!methods.has(record.method)) fail(`${context}: unsupported method ${record.method}`);
@@ -91,6 +91,22 @@ export function validateRecord(record, context = "record") {
       // Variants are non-normative, callsite-scoped observations. Only normalized
       // fields are accepted when supplied; no dotted paths become wire properties.
       if (variant.fields !== undefined) validateFields(variant.fields, `${context}.clientRequestVariants`, false, record.body?.kind === "multipart");
+    }
+  }
+  if (record.clientResponseObservations !== undefined) {
+    const observations = record.clientResponseObservations;
+    if (!Array.isArray(observations) || observations.length === 0) fail(`${context}: clientResponseObservations must be a nonempty array`);
+    for (const observation of observations) {
+      if (!observation || typeof observation !== "object" || Array.isArray(observation) || !nonempty(observation.evidence)) fail(`${context}: each client response observation needs evidence`);
+      const observationAllowed = new Set(["evidence", "source", "propertyReads", "coverage"]);
+      for (const key of Object.keys(observation)) if (!observationAllowed.has(key)) fail(`${context}: unsupported client response observation metadata ${key}`);
+      if (observation.source !== undefined && !((Number.isInteger(observation.source) && observation.source >= 0) || nonempty(observation.source))) fail(`${context}: invalid client response observation source`);
+      if (!Array.isArray(observation.propertyReads)) fail(`${context}: client response observation propertyReads must be an array`);
+      if (!nonempty(observation.coverage)) fail(`${context}: client response observation coverage is required`);
+      for (const read of observation.propertyReads) {
+        if (!read || typeof read !== "object" || Array.isArray(read) || !nonempty(read.path) || !types.has(read.type) || !nonempty(read.evidence)) fail(`${context}: each response property read needs a logical path, supported type, and evidence`);
+        for (const key of Object.keys(read)) if (!["path", "type", "evidence"].includes(key)) fail(`${context}: unsupported response property read metadata ${key}`);
+      }
     }
   }
 }
@@ -207,6 +223,8 @@ export function renderCatalog(catalog) {
     routes.push(extension("x-operation-aliases", op.aliases));
     const clientVariants = op.records.flatMap((record) => record.clientRequestVariants ?? []);
     if (clientVariants.length) routes.push(extension("x-client-request-variants", clientVariants));
+    const clientResponseObservations = op.records.flatMap((record) => record.clientResponseObservations ?? []);
+    if (clientResponseObservations.length) routes.push(extension("x-client-response-observations", clientResponseObservations));
     routes.push(extension("x-unresolved-response", { statusCodes: "unknown", mediaTypes: "unknown", body: "unknown", evidence: op.records.map((r) => r.response) }));
     if (op.queryPassthrough) routes.push(extension("x-unresolved-query", { reason: "Client forwards an untraced params object; no additional named parameters inferred.", sources: op.records.filter((r) => r.queryPassthrough).map((r) => r.source) }));
     if (op.body) routes.push(extension("x-request-body-evidence", { variants: op.records.map((r) => r.body), complete: op.body.complete, serverValidation: "unknown", unresolved: op.body.kind === "unknown" || op.body.kind === "multipart" || !op.body.complete || op.bodyVariantsUnresolved }));

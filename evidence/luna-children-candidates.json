@@ -1,0 +1,426 @@
+[
+  {
+    "operationId": "CreateDiary",
+    "target": {
+      "sourceFunctionId": 25937,
+      "functionName": "createDiary",
+      "line": 1012943,
+      "method": "post",
+      "path": "/api/kindergartens/{kindergartenId}/diary"
+    },
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "course_id",
+          "type": "unknown",
+          "evidence": "#25765 +0x48-0x54 writes the captured course argument when non-nullish; otherwise reads diary.selected_course_id, then assigns course_id."
+        },
+        {
+          "name": "date",
+          "type": "unknown",
+          "evidence": "#25765 +0x59-0x6d writes the captured date argument when non-nullish; otherwise reads diary.selected_date, then assigns date."
+        },
+        {
+          "name": "published",
+          "type": "integer",
+          "value": 0,
+          "evidence": "#25765 +0x71 LoadConstZero and +0x73 writes numeric literal 0. This is an observed client value only; no server type/default/enum claim."
+        }
+      ],
+      "complete": false,
+      "evidence": "#25765 locally constructs the whole data object and passes it as createDiary's body argument at +0x78-0x7e. #25937 POSTs its p2 directly as Axios data (+0x30-0x39)."
+    },
+    "clientRequestVariants": [
+      {
+        "variantId": "DiaryCreateAction",
+        "constructor": {
+          "functionId": 25765,
+          "line": 1008125,
+          "bytecodeOffset": "0x00"
+        },
+        "targetSourceFunctionId": 25937,
+        "provenFieldPaths": [
+          "course_id",
+          "date",
+          "published"
+        ],
+        "branches": [
+          "course_id uses the non-nullish action course argument, else diary.selected_course_id",
+          "date uses the non-nullish action date argument, else diary.selected_date",
+          "published is assigned literal 0"
+        ],
+        "constructionComplete": true,
+        "callsiteCoverage": "partial",
+        "evidence": "#25764 creates the action from courseId/date; #25765 (header line 1008125) +0x0e reads diary/user state, +0x2e resolves diary.createDiary, +0x34 reads selectedKindergartenId, and +0x39-0x78 builds/sends the three-key body. #25937 (header line 1012943) builds the kindergarten/diary URL and passes p2 as Axios POST data (+0x30-0x39)."
+      }
+    ],
+    "notes": [
+      "Caller-observed payload only; the constant 0 is not asserted as a server default or status enum."
+    ]
+  },
+  {
+    "operationId": "SaveEmployeeMeal",
+    "target": {
+      "sourceFunctionId": 26015,
+      "functionName": "saveEmployeeMeal",
+      "line": 1014718,
+      "method": "post",
+      "path": "/api/kindergartens/{kindergartenId}/employee-meals"
+    },
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "date",
+          "type": "unknown",
+          "evidence": "#37349 +0x0e-0x19 copies context.day.date to the constructed body."
+        },
+        {
+          "name": "employee_id",
+          "type": "unknown",
+          "evidence": "#37349 +0x1d-0x23 copies context.employee_id to the constructed body."
+        }
+      ],
+      "complete": false,
+      "evidence": "#37349 also assigns a computed property via PutByVal at +0x4c, with the key obtained from context.meal at +0x28-0x2e; that dynamic wire key is unresolved. #26002 passes the constructed object to #26015, which POSTs p2 directly as Axios data (+0x23-0x39)."
+    },
+    "clientRequestVariants": [
+      {
+        "variantId": "EmployeeMealCheckbox",
+        "constructor": {
+          "functionId": 37349,
+          "line": 1491716,
+          "bytecodeOffset": "0x00"
+        },
+        "targetSourceFunctionId": 26015,
+        "provenFieldPaths": [
+          "date",
+          "employee_id"
+        ],
+        "branches": [
+          "Computed key context.meal is always assigned; non-nullish event.value is copied, otherwise the computed property receives null (including undefined). The dynamic key is not statically known."
+        ],
+        "constructionComplete": true,
+        "callsiteCoverage": "partial",
+        "evidence": "#37349 (header line 1491716) +0x0e-0x23 constructs date and employee_id; +0x28 reads context.meal and +0x2e-0x4c assigns body[context.meal] from event.value or null on the nullish branch, then +0x6b-0x76 calls saveEmployeeMeal. #26002 forwards the object with selectedKindergartenId; #26015 (header line 1014718) POSTs p2. No static meal key/type is inferred."
+      }
+    ],
+    "notes": [
+      "Do not substitute a guessed meal key or enum for the computed property."
+    ]
+  },
+  {
+    "operationId": "AddTimeLog",
+    "target": {
+      "sourceFunctionId": 25971,
+      "functionName": "addTimeLog",
+      "line": 1013616,
+      "method": "post",
+      "path": "/api/kindergartens/{kindergartenId}/diary/{diaryId}/time-logs"
+    },
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "child_id",
+          "type": "unknown",
+          "evidence": "#25897 +0x91-0x9a creates this key from the child ID argument before Object.assign."
+        },
+        {
+          "name": "started_at",
+          "type": "unknown",
+          "evidence": "#43884 +0x1ca-0x1dd creates the body property from the start-time value formatted with YYYY-MM-DD HH:mm:ss."
+        },
+        {
+          "name": "ended_at",
+          "type": "unknown",
+          "optional": true,
+          "evidence": "#43884 +0x1e8-0x1fb assigns ended_at only on the truthy end-time branch; value is formatted with YYYY-MM-DD HH:mm:ss."
+        }
+      ],
+      "complete": false,
+      "evidence": "The named UI caller constructs started_at and conditionally ended_at; action #25897 merges that object with child_id using Object.assign (+0x84-0xa9). Other callers can forward arbitrary keys through that merge. #25971 POSTs p3 as Axios data (+0x35-0x3e)."
+    },
+    "clientRequestVariants": [
+      {
+        "variantId": "DiaryTimeLogEditorAdd",
+        "constructor": {
+          "functionId": 43884,
+          "line": 1789613,
+          "bytecodeOffset": "0x00"
+        },
+        "targetSourceFunctionId": 25971,
+        "provenFieldPaths": [
+          "child_id",
+          "started_at",
+          "ended_at"
+        ],
+        "branches": [
+          "started_at is assigned from the selected start time formatted as YYYY-MM-DD HH:mm:ss",
+          "ended_at is assigned only when the selected end-time value is truthy",
+          "#25897 Object.assign merges the caller object with child_id; arbitrary extra caller properties are not excluded"
+        ],
+        "constructionComplete": true,
+        "callsiteCoverage": "partial",
+        "evidence": "#43884 (header line 1789613) +0x1ca-0x201 builds the time data object; +0x21f-0x236 calls addTimeLog with child.id and that object. Action #25897 adds child_id and Object.assign merges caller data (+0x84-0xa9); #25971 (header line 1013616) sends p3 as Axios data (+0x35-0x3e)."
+      }
+    ],
+    "notes": [
+      "These are one caller's fields and formatting, not a complete endpoint schema or server date-time contract."
+    ]
+  },
+  {
+    "operationId": "MoveFolders",
+    "target": {
+      "sourceFunctionId": 26157,
+      "functionName": "moveFolders",
+      "line": 1019060,
+      "method": "put",
+      "path": "/api/kindergartens/{kindergartenId}/folders/{folderId}/move"
+    },
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "folder_ids",
+          "type": "unknown",
+          "evidence": "#43269 +0x79-0x82 creates the body property folder_ids from routeParams.items unchanged; no ID mapping or array element type is established."
+        }
+      ],
+      "complete": false,
+      "evidence": "The cited bulk-move caller constructs a one-key body object. #26219 forwards its body argument to #26157; service #26157 PUTs p3 directly as Axios data (+0x35-0x3e). The folderId in the route is a separate argument, not the body field."
+    },
+    "clientRequestVariants": [
+      {
+        "variantId": "BulkMoveFolders",
+        "constructor": {
+          "functionId": 43269,
+          "line": 1762505,
+          "bytecodeOffset": "0x00"
+        },
+        "targetSourceFunctionId": 26157,
+        "provenFieldPaths": [
+          "folder_ids"
+        ],
+        "constructionComplete": true,
+        "callsiteCoverage": "partial",
+        "evidence": "#43269 (header line 1762505) handles the selection branch and constructs {folder_ids: routeParams.items} at +0x79-0x82; it separately reads the destination folder id and calls move. Thunk #26219 forwards selectedKindergartenId, route folderId, and body; service #26157 (header line 1019060) places folderId in the URL and sends the body argument as Axios data. No ID mapping or array type is inferred.",
+        "branches": [
+          "The body property receives routeParams.items unchanged; the destination folderId is a separate route argument.",
+          "Do not infer array shape, element type, or server requirements."
+        ]
+      }
+    ],
+    "notes": [
+      "folder_ids type is unknown; its source name/UI context does not establish array element types or server requirements."
+    ]
+  },
+  {
+    "operationId": "MoveFiles",
+    "target": {
+      "sourceFunctionId": 26159,
+      "functionName": "moveFiles",
+      "line": 1019099,
+      "method": "put",
+      "path": "/api/kindergartens/{kindergartenId}/folders/{folderId}/files/move"
+    },
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "file_ids",
+          "type": "unknown",
+          "evidence": "#43269 +0xe6-0xf1 creates the body property file_ids from routeParams.items unchanged; no ID mapping or array element type is established."
+        }
+      ],
+      "complete": false,
+      "evidence": "The cited bulk-move caller constructs a one-key body object. #26223 forwards its body argument to #26159; service #26159 PUTs p3 directly as Axios data (+0x35-0x3e). The folderId in the route is separate from file_ids."
+    },
+    "clientRequestVariants": [
+      {
+        "variantId": "BulkMoveFiles",
+        "constructor": {
+          "functionId": 43269,
+          "line": 1762505,
+          "bytecodeOffset": "0x00"
+        },
+        "targetSourceFunctionId": 26159,
+        "provenFieldPaths": [
+          "file_ids"
+        ],
+        "constructionComplete": true,
+        "callsiteCoverage": "partial",
+        "evidence": "#43269 (header line 1762505) handles the selection branch and constructs {file_ids: routeParams.items} at +0xe6-0xf1; it separately reads the destination folder id and calls move. Thunk #26223 forwards selectedKindergartenId, route folderId, and body; service #26159 (header line 1019099) places folderId in the URL and sends the body argument as Axios data. No ID mapping or array type is inferred.",
+        "branches": [
+          "The body property receives routeParams.items unchanged; the destination folderId is a separate route argument.",
+          "Do not infer array shape, element type, or server requirements."
+        ]
+      }
+    ],
+    "notes": [
+      "file_ids type is unknown; do not infer its element type or server requiredness."
+    ]
+  },
+  {
+    "operationId": "UpdateDiaryFile",
+    "target": {
+      "sourceFunctionId": 25947,
+      "functionName": "updateDiaryFile",
+      "line": 1013149,
+      "method": "put",
+      "path": "/api/kindergartens/{kindergartenId}/files/diary/{fileId}"
+    },
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "name",
+          "type": "unknown",
+          "evidence": "#43639 +0x4a-0x51 copies the submitted name into the nested form passed as HTTP data."
+        },
+        {
+          "name": "description",
+          "type": "unknown",
+          "evidence": "#43639 +0x55-0x60 copies the submitted description into the nested form passed as HTTP data."
+        }
+      ],
+      "complete": false,
+      "evidence": "#43639 constructs form with only name and description, places it in an action envelope, and #25833 unwraps form before calling #25947. The endpoint receives that inner form as p3/Axios PUT data; envelope kindergartenId and filename are used for URL routing, not included in this body's constructor."
+    },
+    "clientRequestVariants": [
+      {
+        "variantId": "DiaryFileMetadataForm",
+        "constructor": {
+          "functionId": 43639,
+          "line": 1779966,
+          "bytecodeOffset": "0x00"
+        },
+        "targetSourceFunctionId": 25947,
+        "provenFieldPaths": [
+          "name",
+          "description"
+        ],
+        "constructionComplete": true,
+        "callsiteCoverage": "partial",
+        "evidence": "#43639 (header line 1779966) +0x30-0x65 creates an action envelope with kindergartenId, filename, and inner form {name,description}; #25832/#25833 unwrap the form and use filename for routing; #25947 uses the route filename argument and sends p3/form as PUT data (+0x23-0x3a). The route placeholder stays canonical; caller provenance is a value named filename, not a server-domain claim."
+      }
+    ],
+    "notes": [
+      "This is the diary-image editor caller; other endpoint callers remain open."
+    ]
+  },
+  {
+    "operationId": "UpdateGalleryFile",
+    "target": {
+      "sourceFunctionId": 26138,
+      "functionName": "updateGalleryFile",
+      "line": 1018581,
+      "method": "put",
+      "path": "/api/kindergartens/{kindergartenId}/files/gallery/{fileId}"
+    },
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "name",
+          "type": "unknown",
+          "evidence": "#38003 +0x4a-0x51 copies submitted name into the nested form passed as HTTP data."
+        },
+        {
+          "name": "description",
+          "type": "unknown",
+          "evidence": "#38003 +0x55-0x60 copies submitted description into the nested form passed as HTTP data."
+        }
+      ],
+      "complete": false,
+      "evidence": "#38003 constructs form with only name and description; the action wrapper forwards this form separately from the route filename. #26129 calls #26138 with p3=form, and #26138 passes p3 as PUT data (+0x34-0x3d)."
+    },
+    "clientRequestVariants": [
+      {
+        "variantId": "GalleryFileMetadataForm",
+        "constructor": {
+          "functionId": 38003,
+          "line": 1520611,
+          "bytecodeOffset": "0x00"
+        },
+        "targetSourceFunctionId": 26138,
+        "provenFieldPaths": [
+          "name",
+          "description"
+        ],
+        "constructionComplete": true,
+        "callsiteCoverage": "partial",
+        "evidence": "#38003 (header line 1520611) +0x30-0x65 creates an action envelope {kindergartenId,filename,form:{name,description}}. #26129 unwraps the envelope; #26138 reads the supplied filename for the URL and sends p3/form as PUT data. The route placeholder stays canonical; filename is caller provenance only."
+      }
+    ],
+    "notes": [
+      "This is one gallery editor caller; no value-type or server-requiredness claim is made."
+    ]
+  },
+  {
+    "operationId": "UpdateDocumentFile",
+    "target": {
+      "sourceFunctionId": 26274,
+      "functionName": "updateDocumentFile",
+      "line": 1021881,
+      "method": "put",
+      "path": "/api/kindergartens/{kindergartenId}/files/documents/{documentId}"
+    },
+    "body": {
+      "kind": "object",
+      "fields": [
+        {
+          "name": "name",
+          "type": "unknown",
+          "evidence": "#39657 +0x2c-0x37 copies submitted name into the object forwarded to the document update action."
+        },
+        {
+          "name": "filename",
+          "type": "unknown",
+          "evidence": "#39657 +0x37-0x3f copies the captured filename into the object forwarded to the action; that object is also passed unchanged as service body data."
+        },
+        {
+          "name": "view",
+          "type": "unknown",
+          "evidence": "#39657 +0x3f-0x4a copies viewTargetGroups into the body object."
+        },
+        {
+          "name": "edit",
+          "type": "unknown",
+          "optional": true,
+          "evidence": "#39657 +0x4a-0x5d assigns editTargetGroups only when the captured state flag is truthy. #39655 sets that flag from !Array.isArray(getDocumentAclResponse); this is an ACL-response-shape/client form branch, not an authorization decision."
+        }
+      ],
+      "complete": false,
+      "evidence": "Unlike diary/gallery wrappers, the document thunk forwards the entire locally constructed form object to #26274 as data. It also reads filename from that object to form the URL. The body therefore includes filename for this caller; filename is not merely an envelope field here."
+    },
+    "clientRequestVariants": [
+      {
+        "variantId": "DocumentFileMetadataForm",
+        "constructor": {
+          "functionId": 39657,
+          "line": 1598321,
+          "bytecodeOffset": "0x00"
+        },
+        "targetSourceFunctionId": 26274,
+        "provenFieldPaths": [
+          "name",
+          "filename",
+          "view",
+          "edit"
+        ],
+        "branches": [
+          "edit is included only when the captured ACL-response-shape state is truthy: #39655 sets it from !Array.isArray(getDocumentAclResponse); array response shape populates viewTargetGroups and omits edit, while non-array shape populates view/edit form state. This is client construction behavior, not a permission decision or server ACL contract."
+        ],
+        "constructionComplete": true,
+        "callsiteCoverage": "partial",
+        "evidence": "#39657 (header line 1598321) +0x2c-0x5d constructs {name,filename,view} and conditionally edit, then +0x75-0x80 calls updateDocumentFile with that same form. #39650 (header line 1597993) selects ACL data; #39655 (header line 1598264) uses Array.isArray(response) to set the form-state flag and viewTargetGroups/editTargetGroups. #26260/#26261 read filename for route construction and forward the same form as service data; #26274 (header line 1021881) reads p2.filename for the URL and p3 for Axios PUT data (+0x23-0x3d). This proves request construction only, not access-control semantics."
+      }
+    ],
+    "notes": [
+      "The body filename is proven by this same-object forwarding chain; do not remove it merely because the service also reads it for the path.",
+      "view/edit field values remain unknown; edit inclusion follows client ACL response shape and is not an authorization decision or server access-control contract."
+    ]
+  }
+]
