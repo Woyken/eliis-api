@@ -1,0 +1,477 @@
+{
+  "title": "Bounded client-observed query/body field candidates",
+  "sourceContract": "Client request-construction evidence only; not server requiredness, validation, complete response modeling, or universal request shape.",
+  "sourceFiles": [
+    "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm",
+    "/data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm",
+    "/data/data/com.termux/files/home/eliis-analysis/domain-source/admin-shop.hasm",
+    "/data/data/com.termux/files/home/eliis-analysis/function-strings.json",
+    "/data/data/com.termux/files/home/eliis-analysis/domain-source/communications-index.json",
+    "/data/data/com.termux/files/home/eliis-analysis/domain-source/admin-shop-index.json"
+  ],
+  "candidates": [
+    {
+      "operationId": "GetEvents",
+      "sourceFunctionId": 25403,
+      "metroServiceModule": {"name": "EventsServices", "functionId": 25400, "line": 995289},
+      "method": "get",
+      "path": "/api/kindergartens/{kindergartenId}/events",
+      "candidateKind": "query",
+      "normalizedFields": [
+        {
+          "name": "dateFrom",
+          "type": "string",
+          "evidence": "Calendar caller #42300 formats the month start with format('Y-MM-DD') and writes dateFrom at eliis.hasm line 1715586, bytecode offset 0x75; duplicate caller #42323 does the same at line 1716934, offset 0x75."
+        },
+        {
+          "name": "dateTo",
+          "type": "string",
+          "evidence": "Calendar caller #42300 formats the month end with format('Y-MM-DD') and writes dateTo at eliis.hasm line 1715596, bytecode offset 0xa4; duplicate caller #42323 does the same at line 1716944, offset 0xa4."
+        }
+      ],
+      "queryPassthrough": true,
+      "body": null,
+      "clientRequestVariants": [
+        {
+          "variant": "calendar month-range construction",
+          "targetSourceFunctionId": 25403,
+          "evidence": "#42300/#42323 -> #25373/#25374 -> installed service #25403; routeChain and normalizedFields give exact constructor writes, argument registers, global lines and function-local offsets. Two own query keys locally complete; arbitrary additional caller keys remain unresolved.",
+          "constructionComplete": true,
+          "constructorFunctionIds": [42300, 42323],
+          "constructorLines": [1715553, 1716901],
+          "routeChain": [
+            "UI calendar caller #42300/#42323 constructs a fresh object with dateFrom/dateTo and calls getEvents at offsets 0xa9 (eliis.hasm lines 1715597 and 1716945).",
+            "Action creator #25373 captures explicit parameter 1 at eliis.hasm line 994660, offset 0x02, and returns thunk #25374; #25374 selects the kindergarten and forwards that captured query as service argument 2 at line 994695, offset 0x59.",
+            "Service method #25403 is at communications.hasm lines 877-913 (global eliis.hasm line 995342, function bytecode offset 0); parameter 2 is shallow-copied with Object.assign({}, arg2) and assigned to Axios config.params at offsets 0x4d-0x62, then Axios get is called at 0x66."
+          ],
+          "branch": "Both identified calendar constructors create dateFrom/dateTo for month start/end. The API wrapper uses an empty params object if argument 2 is undefined/omitted; otherwise it shallow-copies the passed value. The UI-constructor path is evidenced, not exhaustive for all possible callers.",
+          "partialCallerCoverage": true
+        }
+      ],
+      "notes": [
+        "Do not treat dateFrom/dateTo as the exhaustive universal query schema: the service forwards any other enumerable keys on an arbitrary caller argument."
+      ]
+    },
+    {
+      "operationId": "GetWorkSchedule",
+      "sourceFunctionId": 26549,
+      "metroServiceModule": {"name": "WorkScheduleService", "functionId": 26546, "line": 1030597},
+      "method": "get",
+      "path": "/api/kindergartens/{kindergartenId}/work-schedule",
+      "candidateKind": "query",
+      "normalizedFields": [
+        {
+          "name": "courses",
+          "type": "unknown",
+          "evidence": "Caller #39154 reads courses from its captured selection/state object and assigns it into a newly constructed query object at eliis.hasm line 1576142, bytecode offset 0x4a; no type conversion is performed."
+        },
+        {
+          "name": "roles",
+          "type": "unknown",
+          "evidence": "Caller #39154 reads roles from its captured selection/state object and assigns it into the same query object at eliis.hasm line 1576145, bytecode offset 0x59; no type conversion is performed."
+        },
+        {
+          "name": "start_date",
+          "type": "string",
+          "evidence": "Caller #39154 computes startOf('week'), formats it with 'Y-MM-DD', and assigns start_date at eliis.hasm lines 1576149-1576155, offsets 0x6c-0x89."
+        },
+        {
+          "name": "end_date",
+          "type": "string",
+          "evidence": "Caller #39154 computes endOf('week'), formats it with 'Y-MM-DD', and assigns end_date at eliis.hasm lines 1576159-1576163, offsets 0x9c-0xb1."
+        }
+      ],
+      "queryPassthrough": true,
+      "body": null,
+      "clientRequestVariants": [
+        {
+          "variant": "weekly work-schedule fetch",
+          "targetSourceFunctionId": 26549,
+          "evidence": "#39154 -> #26517/#26518 -> service #26549; routeChain and normalizedFields trace four constructor writes through unchanged config.params. Four own keys locally complete; caller coverage partial.",
+          "constructionComplete": true,
+          "constructorFunctionIds": [39154],
+          "constructorLines": [1576118],
+          "routeChain": [
+            "Caller #39154 builds the four-key query object and invokes getWorkSchedules at eliis.hasm line 1576164, bytecode offset 0xb6.",
+            "Action wrapper #26517 captures that object; inner function #26518 calls service method getWorkSchedule with selectedKindergartenId and the captured object at eliis.hasm lines 1029781-1029816, offsets 0x27-0x3f.",
+            "Endpoint #26549 places its parameter 2 unchanged in Axios config.params and calls default.get at admin-shop.hasm lines 27-50 (global eliis.hasm line 1030651; function bytecode offsets 0x2f-0x38)."
+          ],
+          "branch": "One identified weekly UI fetch constructs all four query keys on the executed request path. Other callers can supply an arbitrary forwarded params object; their coverage is not established here.",
+          "partialCallerCoverage": true
+        }
+      ],
+      "notes": [
+        "courses and roles stay unknown rather than being assumed arrays: the caller only reads and forwards their values."
+      ]
+    },
+    {
+      "operationId": "GetNotifications",
+      "sourceFunctionId": 26071,
+      "metroServiceModule": {"name": "NotificationsService", "functionId": 26068, "line": 1016266},
+      "method": "get",
+      "path": "/api/common/notifications",
+      "candidateKind": "query",
+      "normalizedFields": [
+        {
+          "name": "page",
+          "type": "unknown",
+          "evidence": "Each identified NotificationsScreen caller writes a captured page value into the query object: #39404 line 1587900 offset 0x45, #39407 line 1587978 offset 0x43, and #39409 line 1588034 offset 0x45."
+        },
+        {
+          "name": "perPage",
+          "type": "integer",
+          "value": 15,
+          "evidence": "Each identified NotificationsScreen caller writes literal 15 as perPage: #39404 line 1587902 offset 0x4d, #39407 line 1587980 offset 0x4b, and #39409 line 1588036 offset 0x4d."
+        }
+      ],
+      "queryPassthrough": true,
+      "body": null,
+      "clientRequestVariants": [
+        {
+          "variant": "notifications screen request constructors",
+          "targetSourceFunctionId": 26071,
+          "evidence": "#39404/#39407/#39409 -> #26061/#26062/#26063/#26064 -> service #26071; constructor writes and final config.params offsets cited in normalizedFields/routeChain. Two own keys locally complete, page captured despite reset calls; caller coverage partial.",
+          "constructionComplete": true,
+          "constructorFunctionIds": [39404, 39407, 39409],
+          "constructorLines": [1587877, 1587956, 1588011],
+          "routeChain": [
+            "Each constructor creates a fresh object containing page and perPage, then calls action getNotifications; see the caller bytecode offsets cited per field and calls at #39404 offset 0x52, #39407 offset 0x50, and #39409 offset 0x52.",
+            "Thunk action #26061 captures the object and generator #26064 forwards it to the service method at eliis.hasm lines 1016073-1016133, offsets 0x16-0x23.",
+            "Endpoint #26071 assigns function parameter 1 directly to Axios config.params at communications.hasm lines 1159-1175 (global eliis.hasm line 1016313; offsets 0x11-0x1e)."
+          ],
+          "branch": "All three identified screen constructors build the same two keys; page is caller state, perPage is literal 15. This is observed caller coverage, not an exhaustive list of arbitrary action callers.",
+          "partialCallerCoverage": true
+        }
+      ],
+      "notes": [
+        "The API wrapper forwards its argument object unchanged; other caller-provided query keys remain possible and unresolved."
+      ]
+    },
+    {
+      "operationId": "GetPolls",
+      "sourceFunctionId": 26455,
+      "metroServiceModule": {"name": "PollService", "functionId": 26450, "line": 1027429},
+      "method": "get",
+      "path": "/api/kindergartens/{kindergartenId}/polls",
+      "candidateKind": "query",
+      "normalizedFields": [
+        {
+          "name": "page",
+          "type": "unknown",
+          "evidence": "Initial constructor #38968 sets literal page 1 in the object buffer at eliis.hasm line 1566406, then invokes getPolls at line 1566409; pagination constructor #38970 sets page to a captured value plus 1 at lines 1566467-1566470, offsets 0x49-0x54."
+        },
+        {
+          "name": "term",
+          "type": "string",
+          "value": "",
+          "evidence": "#38968 seeds term as the empty string in the object buffer at line 1566406, offset 0x31; #38970 loads the empty string at line 1566471, offset 0x59, and writes term at line 1566472, offset 0x5d."
+        },
+        {
+          "name": "view",
+          "type": "unknown",
+          "evidence": "Initial constructor #38968 loads captured view at line 1566407, offset 0x3b, and overwrites the object's initial null view at eliis.hasm line 1566408, offset 0x3f; pagination constructor #38970 assigns captured view at line 1566474, offset 0x66."
+        },
+        {
+          "name": "perPage",
+          "type": "integer",
+          "value": 5,
+          "evidence": "Initial constructor #38968 sets perPage to literal 5 in its object buffer at eliis.hasm line 1566406; pagination constructor #38970 sets literal 5 at line 1566476, offset 0x6e."
+        }
+      ],
+      "queryPassthrough": true,
+      "body": null,
+      "clientRequestVariants": [
+        {
+          "variant": "initial polls fetch",
+          "targetSourceFunctionId": 26455,
+          "evidence": "#38968 constructs object buffer at 1566406, 0x31, overwrites view at 1566408, 0x3f, and calls at 1566409, 0x45 -> #26440/#26441 -> #26455 config.params 1027544, 0x34, GET 0x38. Four effective own keys locally complete; caller coverage partial.",
+          "constructionComplete": true,
+          "constructorFunctionIds": [38968],
+          "constructorLines": [1566389],
+          "routeChain": [
+            "#38968 constructs {page: 1, term: '', view: null, perPage: 5}, then overwrites view from captured state and calls action getPolls at eliis.hasm lines 1566406-1566409.",
+            "Thunk action #26441 forwards its captured query object to service method getPolls together with selectedKindergartenId at eliis.hasm lines 1027145-1027168, offsets 0x2d-0x3f.",
+            "Endpoint #26455 puts parameter 2 unchanged in Axios config.params at communications.hasm lines 1600-1623 (global eliis.hasm line 1027527; offsets 0x2f-0x38)."
+          ],
+          "branch": "The initial constructor's effective view is the captured value, not the null seed in the object literal.",
+          "partialCallerCoverage": true
+        },
+        {
+          "variant": "polls pagination fetch",
+          "targetSourceFunctionId": 26455,
+          "evidence": "#38970 writes page/term/view/perPage at 1566470/1566472/1566474/1566476, 0x54/0x5d/0x66/0x6e; call 1566477, 0x73 -> #26440/#26441 -> #26455 unchanged params. Four own keys locally complete; caller coverage partial.",
+          "constructionComplete": true,
+          "constructorFunctionIds": [38970],
+          "constructorLines": [1566444],
+          "routeChain": [
+            "#38970 creates page as captured page + 1 and separately writes term, view, and perPage before calling the same getPolls action at eliis.hasm lines 1566465-1566478.",
+            "Action #26441 and endpoint #26455 use the same forwarding chain as the initial fetch."
+          ],
+          "branch": "A separate pagination constructor is identified; page is not treated as an integer because the captured operand's runtime type is not established.",
+          "partialCallerCoverage": true
+        }
+      ],
+      "notes": [
+        "The action wrapper's input is otherwise forwarded; these are the keys constructed in the two traced poll-list callsites, not a claim that all possible callers have only these keys."
+      ]
+    },
+    {
+      "operationId": "InsertWorkSchedule",
+      "sourceFunctionId": 26547,
+      "metroServiceModule": {"name": "WorkScheduleService", "functionId": 26546, "line": 1030597},
+      "method": "post",
+      "path": "/api/kindergartens/{kindergartenId}/work-schedule",
+      "candidateKind": "body",
+      "normalizedFields": [
+        {
+          "name": "employee_id",
+          "type": "unknown",
+          "evidence": "Form constructor #39305 assigns the form value or a params.employeeId fallback at eliis.hasm lines 1582886-1582898, offsets 0x1f-0x4c."
+        },
+        {
+          "name": "type_id",
+          "type": "unknown",
+          "evidence": "Form constructor #39305 copies form data type_id into the body at line 1582900, offset 0x57."
+        },
+        {
+          "name": "start_date",
+          "type": "string",
+          "evidence": "Form constructor #39305 formats the form start_date with YYYY-MM-DD and assigns the field at lines 1582904-1582909, offsets 0x68-0x81; the insert action may then adjust the date/time using convertTimesToUtc."
+        },
+        {
+          "name": "start_time",
+          "type": "unknown",
+          "evidence": "#39305 formats start_time with HH:mm and writes it at 1582912-1582917, 0x8f-0xa8; full-day branch overwrites it with register 8 null (loaded 1582954, 0x153) at 1582976, 0x1af. #26526 skips conversion for truthy full_day at 1029997-1029998, 0x37-0x3d; otherwise #25412 (995603-995642) produces formatted time, copied to start_time at 1030030, 0xda. String or null survives to Axios; unknown conservatively represents both."
+        },
+        {
+          "name": "end_time",
+          "type": "unknown",
+          "evidence": "#39305 formats end_time with HH:mm and writes it at 1582920-1582924, 0xb6-0xcb; full-day branch overwrites it with register 8 null (loaded 1582954, 0x153) at 1582977, 0x1b5. #26526 skips conversion for truthy full_day at 1029997-1029998, 0x37-0x3d; otherwise #25412 (995603-995642) produces formatted time, copied to end_time at 1030032, 0xe6. String or null survives to Axios; unknown conservatively represents both."
+        },
+        {
+          "name": "full_day",
+          "type": "unknown",
+          "evidence": "Form constructor #39305 reads a captured state value and assigns full_day at eliis.hasm line 1582926, offset 0xd4; no conversion is performed."
+        },
+        {
+          "name": "is_recurring",
+          "type": "unknown",
+          "evidence": "Form constructor #39305 copies form is_recurring at eliis.hasm line 1582928, offset 0xdf; no conversion is performed."
+        },
+        {
+          "name": "repeat_end",
+          "type": "unknown",
+          "evidence": "Form constructor #39305 formats repeat_end and assigns either the formatted result or null at eliis.hasm lines 1582931-1582937, offsets 0xed-0x107."
+        },
+        {
+          "name": "rrule",
+          "type": "unknown",
+          "evidence": "Form constructor #39305 copies a captured value into rrule at eliis.hasm line 1582939, offset 0x110."
+        },
+        {
+          "name": "lunch_time",
+          "type": "integer",
+          "evidence": "Form constructor #39305 applies parseInt(value, 10) and falls back to literal 0, then assigns lunch_time at eliis.hasm lines 1582940-1582947, offsets 0x115-0x131."
+        },
+        {
+          "name": "desc",
+          "type": "unknown",
+          "evidence": "Form constructor #39305 copies form desc into the body at eliis.hasm line 1582949, offset 0x13c."
+        },
+        {
+          "name": "change_mode",
+          "type": "unknown",
+          "evidence": "Form constructor #39305 copies a captured state value into change_mode at eliis.hasm line 1582951, offset 0x145."
+        },
+        {
+          "name": "range_end",
+          "type": "unknown",
+          "evidence": "#39305 reads params.range_end when params is non-null, otherwise loads undefined at 1582956, 0x159; always writes the own range_end key at 1582959, 0x164. #26526 copies this own key. Possible undefined value is not constructor omission; later serialization is a separate boundary."
+        },
+        {
+          "name": "range_start",
+          "type": "unknown",
+          "evidence": "#39305 reads params.range_start when params is non-null, otherwise loads undefined at 1582963, 0x176; always writes the own range_start key at 1582966, 0x181. #26526 copies this own key. Possible undefined value is not constructor omission; later serialization is a separate boundary."
+        }
+      ],
+      "body": {
+        "kind": "object",
+        "completeForObservedConstructor": true,
+        "completeForOperation": false,
+        "evidence": "#39305 builds exactly fourteen own keys in register 5 at 1582886-1582966 and sends it to insertWorkSchedule at 1582987, 0x1e0. Captured edit flag slot 12 must be falsy at 1582978-1582979, 0x1bb-0x1bf; duration assignment requires that same flag truthy at 1582967-1582973, 0x186-0x1a2, so insert excludes duration. #26526 copies at 1029996, 0x31; truthy full_day skips conversion (0x37-0x3d), preserving null times. Otherwise it copies only #25412.date/time into start_date/start_time/end_time (1030028-1030032, 0xce/0xda/0xe6), not request tz/date/time names. Service call 1030038, 0x103; #26547 loads data parameter 2 at 1030629, 0x30, and calls Axios POST at 1030630, 0x33. Complete only for these observed own constructor keys, before serialization; other callers remain unresolved.",
+        "observedFieldNames": ["employee_id", "type_id", "start_date", "start_time", "end_time", "full_day", "is_recurring", "repeat_end", "rrule", "lunch_time", "desc", "change_mode", "range_end", "range_start"]
+      },
+      "clientRequestVariants": [
+        {
+          "variant": "work-schedule form insert branch",
+          "targetSourceFunctionId": 26547,
+          "evidence": "#39305 register 5 -> #26525/#26526 copied register 4 -> #26547 parameter 2, Axios POST 1030630, 0x33. Fourteen own keys locally complete on insert; duration excluded by opposite edit flag, range undefined values still own, full-day null times preserved. Field and body evidence record exact source lines/offsets; other callers remain partial.",
+          "constructionComplete": true,
+          "localCompleteness": "fourteen own keys on observed insert paths, before serialization; not universal caller coverage",
+          "constructorFunctionIds": [39305, 26525, 26526],
+          "constructorLines": [1582873, 1029965, 1029978],
+          "routeChain": [
+            "#39305 builds register 5 at 1582886-1582966 and sends it at 1582987, 0x1e0; edit flag slot 12 falsy excludes duration assigned only under truthy flag at 1582967-1582973.",
+            "M2289/#26515 dependencies [1,1229,2290,2228] at 11570-11573: dependency 3=M2228/#25411 exports #25412 at 995548-995549, 0x84-0x89. #26526 copies at 1029996, 0x31, skips full-day conversion at 0x3d, otherwise writes only start_date/start_time/end_time at 0xce/0xda/0xe6; service call 1030038, 0x103.",
+            "M2290/#26544/#26545/class #26546 binds #26547; Axios POST data is parameter 2, loaded at 1030629, 0x30, call 1030630, 0x33."
+          ],
+          "branch": "Exactly fourteen own keys on every executed observed insert path, including range keys whose values may be undefined. Edit flag slot 12 is falsy for insert and truthy for selected-data duration assignment, so duration is excluded, as are update-only id/date/end_date/exception_date. Full-day null times survive the action.",
+          "partialCallerCoverage": true
+        }
+      ],
+      "notes": [
+        "The client Object.assign copy must not be interpreted as a server schema; the complete flag is scoped to this locally traced constructor only."
+      ]
+    },
+    {
+      "operationId": "UpdateWorkSchedule",
+      "sourceFunctionId": 26551,
+      "metroServiceModule": {"name": "WorkScheduleService", "functionId": 26546, "line": 1030597},
+      "method": "put",
+      "path": "/api/kindergartens/{kindergartenId}/work-schedule/{scheduleId}",
+      "candidateKind": "body",
+      "normalizedFields": [
+        {
+          "name": "employee_id",
+          "type": "unknown",
+          "evidence": "Base form construction is at eliis.hasm lines 1582886-1582898; update branch reassigns employee_id from captured selected data at lines 1583071-1583075, offsets 0x38f-0x3a4."
+        },
+        {
+          "name": "type_id",
+          "type": "unknown",
+          "optional": true,
+          "evidence": "#39305 copies type_id into base at 1582900, 0x57; difference(base, selectedData) at 1583003, 0x22b, omits equal values before #26530 shallow-copies the resulting difference at 1030125, 0x37."
+        },
+        {
+          "name": "start_date",
+          "type": "string",
+          "optional": true,
+          "evidence": "#39305 writes formatted start_date at 1582909, 0x81; difference at 1583003, 0x22b, omits equal values. Branches restore base date at 1583030/1583046, 0x2c0/0x311. #26530 may replace with #25412.date at 1030177, 0x12a, only on non-full-day truthy-start_time branch. String when present, no server date-format constraint."
+        },
+        {
+          "name": "start_time",
+          "type": "unknown",
+          "optional": true,
+          "evidence": "#39305 writes formatted HH:mm start_time at 1582917, 0xa8, or full-day null at 1582976, 0x1af; difference may omit equal values, and recurring branch restores base time at 1583062, 0x364. #26530 truthy full_day skips conversion at 1030126-1030127, 0x3d-0x43; otherwise truthy start_time gates #25412 conversion at 1030164, 0xed, and formatted helper time is written at 1030179, 0x136. String or null when present; unknown covers both."
+        },
+        {
+          "name": "end_time",
+          "type": "unknown",
+          "optional": true,
+          "evidence": "#39305 writes formatted HH:mm end_time at 1582924, 0xcb, or full-day null at 1582977, 0x1b5; difference may omit equal values, and recurring branch restores base time at 1583064, 0x370. #26530 truthy full_day skips conversion at 1030126-1030127, 0x3d-0x43; otherwise truthy end_time gates #25412 conversion at 1030181, 0x142, and formatted helper time is written at 1030194, 0x180. String or null when present; unknown covers both."
+        },
+        {
+          "name": "full_day",
+          "type": "unknown",
+          "optional": true,
+          "evidence": "#39305 writes captured full_day at 1582926, 0xd4; difference at 1583003, 0x22b, omits equal values. #26530 branches on copied value at 1030126-1030127, 0x3d-0x43; truthiness does not prove boolean type."
+        },
+        {
+          "name": "is_recurring",
+          "type": "unknown",
+          "optional": true,
+          "evidence": "#39305 copies is_recurring at 1582928, 0xdf; difference at 1583003, 0x22b, omits equal values. Single branch writes literal 0 at 1583034, 0x2d4; no closed enum inferred."
+        },
+        {
+          "name": "repeat_end",
+          "type": "unknown",
+          "optional": true,
+          "evidence": "#39305 writes formatted repeat_end or null at 1582937, 0x107; difference at 1583003, 0x22b, omits equal values, while from branch restores base value at 1583025, 0x2a5. Unknown covers string/null when present."
+        },
+        {
+          "name": "rrule",
+          "type": "unknown",
+          "optional": true,
+          "evidence": "#39305 writes captured rrule at 1582939, 0x110; difference at 1583003, 0x22b, omits equal values. Branches restore base at 1583021, 0x28d, or write null at 1583035/1583049, 0x2da/0x321."
+        },
+        {
+          "name": "lunch_time",
+          "type": "integer",
+          "optional": true,
+          "evidence": "#39305 parseInt(value, 10) or 0 writes lunch_time at 1582947, 0x131; difference at 1583003, 0x22b, omits equal values. Empty-string guard writes 0 at 1583069, 0x386; it does not prove string request values. Integer when present; no server minimum/default."
+        },
+        {
+          "name": "desc",
+          "type": "unknown",
+          "optional": true,
+          "evidence": "#39305 copies desc into base at 1582949, 0x13c; difference(base, selectedData) at 1583003, 0x22b, omits equal values. #26530 copies the filtered difference, not the base object, at 1030125, 0x37."
+        },
+        {
+          "name": "change_mode",
+          "type": "unknown",
+          "optional": true,
+          "evidence": "#39305 writes captured change_mode at 1582951, 0x145; difference at 1583003, 0x22b, omits equal values. Branch may write literal all at 1583048, 0x31b; comparisons do not establish a closed server enum."
+        },
+        {
+          "name": "range_end",
+          "type": "unknown",
+          "optional": true,
+          "evidence": "#39305 always writes base range_end at 1582959, 0x164, after params read or undefined load 0x159. Difference at 1583003, 0x22b, may omit equal values; update optionality comes from filtering, not nullish params."
+        },
+        {
+          "name": "range_start",
+          "type": "unknown",
+          "optional": true,
+          "evidence": "#39305 always writes base range_start at 1582966, 0x181, after params read or undefined load 0x176. Difference at 1583003, 0x22b, may omit equal values; update optionality comes from filtering, not nullish params."
+        },
+        {
+          "name": "duration",
+          "type": "unknown",
+          "optional": true,
+          "evidence": "#39305 requires captured edit flag slot 12 truthy (1582967-1582968, 0x186-0x18a), loads captured selectedData slot 8 at 1582969, 0x18d, reads duration at 1582972, 0x19d, and writes base duration at 1582973, 0x1a2. Not submitted form data; difference may subsequently omit equal duration. The opposite flag selects insert, excluding duration there."
+        },
+        {
+          "name": "id",
+          "type": "unknown",
+          "evidence": "Update branch reads selectedWorkSchedule.id and assigns id to the body at eliis.hasm lines 1583071-1583073, offsets 0x38f-0x398; endpoint #26551 also reads this property's value for the URL."
+        },
+        {
+          "name": "date",
+          "type": "string",
+          "optional": true,
+          "evidence": "One update change_mode branch copies start_date into date at eliis.hasm lines 1583016-1583023, offsets 0x271-0x299."
+        },
+        {
+          "name": "end_date",
+          "type": "string",
+          "optional": true,
+          "evidence": "#39305 conditionally copies base/difference formatted start_date into end_date at 1583019, 0x281; 1583032, 0x2cc; 1583053, 0x337; 1583060, 0x358. Null end_date deletion is at 1583014, 0x267. String when present, branch-conditional; #26530 does not UTC-rewrite end_date."
+        },
+        {
+          "name": "exception_date",
+          "type": "unknown",
+          "optional": true,
+          "evidence": "#39305 checks captured selectedData.is_recurring at 1583036-1583038, 0x2e0-0x2ea; loads selectedData from environment slot 8 at 1583039, 0x2f0, reads its unformatted start_date at 1583040, 0x2f4, and writes exception_date into difference register 4 at 1583041, 0x2fa. Not the freshly formatted base date; unknown type. #26530 does not rewrite this field."
+        }
+      ],
+      "body": {
+        "kind": "object",
+        "completeForObservedConstructor": true,
+        "completeForOperation": false,
+        "evidence": "Nineteen-name possible-key union, not nineteen simultaneous keys. #39305 calls difference(base register 5, captured selectedData slot 8) at 1583003, 0x22b, storing result in register 4. #25432/#25433/#25434 compare selectedData[key] and omit equal values (996255-996258, 0x19-0x25, target 0x71); unequal scalar/object differences are written at 996276, 0x6d, with recursive object branch 0x28-0x64 and transform accumulator #25436 (996300-996401). Branches restore/add/delete keys at 1583012-1583069. Only id and employee_id are always assigned after filtering at 1583073/1583075, 0x398/0x3a4. Update call passes difference register 4 at 1583085, 0x3d1. #26530 copies it at 1030125, 0x37, preserves full-day null times or conditionally copies #25412 formatted results into start_date/start_time/end_time, then service call 1030200, 0x19d. #26551 reads body.id at 1030699, 0x15, and sends the same body register 3 as PUT data at 1030707, 0x39. Local completeness covers only the traced possible-key union and omission/branch mechanisms; operation coverage stays partial and other callers unresolved.",
+        "observedFieldNames": ["employee_id", "type_id", "start_date", "start_time", "end_time", "full_day", "is_recurring", "repeat_end", "rrule", "lunch_time", "desc", "change_mode", "range_end", "range_start", "duration", "id", "date", "end_date", "exception_date"]
+      },
+      "clientRequestVariants": [
+        {
+          "variant": "work-schedule form update branch",
+          "targetSourceFunctionId": 26551,
+          "evidence": "#39305 difference register 4 -> #26529/#26530 copy -> installed #26551 PUT same body register 3 at 1030707, 0x39. #25432/#25433/#25434/#25436 omit equal keys; routeChain, body and normalizedFields cite filtering and branch writes. Locally complete possible-key union only: nineteen names, seventeen conditional, id/employee_id always post-filter assigned; caller coverage partial.",
+          "constructionComplete": true,
+          "localCompleteness": "complete traced nineteen-name possible-key union plus difference/branch omission mechanisms, never nineteen simultaneous keys or universal caller coverage",
+          "constructorFunctionIds": [39305, 26529, 26530],
+          "constructorLines": [1582873, 1030093, 1030106],
+          "routeChain": [
+            "#39305 builds base register 5 at 1582886-1582973; difference(base, selectedData) at 1583003, 0x22b, produces register 4 with equal keys omitted; subsequent branch mutations and final id/employee_id writes precede updateWorkSchedule(register4) at 1583085, 0x3d1.",
+            "M4116 dependencies at 20705-20708: index 24=M2228/#25411 exports difference #25432 at 995596-995597; #25433/#25434/#25436 filter equal keys. M2289 dependencies at 11570-11573: index 3=M2228 exports UTC helper #25412 at 995548-995549. #26530 copies at 1030125, 0x37; full_day skips at 0x43, otherwise truthy times gate selected-date conversion at 0xed/0x142, writes only start_date/start_time/end_time at 0x12a/0x136/0x180; service call 1030200, 0x19d.",
+            "M2290/#26544/#26545/class #26546 binds #26551; reads parameter2.id at 1030699, 0x15, builds URL at 0x32, sends same body register 3 as PUT data at 1030707, 0x39."
+          ],
+          "branch": "Nineteen-name possible-key union only; seventeen names may be omitted by client difference filtering and/or branch selection, including range keys. Only id and employee_id are always written on executed update request paths after filtering. #26530 copies the difference, not the base; full_day truthy preserves null times, otherwise only truthy time fields trigger #25412 rewrites. Endpoint-level arbitrary callers remain untraced.",
+          "partialCallerCoverage": true
+        }
+      ],
+      "notes": [
+        "The API's operation-level body remains open/unknown outside this identified form-submit construction. No server-side requiredness or enum claims are made."
+      ]
+    }
+  ]
+}

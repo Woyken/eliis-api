@@ -3323,7 +3323,36 @@
       "tag": "Notifications",
       "summary": "Get notifications",
       "pathParams": [],
-      "query": [],
+      "query": [
+        {
+          "name": "page",
+          "type": "unknown",
+          "evidence": "#39404/#39407/#39409 write captured page at 1587900/1587978/1588034, 0x45/0x43/0x45; prior state reset does not replace captured operand with literal 1.",
+          "optional": false,
+          "observations": [
+            {
+              "name": "page",
+              "type": "unknown",
+              "evidence": "#39404/#39407/#39409 write captured page at 1587900/1587978/1588034, 0x45/0x43/0x45; prior state reset does not replace captured operand with literal 1."
+            }
+          ]
+        },
+        {
+          "name": "perPage",
+          "type": "integer",
+          "value": 15,
+          "evidence": "#39404/#39407/#39409 literal 15 writes at 1587902/1587980/1588036, 0x4d/0x4b/0x4d; observed caller constant, not server default/enum.",
+          "optional": false,
+          "observations": [
+            {
+              "name": "perPage",
+              "type": "integer",
+              "value": 15,
+              "evidence": "#39404/#39407/#39409 literal 15 writes at 1587902/1587980/1588036, 0x4d/0x4b/0x4d; observed caller constant, not server default/enum."
+            }
+          ]
+        }
+      ],
       "queryPassthrough": true,
       "body": null,
       "bodyOptional": true,
@@ -3346,7 +3375,41 @@
           },
           "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1159-1180 (function #26071 getNotifications): Axios GET call and URL construction traced there. Function parameter 1 is assigned unchanged to Axios config.params; query shape unresolved.",
           "pathParams": [],
-          "query": [],
+          "query": [
+            {
+              "name": "page",
+              "type": "unknown",
+              "evidence": "#39404/#39407/#39409 write captured page at 1587900/1587978/1588034, 0x45/0x43/0x45; prior state reset does not replace captured operand with literal 1."
+            },
+            {
+              "name": "perPage",
+              "type": "integer",
+              "value": 15,
+              "evidence": "#39404/#39407/#39409 literal 15 writes at 1587902/1587980/1588036, 0x4d/0x4b/0x4d; observed caller constant, not server default/enum."
+            }
+          ],
+          "clientRequestVariants": [
+            {
+              "variantId": "NotificationsScreenFetch",
+              "targetSourceFunctionId": 26071,
+              "constructorFunctionIds": [
+                39404,
+                39407,
+                39409
+              ],
+              "constructorLines": [
+                1587877,
+                1587956,
+                1588011
+              ],
+              "placement": "query",
+              "constructionComplete": true,
+              "localCompleteness": "two own keys in each identified screen constructor",
+              "callsiteCoverage": "partial",
+              "branch": "All three constructors build captured page and literal perPage=15; reset calls do not change captured page operand. Other caller shapes untraced.",
+              "evidence": "#39404/#39407/#39409 fresh objects, page writes 1587900/1587978/1588034, 0x45/0x43/0x45, perPage writes 1587902/1587980/1588036, 0x4d/0x4b/0x4d; getNotifications calls 1587903/1587981/1588037, 0x52/0x50/0x52 -> #26061/#26062/#26063/#26064 captured query forwarded at 1016131, 0x23 -> M2260/#26066/#26067/class #26068 binds #26071 (1016248-1016252). #26071 unchanged parameter 1 config.params 1016323, 0x16, GET 1016325, 0x1e. Two local keys complete, caller coverage partial; unknown additional forwarded keys retained."
+            }
+          ],
           "queryPassthrough": true,
           "body": null,
           "response": {
@@ -3355,7 +3418,7 @@
           },
           "auth": "cookie",
           "notes": [
-            "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+            "Traced screen callers prove page and perPage; additional forwarded caller keys remain unresolved. Literal perPage=15 is observed client behavior, not a server default or enum."
           ]
         }
       ]
@@ -7314,7 +7377,34 @@
           ]
         }
       ],
-      "query": [],
+      "query": [
+        {
+          "name": "dateFrom",
+          "type": "string",
+          "evidence": "#42300/#42323 format month start with Moment format('Y-MM-DD'), own write at 1715586/1716934, function-local 0x75. SDK string only, no server format constraint.",
+          "optional": false,
+          "observations": [
+            {
+              "name": "dateFrom",
+              "type": "string",
+              "evidence": "#42300/#42323 format month start with Moment format('Y-MM-DD'), own write at 1715586/1716934, function-local 0x75. SDK string only, no server format constraint."
+            }
+          ]
+        },
+        {
+          "name": "dateTo",
+          "type": "string",
+          "evidence": "#42300/#42323 format month end with Moment format('Y-MM-DD'), own write at 1715596/1716944, function-local 0xa4. SDK string only, no server format constraint.",
+          "optional": false,
+          "observations": [
+            {
+              "name": "dateTo",
+              "type": "string",
+              "evidence": "#42300/#42323 format month end with Moment format('Y-MM-DD'), own write at 1715596/1716944, function-local 0xa4. SDK string only, no server format constraint."
+            }
+          ]
+        }
+      ],
       "queryPassthrough": true,
       "body": null,
       "bodyOptional": true,
@@ -7343,7 +7433,38 @@
               "evidence": "Function parameter 1 is concatenated into URL"
             }
           ],
-          "query": [],
+          "query": [
+            {
+              "name": "dateFrom",
+              "type": "string",
+              "evidence": "#42300/#42323 format month start with Moment format('Y-MM-DD'), own write at 1715586/1716934, function-local 0x75. SDK string only, no server format constraint."
+            },
+            {
+              "name": "dateTo",
+              "type": "string",
+              "evidence": "#42300/#42323 format month end with Moment format('Y-MM-DD'), own write at 1715596/1716944, function-local 0xa4. SDK string only, no server format constraint."
+            }
+          ],
+          "clientRequestVariants": [
+            {
+              "variantId": "CalendarMonthRange",
+              "targetSourceFunctionId": 25403,
+              "constructorFunctionIds": [
+                42300,
+                42323
+              ],
+              "constructorLines": [
+                1715553,
+                1716901
+              ],
+              "placement": "query",
+              "constructionComplete": true,
+              "localCompleteness": "two own keys in traced month-range constructors",
+              "callsiteCoverage": "partial",
+              "branch": "Both calendar constructors create month start/end range. Service argument 2 omitted/undefined becomes {}; otherwise all enumerable caller keys copied, not closed query schema.",
+              "evidence": "#42300/#42323 register 0 own writes dateFrom/dateTo at 1715586/1715596 and 1716934/1716944, 0x75/0xa4, calls getEvents 1715597/1716945, 0xa9 -> #25373 captures FIRST explicit argument at 994660, 0x02 -> #25374 forwards captured query as service argument 2 at 994695, 0x59. M2227/#25398/#25399/class #25400 binds #25403; omitted/undefined arg2 default {} 995346-995355; shallow copy 995371, 0x5c; config.params 995372, 0x62; GET 995373, 0x66. Moment format bound #12925 at 511255-511256 -> #12755/#12753/#12754; #12754 string seed/concatenation/return 512830/512849/512854, 0x10/0x55/0x67; invalid-date SDK text not validation. Caller coverage partial; queryPassthrough preserves unknown additional keys."
+            }
+          ],
           "queryPassthrough": true,
           "body": null,
           "response": {
@@ -7352,7 +7473,7 @@
           },
           "auth": "cookie",
           "notes": [
-            "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+            "Traced calendar callers prove dateFrom/dateTo strings; arbitrary additional enumerable caller keys remain unresolved. Client format arguments do not establish server constraints."
           ]
         }
       ]
@@ -9795,7 +9916,64 @@
           ]
         }
       ],
-      "query": [],
+      "query": [
+        {
+          "name": "page",
+          "type": "unknown",
+          "evidence": "#38968 object buffer 1566406, 0x31, seeds page=1; #38970 captured page plus 1 via generic Add at 1566469, 0x50, own write 1566470, 0x54. Operand type unproved across variants.",
+          "optional": false,
+          "observations": [
+            {
+              "name": "page",
+              "type": "unknown",
+              "evidence": "#38968 object buffer 1566406, 0x31, seeds page=1; #38970 captured page plus 1 via generic Add at 1566469, 0x50, own write 1566470, 0x54. Operand type unproved across variants."
+            }
+          ]
+        },
+        {
+          "name": "perPage",
+          "type": "integer",
+          "value": 5,
+          "evidence": "#38968 object buffer literal 5 at 1566406, 0x31; #38970 literal 5 write 1566476, 0x6e. Observed client constant, not server default/enum.",
+          "optional": false,
+          "observations": [
+            {
+              "name": "perPage",
+              "type": "integer",
+              "value": 5,
+              "evidence": "#38968 object buffer literal 5 at 1566406, 0x31; #38970 literal 5 write 1566476, 0x6e. Observed client constant, not server default/enum."
+            }
+          ]
+        },
+        {
+          "name": "term",
+          "type": "string",
+          "value": "",
+          "evidence": "#38968 object buffer seeds empty string at 1566406, 0x31; #38970 empty literal load 1566471, 0x59, term write 1566472, 0x5d. Caller constant only.",
+          "optional": false,
+          "observations": [
+            {
+              "name": "term",
+              "type": "string",
+              "value": "",
+              "evidence": "#38968 object buffer seeds empty string at 1566406, 0x31; #38970 empty literal load 1566471, 0x59, term write 1566472, 0x5d. Caller constant only."
+            }
+          ]
+        },
+        {
+          "name": "view",
+          "type": "unknown",
+          "evidence": "#38968 loads captured view 1566407, 0x3b, overwrites initial null seed at 1566408, 0x3f; #38970 captured view write 1566474, 0x66.",
+          "optional": false,
+          "observations": [
+            {
+              "name": "view",
+              "type": "unknown",
+              "evidence": "#38968 loads captured view 1566407, 0x3b, overwrites initial null seed at 1566408, 0x3f; #38970 captured view write 1566474, 0x66."
+            }
+          ]
+        }
+      ],
       "queryPassthrough": true,
       "body": null,
       "bodyOptional": true,
@@ -9824,7 +10002,64 @@
               "evidence": "Function parameter 1 is concatenated into URL"
             }
           ],
-          "query": [],
+          "query": [
+            {
+              "name": "page",
+              "type": "unknown",
+              "evidence": "#38968 object buffer 1566406, 0x31, seeds page=1; #38970 captured page plus 1 via generic Add at 1566469, 0x50, own write 1566470, 0x54. Operand type unproved across variants."
+            },
+            {
+              "name": "term",
+              "type": "string",
+              "value": "",
+              "evidence": "#38968 object buffer seeds empty string at 1566406, 0x31; #38970 empty literal load 1566471, 0x59, term write 1566472, 0x5d. Caller constant only."
+            },
+            {
+              "name": "view",
+              "type": "unknown",
+              "evidence": "#38968 loads captured view 1566407, 0x3b, overwrites initial null seed at 1566408, 0x3f; #38970 captured view write 1566474, 0x66."
+            },
+            {
+              "name": "perPage",
+              "type": "integer",
+              "value": 5,
+              "evidence": "#38968 object buffer literal 5 at 1566406, 0x31; #38970 literal 5 write 1566476, 0x6e. Observed client constant, not server default/enum."
+            }
+          ],
+          "clientRequestVariants": [
+            {
+              "variantId": "InitialPollsFetch",
+              "targetSourceFunctionId": 26455,
+              "constructorFunctionIds": [
+                38968
+              ],
+              "constructorLines": [
+                1566389
+              ],
+              "placement": "query",
+              "constructionComplete": true,
+              "localCompleteness": "four effective own keys after captured view overwrite",
+              "callsiteCoverage": "partial",
+              "branch": "Initial page=1, term empty string, perPage=5; effective view is captured value, not null seed.",
+              "evidence": "#38968 object buffer 1566406, 0x31, captured view load/write 1566407-1566408, 0x3b-0x3f, getPolls call 1566409, 0x45 -> #26440/#26441 forwards unchanged query plus selectedKindergartenId at 1027165, 0x3f -> M2284/#26448/#26449/class #26450 binds #26455 at 1027412-1027416; endpoint parameter 2 config.params 1027544, 0x34, GET 1027545, 0x38. Four local keys complete, other callers/additional keys unresolved."
+            },
+            {
+              "variantId": "PaginatedPollsFetch",
+              "targetSourceFunctionId": 26455,
+              "constructorFunctionIds": [
+                38970
+              ],
+              "constructorLines": [
+                1566444
+              ],
+              "placement": "query",
+              "constructionComplete": true,
+              "localCompleteness": "four own keys in pagination constructor",
+              "callsiteCoverage": "partial",
+              "branch": "Captured page plus 1 uses generic Add, unknown operand type; term empty, view captured, perPage=5. Not a server closed schema.",
+              "evidence": "#38970 fresh register 0 at 1566466, 0x47; generic page Add/write 1566469-1566470, 0x50-0x54; empty term load 1566471, 0x59, write 1566472, 0x5d; view write 1566474, 0x66; perPage write 1566476, 0x6e; action call 1566477, 0x73 -> #26440/#26441 service call 1027165, 0x3f -> installed #26455 unchanged parameter 2 config.params 1027544, 0x34, GET 0x38. Four local keys complete; caller coverage partial and unknown additional keys retained."
+            }
+          ],
           "queryPassthrough": true,
           "body": null,
           "response": {
@@ -9833,7 +10068,7 @@
           },
           "auth": "cookie",
           "notes": [
-            "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+            "Traced poll-list callers prove page/term/view/perPage; arbitrary additional caller query keys remain unresolved. Empty term and perPage=5 are observed constants, not server defaults or enums."
           ]
         }
       ]
@@ -12712,7 +12947,60 @@
           ]
         }
       ],
-      "query": [],
+      "query": [
+        {
+          "name": "courses",
+          "type": "unknown",
+          "evidence": "#39154 captured selection courses read/write at 1576140-1576142, 0x40-0x4a; no array/type conversion.",
+          "optional": false,
+          "observations": [
+            {
+              "name": "courses",
+              "type": "unknown",
+              "evidence": "#39154 captured selection courses read/write at 1576140-1576142, 0x40-0x4a; no array/type conversion."
+            }
+          ]
+        },
+        {
+          "name": "end_date",
+          "type": "string",
+          "evidence": "#39154 Moment endOf('week'), format('Y-MM-DD'), own write at 1576159-1576163, 0x9c-0xb1. SDK string only, no server format constraint.",
+          "optional": false,
+          "observations": [
+            {
+              "name": "end_date",
+              "type": "string",
+              "evidence": "#39154 Moment endOf('week'), format('Y-MM-DD'), own write at 1576159-1576163, 0x9c-0xb1. SDK string only, no server format constraint."
+            }
+          ]
+        },
+        {
+          "name": "roles",
+          "type": "unknown",
+          "evidence": "#39154 captured selection roles read/write at 1576143-1576145, 0x4f-0x59; no array/type conversion.",
+          "optional": false,
+          "observations": [
+            {
+              "name": "roles",
+              "type": "unknown",
+              "evidence": "#39154 captured selection roles read/write at 1576143-1576145, 0x4f-0x59; no array/type conversion."
+            }
+          ]
+        },
+        {
+          "name": "start_date",
+          "type": "string",
+          "evidence": "#39154 Moment startOf('week'), format('Y-MM-DD'), own write at 1576149-1576155, 0x6c-0x89. SDK string only, no server format constraint.",
+          "optional": false,
+          "observations": [
+            {
+              "name": "start_date",
+              "type": "string",
+              "evidence": "#39154 Moment startOf('week'), format('Y-MM-DD'), own write at 1576149-1576155, 0x6c-0x89. SDK string only, no server format constraint."
+            }
+          ]
+        }
+      ],
       "queryPassthrough": true,
       "body": null,
       "bodyOptional": true,
@@ -12741,7 +13029,46 @@
               "evidence": "Function #26549 concatenates parameter 1 into this URL segment"
             }
           ],
-          "query": [],
+          "query": [
+            {
+              "name": "courses",
+              "type": "unknown",
+              "evidence": "#39154 captured selection courses read/write at 1576140-1576142, 0x40-0x4a; no array/type conversion."
+            },
+            {
+              "name": "roles",
+              "type": "unknown",
+              "evidence": "#39154 captured selection roles read/write at 1576143-1576145, 0x4f-0x59; no array/type conversion."
+            },
+            {
+              "name": "start_date",
+              "type": "string",
+              "evidence": "#39154 Moment startOf('week'), format('Y-MM-DD'), own write at 1576149-1576155, 0x6c-0x89. SDK string only, no server format constraint."
+            },
+            {
+              "name": "end_date",
+              "type": "string",
+              "evidence": "#39154 Moment endOf('week'), format('Y-MM-DD'), own write at 1576159-1576163, 0x9c-0xb1. SDK string only, no server format constraint."
+            }
+          ],
+          "clientRequestVariants": [
+            {
+              "variantId": "WeeklyWorkScheduleFetch",
+              "targetSourceFunctionId": 26549,
+              "constructorFunctionIds": [
+                39154
+              ],
+              "constructorLines": [
+                1576118
+              ],
+              "placement": "query",
+              "constructionComplete": true,
+              "localCompleteness": "four own query keys in observed weekly constructor",
+              "callsiteCoverage": "partial",
+              "branch": "Executed weekly UI fetch builds all four keys; arbitrary other caller keys remain unresolved.",
+              "evidence": "#39154 fresh register 1, field writes 1576142/1576145/1576155/1576163, 0x4a/0x59/0x89/0xb1, getWorkSchedules call 1576164, 0xb6 -> #26517/#26518 captured query, selectedKindergartenId service call 1029813, 0x39 -> M2290/#26544/#26545/class #26546 installed #26549, unchanged parameter 2 config.params 1030668, 0x34, GET 0x38. SDK Moment #12925 format binding 511255-511256, #12754 string seed/concatenation/return 512830/512849/512854, 0x10/0x55/0x67; strings do not establish valid dates/server constraints. Caller coverage partial, queryPassthrough preserves unknown additional keys."
+            }
+          ],
           "queryPassthrough": true,
           "body": null,
           "response": {
@@ -14966,9 +15293,15 @@
       "query": [],
       "queryPassthrough": false,
       "body": {
-        "kind": "unknown",
-        "fields": [],
-        "evidence": "Function #16321 passes its first argument directly as Axios POST data; its shape is unresolved.",
+        "kind": "object",
+        "fields": [
+          {
+            "name": "email",
+            "type": "unknown",
+            "evidence": "#28196 +0x33 creates a fresh object; +0x35-+0x3e copies handlerArgument.email to its own email; +0x43 hands it to requestForgotPassword."
+          }
+        ],
+        "evidence": "Function #16321 +0x12-+0x19 POSTs its first argument unchanged to /api/auth/password/email. Reviewed #28196 -> #16260/#16261 -> M1575 installed #16321 establishes email in the named caller variant. Complete local construction does not close the endpoint body; arbitrary forwarded remainder, other callers, and server requiredness remain unresolved.",
         "complete": false
       },
       "bodyOptional": false,
@@ -14980,6 +15313,73 @@
       "records": [
         {
           "operationId": "RequestForgotPassword",
+          "clientRequestVariants": [
+            {
+              "variantId": "RequestPasswordScreenEmail",
+              "constructor": {
+                "functionId": 28196,
+                "line": 1110862,
+                "bytecodeOffset": "0x00639137",
+                "bytecodeOffsetKind": "absolute"
+              },
+              "targetSourceFunctionId": 16321,
+              "provenFieldPaths": [
+                "email"
+              ],
+              "fields": [
+                {
+                  "name": "email",
+                  "type": "unknown",
+                  "evidence": "#28196 +0x35-+0x3e reads handler argument email and assigns it to a fresh object; +0x43 passes that object to captured requestForgotPassword."
+                }
+              ],
+              "constructionComplete": true,
+              "completeLocalConstruction": true,
+              "callsiteCoverage": "partial",
+              "bodyCompleteAtTarget": false,
+              "conditionalBranches": [],
+              "overwrites": [],
+              "routingChain": [
+                {
+                  "moduleId": 2580,
+                  "dependencyIndex": 17,
+                  "dependencyModuleId": 1574,
+                  "evidence": "Root module registration at #0 lines 13025-13028 identifies the RequestPasswordScreen factory #28192 as M2580 and its dependency array's index 17 as M1574; this is the captured requestForgotPassword action module."
+                },
+                {
+                  "functionId": 28196,
+                  "line": 1110862,
+                  "evidence": "Constructs {email: handlerArgument.email} at +0x33-+0x3e, calls captured requestForgotPassword at +0x43, then dispatches the returned thunk at +0x48."
+                },
+                {
+                  "functionId": 16260,
+                  "line": 647452,
+                  "evidence": "Named requestForgotPassword action wrapper creates #16261 at +0x09."
+                },
+                {
+                  "functionId": 16261,
+                  "line": 647465,
+                  "evidence": "Calls default.requestForgotPassword with the wrapper argument at +0x07-+0x19; it does not alter the body."
+                },
+                {
+                  "moduleId": 1574,
+                  "dependencyIndex": 3,
+                  "dependencyModuleId": 1575,
+                  "evidence": "Root module registration at #0 lines 7995-7998 identifies M1574's dependency index 3 as M1575; #16261's captured default service is this auth-service dependency."
+                },
+                {
+                  "moduleId": 1575,
+                  "dependencyEvidence": "M1575 service binding is consumed by #16261; #16306 installs requestForgotPassword as #16321 at +0xa5-+0xb8."
+                },
+                {
+                  "functionId": 16321,
+                  "line": 648903,
+                  "evidence": "POSTs its first argument unchanged as data at +0x12-+0x19 to /api/auth/password/email."
+                }
+              ],
+              "evidence": "UI construction, action forwarding, and service POST data argument are traced. The body field type and server requiredness are unknown; callsite coverage is partial."
+            }
+          ],
           "method": "post",
           "path": "/api/auth/password/email",
           "tag": "AuthCommon",
@@ -14994,9 +15394,15 @@
           "query": [],
           "queryPassthrough": false,
           "body": {
-            "kind": "unknown",
-            "fields": [],
-            "evidence": "Function #16321 passes its first argument directly as Axios POST data; its shape is unresolved.",
+            "kind": "object",
+            "fields": [
+              {
+                "name": "email",
+                "type": "unknown",
+                "evidence": "#28196 +0x33 creates a fresh object; +0x35-+0x3e copies handlerArgument.email to its own email; +0x43 hands it to requestForgotPassword."
+              }
+            ],
+            "evidence": "Function #16321 +0x12-+0x19 POSTs its first argument unchanged to /api/auth/password/email. Reviewed #28196 -> #16260/#16261 -> M1575 installed #16321 establishes email in the named caller variant. Complete local construction does not close the endpoint body; arbitrary forwarded remainder, other callers, and server requiredness remain unresolved.",
             "complete": false
           },
           "response": {
@@ -15018,9 +15424,20 @@
       "query": [],
       "queryPassthrough": false,
       "body": {
-        "kind": "unknown",
-        "fields": [],
-        "evidence": "Function #16337 passes its first argument directly as Axios POST data; its shape is unresolved.",
+        "kind": "object",
+        "fields": [
+          {
+            "name": "recovery_code",
+            "type": "unknown",
+            "evidence": "#27174 +0x0a loads handler argument 1; +0x37 creates a fresh object and +0x39 assigns own recovery_code."
+          },
+          {
+            "name": "login_identifier",
+            "type": "unknown",
+            "evidence": "#27174 +0x3e-+0x5b reads route params; the nullish branch skips property read +0x55, not own assignment +0x5b. login_identifier is always assigned, with undefined on nullish params or possibly a missing property. JSON serialization may omit undefined, but downstream serialization and server omission constraints are unestablished."
+          }
+        ],
+        "evidence": "Function #16337 +0x12-+0x19 POSTs its first argument unchanged to /api/auth/recover-2fa. Reviewed #27174 directly calls M1575 installed #16337 with recovery_code and login_identifier. Complete local construction does not close the endpoint body; arbitrary forwarded remainder, other callers, and server requiredness remain unresolved.",
         "complete": false
       },
       "bodyOptional": false,
@@ -15032,6 +15449,65 @@
       "records": [
         {
           "operationId": "RecoverAccount",
+          "clientRequestVariants": [
+            {
+              "variantId": "LoginAccountRecovery",
+              "constructor": {
+                "functionId": 27174,
+                "line": 1049954,
+                "bytecodeOffset": "0x0061543a",
+                "bytecodeOffsetKind": "absolute"
+              },
+              "targetSourceFunctionId": 16337,
+              "provenFieldPaths": [
+                "recovery_code",
+                "login_identifier"
+              ],
+              "fields": [
+                {
+                  "name": "recovery_code",
+                  "type": "unknown",
+                  "evidence": "#27174 +0x0a loads handler argument 1 and +0x37-+0x39 assigns it to recovery_code on a fresh object."
+                },
+                {
+                  "name": "login_identifier",
+                  "type": "unknown",
+                  "evidence": "#27174 +0x3e-+0x5b reads captured route params; nullish params skip the property read at +0x55, not the own login_identifier assignment at +0x5b. The own key is always assigned, with undefined on the nullish branch or possibly from a missing params.login_identifier. JSON serialization may omit undefined; these instructions do not establish the downstream serializer or server omission constraints."
+                }
+              ],
+              "constructionComplete": true,
+              "completeLocalConstruction": true,
+              "callsiteCoverage": "partial",
+              "bodyCompleteAtTarget": false,
+              "conditionalBranches": [
+                "params == null -> login_identifier is assigned undefined; otherwise params.login_identifier is copied."
+              ],
+              "overwrites": [],
+              "routingChain": [
+                {
+                  "moduleId": 2342,
+                  "dependencyIndex": 5,
+                  "dependencyModuleId": 1575,
+                  "evidence": "Root module registration at #0 lines 11835-11838 identifies the LoginAccountRecoveryScreen factory #27168 as M2342 and its dependency array's index 5 as M1575, the direct auth-service import used by #27174."
+                },
+                {
+                  "functionId": 27174,
+                  "line": 1049954,
+                  "evidence": "Constructs the two-property object at +0x37-+0x5b and calls captured default.recoverAccount at +0x60. Unlike the thunked UI handlers, this function's call is directly to the imported service reference."
+                },
+                {
+                  "moduleId": 1575,
+                  "dependencyEvidence": "The imported default.recoverAccount service method is installed by #16306 as #16337 at +0x118-+0x12b."
+                },
+                {
+                  "functionId": 16337,
+                  "line": 649151,
+                  "evidence": "POSTs first argument unchanged as data at +0x12-+0x19 to /api/auth/recover-2fa."
+                }
+              ],
+              "evidence": "Both assignments and the nullish params branch are explicit in #27174. The request-data argument is passed directly to the target service; undefined-valued properties may be dropped by JSON serialization."
+            }
+          ],
           "method": "post",
           "path": "/api/auth/recover-2fa",
           "tag": "AuthCommon",
@@ -15046,9 +15522,20 @@
           "query": [],
           "queryPassthrough": false,
           "body": {
-            "kind": "unknown",
-            "fields": [],
-            "evidence": "Function #16337 passes its first argument directly as Axios POST data; its shape is unresolved.",
+            "kind": "object",
+            "fields": [
+              {
+                "name": "recovery_code",
+                "type": "unknown",
+                "evidence": "#27174 +0x0a loads handler argument 1; +0x37 creates a fresh object and +0x39 assigns own recovery_code."
+              },
+              {
+                "name": "login_identifier",
+                "type": "unknown",
+                "evidence": "#27174 +0x3e-+0x5b reads route params; the nullish branch skips property read +0x55, not own assignment +0x5b. login_identifier is always assigned, with undefined on nullish params or possibly a missing property. JSON serialization may omit undefined, but downstream serialization and server omission constraints are unestablished."
+              }
+            ],
+            "evidence": "Function #16337 +0x12-+0x19 POSTs its first argument unchanged to /api/auth/recover-2fa. Reviewed #27174 directly calls M1575 installed #16337 with recovery_code and login_identifier. Complete local construction does not close the endpoint body; arbitrary forwarded remainder, other callers, and server requiredness remain unresolved.",
             "complete": false
           },
           "response": {
@@ -15070,9 +15557,62 @@
       "query": [],
       "queryPassthrough": false,
       "body": {
-        "kind": "unknown",
-        "fields": [],
-        "evidence": "Function #16317 passes its first argument directly as Axios POST data; its shape is unresolved.",
+        "kind": "object",
+        "fields": [
+          {
+            "name": "email",
+            "type": "unknown",
+            "evidence": "#28149 +0x68-+0x6e reads submitted form.email and assigns it to the fresh payload."
+          },
+          {
+            "name": "fname",
+            "type": "unknown",
+            "evidence": "#28149 +0x73-+0x79 reads submitted form.fname and assigns it to the fresh payload."
+          },
+          {
+            "name": "lang",
+            "type": "unknown",
+            "evidence": "#28149 +0x7e-+0x82 copies captured translations.language to the fresh payload; its type remains unresolved."
+          },
+          {
+            "name": "lname",
+            "type": "unknown",
+            "evidence": "#28149 +0x87-+0x8d reads submitted form.lname and assigns it to the fresh payload."
+          },
+          {
+            "name": "method",
+            "type": "string",
+            "value": "form",
+            "evidence": "#28149 +0x92-+0x96 assigns literal string form; this is an observed client value, not an enum or default."
+          },
+          {
+            "name": "password",
+            "type": "unknown",
+            "evidence": "#28149 +0x9b-+0xa1 reads submitted form.password and assigns it to the fresh payload."
+          },
+          {
+            "name": "role",
+            "type": "unknown",
+            "evidence": "#28149 +0xa6-+0xaa copies captured registeredRole to the fresh payload; its type remains unresolved."
+          },
+          {
+            "name": "country",
+            "type": "unknown",
+            "evidence": "#28149 +0xaf-+0xb3 copies captured registeredCountry to the fresh payload; its type remains unresolved."
+          },
+          {
+            "name": "tz",
+            "type": "number",
+            "evidence": "#28149 +0x2b-+0x35 calls constructed Date's getTimezoneOffset(); +0xb8 assigns its number result, without an integer/server restriction."
+          },
+          {
+            "name": "company_name",
+            "type": "string",
+            "value": "",
+            "evidence": "#28149 +0xbd-+0xc1 assigns the empty-string literal; this is an observed client value, not an enum or default."
+          }
+        ],
+        "evidence": "Function #16317 +0x12-+0x19 POSTs its first argument unchanged to /api/auth/register. Reviewed #28149 -> #16254/#16255 -> M1575 installed #16317 establishes the named literal fields in clientRequestVariants. Complete local construction does not establish exhaustive caller coverage or a closed server body; arbitrary forwarded remainder and server requiredness remain unknown.",
         "complete": false
       },
       "bodyOptional": false,
@@ -15084,6 +15624,129 @@
       "records": [
         {
           "operationId": "RegisterUser",
+          "clientRequestVariants": [
+            {
+              "variantId": "RegisterScreenSubmit",
+              "constructor": {
+                "functionId": 28149,
+                "line": 1109018,
+                "bytecodeOffset": "0x00637e47",
+                "bytecodeOffsetKind": "absolute"
+              },
+              "targetSourceFunctionId": 16317,
+              "provenFieldPaths": [
+                "email",
+                "fname",
+                "lang",
+                "lname",
+                "method",
+                "password",
+                "role",
+                "country",
+                "tz",
+                "company_name"
+              ],
+              "fields": [
+                {
+                  "name": "email",
+                  "type": "unknown",
+                  "evidence": "#28149 +0x68-+0x6e reads submitted form.email and assigns it to the fresh payload."
+                },
+                {
+                  "name": "fname",
+                  "type": "unknown",
+                  "evidence": "#28149 +0x73-+0x79 reads submitted form.fname and assigns it to the fresh payload."
+                },
+                {
+                  "name": "lang",
+                  "type": "unknown",
+                  "evidence": "#28149 +0x7e-+0x82 copies the captured translations.language value to the fresh payload; value type is not established here."
+                },
+                {
+                  "name": "lname",
+                  "type": "unknown",
+                  "evidence": "#28149 +0x87-+0x8d reads submitted form.lname and assigns it to the fresh payload."
+                },
+                {
+                  "name": "method",
+                  "type": "string",
+                  "value": "form",
+                  "evidence": "#28149 +0x92-+0x96 assigns the literal string \"form\" to method."
+                },
+                {
+                  "name": "password",
+                  "type": "unknown",
+                  "evidence": "#28149 +0x9b-+0xa1 reads submitted form.password and assigns it to the fresh payload."
+                },
+                {
+                  "name": "role",
+                  "type": "unknown",
+                  "evidence": "#28149 +0xa6-+0xaa copies the captured registeredRole value to the fresh payload; value type is unresolved."
+                },
+                {
+                  "name": "country",
+                  "type": "unknown",
+                  "evidence": "#28149 +0xaf-+0xb3 copies the captured registeredCountry value to the fresh payload; value type is unresolved."
+                },
+                {
+                  "name": "tz",
+                  "type": "number",
+                  "evidence": "#28149 +0x2b-+0x35 calls Date.prototype.getTimezoneOffset(); +0xb8 assigns that result to tz."
+                },
+                {
+                  "name": "company_name",
+                  "type": "string",
+                  "value": "",
+                  "evidence": "#28149 +0xbd-+0xc1 assigns the empty-string literal to company_name."
+                }
+              ],
+              "constructionComplete": true,
+              "completeLocalConstruction": true,
+              "callsiteCoverage": "partial",
+              "bodyCompleteAtTarget": false,
+              "conditionalBranches": [],
+              "overwrites": [],
+              "routingChain": [
+                {
+                  "moduleId": 2576,
+                  "dependencyIndex": 21,
+                  "dependencyModuleId": 1574,
+                  "evidence": "Root module registration at #0 lines 13005-13008 identifies the RegisterScreen factory #28140 as M2576 and its dependency array's index 21 as M1574; this is the captured registerUser action module."
+                },
+                {
+                  "functionId": 28149,
+                  "line": 1109018,
+                  "evidence": "After its registration state/dispatch setup (+0x00-+0x5b), constructs the listed fresh payload at +0x66-+0xc1, calls captured registerUser with it at +0xc6, then dispatches the returned thunk at +0xcb."
+                },
+                {
+                  "functionId": 16254,
+                  "line": 647366,
+                  "evidence": "Named registerUser action wrapper creates #16255 at +0x09."
+                },
+                {
+                  "functionId": 16255,
+                  "line": 647379,
+                  "evidence": "Calls default.registerUser with the wrapper argument at +0x07-+0x19; it does not reconstruct or add body fields."
+                },
+                {
+                  "moduleId": 1574,
+                  "dependencyIndex": 3,
+                  "dependencyModuleId": 1575,
+                  "evidence": "Root module registration at #0 lines 7995-7998 identifies M1574's dependency index 3 as M1575; #16255's captured default service is this auth-service dependency."
+                },
+                {
+                  "moduleId": 1575,
+                  "dependencyEvidence": "M1575 service binding is the default object consumed by #16255; #16306 installs its registerUser property as #16317 at +0x77-+0x8a."
+                },
+                {
+                  "functionId": 16317,
+                  "line": 648836,
+                  "evidence": "POSTs its first explicit argument unchanged as data at +0x12-+0x19 to /api/auth/register."
+                }
+              ],
+              "evidence": "Exact payload construction and call are traced in #28149; the action wrapper forwards data unchanged and #16317 posts that argument. No server requiredness is inferred. Other request callers were not exhaustively enumerated."
+            }
+          ],
           "method": "post",
           "path": "/api/auth/register",
           "tag": "AuthCommon",
@@ -15098,9 +15761,62 @@
           "query": [],
           "queryPassthrough": false,
           "body": {
-            "kind": "unknown",
-            "fields": [],
-            "evidence": "Function #16317 passes its first argument directly as Axios POST data; its shape is unresolved.",
+            "kind": "object",
+            "fields": [
+              {
+                "name": "email",
+                "type": "unknown",
+                "evidence": "#28149 +0x68-+0x6e reads submitted form.email and assigns it to the fresh payload."
+              },
+              {
+                "name": "fname",
+                "type": "unknown",
+                "evidence": "#28149 +0x73-+0x79 reads submitted form.fname and assigns it to the fresh payload."
+              },
+              {
+                "name": "lang",
+                "type": "unknown",
+                "evidence": "#28149 +0x7e-+0x82 copies captured translations.language to the fresh payload; its type remains unresolved."
+              },
+              {
+                "name": "lname",
+                "type": "unknown",
+                "evidence": "#28149 +0x87-+0x8d reads submitted form.lname and assigns it to the fresh payload."
+              },
+              {
+                "name": "method",
+                "type": "string",
+                "value": "form",
+                "evidence": "#28149 +0x92-+0x96 assigns literal string form; this is an observed client value, not an enum or default."
+              },
+              {
+                "name": "password",
+                "type": "unknown",
+                "evidence": "#28149 +0x9b-+0xa1 reads submitted form.password and assigns it to the fresh payload."
+              },
+              {
+                "name": "role",
+                "type": "unknown",
+                "evidence": "#28149 +0xa6-+0xaa copies captured registeredRole to the fresh payload; its type remains unresolved."
+              },
+              {
+                "name": "country",
+                "type": "unknown",
+                "evidence": "#28149 +0xaf-+0xb3 copies captured registeredCountry to the fresh payload; its type remains unresolved."
+              },
+              {
+                "name": "tz",
+                "type": "number",
+                "evidence": "#28149 +0x2b-+0x35 calls constructed Date's getTimezoneOffset(); +0xb8 assigns its number result, without an integer/server restriction."
+              },
+              {
+                "name": "company_name",
+                "type": "string",
+                "value": "",
+                "evidence": "#28149 +0xbd-+0xc1 assigns the empty-string literal; this is an observed client value, not an enum or default."
+              }
+            ],
+            "evidence": "Function #16317 +0x12-+0x19 POSTs its first argument unchanged to /api/auth/register. Reviewed #28149 -> #16254/#16255 -> M1575 installed #16317 establishes the named literal fields in clientRequestVariants. Complete local construction does not establish exhaustive caller coverage or a closed server body; arbitrary forwarded remainder and server requiredness remain unknown.",
             "complete": false
           },
           "response": {
@@ -15122,9 +15838,15 @@
       "query": [],
       "queryPassthrough": false,
       "body": {
-        "kind": "unknown",
-        "fields": [],
-        "evidence": "Function #16319 passes its first argument directly as Axios POST data; its shape is unresolved.",
+        "kind": "object",
+        "fields": [
+          {
+            "name": "username",
+            "type": "unknown",
+            "evidence": "#13505 +0x12-+0x1a gets the form value named username; fresh R2 +0x40 receives own username +0x42 and is passed to resendEmailVerification +0x47; returned thunk is dispatched +0x4c."
+          }
+        ],
+        "evidence": "Function #16319 +0x12-+0x19 POSTs its first argument unchanged to /api/auth/verification/resend. Reviewed #13505 -> #16263/#16264 -> M1575 installed #16319 establishes username in the named caller variant. Other callers and arbitrary forwarded remainder remain unresolved; complete local construction does not close the endpoint body or establish server requiredness.",
         "complete": false
       },
       "bodyOptional": false,
@@ -15136,6 +15858,73 @@
       "records": [
         {
           "operationId": "ResendEmailVerification",
+          "clientRequestVariants": [
+            {
+              "variantId": "ResendVerificationUsername",
+              "constructor": {
+                "functionId": 13505,
+                "line": 543431,
+                "bytecodeOffset": "0x004ae9c6",
+                "bytecodeOffsetKind": "absolute"
+              },
+              "targetSourceFunctionId": 16319,
+              "provenFieldPaths": [
+                "username"
+              ],
+              "fields": [
+                {
+                  "name": "username",
+                  "type": "unknown",
+                  "evidence": "#13505 +0x12-+0x1a obtains the form value named username; +0x3a-+0x47 constructs a fresh object with that value as its username property."
+                }
+              ],
+              "constructionComplete": true,
+              "completeLocalConstruction": true,
+              "callsiteCoverage": "partial",
+              "bodyCompleteAtTarget": false,
+              "conditionalBranches": [],
+              "overwrites": [],
+              "routingChain": [
+                {
+                  "moduleId": 1231,
+                  "dependencyIndex": 26,
+                  "dependencyModuleId": 1574,
+                  "evidence": "Root module registration at #0 lines 6280-6283 identifies the LoginScreen factory #13500 as M1231 and its dependency array's index 26 as M1574; #13505 uses the captured resendEmailVerification action from this dependency."
+                },
+                {
+                  "functionId": 13505,
+                  "line": 543431,
+                  "evidence": "Calls captured resendEmailVerification({username: formUsername}) at +0x3a-+0x47, then dispatches the returned thunk at +0x4c."
+                },
+                {
+                  "functionId": 16263,
+                  "line": 647495,
+                  "evidence": "Named resendEmailVerification wrapper creates #16264 at +0x09."
+                },
+                {
+                  "functionId": 16264,
+                  "line": 647508,
+                  "evidence": "Calls default.resendEmailVerification with the wrapper argument at +0x07-+0x19 without changing its body."
+                },
+                {
+                  "moduleId": 1574,
+                  "dependencyIndex": 3,
+                  "dependencyModuleId": 1575,
+                  "evidence": "Root module registration at #0 lines 7995-7998 identifies M1574's dependency index 3 as M1575; #16264's captured default service is this auth-service dependency."
+                },
+                {
+                  "moduleId": 1575,
+                  "dependencyEvidence": "M1575 service binding is consumed by #16264; #16306 installs resendEmailVerification as #16319 at +0x8e-+0xa1."
+                },
+                {
+                  "functionId": 16319,
+                  "line": 648872,
+                  "evidence": "POSTs first argument unchanged as data at +0x12-+0x19 to /api/auth/verification/resend."
+                }
+              ],
+              "evidence": "The UI constructor creates exactly {username: value}; thunk/service forwarding is unchanged. Other possible callers were not exhaustively enumerated; no requiredness or value type is inferred."
+            }
+          ],
           "method": "post",
           "path": "/api/auth/verification/resend",
           "tag": "AuthCommon",
@@ -15150,9 +15939,15 @@
           "query": [],
           "queryPassthrough": false,
           "body": {
-            "kind": "unknown",
-            "fields": [],
-            "evidence": "Function #16319 passes its first argument directly as Axios POST data; its shape is unresolved.",
+            "kind": "object",
+            "fields": [
+              {
+                "name": "username",
+                "type": "unknown",
+                "evidence": "#13505 +0x12-+0x1a gets the form value named username; fresh R2 +0x40 receives own username +0x42 and is passed to resendEmailVerification +0x47; returned thunk is dispatched +0x4c."
+              }
+            ],
+            "evidence": "Function #16319 +0x12-+0x19 POSTs its first argument unchanged to /api/auth/verification/resend. Reviewed #13505 -> #16263/#16264 -> M1575 installed #16319 establishes username in the named caller variant. Other callers and arbitrary forwarded remainder remain unresolved; complete local construction does not close the endpoint body or establish server requiredness.",
             "complete": false
           },
           "response": {
@@ -15897,9 +16692,15 @@
       "query": [],
       "queryPassthrough": false,
       "body": {
-        "kind": "unknown",
-        "fields": [],
-        "evidence": "Function #16381 passes its first argument directly as Axios POST data; its shape is unresolved.",
+        "kind": "object",
+        "fields": [
+          {
+            "name": "password",
+            "type": "unknown",
+            "evidence": "#41054 +0x24-+0x2f constructs own password from handler argument.password, handed to verifyPassword +0x34. Independently #45109 +0x2f-+0x37 constructs the same key and hands it to verifyPassword +0x3c; both target #16381."
+          }
+        ],
+        "evidence": "Function #16381 +0x12-+0x19 POSTs its first argument unchanged to /api/common/user/verify-password. Reviewed #41054 and #45109 both reach M1577 installed #16381 and construct password, not login-2fa or auth-key verification data. Complete local construction does not close the endpoint body; arbitrary forwarded remainder, other callers, and server requiredness remain unresolved.",
         "complete": false
       },
       "bodyOptional": false,
@@ -15911,6 +16712,106 @@
       "records": [
         {
           "operationId": "VerifyPassword",
+          "clientRequestVariants": [
+            {
+              "variantId": "UserSecurityVerifyPassword",
+              "constructor": {
+                "functionId": 41054,
+                "line": 1665586,
+                "bytecodeOffset": "0x007d0478",
+                "bytecodeOffsetKind": "absolute"
+              },
+              "targetSourceFunctionId": 16381,
+              "provenFieldPaths": [
+                "password"
+              ],
+              "fields": [
+                {
+                  "name": "password",
+                  "type": "unknown",
+                  "evidence": "#41054 +0x24-+0x2f constructs a fresh object with password copied from submitted form.password; +0x34 calls captured verifyPassword with that object."
+                }
+              ],
+              "constructionComplete": true,
+              "completeLocalConstruction": true,
+              "callsiteCoverage": "partial",
+              "bodyCompleteAtTarget": false,
+              "conditionalBranches": [],
+              "overwrites": [],
+              "routingChain": [
+                {
+                  "moduleId": 4240,
+                  "dependencyIndex": 4,
+                  "dependencyModuleId": 1577,
+                  "evidence": "Root module registration at #0 lines 21325-21328 identifies the UserSecurityScreen factory #41041 as M4240; the dependency array's index 4 is M1577, the default user-service import used by #41054."
+                },
+                {
+                  "functionId": 41054,
+                  "line": 1665586,
+                  "evidence": "Constructs {password: form.password} at +0x24-+0x2f and invokes the captured default.verifyPassword method at +0x34."
+                },
+                {
+                  "moduleId": 1577,
+                  "dependencyEvidence": "The screen's captured default.verifyPassword binding is the M1577 service method; #16342 installs it as #16381 at +0x1a4-+0x1b5."
+                },
+                {
+                  "functionId": 16381,
+                  "line": 650074,
+                  "evidence": "POSTs first argument unchanged as data at +0x12-+0x19 to /api/common/user/verify-password."
+                }
+              ],
+              "evidence": "A separately observed caller variant below independently constructs the same single key. The service is still an arbitrary-object forwarder, so endpoint completeness and server requiredness remain unknown."
+            },
+            {
+              "variantId": "TwoFactorRequiredVerifyPassword",
+              "constructor": {
+                "functionId": 45109,
+                "line": 1848408,
+                "bytecodeOffset": "0x00855377",
+                "bytecodeOffsetKind": "absolute"
+              },
+              "targetSourceFunctionId": 16381,
+              "provenFieldPaths": [
+                "password"
+              ],
+              "fields": [
+                {
+                  "name": "password",
+                  "type": "unknown",
+                  "evidence": "#45109 +0x24-+0x37 constructs a fresh object with password copied from handler argument.password; +0x3c invokes the captured default.verifyPassword method."
+                }
+              ],
+              "constructionComplete": true,
+              "completeLocalConstruction": true,
+              "callsiteCoverage": "partial",
+              "bodyCompleteAtTarget": false,
+              "conditionalBranches": [],
+              "overwrites": [],
+              "routingChain": [
+                {
+                  "moduleId": 4575,
+                  "dependencyIndex": 6,
+                  "dependencyModuleId": 1577,
+                  "evidence": "Root module registration at #0 lines 23000-23003 identifies the TwoFactorAuthRequiredScreen factory #45099 as M4575; the dependency array's index 6 is M1577, the user-service import used by #45109."
+                },
+                {
+                  "functionId": 45109,
+                  "line": 1848408,
+                  "evidence": "Builds {password: handlerArgument.password} at +0x2f-+0x37 and calls captured verifyPassword at +0x3c."
+                },
+                {
+                  "moduleId": 1577,
+                  "dependencyEvidence": "The captured default.verifyPassword method is the M1577 service method installed as #16381 by #16342 at +0x1a4-+0x1b5."
+                },
+                {
+                  "functionId": 16381,
+                  "line": 650074,
+                  "evidence": "POSTs the supplied object unchanged as data at +0x12-+0x19."
+                }
+              ],
+              "evidence": "Independent UI flow has the same one-field shape; the caller's exact password value remains unknown type."
+            }
+          ],
           "method": "post",
           "path": "/api/common/user/verify-password",
           "tag": "AuthCommon",
@@ -15925,9 +16826,15 @@
           "query": [],
           "queryPassthrough": false,
           "body": {
-            "kind": "unknown",
-            "fields": [],
-            "evidence": "Function #16381 passes its first argument directly as Axios POST data; its shape is unresolved.",
+            "kind": "object",
+            "fields": [
+              {
+                "name": "password",
+                "type": "unknown",
+                "evidence": "#41054 +0x24-+0x2f constructs own password from handler argument.password, handed to verifyPassword +0x34. Independently #45109 +0x2f-+0x37 constructs the same key and hands it to verifyPassword +0x3c; both target #16381."
+              }
+            ],
+            "evidence": "Function #16381 +0x12-+0x19 POSTs its first argument unchanged to /api/common/user/verify-password. Reviewed #41054 and #45109 both reach M1577 installed #16381 and construct password, not login-2fa or auth-key verification data. Complete local construction does not close the endpoint body; arbitrary forwarded remainder, other callers, and server requiredness remain unresolved.",
             "complete": false
           },
           "response": {
@@ -15962,9 +16869,15 @@
       "query": [],
       "queryPassthrough": false,
       "body": {
-        "kind": "unknown",
-        "fields": [],
-        "evidence": "Function #16371 passes its second explicit argument directly as Axios POST data; its shape is unresolved.",
+        "kind": "object",
+        "fields": [
+          {
+            "name": "email",
+            "type": "unknown",
+            "evidence": "#40927 +0x53-+0x5b creates a fresh object and assigns submitted form.email; +0x60 supplies it as argument 2. Strict equality +0x18 bypasses the entire request; when invoked, own email is always assigned, not conditionally included."
+          }
+        ],
+        "evidence": "Function #16371 +0x12-+0x33 builds the URL using argument 1 and POSTs argument 2 unchanged. Reviewed #40927 -> #16292/#16293 -> M1577 installed #16371 establishes email in the named caller variant. Complete local construction does not close the endpoint body; arbitrary forwarded remainder, other callers, and server requiredness remain unresolved.",
         "complete": false
       },
       "bodyOptional": false,
@@ -15976,6 +16889,75 @@
       "records": [
         {
           "operationId": "RequestEmailChange",
+          "clientRequestVariants": [
+            {
+              "variantId": "UsersEmailForm",
+              "constructor": {
+                "functionId": 40927,
+                "line": 1659951,
+                "bytecodeOffset": "0x007cc438",
+                "bytecodeOffsetKind": "absolute"
+              },
+              "targetSourceFunctionId": 16371,
+              "provenFieldPaths": [
+                "email"
+              ],
+              "fields": [
+                {
+                  "name": "email",
+                  "type": "unknown",
+                  "evidence": "#40927 +0x53-+0x5b constructs a fresh object and copies submitted form.email into its email field; +0x60 supplies this object as argument 2 to requestEmailChange."
+                }
+              ],
+              "constructionComplete": true,
+              "completeLocalConstruction": true,
+              "callsiteCoverage": "partial",
+              "bodyCompleteAtTarget": false,
+              "conditionalBranches": [
+                "#40927 only takes the request branch when submitted email differs strictly from the current user's email (+0x0c-+0x18); equal values bypass the request."
+              ],
+              "overwrites": [],
+              "routingChain": [
+                {
+                  "moduleId": 4230,
+                  "dependencyIndex": 19,
+                  "dependencyModuleId": 1574,
+                  "evidence": "Root module registration at #0 lines 21275-21278 identifies the UsersEmail factory #40921 as M4230 and its dependency array's index 19 as M1574; #40927 uses its captured requestEmailChange action."
+                },
+                {
+                  "functionId": 40927,
+                  "line": 1659951,
+                  "evidence": "On the changed-email branch, passes current user.id as argument 1 and the fresh {email} body as argument 2 at +0x44-+0x60."
+                },
+                {
+                  "functionId": 16292,
+                  "line": 648164,
+                  "evidence": "Named requestEmailChange action wrapper captures argument 1 into slot 0 and argument 2 into slot 1, then creates #16293 at +0x10; #16186 exports this binding at +0x525-+0x52a (full lines 645737-645738)."
+                },
+                {
+                  "functionId": 16293,
+                  "line": 648179,
+                  "evidence": "Calls default.requestEmailChange with both wrapper arguments unchanged at +0x0c-+0x1d."
+                },
+                {
+                  "moduleId": 1574,
+                  "dependencyIndex": 4,
+                  "dependencyModuleId": 1577,
+                  "evidence": "Root module registration at #0 lines 7995-7998 identifies M1574's dependency index 4 as M1577; #16293's captured default service is this user-service dependency."
+                },
+                {
+                  "moduleId": 1577,
+                  "dependencyEvidence": "M1577 is the user-service dependency behind #16293; #16342 installs requestEmailChange as #16371 at +0x131-+0x142."
+                },
+                {
+                  "functionId": 16371,
+                  "line": 649905,
+                  "evidence": "Builds URL from argument 1 and POSTs argument 2 unchanged as data at +0x12-+0x33."
+                }
+              ],
+              "evidence": "The strict-equality branch, user ID path argument, and body construction are all traced. Email is caller-derived and remains unknown type; this records client inclusion behavior, not server requiredness."
+            }
+          ],
           "method": "post",
           "path": "/api/common/user/{userId}/email-change",
           "tag": "AuthCommon",
@@ -15996,9 +16978,15 @@
           "query": [],
           "queryPassthrough": false,
           "body": {
-            "kind": "unknown",
-            "fields": [],
-            "evidence": "Function #16371 passes its second explicit argument directly as Axios POST data; its shape is unresolved.",
+            "kind": "object",
+            "fields": [
+              {
+                "name": "email",
+                "type": "unknown",
+                "evidence": "#40927 +0x53-+0x5b creates a fresh object and assigns submitted form.email; +0x60 supplies it as argument 2. Strict equality +0x18 bypasses the entire request; when invoked, own email is always assigned, not conditionally included."
+              }
+            ],
+            "evidence": "Function #16371 +0x12-+0x33 builds the URL using argument 1 and POSTs argument 2 unchanged. Reviewed #40927 -> #16292/#16293 -> M1577 installed #16371 establishes email in the named caller variant. Complete local construction does not close the endpoint body; arbitrary forwarded remainder, other callers, and server requiredness remain unresolved.",
             "complete": false
           },
           "response": {
@@ -20653,9 +21641,80 @@
       "query": [],
       "queryPassthrough": false,
       "body": {
-        "kind": "unknown",
-        "fields": [],
-        "evidence": "The POST call forwards a function argument as request data; its construction is not present in this function.",
+        "kind": "object",
+        "fields": [
+          {
+            "name": "employee_id",
+            "type": "unknown",
+            "evidence": "#39305 1582887-1582898, 0x21-0x4c: form truthy employee_id or params.employeeId fallback, always written; may be undefined."
+          },
+          {
+            "name": "type_id",
+            "type": "unknown",
+            "evidence": "#39305 reads submitted type_id and writes own key at 1582900, 0x57."
+          },
+          {
+            "name": "start_date",
+            "type": "string",
+            "evidence": "#39305 Moment YYYY-MM-DD format/write at 1582904-1582909, 0x68-0x81; non-full-day #26526 replaces with #25412.date at 1030028, 0xce. SDK string, not server date-format constraint."
+          },
+          {
+            "name": "start_time",
+            "type": "unknown",
+            "evidence": "#39305 HH:mm format/write at 1582912-1582917, 0x8f-0xa8, full-day null overwrite at 1582976, 0x1af (null loaded 1582954, 0x153). #26526 full_day skip 1029997-1029998, 0x37-0x3d, preserves null; otherwise #25412.time string copied at 1030030, 0xda. Unknown covers string/null."
+          },
+          {
+            "name": "end_time",
+            "type": "unknown",
+            "evidence": "#39305 HH:mm format/write at 1582920-1582924, 0xb6-0xcb, full-day null overwrite at 1582977, 0x1b5. #26526 full_day skip 1029997-1029998, 0x37-0x3d, preserves null; otherwise #25412.time string copied at 1030032, 0xe6. Unknown covers string/null."
+          },
+          {
+            "name": "full_day",
+            "type": "unknown",
+            "evidence": "#39305 captured state write at 1582926, 0xd4; truthiness branching is not boolean type proof."
+          },
+          {
+            "name": "is_recurring",
+            "type": "unknown",
+            "evidence": "#39305 submitted is_recurring write at 1582928, 0xdf; no conversion."
+          },
+          {
+            "name": "repeat_end",
+            "type": "unknown",
+            "evidence": "#39305 formatted repeat_end or null write at 1582931-1582937, 0xed-0x107; unknown covers both."
+          },
+          {
+            "name": "rrule",
+            "type": "unknown",
+            "evidence": "#39305 captured value write at 1582939, 0x110."
+          },
+          {
+            "name": "lunch_time",
+            "type": "integer",
+            "evidence": "#39305 parseInt(submitted value,10) or literal 0, write at 1582940-1582947, 0x115-0x131; client numeric construction only, no server default/minimum."
+          },
+          {
+            "name": "desc",
+            "type": "unknown",
+            "evidence": "#39305 submitted desc write at 1582949, 0x13c."
+          },
+          {
+            "name": "change_mode",
+            "type": "unknown",
+            "evidence": "#39305 captured state write at 1582951, 0x145; no closed server enum inferred."
+          },
+          {
+            "name": "range_end",
+            "type": "unknown",
+            "evidence": "#39305 params.range_end or undefined loaded at 1582956, 0x159; always PutNewOwnById at 1582959, 0x164. #26526 copies own key; undefined is not constructor omission, serialization is separate."
+          },
+          {
+            "name": "range_start",
+            "type": "unknown",
+            "evidence": "#39305 params.range_start or undefined loaded at 1582963, 0x176; always PutNewOwnById at 1582966, 0x181. #26526 copies own key; undefined is not constructor omission, serialization is separate."
+          }
+        ],
+        "evidence": "Endpoint #26547 forwards arbitrary parameter 2 as POST data; one traced form constructor #39305 proves fourteen own keys before serialization. Insert call 1582987, 0x1e0, sends base register 5 through #26525/#26526 copied register 4; service call 1030038, 0x103; Axios POST 1030630, 0x33 (0x30 loads data). Edit flag slot 12 is falsy for insert at 1582978-1582979, whereas selectedData.duration write requires it truthy at 1582967-1582973, so duration is excluded. Full-day null times survive; non-full-day helper rewrites only start_date/start_time/end_time. Other callers/additional body keys unresolved, no server requiredness or validation established.",
         "complete": false
       },
       "bodyOptional": false,
@@ -20687,11 +21746,120 @@
           "query": [],
           "queryPassthrough": false,
           "body": {
-            "kind": "unknown",
-            "fields": [],
-            "evidence": "The POST call forwards a function argument as request data; its construction is not present in this function.",
+            "kind": "object",
+            "fields": [
+              {
+                "name": "employee_id",
+                "type": "unknown",
+                "evidence": "#39305 1582887-1582898, 0x21-0x4c: form truthy employee_id or params.employeeId fallback, always written; may be undefined."
+              },
+              {
+                "name": "type_id",
+                "type": "unknown",
+                "evidence": "#39305 reads submitted type_id and writes own key at 1582900, 0x57."
+              },
+              {
+                "name": "start_date",
+                "type": "string",
+                "evidence": "#39305 Moment YYYY-MM-DD format/write at 1582904-1582909, 0x68-0x81; non-full-day #26526 replaces with #25412.date at 1030028, 0xce. SDK string, not server date-format constraint."
+              },
+              {
+                "name": "start_time",
+                "type": "unknown",
+                "evidence": "#39305 HH:mm format/write at 1582912-1582917, 0x8f-0xa8, full-day null overwrite at 1582976, 0x1af (null loaded 1582954, 0x153). #26526 full_day skip 1029997-1029998, 0x37-0x3d, preserves null; otherwise #25412.time string copied at 1030030, 0xda. Unknown covers string/null."
+              },
+              {
+                "name": "end_time",
+                "type": "unknown",
+                "evidence": "#39305 HH:mm format/write at 1582920-1582924, 0xb6-0xcb, full-day null overwrite at 1582977, 0x1b5. #26526 full_day skip 1029997-1029998, 0x37-0x3d, preserves null; otherwise #25412.time string copied at 1030032, 0xe6. Unknown covers string/null."
+              },
+              {
+                "name": "full_day",
+                "type": "unknown",
+                "evidence": "#39305 captured state write at 1582926, 0xd4; truthiness branching is not boolean type proof."
+              },
+              {
+                "name": "is_recurring",
+                "type": "unknown",
+                "evidence": "#39305 submitted is_recurring write at 1582928, 0xdf; no conversion."
+              },
+              {
+                "name": "repeat_end",
+                "type": "unknown",
+                "evidence": "#39305 formatted repeat_end or null write at 1582931-1582937, 0xed-0x107; unknown covers both."
+              },
+              {
+                "name": "rrule",
+                "type": "unknown",
+                "evidence": "#39305 captured value write at 1582939, 0x110."
+              },
+              {
+                "name": "lunch_time",
+                "type": "integer",
+                "evidence": "#39305 parseInt(submitted value,10) or literal 0, write at 1582940-1582947, 0x115-0x131; client numeric construction only, no server default/minimum."
+              },
+              {
+                "name": "desc",
+                "type": "unknown",
+                "evidence": "#39305 submitted desc write at 1582949, 0x13c."
+              },
+              {
+                "name": "change_mode",
+                "type": "unknown",
+                "evidence": "#39305 captured state write at 1582951, 0x145; no closed server enum inferred."
+              },
+              {
+                "name": "range_end",
+                "type": "unknown",
+                "evidence": "#39305 params.range_end or undefined loaded at 1582956, 0x159; always PutNewOwnById at 1582959, 0x164. #26526 copies own key; undefined is not constructor omission, serialization is separate."
+              },
+              {
+                "name": "range_start",
+                "type": "unknown",
+                "evidence": "#39305 params.range_start or undefined loaded at 1582963, 0x176; always PutNewOwnById at 1582966, 0x181. #26526 copies own key; undefined is not constructor omission, serialization is separate."
+              }
+            ],
+            "evidence": "Endpoint #26547 forwards arbitrary parameter 2 as POST data; one traced form constructor #39305 proves fourteen own keys before serialization. Insert call 1582987, 0x1e0, sends base register 5 through #26525/#26526 copied register 4; service call 1030038, 0x103; Axios POST 1030630, 0x33 (0x30 loads data). Edit flag slot 12 is falsy for insert at 1582978-1582979, whereas selectedData.duration write requires it truthy at 1582967-1582973, so duration is excluded. Full-day null times survive; non-full-day helper rewrites only start_date/start_time/end_time. Other callers/additional body keys unresolved, no server requiredness or validation established.",
             "complete": false
           },
+          "clientRequestVariants": [
+            {
+              "variantId": "WorkScheduleFormInsert",
+              "targetSourceFunctionId": 26547,
+              "constructorFunctionIds": [
+                39305,
+                26525,
+                26526
+              ],
+              "constructorLines": [
+                1582873,
+                1029965,
+                1029978
+              ],
+              "placement": "body",
+              "constructionComplete": true,
+              "localCompleteness": "fourteen own keys on observed insert paths before serialization, not universal caller coverage",
+              "callsiteCoverage": "partial",
+              "provenFieldPaths": [
+                "employee_id",
+                "type_id",
+                "start_date",
+                "start_time",
+                "end_time",
+                "full_day",
+                "is_recurring",
+                "repeat_end",
+                "rrule",
+                "lunch_time",
+                "desc",
+                "change_mode",
+                "range_end",
+                "range_start"
+              ],
+              "branch": "Captured edit flag slot 12 falsy selects insert (1582978-1582979, 0x1bb-0x1bf); opposite truthy flag supplies selectedData.duration (1582967-1582973), hence no insert duration. Full-day null overwrite at 0x1af/0x1b5; range keys always own even undefined.",
+              "evidence": "#39305 register 5 constructed 1582886-1582966 -> insertWorkSchedule at 1582987, 0x1e0 -> #26525/#26526 Object.assign at 1029996, 0x31 -> service call 1030038, 0x103, with copied register 4 -> #26547 parameter 2, Axios POST 1030630, 0x33. M4116 dependency 20=M2289 and dependency 24=M2228 (20705-20708); M2289/#26515 dependencies [1,1229,2290,2228] at 11570-11573; dependency 3=M2228/#25411 exports actual #25412 convertTimesToUtc at 995548-995549, 0x84-0x89. #25412 (995603-995642) returns helper tz/date/time; formats date/time at 0x70-0x79/0x84-0x8d, fallback today/00:00:00 at 0x10-0x2e/0x3b-0x45. #26526 full_day skip 0x3d preserves null; otherwise copies only selected outputs into start_date/start_time/end_time at 1030028/1030030/1030032, 0xce/0xda/0xe6, never new request tz/date/time keys. M2290/#26544/#26545/class #26546 binds #26547. SDK string proof: Moment format bound #12925 at 511255-511256 -> #12755/#12753/#12754; #12754 string seed/concatenation/return 512830/512849/512854, 0x10/0x55/0x67; invalid-date output is also SDK text, not validation. Exact fourteen field proofs in body.fields; caller coverage partial."
+            }
+          ],
           "response": {
             "kind": "unknown",
             "evidence": "The attached then callback returns response.data; completeness and shape are not established."
@@ -22228,9 +23396,20 @@
       "query": [],
       "queryPassthrough": false,
       "body": {
-        "kind": "unknown",
-        "fields": [],
-        "evidence": "Function #16359 passes its first argument directly as Axios PUT data; its shape is unresolved.",
+        "kind": "object",
+        "fields": [
+          {
+            "name": "fname",
+            "type": "unknown",
+            "evidence": "#45083 +0x24-+0x2c copies submitted form.fname into a fresh payload."
+          },
+          {
+            "name": "lname",
+            "type": "unknown",
+            "evidence": "#45083 +0x31-+0x37 copies submitted form.lname into the same payload; R5 aliases it +0x3c and is passed +0x60, before dispatch +0x65."
+          }
+        ],
+        "evidence": "Function #16359 +0x12-+0x19 PUTs its first argument unchanged to /api/common/user/name. Reviewed #45083 -> #16226/#16227 -> M1577 installed #16359 establishes fname/lname, not updateUser or username. Complete local construction does not close the endpoint body; arbitrary forwarded remainder, other callers, and server requiredness remain unresolved.",
         "complete": false
       },
       "bodyOptional": false,
@@ -22242,6 +23421,79 @@
       "records": [
         {
           "operationId": "UpdateUserName",
+          "clientRequestVariants": [
+            {
+              "variantId": "AskUsernameScreen",
+              "constructor": {
+                "functionId": 45083,
+                "line": 1846664,
+                "bytecodeOffset": "0x00853ea6",
+                "bytecodeOffsetKind": "absolute"
+              },
+              "targetSourceFunctionId": 16359,
+              "provenFieldPaths": [
+                "fname",
+                "lname"
+              ],
+              "fields": [
+                {
+                  "name": "fname",
+                  "type": "unknown",
+                  "evidence": "#45083 +0x24-+0x2c copies submitted form.fname into a fresh payload."
+                },
+                {
+                  "name": "lname",
+                  "type": "unknown",
+                  "evidence": "#45083 +0x31-+0x37 copies submitted form.lname into the same payload."
+                }
+              ],
+              "constructionComplete": true,
+              "completeLocalConstruction": true,
+              "callsiteCoverage": "partial",
+              "bodyCompleteAtTarget": false,
+              "conditionalBranches": [],
+              "overwrites": [],
+              "routingChain": [
+                {
+                  "moduleId": 4572,
+                  "dependencyIndex": 18,
+                  "dependencyModuleId": 1574,
+                  "evidence": "Root module registration at #0 lines 22985-22988 identifies the AskUsernameScreen factory #45076 as M4572 and its dependency array's index 18 as M1574; #45083 calls its captured updateUserName action."
+                },
+                {
+                  "functionId": 45083,
+                  "line": 1846664,
+                  "evidence": "Builds exactly {fname, lname} at +0x24-+0x37; calls captured updateUserName(payload) at +0x5a-+0x60."
+                },
+                {
+                  "functionId": 16226,
+                  "line": 646808,
+                  "evidence": "Named updateUserName wrapper creates #16227 at +0x09."
+                },
+                {
+                  "functionId": 16227,
+                  "line": 646821,
+                  "evidence": "Calls default.updateUserName with the wrapper argument at +0x15-+0x22, then passes response through; no body reconstruction."
+                },
+                {
+                  "moduleId": 1574,
+                  "dependencyIndex": 4,
+                  "dependencyModuleId": 1577,
+                  "evidence": "Root module registration at #0 lines 7995-7998 identifies M1574's dependency index 4 as M1577; #16227's captured default service is this user-service dependency."
+                },
+                {
+                  "moduleId": 1577,
+                  "dependencyEvidence": "M1577 is the user-service dependency behind #16227; #16342 installs updateUserName as #16359 at +0xa7-+0xb8."
+                },
+                {
+                  "functionId": 16359,
+                  "line": 649712,
+                  "evidence": "PUTs its first argument unchanged as data at +0x12-+0x19 to /api/common/user/name."
+                }
+              ],
+              "evidence": "Known UI caller payload construction is complete for this variant; this is not a complete endpoint body schema because other callers were not exhaustively checked."
+            }
+          ],
           "method": "put",
           "path": "/api/common/user/name",
           "tag": "AuthCommon",
@@ -22256,9 +23508,20 @@
           "query": [],
           "queryPassthrough": false,
           "body": {
-            "kind": "unknown",
-            "fields": [],
-            "evidence": "Function #16359 passes its first argument directly as Axios PUT data; its shape is unresolved.",
+            "kind": "object",
+            "fields": [
+              {
+                "name": "fname",
+                "type": "unknown",
+                "evidence": "#45083 +0x24-+0x2c copies submitted form.fname into a fresh payload."
+              },
+              {
+                "name": "lname",
+                "type": "unknown",
+                "evidence": "#45083 +0x31-+0x37 copies submitted form.lname into the same payload; R5 aliases it +0x3c and is passed +0x60, before dispatch +0x65."
+              }
+            ],
+            "evidence": "Function #16359 +0x12-+0x19 PUTs its first argument unchanged to /api/common/user/name. Reviewed #45083 -> #16226/#16227 -> M1577 installed #16359 establishes fname/lname, not updateUser or username. Complete local construction does not close the endpoint body; arbitrary forwarded remainder, other callers, and server requiredness remain unresolved.",
             "complete": false
           },
           "response": {
@@ -26639,9 +27902,122 @@
       "query": [],
       "queryPassthrough": false,
       "body": {
-        "kind": "unknown",
-        "fields": [],
-        "evidence": "The PUT call forwards a function argument as request data; its construction is not present in this function.",
+        "kind": "object",
+        "fields": [
+          {
+            "name": "employee_id",
+            "type": "unknown",
+            "evidence": "#39305 base write 1582898, 0x4c; captured selectedData overwrite before filtering 1582971, 0x197; final selectedData.employee_id always assigned after filtering at 1583074-1583075, 0x39e-0x3a4 on executed update request."
+          },
+          {
+            "name": "type_id",
+            "type": "unknown",
+            "optional": true,
+            "evidence": "#39305 base write at 1582900, 0x57; difference(base,selectedData) 1583003, 0x22b, omits equal values (#25434 996255-996258, 0x19-0x25, skip 0x71). Client presence conditional."
+          },
+          {
+            "name": "start_date",
+            "type": "string",
+            "optional": true,
+            "evidence": "#39305 Moment YYYY-MM-DD format/write at 1582904-1582909, 0x68-0x81; difference omits equal values. Branches restore base at 1583030/1583046, 0x2c0/0x311. Non-full-day truthy-start_time #26530 copies #25412.date at 1030177, 0x12a. String when present, no server format constraint."
+          },
+          {
+            "name": "start_time",
+            "type": "unknown",
+            "optional": true,
+            "evidence": "#39305 formatted HH:mm write 1582917, 0xa8, or full-day null overwrite 1582976, 0x1af (null loaded 1582954, 0x153); difference may omit equals, branch restores base at 1583062, 0x364. #26530 full_day skip 1030127, 0x43, preserves null; otherwise truthy time gate 1030164, 0xed, #25412.time copied 1030179, 0x136. Unknown covers string/null when present."
+          },
+          {
+            "name": "end_time",
+            "type": "unknown",
+            "optional": true,
+            "evidence": "#39305 formatted HH:mm write 1582924, 0xcb, or full-day null overwrite 1582977, 0x1b5; difference may omit equals, branch restores base at 1583064, 0x370. #26530 full_day skip 1030127, 0x43, preserves null; otherwise truthy time gate 1030181, 0x142, #25412.time copied 1030194, 0x180. Unknown covers string/null when present."
+          },
+          {
+            "name": "full_day",
+            "type": "unknown",
+            "optional": true,
+            "evidence": "#39305 captured state write 1582926, 0xd4; difference 1583003, 0x22b, omits equals. #26530 truthiness branch 1030126-1030127, 0x3d-0x43, does not establish boolean type."
+          },
+          {
+            "name": "is_recurring",
+            "type": "unknown",
+            "optional": true,
+            "evidence": "#39305 submitted value write 1582928, 0xdf; difference omits equals; single branch writes 0 at 1583034, 0x2d4. Client conditional, not closed enum."
+          },
+          {
+            "name": "repeat_end",
+            "type": "unknown",
+            "optional": true,
+            "evidence": "#39305 formatted value or null write 1582937, 0x107; difference omits equals; from branch restores base repeat_end at 1583025, 0x2a5. Unknown covers string/null."
+          },
+          {
+            "name": "rrule",
+            "type": "unknown",
+            "optional": true,
+            "evidence": "#39305 captured value write 1582939, 0x110; difference omits equals; restores base at 1583021, 0x28d, or writes null at 1583035/1583049, 0x2da/0x321."
+          },
+          {
+            "name": "lunch_time",
+            "type": "integer",
+            "optional": true,
+            "evidence": "#39305 parseInt(submitted value,10) or 0, write 1582947, 0x131; difference omits equals. Empty-string guard writes 0 at 1583069, 0x386, not proof of string request values. Integer when present, no server default/minimum."
+          },
+          {
+            "name": "desc",
+            "type": "unknown",
+            "optional": true,
+            "evidence": "#39305 submitted desc base write 1582949, 0x13c; difference 1583003, 0x22b, omits equal values; #26530 copies difference, not base, 1030125, 0x37."
+          },
+          {
+            "name": "change_mode",
+            "type": "unknown",
+            "optional": true,
+            "evidence": "#39305 captured state write 1582951, 0x145; difference omits equals; conditional all write 1583048, 0x31b. Branch comparisons do not establish closed server enum."
+          },
+          {
+            "name": "range_end",
+            "type": "unknown",
+            "optional": true,
+            "evidence": "#39305 always writes base own range_end 1582959, 0x164, from params or undefined load 1582956, 0x159; difference 1583003, 0x22b, omits equals. Update optionality is filtering, not nullish params."
+          },
+          {
+            "name": "range_start",
+            "type": "unknown",
+            "optional": true,
+            "evidence": "#39305 always writes base own range_start 1582966, 0x181, from params or undefined load 1582963, 0x176; difference 1583003, 0x22b, omits equals. Update optionality is filtering, not nullish params."
+          },
+          {
+            "name": "duration",
+            "type": "unknown",
+            "optional": true,
+            "evidence": "#39305 edit flag slot 12 truthy 1582967-1582968, 0x186-0x18a; captured selectedData slot 8 loaded 1582969, 0x18d, duration read/write 1582972-1582973, 0x19d-0x1a2. Not submitted form data; difference omits equal duration. Opposite flag selects insert, excluding duration there."
+          },
+          {
+            "name": "id",
+            "type": "unknown",
+            "evidence": "#39305 captured selectedData.id read/write after difference at 1583072-1583073, 0x393-0x398, always on executed update request. #26551 reads same body.id at 1030699, 0x15, for scheduleId URL; no renamed body key."
+          },
+          {
+            "name": "date",
+            "type": "string",
+            "optional": true,
+            "evidence": "#39305 from branch copies base formatted start_date into date at 1583022-1583023, 0x293-0x299; branch-conditional, not UTC-rewritten by #26530."
+          },
+          {
+            "name": "end_date",
+            "type": "string",
+            "optional": true,
+            "evidence": "#39305 conditionally copies base/difference formatted start_date into end_date at 1583019/1583032/1583053/1583060, 0x281/0x2cc/0x337/0x358; null deletion at 1583014, 0x267. String when present, branch-conditional, not UTC-rewritten by #26530."
+          },
+          {
+            "name": "exception_date",
+            "type": "unknown",
+            "optional": true,
+            "evidence": "#39305 selectedData.is_recurring guard 1583036-1583038, 0x2e0-0x2ea; captured selectedData slot 8 loaded 1583039, 0x2f0, its start_date read 1583040, 0x2f4, write to difference exception_date 1583041, 0x2fa. Not freshly formatted base date; source type unknown, branch-conditional, no #26530 rewrite."
+          }
+        ],
+        "evidence": "#26551 forwards arbitrary parameter 2 as PUT data and reads body.id for URL. #39305 constructs base register 5, then difference(base, selectedData) at 1583003, 0x22b, produces register 4 omitting equal keys (#25432 -> #25433 -> #25434; 996255-996258, 0x19-0x25, skip 0x71; unequal write 996276, 0x6d; object branch 0x28-0x64; transform #25436 996300-996401). Subsequent branch mutations/deletion and final id/employee_id writes produce a nineteen-name possible-key union, NOT nineteen simultaneous keys. Seventeen names have conditional client presence; only id/employee_id always assigned post-filter on executed requests. #39305 sends difference register 4 at 1583085, 0x3d1; #26530 copies at 1030125, 0x37, conditionally rewrites UTC date/time, calls service 1030200, 0x19d; #26551 sends same body register 3 at 1030707, 0x39. Local trace does not close arbitrary caller body shape or establish server requiredness, enums, defaults, or date-format validation.",
         "complete": false
       },
       "bodyOptional": false,
@@ -26678,11 +28054,167 @@
           "query": [],
           "queryPassthrough": false,
           "body": {
-            "kind": "unknown",
-            "fields": [],
-            "evidence": "The PUT call forwards a function argument as request data; its construction is not present in this function.",
+            "kind": "object",
+            "fields": [
+              {
+                "name": "employee_id",
+                "type": "unknown",
+                "evidence": "#39305 base write 1582898, 0x4c; captured selectedData overwrite before filtering 1582971, 0x197; final selectedData.employee_id always assigned after filtering at 1583074-1583075, 0x39e-0x3a4 on executed update request."
+              },
+              {
+                "name": "type_id",
+                "type": "unknown",
+                "optional": true,
+                "evidence": "#39305 base write at 1582900, 0x57; difference(base,selectedData) 1583003, 0x22b, omits equal values (#25434 996255-996258, 0x19-0x25, skip 0x71). Client presence conditional."
+              },
+              {
+                "name": "start_date",
+                "type": "string",
+                "optional": true,
+                "evidence": "#39305 Moment YYYY-MM-DD format/write at 1582904-1582909, 0x68-0x81; difference omits equal values. Branches restore base at 1583030/1583046, 0x2c0/0x311. Non-full-day truthy-start_time #26530 copies #25412.date at 1030177, 0x12a. String when present, no server format constraint."
+              },
+              {
+                "name": "start_time",
+                "type": "unknown",
+                "optional": true,
+                "evidence": "#39305 formatted HH:mm write 1582917, 0xa8, or full-day null overwrite 1582976, 0x1af (null loaded 1582954, 0x153); difference may omit equals, branch restores base at 1583062, 0x364. #26530 full_day skip 1030127, 0x43, preserves null; otherwise truthy time gate 1030164, 0xed, #25412.time copied 1030179, 0x136. Unknown covers string/null when present."
+              },
+              {
+                "name": "end_time",
+                "type": "unknown",
+                "optional": true,
+                "evidence": "#39305 formatted HH:mm write 1582924, 0xcb, or full-day null overwrite 1582977, 0x1b5; difference may omit equals, branch restores base at 1583064, 0x370. #26530 full_day skip 1030127, 0x43, preserves null; otherwise truthy time gate 1030181, 0x142, #25412.time copied 1030194, 0x180. Unknown covers string/null when present."
+              },
+              {
+                "name": "full_day",
+                "type": "unknown",
+                "optional": true,
+                "evidence": "#39305 captured state write 1582926, 0xd4; difference 1583003, 0x22b, omits equals. #26530 truthiness branch 1030126-1030127, 0x3d-0x43, does not establish boolean type."
+              },
+              {
+                "name": "is_recurring",
+                "type": "unknown",
+                "optional": true,
+                "evidence": "#39305 submitted value write 1582928, 0xdf; difference omits equals; single branch writes 0 at 1583034, 0x2d4. Client conditional, not closed enum."
+              },
+              {
+                "name": "repeat_end",
+                "type": "unknown",
+                "optional": true,
+                "evidence": "#39305 formatted value or null write 1582937, 0x107; difference omits equals; from branch restores base repeat_end at 1583025, 0x2a5. Unknown covers string/null."
+              },
+              {
+                "name": "rrule",
+                "type": "unknown",
+                "optional": true,
+                "evidence": "#39305 captured value write 1582939, 0x110; difference omits equals; restores base at 1583021, 0x28d, or writes null at 1583035/1583049, 0x2da/0x321."
+              },
+              {
+                "name": "lunch_time",
+                "type": "integer",
+                "optional": true,
+                "evidence": "#39305 parseInt(submitted value,10) or 0, write 1582947, 0x131; difference omits equals. Empty-string guard writes 0 at 1583069, 0x386, not proof of string request values. Integer when present, no server default/minimum."
+              },
+              {
+                "name": "desc",
+                "type": "unknown",
+                "optional": true,
+                "evidence": "#39305 submitted desc base write 1582949, 0x13c; difference 1583003, 0x22b, omits equal values; #26530 copies difference, not base, 1030125, 0x37."
+              },
+              {
+                "name": "change_mode",
+                "type": "unknown",
+                "optional": true,
+                "evidence": "#39305 captured state write 1582951, 0x145; difference omits equals; conditional all write 1583048, 0x31b. Branch comparisons do not establish closed server enum."
+              },
+              {
+                "name": "range_end",
+                "type": "unknown",
+                "optional": true,
+                "evidence": "#39305 always writes base own range_end 1582959, 0x164, from params or undefined load 1582956, 0x159; difference 1583003, 0x22b, omits equals. Update optionality is filtering, not nullish params."
+              },
+              {
+                "name": "range_start",
+                "type": "unknown",
+                "optional": true,
+                "evidence": "#39305 always writes base own range_start 1582966, 0x181, from params or undefined load 1582963, 0x176; difference 1583003, 0x22b, omits equals. Update optionality is filtering, not nullish params."
+              },
+              {
+                "name": "duration",
+                "type": "unknown",
+                "optional": true,
+                "evidence": "#39305 edit flag slot 12 truthy 1582967-1582968, 0x186-0x18a; captured selectedData slot 8 loaded 1582969, 0x18d, duration read/write 1582972-1582973, 0x19d-0x1a2. Not submitted form data; difference omits equal duration. Opposite flag selects insert, excluding duration there."
+              },
+              {
+                "name": "id",
+                "type": "unknown",
+                "evidence": "#39305 captured selectedData.id read/write after difference at 1583072-1583073, 0x393-0x398, always on executed update request. #26551 reads same body.id at 1030699, 0x15, for scheduleId URL; no renamed body key."
+              },
+              {
+                "name": "date",
+                "type": "string",
+                "optional": true,
+                "evidence": "#39305 from branch copies base formatted start_date into date at 1583022-1583023, 0x293-0x299; branch-conditional, not UTC-rewritten by #26530."
+              },
+              {
+                "name": "end_date",
+                "type": "string",
+                "optional": true,
+                "evidence": "#39305 conditionally copies base/difference formatted start_date into end_date at 1583019/1583032/1583053/1583060, 0x281/0x2cc/0x337/0x358; null deletion at 1583014, 0x267. String when present, branch-conditional, not UTC-rewritten by #26530."
+              },
+              {
+                "name": "exception_date",
+                "type": "unknown",
+                "optional": true,
+                "evidence": "#39305 selectedData.is_recurring guard 1583036-1583038, 0x2e0-0x2ea; captured selectedData slot 8 loaded 1583039, 0x2f0, its start_date read 1583040, 0x2f4, write to difference exception_date 1583041, 0x2fa. Not freshly formatted base date; source type unknown, branch-conditional, no #26530 rewrite."
+              }
+            ],
+            "evidence": "#26551 forwards arbitrary parameter 2 as PUT data and reads body.id for URL. #39305 constructs base register 5, then difference(base, selectedData) at 1583003, 0x22b, produces register 4 omitting equal keys (#25432 -> #25433 -> #25434; 996255-996258, 0x19-0x25, skip 0x71; unequal write 996276, 0x6d; object branch 0x28-0x64; transform #25436 996300-996401). Subsequent branch mutations/deletion and final id/employee_id writes produce a nineteen-name possible-key union, NOT nineteen simultaneous keys. Seventeen names have conditional client presence; only id/employee_id always assigned post-filter on executed requests. #39305 sends difference register 4 at 1583085, 0x3d1; #26530 copies at 1030125, 0x37, conditionally rewrites UTC date/time, calls service 1030200, 0x19d; #26551 sends same body register 3 at 1030707, 0x39. Local trace does not close arbitrary caller body shape or establish server requiredness, enums, defaults, or date-format validation.",
             "complete": false
           },
+          "clientRequestVariants": [
+            {
+              "variantId": "WorkScheduleFormUpdate",
+              "targetSourceFunctionId": 26551,
+              "constructorFunctionIds": [
+                39305,
+                26529,
+                26530
+              ],
+              "constructorLines": [
+                1582873,
+                1030093,
+                1030106
+              ],
+              "placement": "body",
+              "constructionComplete": true,
+              "localCompleteness": "complete traced nineteen-name possible-key union and difference/branch omission mechanisms; never nineteen simultaneous keys or universal caller coverage",
+              "callsiteCoverage": "partial",
+              "provenFieldPaths": [
+                "employee_id",
+                "type_id",
+                "start_date",
+                "start_time",
+                "end_time",
+                "full_day",
+                "is_recurring",
+                "repeat_end",
+                "rrule",
+                "lunch_time",
+                "desc",
+                "change_mode",
+                "range_end",
+                "range_start",
+                "duration",
+                "id",
+                "date",
+                "end_date",
+                "exception_date"
+              ],
+              "branch": "Edit flag slot 12 truthy selects update; difference(base, selectedData) omits equal values before request, then change_mode/is_recurring branches restore/add/delete keys. Only id and employee_id always assigned after filtering (1583073/1583075, 0x398/0x3a4); seventeen names optional in client construction. Full-day null times preserved; other modes convert only truthy times.",
+              "evidence": "M4116/#39290 dependencies at 20705-20708: index 20=M2289, index 24=M2228. #39305 base register 5 -> difference(base, selectedData slot 8) 1583003, 0x22b, result register 4; M2228/#25411 exports #25432 at 995596-995597, 0x16a-0x16f -> #25433/#25434 equal skip 996258, 0x25, target 0x71; unequal write 996276, 0x6d; object recursion 0x28-0x64; #25436 transform 996300-996401. Mutations 1583012-1583069 precede final id/employee_id writes and updateWorkSchedule(register4) 1583085, 0x3d1 -> #26529/#26530 copy 1030125, 0x37 -> service call 1030200, 0x19d -> M2290/#26544/#26545/class #26546 installed #26551, body.id read 1030699, 0x15; URL 0x32, PUT same body register 3 at 1030707, 0x39. M2289/#26515 dependency 3=M2228 at 11570-11573; #25411 exports actual #25412 UTC helper at 995548-995549, 0x84-0x89. #26530 full_day skips at 0x43; helper date source selection uses change_mode all/from/other, repeat_start and selectedWorkSchedule fallbacks (1030128-1030162, 0x49-0xe4), not added request keys. Truthy time gates 0xed/0x142, helper calls 0x11e/0x173, writes only start_date/start_time/end_time at 0x12a/0x136/0x180. #25412 995603-995642 formats selected date/time; helper tz/date/time object is not request shape. SDK string proof #12925 format binding 511255-511256 -> #12755/#12753/#12754 string seed/concatenation/return at 512830/512849/512854, 0x10/0x55/0x67; no validity/server date-format guarantee. Exact possible-key proofs in body.fields; local completeness qualified, operation coverage partial."
+            }
+          ],
           "response": {
             "kind": "unknown",
             "evidence": "The attached then callback returns response.data; completeness and shape are not established."

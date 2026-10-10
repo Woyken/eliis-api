@@ -1,0 +1,241 @@
+{
+  "source": "/data/data/com.termux/files/home/eliis-analysis/eliis.hasm",
+  "scope": "Evidence-backed client request-body field candidates for existing auth-common operations. These are named caller variants, not server-complete schemas. Constructor bytecodeOffset values are absolute offsets in the original full disassembly; +0x offsets in evidence are relative to the named function.",
+  "candidates": [
+    {
+      "operationId": "RegisterUser",
+      "targetSourceFunctionId": 16317,
+      "variants": [
+        {
+          "variantId": "RegisterScreenSubmit",
+          "constructor": {"functionId": 28149, "line": 1109018, "bytecodeOffset": "0x00637e47"},
+          "provenFieldPaths": ["email", "fname", "lang", "lname", "method", "password", "role", "country", "tz", "company_name"],
+          "fields": [
+            {"name": "email", "type": "unknown", "evidence": "#28149 +0x68-+0x6e reads submitted form.email and assigns it to the fresh payload."},
+            {"name": "fname", "type": "unknown", "evidence": "#28149 +0x73-+0x79 reads submitted form.fname and assigns it to the fresh payload."},
+            {"name": "lang", "type": "unknown", "evidence": "#28149 +0x7e-+0x82 copies the captured translations.language value to the fresh payload; value type is not established here."},
+            {"name": "lname", "type": "unknown", "evidence": "#28149 +0x87-+0x8d reads submitted form.lname and assigns it to the fresh payload."},
+            {"name": "method", "type": "string", "value": "form", "evidence": "#28149 +0x92-+0x96 assigns the literal string \"form\" to method."},
+            {"name": "password", "type": "unknown", "evidence": "#28149 +0x9b-+0xa1 reads submitted form.password and assigns it to the fresh payload."},
+            {"name": "role", "type": "unknown", "evidence": "#28149 +0xa6-+0xaa copies the captured registeredRole value to the fresh payload; value type is unresolved."},
+            {"name": "country", "type": "unknown", "evidence": "#28149 +0xaf-+0xb3 copies the captured registeredCountry value to the fresh payload; value type is unresolved."},
+            {"name": "tz", "type": "number", "evidence": "#28149 +0x2b-+0x35 calls Date.prototype.getTimezoneOffset(); +0xb8 assigns that result to tz."},
+            {"name": "company_name", "type": "string", "value": "", "evidence": "#28149 +0xbd-+0xc1 assigns the empty-string literal to company_name."}
+          ],
+          "constructionComplete": true,
+          "callsiteCoverage": "partial",
+          "bodyCompleteAtTarget": false,
+          "conditionalBranches": [],
+          "overwrites": [],
+          "routingChain": [
+            {"moduleId": 2576, "dependencyIndex": 21, "dependencyModuleId": 1574, "evidence": "Root module registration at #0 lines 13005-13008 identifies the RegisterScreen factory #28140 as M2576 and its dependency array's index 21 as M1574; this is the captured registerUser action module."},
+            {"functionId": 28149, "line": 1109018, "evidence": "After its registration state/dispatch setup (+0x00-+0x5b), constructs the listed fresh payload at +0x66-+0xc1, calls captured registerUser with it at +0xc6, then dispatches the returned thunk at +0xcb."},
+            {"functionId": 16254, "line": 647366, "evidence": "Named registerUser action wrapper creates #16255 at +0x09."},
+            {"functionId": 16255, "line": 647379, "evidence": "Calls default.registerUser with the wrapper argument at +0x07-+0x19; it does not reconstruct or add body fields."},
+            {"moduleId": 1574, "dependencyIndex": 3, "dependencyModuleId": 1575, "evidence": "Root module registration at #0 lines 7995-7998 identifies M1574's dependency index 3 as M1575; #16255's captured default service is this auth-service dependency."},
+            {"moduleId": 1575, "dependencyEvidence": "M1575 service binding is the default object consumed by #16255; #16306 installs its registerUser property as #16317 at +0x77-+0x8a."},
+            {"functionId": 16317, "line": 648836, "evidence": "POSTs its first explicit argument unchanged as data at +0x12-+0x19 to /api/auth/register."}
+          ],
+          "evidence": "Exact payload construction and call are traced in #28149; the action wrapper forwards data unchanged and #16317 posts that argument. No server requiredness is inferred. Other request callers were not exhaustively enumerated."
+        }
+      ]
+    },
+    {
+      "operationId": "ResendEmailVerification",
+      "targetSourceFunctionId": 16319,
+      "variants": [
+        {
+          "variantId": "ResendVerificationUsername",
+          "constructor": {"functionId": 13505, "line": 543431, "bytecodeOffset": "0x004ae9c6"},
+          "provenFieldPaths": ["username"],
+          "fields": [
+            {"name": "username", "type": "unknown", "evidence": "#13505 +0x12-+0x1a obtains the form value named username; +0x3a-+0x47 constructs a fresh object with that value as its username property."}
+          ],
+          "constructionComplete": true,
+          "callsiteCoverage": "partial",
+          "bodyCompleteAtTarget": false,
+          "conditionalBranches": [],
+          "overwrites": [],
+          "routingChain": [
+            {"moduleId": 1231, "dependencyIndex": 26, "dependencyModuleId": 1574, "evidence": "Root module registration at #0 lines 6280-6283 identifies the LoginScreen factory #13500 as M1231 and its dependency array's index 26 as M1574; #13505 uses the captured resendEmailVerification action from this dependency."},
+            {"functionId": 13505, "line": 543431, "evidence": "Calls captured resendEmailVerification({username: formUsername}) at +0x3a-+0x47, then dispatches the returned thunk at +0x4c."},
+            {"functionId": 16263, "line": 647495, "evidence": "Named resendEmailVerification wrapper creates #16264 at +0x09."},
+            {"functionId": 16264, "line": 647508, "evidence": "Calls default.resendEmailVerification with the wrapper argument at +0x07-+0x19 without changing its body."},
+            {"moduleId": 1574, "dependencyIndex": 3, "dependencyModuleId": 1575, "evidence": "Root module registration at #0 lines 7995-7998 identifies M1574's dependency index 3 as M1575; #16264's captured default service is this auth-service dependency."},
+            {"moduleId": 1575, "dependencyEvidence": "M1575 service binding is consumed by #16264; #16306 installs resendEmailVerification as #16319 at +0x8e-+0xa1."},
+            {"functionId": 16319, "line": 648872, "evidence": "POSTs first argument unchanged as data at +0x12-+0x19 to /api/auth/verification/resend."}
+          ],
+          "evidence": "The UI constructor creates exactly {username: value}; thunk/service forwarding is unchanged. Other possible callers were not exhaustively enumerated; no requiredness or value type is inferred."
+        }
+      ]
+    },
+    {
+      "operationId": "RequestForgotPassword",
+      "targetSourceFunctionId": 16321,
+      "variants": [
+        {
+          "variantId": "RequestPasswordScreenEmail",
+          "constructor": {"functionId": 28196, "line": 1110862, "bytecodeOffset": "0x00639137"},
+          "provenFieldPaths": ["email"],
+          "fields": [
+            {"name": "email", "type": "unknown", "evidence": "#28196 +0x35-+0x3e reads handler argument email and assigns it to a fresh object; +0x43 passes that object to captured requestForgotPassword."}
+          ],
+          "constructionComplete": true,
+          "callsiteCoverage": "partial",
+          "bodyCompleteAtTarget": false,
+          "conditionalBranches": [],
+          "overwrites": [],
+          "routingChain": [
+            {"moduleId": 2580, "dependencyIndex": 17, "dependencyModuleId": 1574, "evidence": "Root module registration at #0 lines 13025-13028 identifies the RequestPasswordScreen factory #28192 as M2580 and its dependency array's index 17 as M1574; this is the captured requestForgotPassword action module."},
+            {"functionId": 28196, "line": 1110862, "evidence": "Constructs {email: handlerArgument.email} at +0x33-+0x3e, calls captured requestForgotPassword at +0x43, then dispatches the returned thunk at +0x48."},
+            {"functionId": 16260, "line": 647452, "evidence": "Named requestForgotPassword action wrapper creates #16261 at +0x09."},
+            {"functionId": 16261, "line": 647465, "evidence": "Calls default.requestForgotPassword with the wrapper argument at +0x07-+0x19; it does not alter the body."},
+            {"moduleId": 1574, "dependencyIndex": 3, "dependencyModuleId": 1575, "evidence": "Root module registration at #0 lines 7995-7998 identifies M1574's dependency index 3 as M1575; #16261's captured default service is this auth-service dependency."},
+            {"moduleId": 1575, "dependencyEvidence": "M1575 service binding is consumed by #16261; #16306 installs requestForgotPassword as #16321 at +0xa5-+0xb8."},
+            {"functionId": 16321, "line": 648903, "evidence": "POSTs its first argument unchanged as data at +0x12-+0x19 to /api/auth/password/email."}
+          ],
+          "evidence": "UI construction, action forwarding, and service POST data argument are traced. The body field type and server requiredness are unknown; callsite coverage is partial."
+        }
+      ]
+    },
+    {
+      "operationId": "RecoverAccount",
+      "targetSourceFunctionId": 16337,
+      "variants": [
+        {
+          "variantId": "LoginAccountRecovery",
+          "constructor": {"functionId": 27174, "line": 1049954, "bytecodeOffset": "0x0061543a"},
+          "provenFieldPaths": ["recovery_code", "login_identifier"],
+          "fields": [
+            {"name": "recovery_code", "type": "unknown", "evidence": "#27174 +0x0a loads handler argument 1 and +0x37-+0x39 assigns it to recovery_code on a fresh object."},
+            {"name": "login_identifier", "type": "unknown", "evidence": "#27174 +0x3e-+0x5b reads captured route params; nullish params skip the property read at +0x55, not the own login_identifier assignment at +0x5b. The own key is always assigned, with undefined on the nullish branch or possibly from a missing params.login_identifier. JSON serialization may omit undefined; these instructions do not establish the downstream serializer or server omission constraints."}
+          ],
+          "constructionComplete": true,
+          "callsiteCoverage": "partial",
+          "bodyCompleteAtTarget": false,
+          "conditionalBranches": ["params == null -> login_identifier is assigned undefined; otherwise params.login_identifier is copied."],
+          "overwrites": [],
+          "routingChain": [
+            {"moduleId": 2342, "dependencyIndex": 5, "dependencyModuleId": 1575, "evidence": "Root module registration at #0 lines 11835-11838 identifies the LoginAccountRecoveryScreen factory #27168 as M2342 and its dependency array's index 5 as M1575, the direct auth-service import used by #27174."},
+            {"functionId": 27174, "line": 1049954, "evidence": "Constructs the two-property object at +0x37-+0x5b and calls captured default.recoverAccount at +0x60. Unlike the thunked UI handlers, this function's call is directly to the imported service reference."},
+            {"moduleId": 1575, "dependencyEvidence": "The imported default.recoverAccount service method is installed by #16306 as #16337 at +0x118-+0x12b."},
+            {"functionId": 16337, "line": 649151, "evidence": "POSTs first argument unchanged as data at +0x12-+0x19 to /api/auth/recover-2fa."}
+          ],
+          "evidence": "Both assignments and the nullish params branch are explicit in #27174. The request-data argument is passed directly to the target service; undefined-valued properties may be dropped by JSON serialization."
+        }
+      ]
+    },
+    {
+      "operationId": "UpdateUserName",
+      "targetSourceFunctionId": 16359,
+      "variants": [
+        {
+          "variantId": "AskUsernameScreen",
+          "constructor": {"functionId": 45083, "line": 1846664, "bytecodeOffset": "0x00853ea6"},
+          "provenFieldPaths": ["fname", "lname"],
+          "fields": [
+            {"name": "fname", "type": "unknown", "evidence": "#45083 +0x24-+0x2c copies submitted form.fname into a fresh payload."},
+            {"name": "lname", "type": "unknown", "evidence": "#45083 +0x31-+0x37 copies submitted form.lname into the same payload."}
+          ],
+          "constructionComplete": true,
+          "callsiteCoverage": "partial",
+          "bodyCompleteAtTarget": false,
+          "conditionalBranches": [],
+          "overwrites": [],
+          "routingChain": [
+            {"moduleId": 4572, "dependencyIndex": 18, "dependencyModuleId": 1574, "evidence": "Root module registration at #0 lines 22985-22988 identifies the AskUsernameScreen factory #45076 as M4572 and its dependency array's index 18 as M1574; #45083 calls its captured updateUserName action."},
+            {"functionId": 45083, "line": 1846664, "evidence": "Builds exactly {fname, lname} at +0x24-+0x37; calls captured updateUserName(payload) at +0x5a-+0x60."},
+            {"functionId": 16226, "line": 646808, "evidence": "Named updateUserName wrapper creates #16227 at +0x09."},
+            {"functionId": 16227, "line": 646821, "evidence": "Calls default.updateUserName with the wrapper argument at +0x15-+0x22, then passes response through; no body reconstruction."},
+            {"moduleId": 1574, "dependencyIndex": 4, "dependencyModuleId": 1577, "evidence": "Root module registration at #0 lines 7995-7998 identifies M1574's dependency index 4 as M1577; #16227's captured default service is this user-service dependency."},
+            {"moduleId": 1577, "dependencyEvidence": "M1577 is the user-service dependency behind #16227; #16342 installs updateUserName as #16359 at +0xa7-+0xb8."},
+            {"functionId": 16359, "line": 649712, "evidence": "PUTs its first argument unchanged as data at +0x12-+0x19 to /api/common/user/name."}
+          ],
+          "evidence": "Known UI caller payload construction is complete for this variant; this is not a complete endpoint body schema because other callers were not exhaustively checked."
+        }
+      ]
+    },
+    {
+      "operationId": "RequestEmailChange",
+      "targetSourceFunctionId": 16371,
+      "variants": [
+        {
+          "variantId": "UsersEmailForm",
+          "constructor": {"functionId": 40927, "line": 1659951, "bytecodeOffset": "0x007cc438"},
+          "provenFieldPaths": ["email"],
+          "fields": [
+            {"name": "email", "type": "unknown", "evidence": "#40927 +0x53-+0x5b constructs a fresh object and copies submitted form.email into its email field; +0x60 supplies this object as argument 2 to requestEmailChange."}
+          ],
+          "constructionComplete": true,
+          "callsiteCoverage": "partial",
+          "bodyCompleteAtTarget": false,
+          "conditionalBranches": ["#40927 only takes the request branch when submitted email differs strictly from the current user's email (+0x0c-+0x18); equal values bypass the request."],
+          "overwrites": [],
+          "routingChain": [
+            {"moduleId": 4230, "dependencyIndex": 19, "dependencyModuleId": 1574, "evidence": "Root module registration at #0 lines 21275-21278 identifies the UsersEmail factory #40921 as M4230 and its dependency array's index 19 as M1574; #40927 uses its captured requestEmailChange action."},
+            {"functionId": 40927, "line": 1659951, "evidence": "On the changed-email branch, passes current user.id as argument 1 and the fresh {email} body as argument 2 at +0x44-+0x60."},
+            {"functionId": 16292, "line": 648164, "evidence": "Named requestEmailChange action wrapper captures argument 1 into slot 0 and argument 2 into slot 1, then creates #16293 at +0x10; #16186 exports this binding at +0x525-+0x52a (full lines 645737-645738)."},
+            {"functionId": 16293, "line": 648179, "evidence": "Calls default.requestEmailChange with both wrapper arguments unchanged at +0x0c-+0x1d."},
+            {"moduleId": 1574, "dependencyIndex": 4, "dependencyModuleId": 1577, "evidence": "Root module registration at #0 lines 7995-7998 identifies M1574's dependency index 4 as M1577; #16293's captured default service is this user-service dependency."},
+            {"moduleId": 1577, "dependencyEvidence": "M1577 is the user-service dependency behind #16293; #16342 installs requestEmailChange as #16371 at +0x131-+0x142."},
+            {"functionId": 16371, "line": 649905, "evidence": "Builds URL from argument 1 and POSTs argument 2 unchanged as data at +0x12-+0x33."}
+          ],
+          "evidence": "The strict-equality branch, user ID path argument, and body construction are all traced. Email is caller-derived and remains unknown type; this records client inclusion behavior, not server requiredness."
+        }
+      ]
+    },
+    {
+      "operationId": "VerifyPassword",
+      "targetSourceFunctionId": 16381,
+      "variants": [
+        {
+          "variantId": "UserSecurityVerifyPassword",
+          "constructor": {"functionId": 41054, "line": 1665586, "bytecodeOffset": "0x007d0478"},
+          "provenFieldPaths": ["password"],
+          "fields": [
+            {"name": "password", "type": "unknown", "evidence": "#41054 +0x24-+0x2f constructs a fresh object with password copied from submitted form.password; +0x34 calls captured verifyPassword with that object."}
+          ],
+          "constructionComplete": true,
+          "callsiteCoverage": "partial",
+          "bodyCompleteAtTarget": false,
+          "conditionalBranches": [],
+          "overwrites": [],
+          "routingChain": [
+            {"moduleId": 4240, "dependencyIndex": 4, "dependencyModuleId": 1577, "evidence": "Root module registration at #0 lines 21325-21328 identifies the UserSecurityScreen factory #41041 as M4240; the dependency array's index 4 is M1577, the default user-service import used by #41054."},
+            {"functionId": 41054, "line": 1665586, "evidence": "Constructs {password: form.password} at +0x24-+0x2f and invokes the captured default.verifyPassword method at +0x34."},
+            {"moduleId": 1577, "dependencyEvidence": "The screen's captured default.verifyPassword binding is the M1577 service method; #16342 installs it as #16381 at +0x1a4-+0x1b5."},
+            {"functionId": 16381, "line": 650074, "evidence": "POSTs first argument unchanged as data at +0x12-+0x19 to /api/common/user/verify-password."}
+          ],
+          "evidence": "A separately observed caller variant below independently constructs the same single key. The service is still an arbitrary-object forwarder, so endpoint completeness and server requiredness remain unknown."
+        },
+        {
+          "variantId": "TwoFactorRequiredVerifyPassword",
+          "constructor": {"functionId": 45109, "line": 1848408, "bytecodeOffset": "0x00855377"},
+          "provenFieldPaths": ["password"],
+          "fields": [
+            {"name": "password", "type": "unknown", "evidence": "#45109 +0x24-+0x37 constructs a fresh object with password copied from handler argument.password; +0x3c invokes the captured default.verifyPassword method."}
+          ],
+          "constructionComplete": true,
+          "callsiteCoverage": "partial",
+          "bodyCompleteAtTarget": false,
+          "conditionalBranches": [],
+          "overwrites": [],
+          "routingChain": [
+            {"moduleId": 4575, "dependencyIndex": 6, "dependencyModuleId": 1577, "evidence": "Root module registration at #0 lines 23000-23003 identifies the TwoFactorAuthRequiredScreen factory #45099 as M4575; the dependency array's index 6 is M1577, the user-service import used by #45109."},
+            {"functionId": 45109, "line": 1848408, "evidence": "Builds {password: handlerArgument.password} at +0x2f-+0x37 and calls captured verifyPassword at +0x3c."},
+            {"moduleId": 1577, "dependencyEvidence": "The captured default.verifyPassword method is the M1577 service method installed as #16381 by #16342 at +0x1a4-+0x1b5."},
+            {"functionId": 16381, "line": 650074, "evidence": "POSTs the supplied object unchanged as data at +0x12-+0x19."}
+          ],
+          "evidence": "Independent UI flow has the same one-field shape; the caller's exact password value remains unknown type."
+        }
+      ]
+    }
+  ],
+  "notRecovered": [
+    {
+      "operationId": "VerifyTwoFactorAuthKey",
+      "targetSourceFunctionId": 16335,
+      "reason": "The bounded caller search found the service method and its M1575 installation, but no caller that constructs the argument reaching #16335. The observed two-factor login UI targets #16309 (/api/auth/login-2fa), which is a different operation; its code/login_identifier fields are not evidence for #16335."
+    }
+  ]
+}

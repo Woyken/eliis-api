@@ -1100,7 +1100,11 @@
         "evidence": "Function parameter 1 is concatenated into URL"
       }
     ],
-    "query": [],
+    "query": [
+      {"name":"dateFrom","type":"string","evidence":"#42300/#42323 format month start with Moment format('Y-MM-DD'), own write at 1715586/1716934, function-local 0x75. SDK string only, no server format constraint."},
+      {"name":"dateTo","type":"string","evidence":"#42300/#42323 format month end with Moment format('Y-MM-DD'), own write at 1715596/1716944, function-local 0xa4. SDK string only, no server format constraint."}
+    ],
+    "clientRequestVariants": [{"variantId":"CalendarMonthRange","targetSourceFunctionId":25403,"constructorFunctionIds":[42300,42323],"constructorLines":[1715553,1716901],"placement":"query","constructionComplete":true,"localCompleteness":"two own keys in traced month-range constructors","callsiteCoverage":"partial","branch":"Both calendar constructors create month start/end range. Service argument 2 omitted/undefined becomes {}; otherwise all enumerable caller keys copied, not closed query schema.","evidence":"#42300/#42323 register 0 own writes dateFrom/dateTo at 1715586/1715596 and 1716934/1716944, 0x75/0xa4, calls getEvents 1715597/1716945, 0xa9 -> #25373 captures FIRST explicit argument at 994660, 0x02 -> #25374 forwards captured query as service argument 2 at 994695, 0x59. M2227/#25398/#25399/class #25400 binds #25403; omitted/undefined arg2 default {} 995346-995355; shallow copy 995371, 0x5c; config.params 995372, 0x62; GET 995373, 0x66. Moment format bound #12925 at 511255-511256 -> #12755/#12753/#12754; #12754 string seed/concatenation/return 512830/512849/512854, 0x10/0x55/0x67; invalid-date SDK text not validation. Caller coverage partial; queryPassthrough preserves unknown additional keys."}],
     "queryPassthrough": true,
     "body": null,
     "response": {
@@ -1109,7 +1113,7 @@
     },
     "auth": "cookie",
     "notes": [
-      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+      "Traced calendar callers prove dateFrom/dateTo strings; arbitrary additional enumerable caller keys remain unresolved. Client format arguments do not establish server constraints."
     ]
   },
   {
@@ -1430,7 +1434,11 @@
     },
     "evidence": "Bytecode /data/data/com.termux/files/home/eliis-analysis/domain-source/communications.hasm:1159-1180 (function #26071 getNotifications): Axios GET call and URL construction traced there. Function parameter 1 is assigned unchanged to Axios config.params; query shape unresolved.",
     "pathParams": [],
-    "query": [],
+    "query": [
+      {"name":"page","type":"unknown","evidence":"#39404/#39407/#39409 write captured page at 1587900/1587978/1588034, 0x45/0x43/0x45; prior state reset does not replace captured operand with literal 1."},
+      {"name":"perPage","type":"integer","value":15,"evidence":"#39404/#39407/#39409 literal 15 writes at 1587902/1587980/1588036, 0x4d/0x4b/0x4d; observed caller constant, not server default/enum."}
+    ],
+    "clientRequestVariants": [{"variantId":"NotificationsScreenFetch","targetSourceFunctionId":26071,"constructorFunctionIds":[39404,39407,39409],"constructorLines":[1587877,1587956,1588011],"placement":"query","constructionComplete":true,"localCompleteness":"two own keys in each identified screen constructor","callsiteCoverage":"partial","branch":"All three constructors build captured page and literal perPage=15; reset calls do not change captured page operand. Other caller shapes untraced.","evidence":"#39404/#39407/#39409 fresh objects, page writes 1587900/1587978/1588034, 0x45/0x43/0x45, perPage writes 1587902/1587980/1588036, 0x4d/0x4b/0x4d; getNotifications calls 1587903/1587981/1588037, 0x52/0x50/0x52 -> #26061/#26062/#26063/#26064 captured query forwarded at 1016131, 0x23 -> M2260/#26066/#26067/class #26068 binds #26071 (1016248-1016252). #26071 unchanged parameter 1 config.params 1016323, 0x16, GET 1016325, 0x1e. Two local keys complete, caller coverage partial; unknown additional forwarded keys retained."}],
     "queryPassthrough": true,
     "body": null,
     "response": {
@@ -1439,7 +1447,7 @@
     },
     "auth": "cookie",
     "notes": [
-      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+      "Traced screen callers prove page and perPage; additional forwarded caller keys remain unresolved. Literal perPage=15 is observed client behavior, not a server default or enum."
     ]
   },
   {
@@ -2018,7 +2026,16 @@
         "evidence": "Function parameter 1 is concatenated into URL"
       }
     ],
-    "query": [],
+    "query": [
+      {"name":"page","type":"unknown","evidence":"#38968 object buffer 1566406, 0x31, seeds page=1; #38970 captured page plus 1 via generic Add at 1566469, 0x50, own write 1566470, 0x54. Operand type unproved across variants."},
+      {"name":"term","type":"string","value":"","evidence":"#38968 object buffer seeds empty string at 1566406, 0x31; #38970 empty literal load 1566471, 0x59, term write 1566472, 0x5d. Caller constant only."},
+      {"name":"view","type":"unknown","evidence":"#38968 loads captured view 1566407, 0x3b, overwrites initial null seed at 1566408, 0x3f; #38970 captured view write 1566474, 0x66."},
+      {"name":"perPage","type":"integer","value":5,"evidence":"#38968 object buffer literal 5 at 1566406, 0x31; #38970 literal 5 write 1566476, 0x6e. Observed client constant, not server default/enum."}
+    ],
+    "clientRequestVariants": [
+      {"variantId":"InitialPollsFetch","targetSourceFunctionId":26455,"constructorFunctionIds":[38968],"constructorLines":[1566389],"placement":"query","constructionComplete":true,"localCompleteness":"four effective own keys after captured view overwrite","callsiteCoverage":"partial","branch":"Initial page=1, term empty string, perPage=5; effective view is captured value, not null seed.","evidence":"#38968 object buffer 1566406, 0x31, captured view load/write 1566407-1566408, 0x3b-0x3f, getPolls call 1566409, 0x45 -> #26440/#26441 forwards unchanged query plus selectedKindergartenId at 1027165, 0x3f -> M2284/#26448/#26449/class #26450 binds #26455 at 1027412-1027416; endpoint parameter 2 config.params 1027544, 0x34, GET 1027545, 0x38. Four local keys complete, other callers/additional keys unresolved."},
+      {"variantId":"PaginatedPollsFetch","targetSourceFunctionId":26455,"constructorFunctionIds":[38970],"constructorLines":[1566444],"placement":"query","constructionComplete":true,"localCompleteness":"four own keys in pagination constructor","callsiteCoverage":"partial","branch":"Captured page plus 1 uses generic Add, unknown operand type; term empty, view captured, perPage=5. Not a server closed schema.","evidence":"#38970 fresh register 0 at 1566466, 0x47; generic page Add/write 1566469-1566470, 0x50-0x54; empty term load 1566471, 0x59, write 1566472, 0x5d; view write 1566474, 0x66; perPage write 1566476, 0x6e; action call 1566477, 0x73 -> #26440/#26441 service call 1027165, 0x3f -> installed #26455 unchanged parameter 2 config.params 1027544, 0x34, GET 0x38. Four local keys complete; caller coverage partial and unknown additional keys retained."}
+    ],
     "queryPassthrough": true,
     "body": null,
     "response": {
@@ -2027,7 +2044,7 @@
     },
     "auth": "cookie",
     "notes": [
-      "Query parameter names and types are unresolved because the client forwards the parameter object (or a shallow copy) without a traced field construction."
+      "Traced poll-list callers prove page/term/view/perPage; arbitrary additional caller query keys remain unresolved. Empty term and perPage=5 are observed constants, not server defaults or enums."
     ]
   },
   {

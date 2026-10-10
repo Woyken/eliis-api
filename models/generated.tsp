@@ -138,6 +138,66 @@ model Login2FABody extends Record<unknown> {
   `platform`?: Login2FABody_platform;
 }
 
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "email", `type`: "unknown", `evidence`: "#28196 +0x33 creates a fresh object; +0x35-+0x3e copies handlerArgument.email to its own email; +0x43 hands it to requestForgotPassword."}], `evidence`: "Function #16321 +0x12-+0x19 POSTs its first argument unchanged to /api/auth/password/email. Reviewed #28196 -> #16260/#16261 -> M1575 installed #16321 establishes email in the named caller variant. Complete local construction does not close the endpoint body; arbitrary forwarded remainder, other callers, and server requiredness remain unresolved.", `complete`: false}]})
+model RequestForgotPasswordBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "email", `type`: "unknown", `evidence`: "#28196 +0x33 creates a fresh object; +0x35-+0x3e copies handlerArgument.email to its own email; +0x43 hands it to requestForgotPassword."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `email`?: unknown;
+}
+
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "recovery_code", `type`: "unknown", `evidence`: "#27174 +0x0a loads handler argument 1; +0x37 creates a fresh object and +0x39 assigns own recovery_code."}, #{`name`: "login_identifier", `type`: "unknown", `evidence`: "#27174 +0x3e-+0x5b reads route params; the nullish branch skips property read +0x55, not own assignment +0x5b. login_identifier is always assigned, with undefined on nullish params or possibly a missing property. JSON serialization may omit undefined, but downstream serialization and server omission constraints are unestablished."}], `evidence`: "Function #16337 +0x12-+0x19 POSTs its first argument unchanged to /api/auth/recover-2fa. Reviewed #27174 directly calls M1575 installed #16337 with recovery_code and login_identifier. Complete local construction does not close the endpoint body; arbitrary forwarded remainder, other callers, and server requiredness remain unresolved.", `complete`: false}]})
+model RecoverAccountBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "recovery_code", `type`: "unknown", `evidence`: "#27174 +0x0a loads handler argument 1; +0x37 creates a fresh object and +0x39 assigns own recovery_code."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `recovery_code`?: unknown;
+  @extension("x-evidence", #[#{`name`: "login_identifier", `type`: "unknown", `evidence`: "#27174 +0x3e-+0x5b reads route params; the nullish branch skips property read +0x55, not own assignment +0x5b. login_identifier is always assigned, with undefined on nullish params or possibly a missing property. JSON serialization may omit undefined, but downstream serialization and server omission constraints are unestablished."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `login_identifier`?: unknown;
+}
+
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "email", `type`: "unknown", `evidence`: "#28149 +0x68-+0x6e reads submitted form.email and assigns it to the fresh payload."}, #{`name`: "fname", `type`: "unknown", `evidence`: "#28149 +0x73-+0x79 reads submitted form.fname and assigns it to the fresh payload."}, #{`name`: "lang", `type`: "unknown", `evidence`: "#28149 +0x7e-+0x82 copies captured translations.language to the fresh payload; its type remains unresolved."}, #{`name`: "lname", `type`: "unknown", `evidence`: "#28149 +0x87-+0x8d reads submitted form.lname and assigns it to the fresh payload."}, #{`name`: "method", `type`: "string", `value`: "form", `evidence`: "#28149 +0x92-+0x96 assigns literal string form; this is an observed client value, not an enum or default."}, #{`name`: "password", `type`: "unknown", `evidence`: "#28149 +0x9b-+0xa1 reads submitted form.password and assigns it to the fresh payload."}, #{`name`: "role", `type`: "unknown", `evidence`: "#28149 +0xa6-+0xaa copies captured registeredRole to the fresh payload; its type remains unresolved."}, #{`name`: "country", `type`: "unknown", `evidence`: "#28149 +0xaf-+0xb3 copies captured registeredCountry to the fresh payload; its type remains unresolved."}, #{`name`: "tz", `type`: "number", `evidence`: "#28149 +0x2b-+0x35 calls constructed Date's getTimezoneOffset(); +0xb8 assigns its number result, without an integer/server restriction."}, #{`name`: "company_name", `type`: "string", `value`: "", `evidence`: "#28149 +0xbd-+0xc1 assigns the empty-string literal; this is an observed client value, not an enum or default."}], `evidence`: "Function #16317 +0x12-+0x19 POSTs its first argument unchanged to /api/auth/register. Reviewed #28149 -> #16254/#16255 -> M1575 installed #16317 establishes the named literal fields in clientRequestVariants. Complete local construction does not establish exhaustive caller coverage or a closed server body; arbitrary forwarded remainder and server requiredness remain unknown.", `complete`: false}]})
+model RegisterUserBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "email", `type`: "unknown", `evidence`: "#28149 +0x68-+0x6e reads submitted form.email and assigns it to the fresh payload."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `email`?: unknown;
+  @extension("x-evidence", #[#{`name`: "fname", `type`: "unknown", `evidence`: "#28149 +0x73-+0x79 reads submitted form.fname and assigns it to the fresh payload."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `fname`?: unknown;
+  @extension("x-evidence", #[#{`name`: "lang", `type`: "unknown", `evidence`: "#28149 +0x7e-+0x82 copies captured translations.language to the fresh payload; its type remains unresolved."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `lang`?: unknown;
+  @extension("x-evidence", #[#{`name`: "lname", `type`: "unknown", `evidence`: "#28149 +0x87-+0x8d reads submitted form.lname and assigns it to the fresh payload."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `lname`?: unknown;
+  @extension("x-evidence", #[#{`name`: "method", `type`: "string", `value`: "form", `evidence`: "#28149 +0x92-+0x96 assigns literal string form; this is an observed client value, not an enum or default."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  @extension("x-client-observed-value", "form")
+  `method`?: string;
+  @extension("x-evidence", #[#{`name`: "password", `type`: "unknown", `evidence`: "#28149 +0x9b-+0xa1 reads submitted form.password and assigns it to the fresh payload."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `password`?: unknown;
+  @extension("x-evidence", #[#{`name`: "role", `type`: "unknown", `evidence`: "#28149 +0xa6-+0xaa copies captured registeredRole to the fresh payload; its type remains unresolved."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `role`?: unknown;
+  @extension("x-evidence", #[#{`name`: "country", `type`: "unknown", `evidence`: "#28149 +0xaf-+0xb3 copies captured registeredCountry to the fresh payload; its type remains unresolved."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `country`?: unknown;
+  @extension("x-evidence", #[#{`name`: "tz", `type`: "number", `evidence`: "#28149 +0x2b-+0x35 calls constructed Date's getTimezoneOffset(); +0xb8 assigns its number result, without an integer/server restriction."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `tz`?: numeric;
+  @extension("x-evidence", #[#{`name`: "company_name", `type`: "string", `value`: "", `evidence`: "#28149 +0xbd-+0xc1 assigns the empty-string literal; this is an observed client value, not an enum or default."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  @extension("x-client-observed-value", "")
+  `company_name`?: string;
+}
+
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "username", `type`: "unknown", `evidence`: "#13505 +0x12-+0x1a gets the form value named username; fresh R2 +0x40 receives own username +0x42 and is passed to resendEmailVerification +0x47; returned thunk is dispatched +0x4c."}], `evidence`: "Function #16319 +0x12-+0x19 POSTs its first argument unchanged to /api/auth/verification/resend. Reviewed #13505 -> #16263/#16264 -> M1575 installed #16319 establishes username in the named caller variant. Other callers and arbitrary forwarded remainder remain unresolved; complete local construction does not close the endpoint body or establish server requiredness.", `complete`: false}]})
+model ResendEmailVerificationBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "username", `type`: "unknown", `evidence`: "#13505 +0x12-+0x1a gets the form value named username; fresh R2 +0x40 receives own username +0x42 and is passed to resendEmailVerification +0x47; returned thunk is dispatched +0x4c."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `username`?: unknown;
+}
+
 @extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "multipart", `fields`: #[#{`name`: "_method", `type`: "string", `value`: "put", `evidence`: "#34032 +0x49-0x57 appends literal string _method=put; client override part only, not HTTP verb or server enum."}, #{`name`: "body", `type`: "unknown", `evidence`: "#34032 +0x5d-0x8f appends literal body from convertNewlinesToHTML(submitted body); return type unresolved."}], `evidence`: "#34032 -> #25206/#25207 -> installed #25253 POST data=p2 proves two literal parts; indexed file/removed-file families are only dynamicParts metadata. Other endpoint/caller inputs remain unknown.", `complete`: false}]})
 model UpdateSentMessageBody extends Record<unknown> {
   @extension("x-evidence", #[#{`name`: "_method", `type`: "string", `value`: "put", `evidence`: "#34032 +0x49-0x57 appends literal string _method=put; client override part only, not HTTP verb or server enum."}])
@@ -178,6 +238,20 @@ model GenerateTwoFactorAuthSecretBody extends Record<unknown> {
   @extension("x-evidence", #[#{`name`: "type", `type`: "unknown", `evidence`: "Copied directly from the first function argument."}])
   @extension("x-client-presence", "present in traced construction; server requiredness unknown")
   `type`?: unknown;
+}
+
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "password", `type`: "unknown", `evidence`: "#41054 +0x24-+0x2f constructs own password from handler argument.password, handed to verifyPassword +0x34. Independently #45109 +0x2f-+0x37 constructs the same key and hands it to verifyPassword +0x3c; both target #16381."}], `evidence`: "Function #16381 +0x12-+0x19 POSTs its first argument unchanged to /api/common/user/verify-password. Reviewed #41054 and #45109 both reach M1577 installed #16381 and construct password, not login-2fa or auth-key verification data. Complete local construction does not close the endpoint body; arbitrary forwarded remainder, other callers, and server requiredness remain unresolved.", `complete`: false}]})
+model VerifyPasswordBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "password", `type`: "unknown", `evidence`: "#41054 +0x24-+0x2f constructs own password from handler argument.password, handed to verifyPassword +0x34. Independently #45109 +0x2f-+0x37 constructs the same key and hands it to verifyPassword +0x3c; both target #16381."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `password`?: unknown;
+}
+
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "email", `type`: "unknown", `evidence`: "#40927 +0x53-+0x5b creates a fresh object and assigns submitted form.email; +0x60 supplies it as argument 2. Strict equality +0x18 bypasses the entire request; when invoked, own email is always assigned, not conditionally included."}], `evidence`: "Function #16371 +0x12-+0x33 builds the URL using argument 1 and POSTs argument 2 unchanged. Reviewed #40927 -> #16292/#16293 -> M1577 installed #16371 establishes email in the named caller variant. Complete local construction does not close the endpoint body; arbitrary forwarded remainder, other callers, and server requiredness remain unresolved.", `complete`: false}]})
+model RequestEmailChangeBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "email", `type`: "unknown", `evidence`: "#40927 +0x53-+0x5b creates a fresh object and assigns submitted form.email; +0x60 supplies it as argument 2. Strict equality +0x18 bypasses the entire request; when invoked, own email is always assigned, not conditionally included."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `email`?: unknown;
 }
 
 @extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "multipart", `fields`: #[#{`name`: "subject", `type`: "unknown", `evidence`: "#42237 +0x2b-0x35 appends literal part subject from submitted subject."}, #{`name`: "body", `type`: "unknown", `evidence`: "#42237 +0x60-0x6f appends literal body part from convertNewlinesToHTML(submitted body); conversion result type unresolved."}, #{`name`: "type", `type`: "string", `value`: "announcement", `evidence`: "#42237 +0x7b-0x83 appends literal part type='announcement'; client value only."}], `evidence`: "The Axios client is called directly with config method=\"post\", url, data=function parameter 2, and Content-Type=\"multipart/form-data\". Verified #42237 -> #25321/#25322 -> M2224 installed #25338 proves three literal caller parts. Further targetGroups[{index}][{key}] parts are dynamic metadata in clientRequestVariants, not fixed named fields; coverage partial and remaining parts unresolved.", `complete`: false}]})
@@ -492,6 +566,52 @@ model AddKindergartenServiceCommentBody extends Record<unknown> {
   `comment`?: unknown;
 }
 
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "employee_id", `type`: "unknown", `evidence`: "#39305 1582887-1582898, 0x21-0x4c: form truthy employee_id or params.employeeId fallback, always written; may be undefined."}, #{`name`: "type_id", `type`: "unknown", `evidence`: "#39305 reads submitted type_id and writes own key at 1582900, 0x57."}, #{`name`: "start_date", `type`: "string", `evidence`: "#39305 Moment YYYY-MM-DD format/write at 1582904-1582909, 0x68-0x81; non-full-day #26526 replaces with #25412.date at 1030028, 0xce. SDK string, not server date-format constraint."}, #{`name`: "start_time", `type`: "unknown", `evidence`: "#39305 HH:mm format/write at 1582912-1582917, 0x8f-0xa8, full-day null overwrite at 1582976, 0x1af (null loaded 1582954, 0x153). #26526 full_day skip 1029997-1029998, 0x37-0x3d, preserves null; otherwise #25412.time string copied at 1030030, 0xda. Unknown covers string/null."}, #{`name`: "end_time", `type`: "unknown", `evidence`: "#39305 HH:mm format/write at 1582920-1582924, 0xb6-0xcb, full-day null overwrite at 1582977, 0x1b5. #26526 full_day skip 1029997-1029998, 0x37-0x3d, preserves null; otherwise #25412.time string copied at 1030032, 0xe6. Unknown covers string/null."}, #{`name`: "full_day", `type`: "unknown", `evidence`: "#39305 captured state write at 1582926, 0xd4; truthiness branching is not boolean type proof."}, #{`name`: "is_recurring", `type`: "unknown", `evidence`: "#39305 submitted is_recurring write at 1582928, 0xdf; no conversion."}, #{`name`: "repeat_end", `type`: "unknown", `evidence`: "#39305 formatted repeat_end or null write at 1582931-1582937, 0xed-0x107; unknown covers both."}, #{`name`: "rrule", `type`: "unknown", `evidence`: "#39305 captured value write at 1582939, 0x110."}, #{`name`: "lunch_time", `type`: "integer", `evidence`: "#39305 parseInt(submitted value,10) or literal 0, write at 1582940-1582947, 0x115-0x131; client numeric construction only, no server default/minimum."}, #{`name`: "desc", `type`: "unknown", `evidence`: "#39305 submitted desc write at 1582949, 0x13c."}, #{`name`: "change_mode", `type`: "unknown", `evidence`: "#39305 captured state write at 1582951, 0x145; no closed server enum inferred."}, #{`name`: "range_end", `type`: "unknown", `evidence`: "#39305 params.range_end or undefined loaded at 1582956, 0x159; always PutNewOwnById at 1582959, 0x164. #26526 copies own key; undefined is not constructor omission, serialization is separate."}, #{`name`: "range_start", `type`: "unknown", `evidence`: "#39305 params.range_start or undefined loaded at 1582963, 0x176; always PutNewOwnById at 1582966, 0x181. #26526 copies own key; undefined is not constructor omission, serialization is separate."}], `evidence`: "Endpoint #26547 forwards arbitrary parameter 2 as POST data; one traced form constructor #39305 proves fourteen own keys before serialization. Insert call 1582987, 0x1e0, sends base register 5 through #26525/#26526 copied register 4; service call 1030038, 0x103; Axios POST 1030630, 0x33 (0x30 loads data). Edit flag slot 12 is falsy for insert at 1582978-1582979, whereas selectedData.duration write requires it truthy at 1582967-1582973, so duration is excluded. Full-day null times survive; non-full-day helper rewrites only start_date/start_time/end_time. Other callers/additional body keys unresolved, no server requiredness or validation established.", `complete`: false}]})
+model InsertWorkScheduleBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "employee_id", `type`: "unknown", `evidence`: "#39305 1582887-1582898, 0x21-0x4c: form truthy employee_id or params.employeeId fallback, always written; may be undefined."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `employee_id`?: unknown;
+  @extension("x-evidence", #[#{`name`: "type_id", `type`: "unknown", `evidence`: "#39305 reads submitted type_id and writes own key at 1582900, 0x57."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `type_id`?: unknown;
+  @extension("x-evidence", #[#{`name`: "start_date", `type`: "string", `evidence`: "#39305 Moment YYYY-MM-DD format/write at 1582904-1582909, 0x68-0x81; non-full-day #26526 replaces with #25412.date at 1030028, 0xce. SDK string, not server date-format constraint."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `start_date`?: string;
+  @extension("x-evidence", #[#{`name`: "start_time", `type`: "unknown", `evidence`: "#39305 HH:mm format/write at 1582912-1582917, 0x8f-0xa8, full-day null overwrite at 1582976, 0x1af (null loaded 1582954, 0x153). #26526 full_day skip 1029997-1029998, 0x37-0x3d, preserves null; otherwise #25412.time string copied at 1030030, 0xda. Unknown covers string/null."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `start_time`?: unknown;
+  @extension("x-evidence", #[#{`name`: "end_time", `type`: "unknown", `evidence`: "#39305 HH:mm format/write at 1582920-1582924, 0xb6-0xcb, full-day null overwrite at 1582977, 0x1b5. #26526 full_day skip 1029997-1029998, 0x37-0x3d, preserves null; otherwise #25412.time string copied at 1030032, 0xe6. Unknown covers string/null."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `end_time`?: unknown;
+  @extension("x-evidence", #[#{`name`: "full_day", `type`: "unknown", `evidence`: "#39305 captured state write at 1582926, 0xd4; truthiness branching is not boolean type proof."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `full_day`?: unknown;
+  @extension("x-evidence", #[#{`name`: "is_recurring", `type`: "unknown", `evidence`: "#39305 submitted is_recurring write at 1582928, 0xdf; no conversion."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `is_recurring`?: unknown;
+  @extension("x-evidence", #[#{`name`: "repeat_end", `type`: "unknown", `evidence`: "#39305 formatted repeat_end or null write at 1582931-1582937, 0xed-0x107; unknown covers both."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `repeat_end`?: unknown;
+  @extension("x-evidence", #[#{`name`: "rrule", `type`: "unknown", `evidence`: "#39305 captured value write at 1582939, 0x110."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `rrule`?: unknown;
+  @extension("x-evidence", #[#{`name`: "lunch_time", `type`: "integer", `evidence`: "#39305 parseInt(submitted value,10) or literal 0, write at 1582940-1582947, 0x115-0x131; client numeric construction only, no server default/minimum."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `lunch_time`?: integer;
+  @extension("x-evidence", #[#{`name`: "desc", `type`: "unknown", `evidence`: "#39305 submitted desc write at 1582949, 0x13c."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `desc`?: unknown;
+  @extension("x-evidence", #[#{`name`: "change_mode", `type`: "unknown", `evidence`: "#39305 captured state write at 1582951, 0x145; no closed server enum inferred."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `change_mode`?: unknown;
+  @extension("x-evidence", #[#{`name`: "range_end", `type`: "unknown", `evidence`: "#39305 params.range_end or undefined loaded at 1582956, 0x159; always PutNewOwnById at 1582959, 0x164. #26526 copies own key; undefined is not constructor omission, serialization is separate."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `range_end`?: unknown;
+  @extension("x-evidence", #[#{`name`: "range_start", `type`: "unknown", `evidence`: "#39305 params.range_start or undefined loaded at 1582963, 0x176; always PutNewOwnById at 1582966, 0x181. #26526 copies own key; undefined is not constructor omission, serialization is separate."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `range_start`?: unknown;
+}
+
 @extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "qty", `type`: "unknown", `evidence`: "#40014 +0x05-0x09 copies captured quantity into fresh object r3."}, #{`name`: "course_period_id", `type`: "unknown", `value`: null, `evidence`: "#40014 +0x0e-0x10 assigns final null; no later overwrite. Client value only."}, #{`name`: "product_id", `type`: "unknown", `optional`: true, `evidence`: "#40014 +0x22 jumps to +0x37 iff item.type === 'product'; +0x3b-0x40 assigns item.id to product_id."}, #{`name`: "service_id", `type`: "unknown", `optional`: true, `evidence`: "#40014 +0x22 falls through iff item.type !== 'product'; +0x2a-0x2f assigns item.id to service_id."}], `evidence`: "The POST call forwards a function argument as request data; construction is not in helper #26767. Verified caller #40014 +0x00-0x40 builds these keys; M4149 dependency 26=M2293 -> exported #26652/#26653 -> M2294 installed #26767. Known caller fields are partial endpoint evidence; arbitrary remainder unresolved.", `complete`: false}]})
 model AddToCartBody extends Record<unknown> {
   @extension("x-evidence", #[#{`name`: "qty", `type`: "unknown", `evidence`: "#40014 +0x05-0x09 copies captured quantity into fresh object r3."}])
@@ -611,6 +731,16 @@ model AuthorizeBody extends Record<unknown> {
   @extension("x-evidence", #[#{`name`: "channel_name", `type`: "unknown", `evidence`: "#16397 authorizer (0x004f653e, full lines 650583–650593) +0x02/+0x05 captures its first explicit argument in outer environment slot 0 and +0x0b creates #16398. #16398 +0x25/+0x28 loads that outer slot, +0x2c reads its name, and +0x31 assigns channel_name on r2 posted at +0x3a. authorize's second explicit argument is the callback, not the channel object; channel_name's value/type remain unknown."}])
   @extension("x-client-presence", "present in traced construction; server requiredness unknown")
   `channel_name`?: unknown;
+}
+
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "fname", `type`: "unknown", `evidence`: "#45083 +0x24-+0x2c copies submitted form.fname into a fresh payload."}, #{`name`: "lname", `type`: "unknown", `evidence`: "#45083 +0x31-+0x37 copies submitted form.lname into the same payload; R5 aliases it +0x3c and is passed +0x60, before dispatch +0x65."}], `evidence`: "Function #16359 +0x12-+0x19 PUTs its first argument unchanged to /api/common/user/name. Reviewed #45083 -> #16226/#16227 -> M1577 installed #16359 establishes fname/lname, not updateUser or username. Complete local construction does not close the endpoint body; arbitrary forwarded remainder, other callers, and server requiredness remain unresolved.", `complete`: false}]})
+model UpdateUserNameBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "fname", `type`: "unknown", `evidence`: "#45083 +0x24-+0x2c copies submitted form.fname into a fresh payload."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `fname`?: unknown;
+  @extension("x-evidence", #[#{`name`: "lname", `type`: "unknown", `evidence`: "#45083 +0x31-+0x37 copies submitted form.lname into the same payload; R5 aliases it +0x3c and is passed +0x60, before dispatch +0x65."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `lname`?: unknown;
 }
 
 @extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`name`: "address", `type`: "unknown", `optional`: true, `fields`: #[#{`name`: "address", `type`: "unknown", `evidence`: "#40860 +0x5e-0x64 copies submitted address into fresh nested object's address."}], `evidence`: "Profile #40860 +0x5c-0x69 constructs {address:submitted.address}; absent from password variant."}]})
@@ -876,4 +1006,65 @@ model CancelKindergartenOrderBody extends Record<unknown> {
   @extension("x-evidence", #[#{`name`: "reason", `type`: "unknown", `evidence`: "Function assigns parameter 3 to the locally constructed request body property reason."}])
   @extension("x-client-presence", "present in traced construction; server requiredness unknown")
   `reason`?: unknown;
+}
+
+@extension("x-client-construction", #{`complete`: false, `serverValidation`: "unknown", `evidence`: #[#{`kind`: "object", `fields`: #[#{`name`: "employee_id", `type`: "unknown", `evidence`: "#39305 base write 1582898, 0x4c; captured selectedData overwrite before filtering 1582971, 0x197; final selectedData.employee_id always assigned after filtering at 1583074-1583075, 0x39e-0x3a4 on executed update request."}, #{`name`: "type_id", `type`: "unknown", `optional`: true, `evidence`: "#39305 base write at 1582900, 0x57; difference(base,selectedData) 1583003, 0x22b, omits equal values (#25434 996255-996258, 0x19-0x25, skip 0x71). Client presence conditional."}, #{`name`: "start_date", `type`: "string", `optional`: true, `evidence`: "#39305 Moment YYYY-MM-DD format/write at 1582904-1582909, 0x68-0x81; difference omits equal values. Branches restore base at 1583030/1583046, 0x2c0/0x311. Non-full-day truthy-start_time #26530 copies #25412.date at 1030177, 0x12a. String when present, no server format constraint."}, #{`name`: "start_time", `type`: "unknown", `optional`: true, `evidence`: "#39305 formatted HH:mm write 1582917, 0xa8, or full-day null overwrite 1582976, 0x1af (null loaded 1582954, 0x153); difference may omit equals, branch restores base at 1583062, 0x364. #26530 full_day skip 1030127, 0x43, preserves null; otherwise truthy time gate 1030164, 0xed, #25412.time copied 1030179, 0x136. Unknown covers string/null when present."}, #{`name`: "end_time", `type`: "unknown", `optional`: true, `evidence`: "#39305 formatted HH:mm write 1582924, 0xcb, or full-day null overwrite 1582977, 0x1b5; difference may omit equals, branch restores base at 1583064, 0x370. #26530 full_day skip 1030127, 0x43, preserves null; otherwise truthy time gate 1030181, 0x142, #25412.time copied 1030194, 0x180. Unknown covers string/null when present."}, #{`name`: "full_day", `type`: "unknown", `optional`: true, `evidence`: "#39305 captured state write 1582926, 0xd4; difference 1583003, 0x22b, omits equals. #26530 truthiness branch 1030126-1030127, 0x3d-0x43, does not establish boolean type."}, #{`name`: "is_recurring", `type`: "unknown", `optional`: true, `evidence`: "#39305 submitted value write 1582928, 0xdf; difference omits equals; single branch writes 0 at 1583034, 0x2d4. Client conditional, not closed enum."}, #{`name`: "repeat_end", `type`: "unknown", `optional`: true, `evidence`: "#39305 formatted value or null write 1582937, 0x107; difference omits equals; from branch restores base repeat_end at 1583025, 0x2a5. Unknown covers string/null."}, #{`name`: "rrule", `type`: "unknown", `optional`: true, `evidence`: "#39305 captured value write 1582939, 0x110; difference omits equals; restores base at 1583021, 0x28d, or writes null at 1583035/1583049, 0x2da/0x321."}, #{`name`: "lunch_time", `type`: "integer", `optional`: true, `evidence`: "#39305 parseInt(submitted value,10) or 0, write 1582947, 0x131; difference omits equals. Empty-string guard writes 0 at 1583069, 0x386, not proof of string request values. Integer when present, no server default/minimum."}, #{`name`: "desc", `type`: "unknown", `optional`: true, `evidence`: "#39305 submitted desc base write 1582949, 0x13c; difference 1583003, 0x22b, omits equal values; #26530 copies difference, not base, 1030125, 0x37."}, #{`name`: "change_mode", `type`: "unknown", `optional`: true, `evidence`: "#39305 captured state write 1582951, 0x145; difference omits equals; conditional all write 1583048, 0x31b. Branch comparisons do not establish closed server enum."}, #{`name`: "range_end", `type`: "unknown", `optional`: true, `evidence`: "#39305 always writes base own range_end 1582959, 0x164, from params or undefined load 1582956, 0x159; difference 1583003, 0x22b, omits equals. Update optionality is filtering, not nullish params."}, #{`name`: "range_start", `type`: "unknown", `optional`: true, `evidence`: "#39305 always writes base own range_start 1582966, 0x181, from params or undefined load 1582963, 0x176; difference 1583003, 0x22b, omits equals. Update optionality is filtering, not nullish params."}, #{`name`: "duration", `type`: "unknown", `optional`: true, `evidence`: "#39305 edit flag slot 12 truthy 1582967-1582968, 0x186-0x18a; captured selectedData slot 8 loaded 1582969, 0x18d, duration read/write 1582972-1582973, 0x19d-0x1a2. Not submitted form data; difference omits equal duration. Opposite flag selects insert, excluding duration there."}, #{`name`: "id", `type`: "unknown", `evidence`: "#39305 captured selectedData.id read/write after difference at 1583072-1583073, 0x393-0x398, always on executed update request. #26551 reads same body.id at 1030699, 0x15, for scheduleId URL; no renamed body key."}, #{`name`: "date", `type`: "string", `optional`: true, `evidence`: "#39305 from branch copies base formatted start_date into date at 1583022-1583023, 0x293-0x299; branch-conditional, not UTC-rewritten by #26530."}, #{`name`: "end_date", `type`: "string", `optional`: true, `evidence`: "#39305 conditionally copies base/difference formatted start_date into end_date at 1583019/1583032/1583053/1583060, 0x281/0x2cc/0x337/0x358; null deletion at 1583014, 0x267. String when present, branch-conditional, not UTC-rewritten by #26530."}, #{`name`: "exception_date", `type`: "unknown", `optional`: true, `evidence`: "#39305 selectedData.is_recurring guard 1583036-1583038, 0x2e0-0x2ea; captured selectedData slot 8 loaded 1583039, 0x2f0, its start_date read 1583040, 0x2f4, write to difference exception_date 1583041, 0x2fa. Not freshly formatted base date; source type unknown, branch-conditional, no #26530 rewrite."}], `evidence`: "#26551 forwards arbitrary parameter 2 as PUT data and reads body.id for URL. #39305 constructs base register 5, then difference(base, selectedData) at 1583003, 0x22b, produces register 4 omitting equal keys (#25432 -> #25433 -> #25434; 996255-996258, 0x19-0x25, skip 0x71; unequal write 996276, 0x6d; object branch 0x28-0x64; transform #25436 996300-996401). Subsequent branch mutations/deletion and final id/employee_id writes produce a nineteen-name possible-key union, NOT nineteen simultaneous keys. Seventeen names have conditional client presence; only id/employee_id always assigned post-filter on executed requests. #39305 sends difference register 4 at 1583085, 0x3d1; #26530 copies at 1030125, 0x37, conditionally rewrites UTC date/time, calls service 1030200, 0x19d; #26551 sends same body register 3 at 1030707, 0x39. Local trace does not close arbitrary caller body shape or establish server requiredness, enums, defaults, or date-format validation.", `complete`: false}]})
+model UpdateWorkScheduleBody extends Record<unknown> {
+  @extension("x-evidence", #[#{`name`: "employee_id", `type`: "unknown", `evidence`: "#39305 base write 1582898, 0x4c; captured selectedData overwrite before filtering 1582971, 0x197; final selectedData.employee_id always assigned after filtering at 1583074-1583075, 0x39e-0x3a4 on executed update request."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `employee_id`?: unknown;
+  @extension("x-evidence", #[#{`name`: "type_id", `type`: "unknown", `optional`: true, `evidence`: "#39305 base write at 1582900, 0x57; difference(base,selectedData) 1583003, 0x22b, omits equal values (#25434 996255-996258, 0x19-0x25, skip 0x71). Client presence conditional."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `type_id`?: unknown;
+  @extension("x-evidence", #[#{`name`: "start_date", `type`: "string", `optional`: true, `evidence`: "#39305 Moment YYYY-MM-DD format/write at 1582904-1582909, 0x68-0x81; difference omits equal values. Branches restore base at 1583030/1583046, 0x2c0/0x311. Non-full-day truthy-start_time #26530 copies #25412.date at 1030177, 0x12a. String when present, no server format constraint."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `start_date`?: string;
+  @extension("x-evidence", #[#{`name`: "start_time", `type`: "unknown", `optional`: true, `evidence`: "#39305 formatted HH:mm write 1582917, 0xa8, or full-day null overwrite 1582976, 0x1af (null loaded 1582954, 0x153); difference may omit equals, branch restores base at 1583062, 0x364. #26530 full_day skip 1030127, 0x43, preserves null; otherwise truthy time gate 1030164, 0xed, #25412.time copied 1030179, 0x136. Unknown covers string/null when present."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `start_time`?: unknown;
+  @extension("x-evidence", #[#{`name`: "end_time", `type`: "unknown", `optional`: true, `evidence`: "#39305 formatted HH:mm write 1582924, 0xcb, or full-day null overwrite 1582977, 0x1b5; difference may omit equals, branch restores base at 1583064, 0x370. #26530 full_day skip 1030127, 0x43, preserves null; otherwise truthy time gate 1030181, 0x142, #25412.time copied 1030194, 0x180. Unknown covers string/null when present."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `end_time`?: unknown;
+  @extension("x-evidence", #[#{`name`: "full_day", `type`: "unknown", `optional`: true, `evidence`: "#39305 captured state write 1582926, 0xd4; difference 1583003, 0x22b, omits equals. #26530 truthiness branch 1030126-1030127, 0x3d-0x43, does not establish boolean type."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `full_day`?: unknown;
+  @extension("x-evidence", #[#{`name`: "is_recurring", `type`: "unknown", `optional`: true, `evidence`: "#39305 submitted value write 1582928, 0xdf; difference omits equals; single branch writes 0 at 1583034, 0x2d4. Client conditional, not closed enum."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `is_recurring`?: unknown;
+  @extension("x-evidence", #[#{`name`: "repeat_end", `type`: "unknown", `optional`: true, `evidence`: "#39305 formatted value or null write 1582937, 0x107; difference omits equals; from branch restores base repeat_end at 1583025, 0x2a5. Unknown covers string/null."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `repeat_end`?: unknown;
+  @extension("x-evidence", #[#{`name`: "rrule", `type`: "unknown", `optional`: true, `evidence`: "#39305 captured value write 1582939, 0x110; difference omits equals; restores base at 1583021, 0x28d, or writes null at 1583035/1583049, 0x2da/0x321."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `rrule`?: unknown;
+  @extension("x-evidence", #[#{`name`: "lunch_time", `type`: "integer", `optional`: true, `evidence`: "#39305 parseInt(submitted value,10) or 0, write 1582947, 0x131; difference omits equals. Empty-string guard writes 0 at 1583069, 0x386, not proof of string request values. Integer when present, no server default/minimum."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `lunch_time`?: integer;
+  @extension("x-evidence", #[#{`name`: "desc", `type`: "unknown", `optional`: true, `evidence`: "#39305 submitted desc base write 1582949, 0x13c; difference 1583003, 0x22b, omits equal values; #26530 copies difference, not base, 1030125, 0x37."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `desc`?: unknown;
+  @extension("x-evidence", #[#{`name`: "change_mode", `type`: "unknown", `optional`: true, `evidence`: "#39305 captured state write 1582951, 0x145; difference omits equals; conditional all write 1583048, 0x31b. Branch comparisons do not establish closed server enum."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `change_mode`?: unknown;
+  @extension("x-evidence", #[#{`name`: "range_end", `type`: "unknown", `optional`: true, `evidence`: "#39305 always writes base own range_end 1582959, 0x164, from params or undefined load 1582956, 0x159; difference 1583003, 0x22b, omits equals. Update optionality is filtering, not nullish params."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `range_end`?: unknown;
+  @extension("x-evidence", #[#{`name`: "range_start", `type`: "unknown", `optional`: true, `evidence`: "#39305 always writes base own range_start 1582966, 0x181, from params or undefined load 1582963, 0x176; difference 1583003, 0x22b, omits equals. Update optionality is filtering, not nullish params."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `range_start`?: unknown;
+  @extension("x-evidence", #[#{`name`: "duration", `type`: "unknown", `optional`: true, `evidence`: "#39305 edit flag slot 12 truthy 1582967-1582968, 0x186-0x18a; captured selectedData slot 8 loaded 1582969, 0x18d, duration read/write 1582972-1582973, 0x19d-0x1a2. Not submitted form data; difference omits equal duration. Opposite flag selects insert, excluding duration there."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `duration`?: unknown;
+  @extension("x-evidence", #[#{`name`: "id", `type`: "unknown", `evidence`: "#39305 captured selectedData.id read/write after difference at 1583072-1583073, 0x393-0x398, always on executed update request. #26551 reads same body.id at 1030699, 0x15, for scheduleId URL; no renamed body key."}])
+  @extension("x-client-presence", "present in traced construction; server requiredness unknown")
+  `id`?: unknown;
+  @extension("x-evidence", #[#{`name`: "date", `type`: "string", `optional`: true, `evidence`: "#39305 from branch copies base formatted start_date into date at 1583022-1583023, 0x293-0x299; branch-conditional, not UTC-rewritten by #26530."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `date`?: string;
+  @extension("x-evidence", #[#{`name`: "end_date", `type`: "string", `optional`: true, `evidence`: "#39305 conditionally copies base/difference formatted start_date into end_date at 1583019/1583032/1583053/1583060, 0x281/0x2cc/0x337/0x358; null deletion at 1583014, 0x267. String when present, branch-conditional, not UTC-rewritten by #26530."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `end_date`?: string;
+  @extension("x-evidence", #[#{`name`: "exception_date", `type`: "unknown", `optional`: true, `evidence`: "#39305 selectedData.is_recurring guard 1583036-1583038, 0x2e0-0x2ea; captured selectedData slot 8 loaded 1583039, 0x2f0, its start_date read 1583040, 0x2f4, write to difference exception_date 1583041, 0x2fa. Not freshly formatted base date; source type unknown, branch-conditional, no #26530 rewrite."}])
+  @extension("x-client-presence", "conditional; server requiredness unknown")
+  `exception_date`?: unknown;
 }
