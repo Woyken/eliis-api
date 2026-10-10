@@ -1,0 +1,291 @@
+{
+  "date": "2026-10-10",
+  "basisSnapshot": "evidence/guardian-batch/pre-integration-snapshot.json",
+  "scope": {
+    "operationCount": 17,
+    "updatedOperations": [
+      {
+        "operationId": "Login",
+        "sourceFunctionId": 16308
+      },
+      {
+        "operationId": "Login2FA",
+        "sourceFunctionId": 16309
+      },
+      {
+        "operationId": "GetUserData",
+        "sourceFunctionId": 16344
+      },
+      {
+        "operationId": "GetUserPermissions",
+        "sourceFunctionId": 16348
+      },
+      {
+        "operationId": "GetChildProfile",
+        "sourceFunctionId": 25634
+      },
+      {
+        "operationId": "GetChildCourses",
+        "sourceFunctionId": 25624
+      },
+      {
+        "operationId": "GetEvents",
+        "sourceFunctionId": 25403
+      },
+      {
+        "operationId": "GetRecentEvents",
+        "sourceFunctionId": 25401
+      },
+      {
+        "operationId": "GetChildCalendar",
+        "sourceFunctionId": 25644
+      },
+      {
+        "operationId": "GetStatusLogs",
+        "sourceFunctionId": 25650
+      },
+      {
+        "operationId": "GetAbsenceModalData",
+        "sourceFunctionId": 25652
+      },
+      {
+        "operationId": "GetGuardianFeed",
+        "sourceFunctionId": 25632
+      },
+      {
+        "operationId": "GetGuardianDiary",
+        "sourceFunctionId": 25630
+      },
+      {
+        "operationId": "GetDiaryData",
+        "sourceFunctionId": 25935
+      },
+      {
+        "operationId": "GetDayMenu",
+        "sourceFunctionId": 26007
+      },
+      {
+        "operationId": "GetWeekMenu",
+        "sourceFunctionId": 26009
+      },
+      {
+        "operationId": "DownloadFoodmenuFile",
+        "sourceFunctionId": 37318
+      }
+    ]
+  },
+  "responseFieldNodeCounts": {
+    "before": 36,
+    "after": 134,
+    "operations": [
+      {
+        "operationId": "Login",
+        "sourceFunctionId": 16308,
+        "before": 1,
+        "after": 4
+      },
+      {
+        "operationId": "Login2FA",
+        "sourceFunctionId": 16309,
+        "before": 2,
+        "after": 3
+      },
+      {
+        "operationId": "GetUserData",
+        "sourceFunctionId": 16344,
+        "before": 10,
+        "after": 14
+      },
+      {
+        "operationId": "GetUserPermissions",
+        "sourceFunctionId": 16348,
+        "before": 1,
+        "after": 8
+      },
+      {
+        "operationId": "GetChildProfile",
+        "sourceFunctionId": 25634,
+        "before": 1,
+        "after": 3
+      },
+      {
+        "operationId": "GetChildCourses",
+        "sourceFunctionId": 25624,
+        "before": 0,
+        "after": 2
+      },
+      {
+        "operationId": "GetEvents",
+        "sourceFunctionId": 25403,
+        "before": 0,
+        "after": 24
+      },
+      {
+        "operationId": "GetRecentEvents",
+        "sourceFunctionId": 25401,
+        "before": 2,
+        "after": 2
+      },
+      {
+        "operationId": "GetChildCalendar",
+        "sourceFunctionId": 25644,
+        "before": 1,
+        "after": 9
+      },
+      {
+        "operationId": "GetStatusLogs",
+        "sourceFunctionId": 25650,
+        "before": 0,
+        "after": 12
+      },
+      {
+        "operationId": "GetAbsenceModalData",
+        "sourceFunctionId": 25652,
+        "before": 1,
+        "after": 1
+      },
+      {
+        "operationId": "GetGuardianFeed",
+        "sourceFunctionId": 25632,
+        "before": 0,
+        "after": 22
+      },
+      {
+        "operationId": "GetGuardianDiary",
+        "sourceFunctionId": 25630,
+        "before": 0,
+        "after": 0
+      },
+      {
+        "operationId": "GetDiaryData",
+        "sourceFunctionId": 25935,
+        "before": 17,
+        "after": 17
+      },
+      {
+        "operationId": "GetDayMenu",
+        "sourceFunctionId": 26007,
+        "before": 0,
+        "after": 0
+      },
+      {
+        "operationId": "GetWeekMenu",
+        "sourceFunctionId": 26009,
+        "before": 0,
+        "after": 13
+      },
+      {
+        "operationId": "DownloadFoodmenuFile",
+        "sourceFunctionId": 37318,
+        "before": 0,
+        "after": 0
+      }
+    ]
+  },
+  "requestFieldNodeCounts": {
+    "before": 2,
+    "after": 6,
+    "operations": [
+      {
+        "operationId": "GetGuardianFeed",
+        "sourceFunctionId": 25632,
+        "before": 0,
+        "after": 1
+      },
+      {
+        "operationId": "GetChildCalendar",
+        "sourceFunctionId": 25644,
+        "before": 0,
+        "after": 2
+      },
+      {
+        "operationId": "GetStatusLogs",
+        "sourceFunctionId": 25650,
+        "before": 1,
+        "after": 1
+      },
+      {
+        "operationId": "GetAbsenceModalData",
+        "sourceFunctionId": 25652,
+        "before": 1,
+        "after": 2
+      }
+    ]
+  },
+  "responseCatalogCounts": {
+    "researchObservations": 298,
+    "canonicalOperations": 296,
+    "modeledResponseOperations": {
+      "before": 87,
+      "after": 92
+    },
+    "binaryResponseOperations": 15,
+    "unknownResponseOperations": {
+      "before": 194,
+      "after": 189
+    },
+    "responseModelDefinitions": {
+      "before": 225,
+      "after": 251
+    },
+    "responseWrappers": {
+      "before": 87,
+      "after": 92
+    },
+    "basis": "Read-only makeCatalog -> makeResponseCatalog -> renderResponseModels comparison against HEAD and current evidence; no generated file was written."
+  },
+  "operationInventory": {
+    "added": 0,
+    "removed": 0,
+    "statement": "Only existing request records were enriched; no endpoint or operation identity was added or removed."
+  },
+  "sourceResolution": {
+    "operationId": "GetChildProfile",
+    "sourceFunctionId": 25634,
+    "evidenceReport": "evidence/reviews/guardian-discovery-selector-resolution.md",
+    "selectors": {
+      "44121": "state.myChild.child",
+      "44122": "optional state.myChild.child.kindergarten_id",
+      "44123": "optional state.myChild.child.deleted_at"
+    },
+    "callerSlots": {
+      "44120": {
+        "slot4": "#44121 result",
+        "slot5": "#44122 result",
+        "slot6": "#44123 result"
+      },
+      "44124": {
+        "argument1": "slot 5 (#44122 kindergarten_id), source line 1800750",
+        "argument2": "route childId, source line 1800751",
+        "argument3": "literal false, source line 1800752"
+      }
+    },
+    "boundary": "The argument is not the whole child object. The route childId handoff and guardian/server authorization remain unresolved."
+  },
+  "filesUpdated": [
+    "evidence/responses/auth-common.json",
+    "evidence/responses/children-diary-files.json",
+    "evidence/responses/communications.json",
+    "evidence/responses/coverage-extra.json"
+  ],
+  "researchFilesUpdated": [
+    "evidence/research/auth-common.json",
+    "evidence/research/children-diary-files.json"
+  ],
+  "readmeAndScriptFilesUpdated": [
+    "README.md",
+    "package.json"
+  ],
+  "untouchedFiles": [
+    "evidence/research/coverage-extra.json",
+    "evidence/research/admin-shop.json",
+    "evidence/responses/admin-shop.json",
+    "models/responses.tsp",
+    "routes/generated.tsp",
+    "docs/GUARDIAN-CAPABILITIES.md",
+    "docs/GUARDIAN-HA-BLOCKERS.md",
+    "scripts/coverage.json",
+    "scripts/operation-catalog.json"
+  ],
+  "mergePolicy": "Existing named fields, types, and nested models were retained; evidence/traces were merged by operation/source and field name. New types refine prior opaque dispositions only where reviewed direct response-to-consumer evidence supports the shape. Rejection-only auth message reads are optional and explicitly not fulfillment guarantees."
+}

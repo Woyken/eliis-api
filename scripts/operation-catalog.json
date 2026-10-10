@@ -4847,13 +4847,27 @@
         {
           "name": "form",
           "type": "unknown",
-          "evidence": "Constructs params object with form set to parameter 3.",
+          "evidence": "Constructs params object with form set to parameter 3. #25652 wraps parameter 3 in params.form (1003734-1003739), and #26414 passes its local {user_id: currentUser.id}. Nested Axios query serialization is unresolved; no bracket/dotted wire syntax is asserted.",
+          "fields": [
+            {
+              "name": "user_id",
+              "type": "unknown",
+              "evidence": "Modal thunk #26414 constructs {user_id: currentUser.id} at 1026225-1026229; no identifier primitive type is established."
+            }
+          ],
           "optional": false,
           "observations": [
             {
               "name": "form",
               "type": "unknown",
-              "evidence": "Constructs params object with form set to parameter 3."
+              "evidence": "Constructs params object with form set to parameter 3. #25652 wraps parameter 3 in params.form (1003734-1003739), and #26414 passes its local {user_id: currentUser.id}. Nested Axios query serialization is unresolved; no bracket/dotted wire syntax is asserted.",
+              "fields": [
+                {
+                  "name": "user_id",
+                  "type": "unknown",
+                  "evidence": "Modal thunk #26414 constructs {user_id: currentUser.id} at 1026225-1026229; no identifier primitive type is established."
+                }
+              ]
             }
           ]
         }
@@ -4895,7 +4909,14 @@
             {
               "name": "form",
               "type": "unknown",
-              "evidence": "Constructs params object with form set to parameter 3."
+              "evidence": "Constructs params object with form set to parameter 3. #25652 wraps parameter 3 in params.form (1003734-1003739), and #26414 passes its local {user_id: currentUser.id}. Nested Axios query serialization is unresolved; no bracket/dotted wire syntax is asserted.",
+              "fields": [
+                {
+                  "name": "user_id",
+                  "type": "unknown",
+                  "evidence": "Modal thunk #26414 constructs {user_id: currentUser.id} at 1026225-1026229; no identifier primitive type is established."
+                }
+              ]
             }
           ],
           "queryPassthrough": false,
@@ -4905,7 +4926,9 @@
             "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
           },
           "auth": "cookie",
-          "notes": []
+          "notes": [
+            "The caller constructs params.form={user_id: currentUser.id}; nested Axios query encoding is unresolved and no bracket/dotted wire-key syntax is asserted."
+          ]
         }
       ]
     },
@@ -5019,7 +5042,34 @@
           ]
         }
       ],
-      "query": [],
+      "query": [
+        {
+          "name": "end_date",
+          "type": "string",
+          "evidence": "Calendar caller #44368 computes selected-month end with endOf(\"month\").format(\"Y-MM-DD\") and inserts end_date in the action/query object (1812024-1812031); #25644 forwards parameter 3 as Axios config.params. Client-produced string only; no server date-range/inclusion contract.",
+          "optional": false,
+          "observations": [
+            {
+              "name": "end_date",
+              "type": "string",
+              "evidence": "Calendar caller #44368 computes selected-month end with endOf(\"month\").format(\"Y-MM-DD\") and inserts end_date in the action/query object (1812024-1812031); #25644 forwards parameter 3 as Axios config.params. Client-produced string only; no server date-range/inclusion contract."
+            }
+          ]
+        },
+        {
+          "name": "start_date",
+          "type": "string",
+          "evidence": "Calendar caller #44368 computes selected-month start with startOf(\"month\").format(\"Y-MM-DD\") and inserts start_date in the action/query object (1812017-1812023); #25644 forwards parameter 3 as Axios config.params. Client-produced string only; no server date-range/inclusion contract.",
+          "optional": false,
+          "observations": [
+            {
+              "name": "start_date",
+              "type": "string",
+              "evidence": "Calendar caller #44368 computes selected-month start with startOf(\"month\").format(\"Y-MM-DD\") and inserts start_date in the action/query object (1812017-1812023); #25644 forwards parameter 3 as Axios config.params. Client-produced string only; no server date-range/inclusion contract."
+            }
+          ]
+        }
+      ],
       "queryPassthrough": true,
       "body": null,
       "bodyOptional": true,
@@ -5053,7 +5103,18 @@
               "evidence": "Input parameter 2 is concatenated into the URL at this path position."
             }
           ],
-          "query": [],
+          "query": [
+            {
+              "name": "start_date",
+              "type": "string",
+              "evidence": "Calendar caller #44368 computes selected-month start with startOf(\"month\").format(\"Y-MM-DD\") and inserts start_date in the action/query object (1812017-1812023); #25644 forwards parameter 3 as Axios config.params. Client-produced string only; no server date-range/inclusion contract."
+            },
+            {
+              "name": "end_date",
+              "type": "string",
+              "evidence": "Calendar caller #44368 computes selected-month end with endOf(\"month\").format(\"Y-MM-DD\") and inserts end_date in the action/query object (1812024-1812031); #25644 forwards parameter 3 as Axios config.params. Client-produced string only; no server date-range/inclusion contract."
+            }
+          ],
           "queryPassthrough": true,
           "body": null,
           "response": {
@@ -5583,7 +5644,21 @@
           ]
         }
       ],
-      "query": [],
+      "query": [
+        {
+          "name": "date",
+          "type": "unknown",
+          "evidence": "Thunk #25515 constructs params={date:value} and passes it to #25632 (1000457-1000465). At 1000445-1000446, a falsy diaryNextDate jumps to the formatter at 1000450-1000456; for a truthy value, JStrictNotEqual at 1000447-1000449 jumps directly to 1000457 when captured page is not 1, preserving the selected value and skipping formatting. Otherwise (falsy value on any page, or truthy value on page 1), it invokes the imported default formatter with no explicit argument (Call1 has an undefined receiver, not an undefined argument), then calls .format('YYYY-MM-DD'). The resulting value is assigned to params.date in either branch at 1000457-1000458; formatter output is not inferred. Page is separate action state, not a query field; arbitrary params passthrough remains open.",
+          "optional": false,
+          "observations": [
+            {
+              "name": "date",
+              "type": "unknown",
+              "evidence": "Thunk #25515 constructs params={date:value} and passes it to #25632 (1000457-1000465). At 1000445-1000446, a falsy diaryNextDate jumps to the formatter at 1000450-1000456; for a truthy value, JStrictNotEqual at 1000447-1000449 jumps directly to 1000457 when captured page is not 1, preserving the selected value and skipping formatting. Otherwise (falsy value on any page, or truthy value on page 1), it invokes the imported default formatter with no explicit argument (Call1 has an undefined receiver, not an undefined argument), then calls .format('YYYY-MM-DD'). The resulting value is assigned to params.date in either branch at 1000457-1000458; formatter output is not inferred. Page is separate action state, not a query field; arbitrary params passthrough remains open."
+            }
+          ]
+        }
+      ],
       "queryPassthrough": true,
       "body": null,
       "bodyOptional": true,
@@ -5617,7 +5692,13 @@
               "evidence": "Input parameter 2 is concatenated into the URL at this path position."
             }
           ],
-          "query": [],
+          "query": [
+            {
+              "name": "date",
+              "type": "unknown",
+              "evidence": "Thunk #25515 constructs params={date:value} and passes it to #25632 (1000457-1000465). At 1000445-1000446, a falsy diaryNextDate jumps to the formatter at 1000450-1000456; for a truthy value, JStrictNotEqual at 1000447-1000449 jumps directly to 1000457 when captured page is not 1, preserving the selected value and skipping formatting. Otherwise (falsy value on any page, or truthy value on page 1), it invokes the imported default formatter with no explicit argument (Call1 has an undefined receiver, not an undefined argument), then calls .format('YYYY-MM-DD'). The resulting value is assigned to params.date in either branch at 1000457-1000458; formatter output is not inferred. Page is separate action state, not a query field; arbitrary params passthrough remains open."
+            }
+          ],
           "queryPassthrough": true,
           "body": null,
           "response": {
@@ -6688,13 +6769,13 @@
         {
           "name": "date",
           "type": "unknown",
-          "evidence": "Constructs params object with date set to parameter 3.",
+          "evidence": "Constructs params object with date set to parameter 3. Caller #43077 supplies selected date formatted YYYY-MM-DD (1753728-1753738); #25650 assigns parameter 3 to params.date (1003691-1003696). Enriches the existing unknown query type; no server validation, timezone, range, or inclusivity is inferred.",
           "optional": false,
           "observations": [
             {
               "name": "date",
               "type": "unknown",
-              "evidence": "Constructs params object with date set to parameter 3."
+              "evidence": "Constructs params object with date set to parameter 3. Caller #43077 supplies selected date formatted YYYY-MM-DD (1753728-1753738); #25650 assigns parameter 3 to params.date (1003691-1003696). Enriches the existing unknown query type; no server validation, timezone, range, or inclusivity is inferred."
             }
           ]
         }
@@ -6736,7 +6817,7 @@
             {
               "name": "date",
               "type": "unknown",
-              "evidence": "Constructs params object with date set to parameter 3."
+              "evidence": "Constructs params object with date set to parameter 3. Caller #43077 supplies selected date formatted YYYY-MM-DD (1753728-1753738); #25650 assigns parameter 3 to params.date (1003691-1003696). Enriches the existing unknown query type; no server validation, timezone, range, or inclusivity is inferred."
             }
           ],
           "queryPassthrough": false,
@@ -15547,9 +15628,24 @@
             "kind": "unknown",
             "evidence": "Returns the Axios auth.post promise directly; no response.data transformation in function #16308."
           },
+          "clientResponseObservations": [
+            {
+              "evidence": "Password-login rejection handler #13517 conditionally reads message from error.response.data; this rejection-branch observation is not a fulfillment-body field.",
+              "source": 13517,
+              "propertyReads": [
+                {
+                  "path": "message",
+                  "type": "unknown",
+                  "evidence": "#13517 rejection branch reads error.response.data.message only after response/data checks and a truthy message test (543815-543830); this is rejection-only, not a fulfillment-body read."
+                }
+              ],
+              "coverage": "rejection branch partial, not fulfillment"
+            }
+          ],
           "auth": "none",
           "notes": [
-            "Uses the separately created auth Axios client: #5603 +0x13e/+0x143 creates/exports auth, while +0x169–+0x189 installs the cookie-attaching request interceptor only on default. Auth does have response interception (#5603 +0x1be–+0x1da): #5621 +0x03/+0x0c invokes the shared setCookie helper, whose #5617 +0x3b–+0x58 extracts/serializes eliis_csrf and +0x91/+0x97 saves it. auth:none describes configured request behavior, not native networking cookie absence or inability to capture a response cookie."
+            "Uses the separately created auth Axios client: #5603 +0x13e/+0x143 creates/exports auth, while +0x169–+0x189 installs the cookie-attaching request interceptor only on default. Auth does have response interception (#5603 +0x1be–+0x1da): #5621 +0x03/+0x0c invokes the shared setCookie helper, whose #5617 +0x3b–+0x58 extracts/serializes eliis_csrf and +0x91/+0x97 saves it. auth:none describes configured request behavior, not native networking cookie absence or inability to capture a response cookie.",
+            "Successful-response cookie persistence inspects response headers[\"set-cookie\"] for eliis_csrf; it is not a response-body field. Login uses the isolated auth client whose rejection handler passes errors through. Default-client 401 cleanup applies to Login2FA/default-client calls and does not prove server 401 meaning or expiry semantics."
           ]
         }
       ]
@@ -15679,9 +15775,24 @@
             "kind": "unknown",
             "evidence": "Function #16310 returns response.data."
           },
+          "clientResponseObservations": [
+            {
+              "evidence": "Two-factor rejection handler #27145 conditionally reads message from error.response.data; this rejection-branch observation is not a fulfillment-body field.",
+              "source": 27145,
+              "propertyReads": [
+                {
+                  "path": "message",
+                  "type": "unknown",
+                  "evidence": "#27145 rejection branch reads error.response.data.message only after response/data checks and a truthy message test (1048494-1048512); this is rejection-only, not a fulfillment-body read."
+                }
+              ],
+              "coverage": "rejection branch partial, not fulfillment"
+            }
+          ],
           "auth": "cookie",
           "notes": [
-            "The request body is a caller-provided object with a client-added platform property; remaining body fields are unresolved."
+            "The request body is a caller-provided object with a client-added platform property; remaining body fields are unresolved.",
+            "Successful-response cookie handling is header-driven (set-cookie/eliis_csrf), not a response-body field. This operation uses the default client; its 401 cleanup is local behavior and does not prove server expiry semantics. Keep distinct from Login, whose isolated auth-client rejection handler is pass-through."
           ]
         }
       ]

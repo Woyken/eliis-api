@@ -11,6 +11,7 @@ This project is for education, research, and authorized personal integration. It
 - [Authentication](AUTH.md): the client sends an `eliis_csrf` cookie, not an assumed Bearer token.
 - [Evidence and limitations](EVIDENCE.md): provenance, source identifiers, and the sole recorded live check.
 - [Response models and evidence](RESPONSE-MODELS.md): how to interpret partial static-derived models, client observations, opaque operations, and coverage.
+- [Guardian-facing capability observations](docs/GUARDIAN-CAPABILITIES.md) and [Home Assistant blockers](docs/GUARDIAN-HA-BLOCKERS.md): bounded static client findings for discovery, events, attendance, diary, and food menus—not verified server permissions or an implemented integration.
 - [`evidence/research/`](evidence/research/): operation-level bytecode findings; [`evidence/inventory.json`](evidence/inventory.json): source hashes and candidate function inventory.
 - [`scripts/coverage.json`](scripts/coverage.json) and [`scripts/operation-catalog.json`](scripts/operation-catalog.json): generated source-function coverage and canonical operation/alias accounting.
 - [`evidence/reviews/`](evidence/reviews/): independent review findings, corrections, and the two-consecutive-clean-run publication gate.
@@ -30,6 +31,7 @@ npm ci
 npm run check
 npm test
 npm run build
+npm run check:guardian
 ```
 
 The build generates TypeSpec from research records and compiles OpenAPI under `tsp-output/@typespec/openapi3/`. Generated OpenAPI and Pages artifacts are not committed. CI checks the project; the Pages workflow publishes the static viewer and downloadable JSON/YAML without contacting the Eliis API.

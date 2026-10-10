@@ -52,13 +52,45 @@
     "operationId": "DownloadFoodmenuFile",
     "sourceFunctionId": 37318,
     "kind": "binary",
-    "evidence": "#37318 builds the food-menu download URL/options (eliis.hasm:1489780-1489795); continuation #37319 overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1489815-1489830). Native implementation evidence: RNFSManager.java:779-792 maps fromUrl to DownloadParams.src; Downloader.java:64-74 opens and connects an HttpURLConnection, then Downloader.java:131-135 obtains its input stream and opens the destination FileOutputStream, and 141-203 copies the input bytes into that file. This establishes an opaque downloaded transport body, not a JSON result. The food-menu/download path and local filename do not prove actual media type.",
+    "evidence": "#37318 builds the food-menu download URL/options (eliis.hasm:1489780-1489795); continuation #37319 overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1489815-1489830). Native implementation evidence: RNFSManager.java:779-792 maps fromUrl to DownloadParams.src; Downloader.java:64-74 opens and connects an HttpURLConnection, then Downloader.java:131-135 obtains its input stream and opens the destination FileOutputStream, and 141-203 copies the input bytes into that file. This establishes an opaque downloaded transport body, not a JSON result. The food-menu/download path and local filename do not prove actual media type. #37318 passes an API URL and local destination to RNFS.downloadFile; #37319 supplies the cookie header and calls the native downloader. RNFSManager maps fromUrl to a URL and toFile to a destination, and Downloader streams the HTTP input bytes to that local file. The transport body is therefore opaque downloaded content; native promise/event metadata is not the HTTP body. The UI's PDF icon/type text and local filename do not establish actual response media type.",
     "trace": [
-      {"functionId": 37318, "line": 1489780, "evidence": "Parent builds the food-menu download URL/options (eliis.hasm:1489780-1489795)."},
-      {"functionId": 37319, "line": 1489830, "evidence": "Continuation overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1489815-1489830)."}
+      {
+        "functionId": 37318,
+        "line": 1489780,
+        "evidence": "Parent builds the food-menu download URL/options (eliis.hasm:1489780-1489795)."
+      },
+      {
+        "functionId": 37319,
+        "line": 1489830,
+        "evidence": "Continuation overwrites the cookie header and invokes RNFS downloadFile (eliis.hasm:1489815-1489830)."
+      },
+      {
+        "functionId": 37314,
+        "line": 1489553,
+        "evidence": "The menu-file UI component invokes the file-download flow with a response-derived file object."
+      },
+      {
+        "functionId": 37318,
+        "line": 1489745,
+        "evidence": "Builds fromUrl using the selected file object's id; constructs toFile from file.filename after sanitization; initializes headers.cookie empty and awaits getAccessToken."
+      },
+      {
+        "functionId": 37319,
+        "line": 1489815,
+        "evidence": "Writes the saved access-cookie into download options and calls RNFS.downloadFile."
+      }
     ],
-    "fields": [], "complete": false,
-    "limitations": ["Opaque streamed response body only; no runtime payload was captured.", "Actual MIME type, HTTP status, and response headers are unknown; route naming and local filename are not media-type evidence.", "RNFS jobId/statusCode/bytesWritten are native download metadata, not HTTP-body fields, and are not modeled."]
+    "fields": [],
+    "complete": false,
+    "limitations": [
+      "Opaque streamed response body only; no runtime payload was captured.",
+      "Actual MIME type, HTTP status, and response headers are unknown; route naming and local filename are not media-type evidence.",
+      "RNFS jobId/statusCode/bytesWritten are native download metadata, not HTTP-body fields, and are not modeled.",
+      "Downloaded server bytes are opaque; no JSON fields or payload structure are evidenced.",
+      "Actual media type, HTTP status, and response headers are not established; UI PDF labeling and the local filename are not evidence of server MIME type.",
+      "RNFS jobId, statusCode, bytesWritten, contentLength, and headers are native download result/event metadata, not modeled HTTP response-body properties.",
+      "No server-side effect beyond the GET is known."
+    ]
   },
   {
     "operationId": "DownloadPlanPdf",

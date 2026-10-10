@@ -1,0 +1,270 @@
+{
+  "domain": "diary",
+  "responseCandidates": [
+    {
+      "operationId": "GetGuardianFeed",
+      "sourceFunctionId": 25632,
+      "kind": "object",
+      "evidence": "Service #25632 returns Axios response.data unchanged via #25633. Its registered action/thunk #25514/#25515 calls the exact helper; success callback #25516 places that body unchanged on action.data. Dashboard reducer #26862 maps action.data.data as date-group values and reads sibling action.data.next_date. The resulting diaries entries are passed through the feed display branch to #34949, which reads the partial item fields modeled below. These are partial client-observed HTTP-body fields, not a complete response schema.",
+      "trace": [
+        {"functionId": 25632, "line": 1003318, "evidence": "Constructs GET /api/kindergartens/{kindergartenId}/children/{childId}/guardian-feed; Axios config.params is input 3."},
+        {"functionId": 25633, "line": 1003348, "evidence": "Returns resolved Axios response.data unchanged."},
+        {"functionId": 25514, "line": 1000403, "evidence": "Guardian-feed action creator returns thunk #25515, which closes over child/view/page arguments."},
+        {"functionId": 25515, "line": 1000422, "evidence": "Calls exact service #25632; constructs the params object with date and selects the current diaryNextDate from dashboard/child state."},
+        {"functionId": 25516, "line": 1000474, "evidence": "Success callback forwards response body unchanged as action data; page is a separate captured client value."},
+        {"functionId": 26862, "line": 1039666, "evidence": "dashboardReducer handles SET_DASHBOARD_GUARDIAN_FEED; at 1039789-1039812 reads action.data.data and action.data.next_date. Since #25516 places the unchanged HTTP body on action.data, these are HTTP-body root properties data and next_date; data is mapped into local diary summary rows."},
+        {"functionId": 26865, "line": 1039971, "evidence": "Maps one HTTP-body data array item; reads its date and diaries, maps diaries unchanged except for locally added displayType, and checks evaluations.length before placing evaluations into a local summary row."},
+        {"functionId": 34923, "line": 1391460, "evidence": "GuardianFeed screen selects dashboard diary/currentPage/diaryNextDate and supplies diary entries to a FlatList; its refresh and load-more callbacks invoke the client fetch flow."},
+        {"functionId": 34944, "line": 1392374, "evidence": "FlatList renderer reads the locally prepared item's displayType and passes the same entry to its diary branch."},
+        {"functionId": 34941, "line": 1392217, "evidence": "For the diary displayType branch, passes the entry as ChildDiaryEntryItem's data prop; date/evaluation branches instead make local display rows."},
+        {"functionId": 34949, "line": 1392765, "evidence": "ChildDiaryEntryItem reads course, texts, status, meals, total_time, summaries, images, documents, feedback, likes, and id directly from its data prop, which is the unchanged diary entry from the feed list."},
+        {"functionId": 34952, "line": 1393114, "evidence": "Maps diary summaries; its callback #34953 reads each summary item's comment property."},
+        {"functionId": 34953, "line": 1393166, "evidence": "Reads summary.comment and returns it for display; no type or further summary-item fields are established."},
+        {"functionId": 34958, "line": 1393505, "evidence": "Feedback renderer reads each feedback item's comment and owner properties; owner is passed through as a display value and no nested owner fields are read."},
+        {"functionId": 35160, "line": 1402712, "evidence": "ChildDiaryImages receives entry.images and maps that collection; image-item fields are not inspected here."},
+        {"functionId": 35406, "line": 1413278, "evidence": "ChildDiaryDocuments receives entry.documents and maps that collection; document-item fields are not inspected here."},
+        {"functionId": 44110, "line": 1799541, "evidence": "ChildDiaryScreen reads route childId and employeeView and selects the client screen state."},
+        {"functionId": 44111, "line": 1799603, "evidence": "When employeeView is false selects state.myChild.child.kindergarten_id; the employee branch selects state.child.child.kindergarten_id."},
+        {"functionId": 44112, "line": 1799623, "evidence": "When employeeView is false selects state.myChild.diaryCurrentPage; the employee branch selects state.child.diaryCurrentPage."},
+        {"functionId": 44113, "line": 1799641, "evidence": "When employeeView is false selects state.myChild.diaryNextDate; the employee branch selects state.child.diaryNextDate."},
+        {"functionId": 44114, "line": 1799659, "evidence": "When employeeView is false selects state.myChild.diary; the employee branch selects state.child.diary."},
+        {"functionId": 44115, "line": 1799677, "evidence": "Reads the imported getGuardianFeed action from the screen module's dependency object and invokes it; no server permission semantics are inferred from this client call."},
+        {"functionId": 44116, "line": 1799703, "evidence": "Invokes the getEntries fetch closure from ChildDiaryScreen."},
+        {"functionId": 25496, "line": 999272, "evidence": "Child reducer handles SET_MY_CHILD_GUARDIAN_DIARY_FEED; the action's body remains the raw body assigned by #25516."},
+        {"functionId": 25497, "line": 999741, "evidence": "Reads raw action.data.data and maps each date-group item; each local group receives a synthetic displayType and date."},
+        {"functionId": 25498, "line": 999779, "evidence": "Forwards each raw group.diaries entry, adding only local displayType='diary'; this independently confirms the child reducer consumes the same body.data[].diaries[] path."}
+      ],
+      "fields": [
+        {
+          "name": "data",
+          "type": "array",
+          "evidence": "Reducer #26862 reads action.data.data at 1039798-1039802 and invokes .map. Callback #25516 sets action.data to the unchanged HTTP body at 1000478-1000498, so this is the HTTP-body root property data; client collection use does not establish item completeness or server guarantees.",
+          "items": {
+            "kind": "object",
+            "evidence": "#26865 directly reads date and diaries and checks evaluations.length on each value passed from the root body.data collection; only these paths are observed.",
+            "fields": [
+              {"name": "date", "type": "unknown", "evidence": "#26865 reads group.date at 1039979-1039980 and copies it into a locally created date-summary row and evaluation-summary row."},
+              {"name": "diaries", "type": "array", "evidence": "#26865 invokes .map on group.diaries at 1039985-1039989; #26866 adds local displayType='diary' to each entry and otherwise returns it unchanged at 1040009-1040019. The entry is passed to #34941/#34949, which reads the fields listed below.", "items": {"kind": "object", "evidence": "#34949 reads the listed properties directly from its data prop; #34941 passes the same feed diary entry as that prop, and #26866 only adds local displayType before forwarding it.", "fields": [
+                {"name": "course", "type": "unknown", "evidence": "#34949 reads data.course at 1392839-1392841; no value type or nested fields are established."},
+                {"name": "texts", "type": "unknown", "evidence": "#34949 checks typeof data.texts against 'object' and calls Object.keys(data.texts) at 1392814-1392827. Arrays also satisfy this check; no Array.isArray discriminator or fixed dictionary shape is established, so the object-or-array boundary remains unknown."},
+                {"name": "status", "type": "object", "evidence": "#34949 reads data.status and, when truthy, reads status.color, status.icon, and status.name at 1392848-1392898; nested value types and any further status shape are unknown.", "fields": [
+                  {"name": "color", "type": "unknown", "evidence": "#34949 reads data.status.color at 1392868-1392870; no value type is proved."},
+                  {"name": "icon", "type": "unknown", "evidence": "#34949 reads data.status.icon at 1392871-1392874; no value type is proved."},
+                  {"name": "name", "type": "unknown", "evidence": "#34949 reads data.status.name at 1392896-1392898; no value type is proved."}
+                ]},
+                {"name": "meals", "type": "unknown", "evidence": "#34949 reads data.meals and applies Object.keys then maps its keys at 1392907-1392935; #34957 indexes meals by a key at 1393419-1393423. The complete value shape is not established."},
+                {"name": "total_time", "type": "unknown", "evidence": "#34949 reads data.total_time at 1392939-1392941 and 1392983-1392985; no value type is proved."},
+                {"name": "summaries", "type": "array", "evidence": "#34949 passes data.summaries to #34952 when present at 1392998-1393001; #34952 maps it at 1393124-1393127.", "items": {"kind": "object", "evidence": "#34952 maps each summary and #34953 reads its comment property at 1393124-1393172; no other item fields or value types are established.", "fields": [{"name": "comment", "type": "unknown", "evidence": "#34953 reads summary.comment at 1393170-1393172; no value type is proved."}]}},
+                {"name": "images", "type": "array", "evidence": "#34949 checks data.images.length and passes images to #35160 at 1393302-1393327; #35160 maps its images prop at 1402829-1402832.", "items": {"kind": "unknown", "evidence": "#35160 maps image items, but their properties and value types are not established."}},
+                {"name": "documents", "type": "array", "evidence": "#34949 checks data.documents.length and passes documents to #35406 at 1393329-1393345; #35406 maps its documents prop at 1413316-1413318.", "items": {"kind": "unknown", "evidence": "#35406 maps document items, but their properties and value types are not established."}},
+                {"name": "feedback", "type": "array", "evidence": "#34949 checks data.feedback.length and maps the feedback collection at 1393035-1393053.", "items": {"kind": "object", "evidence": "#34958 receives each mapped item and reads its comment and owner properties at 1393537 and 1393717; no nested owner fields or value types are established.", "fields": [
+                  {"name": "comment", "type": "unknown", "evidence": "#34958 reads feedbackItem.comment at 1393537; no value type is proved."},
+                  {"name": "owner", "type": "unknown", "evidence": "#34958 reads feedbackItem.owner at 1393717 and passes that value to the display component; it does not read owner.name or another nested property."}
+                ]}},
+                {"name": "likes", "type": "unknown", "evidence": "#34949 reads data.likes and passes it unchanged as a child component prop at 1393347-1393366; its shape is not inspected."},
+                {"name": "id", "type": "unknown", "evidence": "#34949 reads data.id at 1393369-1393370; no value type is proved."}
+              ]}},
+              {"name": "evaluations", "type": "unknown", "evidence": "#26865 reads group.evaluations and its length at 1039990-1039995, then copies the value into a client-created summary item; no item fields or precise value type are established."}
+            ]
+          }
+        },
+        {"name": "next_date", "type": "unknown", "evidence": "Reducer #26862 reads action.data.next_date at 1039808-1039810. Callback #25516 sets action.data to the unchanged HTTP body, so this is the HTTP-body root property next_date; its server meaning, inclusivity, timezone, and value type are not established."}
+      ],
+      "complete": false,
+      "limitations": [
+        "Client-created displayType/date-header/evaluation summary objects, Redux state keys, and action wrapper page are not HTTP-body properties. In particular, the source reads body.data and body.next_date at the body root; it does not establish a body.data.data or body.data.next_date wrapper.",
+        "The display component reads only the modeled diary-item fields; client-side reads do not establish guaranteed presence or server completeness. The texts check accepts an object or array and does not establish a fixed dictionary. Do not infer title, description/HTML, contentDate, created_at, published_at, updated_at, generic media, attachment fields, filetype, URL, filename, thumbnail, fixed texts dictionary keys, meal item shape, image/document item fields, feedback owner subfields, or likes shape.",
+        "The feed list's displayType is synthesized locally by #26866/#25498 and is not a response field. Group date and local date/evaluation summary rows are not diary-entry fields.",
+        "ChildDiaryScreen's employeeView=false branch selects state.myChild and calls the imported getGuardianFeed action, but this UI/state label and route childId do not establish server-verified guardian permission or visibility of other-child feedback.",
+        "The screen's empty-state text mentions published entries, but this is UI copy, not a response visibility field or server guarantee.",
+        "No status code, media type, item completeness, or complete body shape is established."
+      ]
+    },
+    {
+      "operationId": "GetGuardianDiary",
+      "sourceFunctionId": 25630,
+      "kind": "unknown",
+      "evidence": "Service #25630 returns Axios response.data unchanged via #25631. ChildServices registers the method, but a full literal/member-reference search in the original disassembly finds no caller beyond that registration; no downstream body consumer is established.",
+      "trace": [
+        {"functionId": 25630, "line": 1003280, "evidence": "Constructs GET /api/kindergartens/{kindergartenId}/children/{childId}/diary with no Axios params config."},
+        {"functionId": 25631, "line": 1003307, "evidence": "Returns resolved Axios response.data unchanged."},
+        {"functionId": 25620, "line": 1002896, "evidence": "ChildServices export table registers getGuardianDiary at 1002932-1002936; the registration is the only active reference found, with no action, reducer, or UI consumer tied to its result."}
+      ],
+      "fields": [],
+      "complete": false,
+      "limitations": [
+        "No action, reducer, saga, screen, or body-property read was tied to this helper; retain an opaque response disposition rather than inferring from /diary or the method name.",
+        "No guardian-authorized screen/call path, own-child permission condition, group/class visibility, or feedback visibility is established.",
+        "No status code, media type, or server contract is established."
+      ]
+    },
+    {
+      "operationId": "GetDiaryData",
+      "sourceFunctionId": 25935,
+      "kind": "object",
+      "evidence": "Service #25935 returns Axios response.data unchanged via #25936. Employee diary action #25781/#25782 calls the service and #25783 reads the listed root body properties; #25784 reads two properties from status items. A separate caller #43846 calls the action but does not inspect its resolved body. This is an employee-client observation only and does not establish guardian access.",
+      "trace": [
+        {"functionId": 25935, "line": 1012899, "evidence": "Builds GET /api/kindergartens/{kindergartenId}/diary and params {course: input.course_id, date: input.date}."},
+        {"functionId": 25936, "line": 1012932, "evidence": "Returns resolved Axios response.data unchanged."},
+        {"functionId": 25781, "line": 1008600, "evidence": "Diary action reads its query selector and returns thunk #25782."},
+        {"functionId": 25782, "line": 1008630, "evidence": "Reads state.user.employee and employee.selected_course_id, plus diary.selected_date, and calls getDiaryData; if an explicit query course/date is supplied it is used instead of the corresponding state value."},
+        {"functionId": 25783, "line": 1008685, "evidence": "Exact success callback reads the listed HTTP-body root properties and dispatches selected values into diary state."},
+        {"functionId": 25784, "line": 1008861, "evidence": "Iterates body.statuses and reads item.used_in_course and item.type; it does not establish other status-item properties."},
+        {"functionId": 25735, "line": 1006419, "evidence": "diaryReducer consumes the dispatched diary fields; reducer/local state names are not additional HTTP-body properties."},
+        {"functionId": 43846, "line": 1787831, "evidence": "Separate action caller sets local loading state, flushes diary auto-saves, calls getDiaryData with resetFirst, then only performs modal cleanup; it never reads the resolved response body. This path is not guardian-access proof."}
+      ],
+      "fields": [
+        {"name": "diary", "type": "unknown", "evidence": "#25783 reads response-body p1.diary at 1008696-1008699 and dispatches it unchanged."},
+        {"name": "entries", "type": "unknown", "evidence": "#25783 reads response-body p1.entries at 1008703-1008705 and dispatches it unchanged."},
+        {"name": "feedback_type_options", "type": "unknown", "evidence": "#25783 reads p1.feedback_type_options at 1008706-1008714 and dispatches it only when truthy."},
+        {"name": "leave_type_option", "type": "unknown", "evidence": "#25783 reads p1.leave_type_option at 1008715-1008723 and dispatches it only when truthy."},
+        {"name": "statuses", "type": "array", "evidence": "#25783 invokes .forEach on response-body p1.statuses at 1008728-1008731.", "items": {"kind": "object", "evidence": "#25784 reads each item.used_in_course and item.type at 1008866-1008881; no complete status item shape is established.", "fields": [{"name": "used_in_course", "type": "unknown", "evidence": "#25784 reads the item property at 1008866 to select a local destination array."}, {"name": "type", "type": "unknown", "evidence": "#25784 reads the item property at 1008868 and 1008875 and compares it with local branch constants; no enum or primitive type follows."}]}},
+        {"name": "settings", "type": "unknown", "evidence": "#25783 reads response-body p1.settings at 1008752-1008755 and dispatches it."},
+        {"name": "meals", "type": "unknown", "evidence": "#25783 reads response-body p1.meals at 1008759-1008761 and dispatches it."},
+        {"name": "images", "type": "unknown", "evidence": "#25783 reads response-body p1.images at 1008765-1008769; its fallback empty array is local and is not modeled as a response value."},
+        {"name": "documents", "type": "unknown", "evidence": "#25783 reads response-body p1.documents at 1008774-1008778; its fallback empty array is local and is not modeled as a response value."},
+        {"name": "daily_comments", "type": "unknown", "evidence": "#25783 reads response-body p1.daily_comments at 1008783-1008787; its fallback empty array is local and is not modeled as a response value."},
+        {"name": "analysis_comments", "type": "unknown", "evidence": "#25783 reads response-body p1.analysis_comments at 1008792-1008796; its fallback empty array is local and is not modeled as a response value."},
+        {"name": "daily_notes", "type": "unknown", "evidence": "#25783 reads response-body p1.daily_notes at 1008801-1008805; its fallback empty array is local and is not modeled as a response value."},
+        {"name": "holidays", "type": "unknown", "evidence": "#25783 reads response-body p1.holidays at 1008810-1008812 and dispatches it."},
+        {"name": "likes", "type": "unknown", "evidence": "#25783 reads response-body p1.likes at 1008823-1008845; when undefined it dispatches a client-created {liked:false,users:[]} fallback, which is not a response field."},
+        {"name": "integrations", "type": "unknown", "evidence": "#25783 reads response-body p1.integrations at 1008846-1008855 and dispatches it only when defined."}
+      ],
+      "complete": false,
+      "limitations": [
+        "These root reads come from the employee diary client chain, including direct use of user.employee and selected_course_id. Do not transfer any of these fields to GetGuardianDiary or claim they are guardian-visible.",
+        "#43846's opaque caller establishes no body fields; its flushDiaryAutoSaves call is a separate possible write side effect, not a behavior of the GET itself.",
+        "Local selected_date, timestamps, fallback arrays and fallback likes object are not response fields. No nested diary, entry, feedback, media, attachment, thumbnail or filename schema is established.",
+        "No completeness, status code, media type, date inclusivity/timezone, or server permission guarantee is established."
+      ]
+    }
+  ],
+  "requestCandidates": [
+    {
+      "operationId": "GetGuardianFeed",
+      "sourceFunctionId": 25632,
+      "placement": "query",
+      "fields": [
+        {"name": "date", "type": "unknown", "evidence": "#25515 constructs params {date: value} at 1000457-1000458 and passes that object as input 3 to service #25632 at 1000462-1000465. At 1000445-1000446, a falsy diaryNextDate jumps to the formatter; for a truthy value, JStrictNotEqual at 1000447-1000449 jumps to 1000457 when captured page is not 1, preserving the selected value and skipping formatting. Otherwise (falsy value on any page, or truthy value on page 1), it invokes the imported default formatter with no explicit argument (Call1 has an undefined receiver, not an undefined argument), then calls .format('YYYY-MM-DD'). The resulting value is assigned to params.date in either branch; formatter output is not inferred."}
+      ],
+      "evidence": "Exact guardian-feed thunk #25515 constructs a one-key params object and passes it to ChildServices.getGuardianFeed (#25632); the service forwards it unchanged as Axios config.params. No page/perPage property is constructed in this caller-to-service path.",
+      "trace": [
+        {"functionId": 25515, "line": 1000422, "evidence": "Reads dashboard/child diaryNextDate. A falsy value takes the formatter branch; a truthy value with captured page !== 1 skips formatting and is copied. Otherwise the imported default formatter is called with no explicit argument (Call1 uses an undefined receiver, not an undefined argument), then .format('YYYY-MM-DD') is called. The resulting value is assigned to {date} before invoking getGuardianFeed; no formatter output is inferred."},
+        {"functionId": 25632, "line": 1003318, "evidence": "Passes input parameter 3 unchanged as Axios config.params."},
+        {"functionId": 25516, "line": 1000474, "evidence": "Uses captured page for the Redux action wrapper separately from the HTTP body/request params."},
+        {"functionId": 34923, "line": 1391460, "evidence": "GuardianFeed list refresh/load-more controls call the fetch action; this screen reads next date/current page from client dashboard state."}
+      ],
+      "limitations": [
+        "Only the traced caller's query construction is covered; the service itself accepts an arbitrary params object from other potential callers, so the endpoint-wide query shape remains open.",
+        "Do not add page or perPage: page is separate captured client state and no perPage construction is established for this endpoint.",
+        "The .format('YYYY-MM-DD') call occurs only for a falsy selected diaryNextDate or a truthy value on page 1; it is not applied to a truthy value when page !== 1. The imported formatter's no-argument result is not inferred. Timezone, range inclusivity, and server interpretation are unknown."
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "operationId": "GetGuardianFeed",
+      "sourceFunctionId": 25632,
+      "establishedFields": ["data", "data[]", "data[].date", "data[].diaries[]", "data[].diaries[].course", "data[].diaries[].texts", "data[].diaries[].status", "data[].diaries[].meals", "data[].diaries[].total_time", "data[].diaries[].summaries[]", "data[].diaries[].images[]", "data[].diaries[].documents[]", "data[].diaries[].feedback[]", "data[].diaries[].likes", "data[].diaries[].id", "data[].evaluations", "next_date"],
+      "unresolvedFields": ["diary-item primitive value types and unobserved fields", "texts object-or-array ambiguity, dictionary keys, and value types", "meals shape", "summary/feedback comment value types", "feedback owner shape", "image/document item fields", "likes shape", "evaluation item fields and type", "complete response body", "authorization/visibility semantics", "server pagination contract"],
+      "querySemantics": [
+        {"claim": "The exact traced caller constructs params.date: a falsy diaryNextDate takes the formatter branch; a truthy value with captured page !== 1 skips the formatter and is copied; otherwise the imported default formatter is called with no explicit argument and its result is formatted YYYY-MM-DD. The resulting value is assigned to date.", "evidence": "#25515 JmpFalse at 1000445-1000446 targets the formatter at offset 0x5d; with a truthy value JStrictNotEqual at offset 0x59 jumps to 0x7b when page !== 1, skipping the formatter and preserving the selected value. Otherwise the default formatter is called with no explicit argument (Call1's undefined receiver is not an argument), followed by .format('YYYY-MM-DD'); the result or copied value is assigned at 1000457-1000458. #25632 forwards params at 1003335-1003339.", "established": true},
+        {"claim": "The caller does not add page or perPage to the HTTP query; page is separately captured for Redux.", "evidence": "#25515 constructs only {date} at 1000457-1000458; #25516 adds page to the client action at 1000491-1000502.", "established": true},
+        {"claim": "The formatter result on its no-explicit-argument path and the serialization/server treatment of the resulting date value are unresolved.", "evidence": "#25515 calls the imported default formatter with no explicit argument, then .format('YYYY-MM-DD'), and assigns the result; the formatter implementation/result and Axios/server behavior are not established by this trace.", "established": false},
+        {"claim": "ChildDiaryScreen has a client-side MyChild path when employeeView is false and calls the imported getGuardianFeed action; this does not establish server authorization or response visibility.", "evidence": "Screen module factory #44109 resolves dependencies at 1799498-1799535; #44110 reads route childId/employeeView at 1799547-1799552; #44111-#44114 select myChild vs child state at 1799607-1799672; #44115 reads the imported getGuardianFeed export and invokes it at 1799677-1799697. The exact matching action creator is #25514, returning thunk #25515 at 1000403-1000465; #25515 then calls ChildServices method #25632, so the imported action is not inferred from the similar service name alone.", "established": true}
+      ],
+      "permissions": [
+        {"claim": "A distinct client-side MyChild screen/state branch exists when employeeView is false and invokes getGuardianFeed; this is not server permission evidence.", "evidence": "#44110 reads route childId/employeeView at 1799547-1799552; #44111-#44114 select state.myChild vs state.child at 1799607-1799672; #44115 calls imported getGuardianFeed at 1799677-1799697; #25496-#25498 consume the MyChild feed action/body.", "established": true},
+        {"claim": "The endpoint method name, child-scoped route, and client MyChild branch do not prove server guardian permission, own-child authorization, or visibility of class/other-child entries or feedback.", "evidence": "#25632 constructs a child-scoped route; #44110-#44115 prove only client route/state/action behavior. No server authorization behavior is present in the static client trace.", "established": false},
+        {"claim": "No published visibility field or server guarantee is established; the MyChild screen branch is only client-side state selection.", "evidence": "UI empty-state text 'There are no published diary entries' at #34942 line 1392287 is presentation copy only; #44110-#44115 select myChild state and call the action but contain no server authorization proof.", "established": false}
+      ],
+      "dateTimeSemantics": [
+        {"claim": "A truthy diaryNextDate is copied without formatting when captured page !== 1. A falsy value on any page, or a truthy value on page 1, instead takes a no-explicit-argument call to the imported default formatter followed by .format('YYYY-MM-DD'); the resulting value is assigned to params.date.", "evidence": "#25515 JmpFalse at offset 0x4f targets formatter offset 0x5d for a falsy selected value; for truthy values, JStrictNotEqual at 0x59 jumps to 0x7b when page !== 1, skipping formatting. The formatter call at 0x69 has no explicit argument (Call1's undefined receiver is not an argument); .format('YYYY-MM-DD') follows at 0x76, and params.date is assigned at 0x7d.", "established": true},
+        {"claim": "The no-argument formatter result, timezone/date parsing zone, inclusivity, and server date semantics are unresolved.", "evidence": "The exact default formatter implementation/result and any timezone or range logic are not established; only the client call/format sequence and opaque body next_date read are traced.", "established": false}
+      ],
+      "pagination": [
+        {"claim": "The reducer reads root body.next_date and body.data, stores next_date as diaryNextDate, and the UI uses client page state for load-more dispatches; the child reducer independently maps the same root body.data groups.", "evidence": "#25516 sets action.data to the unchanged body and page separately at 1000478-1000502; #26862 reads action.data.data and action.data.next_date at 1039798-1039812; #25496/#25497/#25498 map action.data.data at 999311-999324 and 999679-999790; #34923/#34935/#34937 use client page state at 1391486-1391503 and 1392090-1392159.", "established": true},
+        {"claim": "No endpoint page/perPage contract is proven; the caller constructs only date, with page carried separately in action state. The date value is copied only for a truthy cursor on page !== 1; otherwise it is produced by the no-explicit-argument formatter path.", "evidence": "#25515 lines 1000445-1000465 and #25516 lines 1000491-1000502; JStrictNotEqual at #25515 offset 0x59 targets 0x7b and skips formatting for a truthy cursor when page !== 1.", "established": false}
+      ],
+      "readSideEffects": [
+        {"claim": "The traced screen triggers GET fetches from list refresh/load-more and app-focus/resume flows; no explicit seen/read POST is attached to the successful GET callback in this chain.", "evidence": "#34923 creates focus/resume and fetch handlers at 1391902-1391924; #34932/#34935/#34937 at 1392014-1392160; #25516 only dispatches the body/page at 1000474-1000503.", "established": true},
+        {"claim": "Whether another notification/read timer or separate mark-viewed operation exists elsewhere is unresolved.", "evidence": "No such call is present in this exact service/action/reducer/screen chain; absence in this chain does not establish global absence.", "established": false}
+      ],
+      "trace": [
+        {"functionId": 25632, "line": 1003318, "evidence": "Exact GET service path and params forwarding."},
+        {"functionId": 25515, "line": 1000422, "evidence": "Exact caller query builder and service invocation."},
+        {"functionId": 25516, "line": 1000474, "evidence": "Raw body forwarding and separate action page."},
+        {"functionId": 26862, "line": 1039666, "evidence": "dashboardReducer's body.data and sibling body.next_date observations, after #25516 forwards the raw body in action.data."},
+        {"functionId": 26865, "line": 1039971, "evidence": "Group date/diaries/evaluations reads and local mapping of the diary entries."},
+        {"functionId": 34923, "line": 1391460, "evidence": "GuardianFeed UI selects dashboard diary state and invokes fetch callbacks."},
+        {"functionId": 44109, "line": 1799498, "evidence": "ChildDiaryScreen Metro module factory resolves the screen module's dependencies and exports the screen component."},
+        {"functionId": 44110, "line": 1799541, "evidence": "ChildDiaryScreen's employeeView=false branch selects myChild diary state and uses the imported getGuardianFeed action; this is client UI/state evidence only."},
+        {"functionId": 44115, "line": 1799677, "evidence": "Reads and invokes the getGuardianFeed export from the screen module dependency object; the matching action creator is #25514, not the similarly named ChildServices method #25632."},
+        {"functionId": 25514, "line": 1000403, "evidence": "Exact getGuardianFeed action creator; returns thunk #25515, which calls service #25632."},
+        {"functionId": 25496, "line": 999272, "evidence": "Child reducer handles the MyChild guardian-feed action type."},
+        {"functionId": 25497, "line": 999741, "evidence": "Maps the child reducer's body.data date groups."},
+        {"functionId": 25498, "line": 999779, "evidence": "Forwards each body.data[].diaries entry with only locally synthesized displayType."}
+      ],
+      "blockers": ["Do not recommend this route as a general guardian diary/feedback access capability until server permission/visibility conditions are proven.", "Static UI reads do not establish guaranteed feedback visibility, publication fields, or response completeness."]
+    },
+    {
+      "operationId": "GetGuardianDiary",
+      "sourceFunctionId": 25630,
+      "establishedFields": [],
+      "unresolvedFields": ["all response body fields", "active caller and consumer", "guardian permission/visibility", "pagination and date semantics", "read side effects"],
+      "querySemantics": [],
+      "permissions": [
+        {"claim": "Guardian access is not established; do not recommend this endpoint by route or method name.", "evidence": "#25630 is only registered in ChildServices at 1002932-1002936; no active caller/body consumer is referenced elsewhere in the full disassembly search.", "established": false}
+      ],
+      "dateTimeSemantics": [],
+      "pagination": [
+        {"claim": "The service takes no query config, so no date/page/perPage parameter is proven at this function.", "evidence": "#25630 calls Axios get with only the concatenated URL at 1003284-1003301.", "established": true}
+      ],
+      "readSideEffects": [
+        {"claim": "No caller flow exists in which a follow-up read/seen request or timer can be attributed to this method.", "evidence": "No active action/screen callsite found for #25630; GET success callback #25631 only returns response.data.", "established": false}
+      ],
+      "trace": [
+        {"functionId": 25630, "line": 1003280, "evidence": "Service GET to child /diary path."},
+        {"functionId": 25631, "line": 1003307, "evidence": "Raw response.data projection."},
+        {"functionId": 25620, "line": 1002896, "evidence": "ChildServices registration, with no active caller found."}
+      ],
+      "blockers": ["No active caller or response-property consumer is established.", "No guardian role, own-child scope, or visibility guarantee is established; keep capability blocked/unproven."]
+    },
+    {
+      "operationId": "GetDiaryData",
+      "sourceFunctionId": 25935,
+      "establishedFields": ["diary", "entries", "feedback_type_options", "leave_type_option", "statuses", "statuses[].used_in_course", "statuses[].type", "settings", "meals", "images", "documents", "daily_comments", "analysis_comments", "daily_notes", "holidays", "likes", "integrations"],
+      "unresolvedFields": ["nested diary/entry/content/media/feedback/file fields", "guardian authorization", "exact audience of opaque caller #43846", "date/timezone/inclusivity semantics", "server pagination contract"],
+      "querySemantics": [
+        {"claim": "Service locally builds query params course from input.course_id and date from input.date.", "evidence": "#25935 lines 1012903-1012910.", "established": true},
+        {"claim": "The traced primary action caller obtains a course fallback from state.user.employee.selected_course_id and date fallback from state.diary.selected_date; resetFirst is an action-control field, not an Axios query field.", "evidence": "#25782 lines 1008641-1008676; #25935's constructed params at 1012903-1012910 include only course/date.", "established": true},
+        {"claim": "Course/date semantic relationship, range behavior, and server interpretation are not established.", "evidence": "Only construction and client state selection are observed.", "established": false}
+      ],
+      "permissions": [
+        {"claim": "The strongest response-reading chain is employee-facing and cannot establish guardian access or visibility.", "evidence": "#25782 reads state.user.employee and employee.selected_course_id at 1008641-1008654; #25783 consumes its result. A separate #43846 caller does not inspect the response body.", "established": true},
+        {"claim": "Guardian authority/own-child access and visibility of staff entries, group/class aggregation, or other children's feedback are not proven.", "evidence": "No guardian role branch or guardian screen/service caller is traced to #25935; employee response fields cannot be transferred to guardian routes.", "established": false}
+      ],
+      "dateTimeSemantics": [
+        {"claim": "The request sends caller-supplied date under query key date.", "evidence": "#25935 reads input.date and assigns params.date at 1012908-1012910.", "established": true},
+        {"claim": "Date format, timezone, inclusivity, and server meaning are unresolved.", "evidence": "No date transformation or server semantics are established in the traced request and response consumer chain.", "established": false}
+      ],
+      "pagination": [
+        {"claim": "No page/perPage is constructed by this getDiaryData service; its locally built query has course and date only.", "evidence": "#25935 lines 1012903-1012910.", "established": true},
+        {"claim": "Any server pagination behavior remains unknown.", "evidence": "No pagination response properties or pagination controls are tied to this exact service chain.", "established": false}
+      ],
+      "readSideEffects": [
+        {"claim": "Primary #25782 success path reads response and dispatches diary state; this does not prove a server-side read/seen mutation.", "evidence": "#25782 lines 1008672-1008679 and #25783 lines 1008685-1008855.", "established": true},
+        {"claim": "Separate caller #43846 invokes flushDiaryAutoSaves before the GET, then only closes a modal after completion; any autosave write is distinct from this GET and must not be performed during research.", "evidence": "#43846 lines 1787840-1787884 and the associated continuation #43847; no successful-body property reads are made in this caller.", "established": true},
+        {"claim": "A separate mark-seen/diary-viewed or notification-delete request associated with the GET is unresolved.", "evidence": "No such call appears in the traced #25782/#25783 or #43846 body-success path.", "established": false}
+      ],
+      "trace": [
+        {"functionId": 25935, "line": 1012899, "evidence": "DiaryService GET path/query construction."},
+        {"functionId": 25782, "line": 1008630, "evidence": "Employee diary action/service invocation."},
+        {"functionId": 25783, "line": 1008685, "evidence": "Response root reads and action projections."},
+        {"functionId": 25784, "line": 1008861, "evidence": "Status item property reads."},
+        {"functionId": 43846, "line": 1787831, "evidence": "Separate opaque body caller and preceding autosave flush."}
+      ],
+      "blockers": ["Do not recommend as guardian API access: observed model belongs to employee diary state and no guardian permission path is proven.", "Do not substitute this staff diary response for GetGuardianDiary or attribute staff/class-wide entries or other-child feedback as guardian-visible."]
+    }
+  ]
+}

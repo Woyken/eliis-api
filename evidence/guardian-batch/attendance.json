@@ -1,0 +1,259 @@
+{
+  "domain": "attendance",
+  "responseCandidates": [
+    {
+      "operationId": "GetChildCalendar",
+      "sourceFunctionId": 25644,
+      "kind": "object",
+      "evidence": "Service #25644 calls Axios GET and #25645 returns response.data. The exact calendar action #26402 reads top-level response-body access and dispatches the unchanged whole body. Reducer #26394 then reads the listed root properties directly from that action.data; days is used as a collection downstream. This is a partial raw HTTP-body view, not the calendar UI's composed per-cell model.",
+      "trace": [
+        {"functionId": 25644, "line": 1003555, "evidence": "Builds /api/kindergartens/{kindergartenId}/children/{childId}/calendar, passes input parameter 3 as Axios config.params, and attaches a response continuation."},
+        {"functionId": 25645, "line": 1003585, "evidence": "Reads resolved Axios response.data and returns it unchanged."},
+        {"functionId": 26401, "line": 1025917, "evidence": "Calendar thunk invokes imported getChildCalendar with selectedKindergartenId, childId and its query/config argument."},
+        {"functionId": 26402, "line": 1025968, "evidence": "Success continuation reads response-body access at 1025977 and dispatches the full unchanged response body as SET_CHILD_ABSENCE_CALENDAR_DATA at 1025982-1025985."},
+        {"functionId": 26394, "line": 1025591, "evidence": "Reducer reads action.data.days, child_data, lock_date, comment_date, holidays, default_status, workday_weekend and workday_holiday; separate SET_CHILD_CALENDAR_ACCESS stores action.data directly as childCalendarAccess."},
+        {"functionId": 44368, "line": 1811993, "evidence": "Calendar caller builds an action argument containing childId plus start_date/end_date; it computes startOf('month') and endOf('month'), formats both with Y-MM-DD, invokes getChildAbsenceCalendar, then dispatches the thunk."},
+        {"functionId": 44369, "line": 1812043, "evidence": "Calendar finally callback converts the selected date toISOString for local callback/state handling; this does not establish server timezone or range inclusivity."},
+        {"functionId": 44382, "line": 1812441, "evidence": "CalendarDay consumes a data prop and locally selected calendar state. Its composed day model is not shown to be a direct HTTP days[] item."},
+        {"functionId": 44393, "line": 1812857, "evidence": "Client dayStatus uses a diary_status value when present, otherwise performs date/current-day and explicit attendance/status lookups; it does not infer absence from a missing arrival/log."}
+      ],
+      "fields": [
+        {"name": "access", "type": "unknown", "evidence": "#26402 reads response-body access directly at 1025977 and forwards the complete body unchanged; no access value type or nested fields are inspected."},
+        {"name": "days", "type": "array", "items": {"kind": "unknown", "evidence": "Reducer #26394 reads body.days directly into absenceCalendarData at 1025725-1025728; its calendar state collection is mapped/searched. No raw item property is tied conclusively to this response array."}, "evidence": "#26394 reads body.days at 1025725-1025728 and assigns it to absenceCalendarData. Consumer #44366 searches the calendar data by date, but its date-keyed UI/calendar objects do not prove a field of each raw HTTP item."},
+        {"name": "child_data", "type": "unknown", "evidence": "#26394 reads body.child_data at 1025728-1025731 and stores the value unchanged as absenceChildData; no nested field is read here."},
+        {"name": "lock_date", "type": "unknown", "evidence": "#26394 reads body.lock_date at 1025731-1025734 and stores it as absenceLockDate; no type or format is asserted."},
+        {"name": "comment_date", "type": "unknown", "evidence": "#26394 reads body.comment_date at 1025734-1025737 and stores it as absenceCommentLockDate; no type or format is asserted."},
+        {"name": "holidays", "type": "unknown", "evidence": "#26394 reads body.holidays at 1025737-1025740 and stores it as absenceCalendarHolidays; a calendar holiday lookup calls find on a collection supplied to the UI, but its origin is not conclusively tied to this raw response property. No item fields or response type are established."},
+        {"name": "default_status", "type": "unknown", "evidence": "#26394 reads body.default_status at 1025740-1025743 and stores it as defaultStatus. UI references a defaultStatus value but does not prove its HTTP type or enum."},
+        {"name": "workday_weekend", "type": "unknown", "evidence": "#26394 reads body.workday_weekend at 1025743-1025746 and stores it as workdayWeekend; #44396 invokes includes on the stored value, which does not distinguish an array from another includes-capable value."},
+        {"name": "workday_holiday", "type": "unknown", "evidence": "#26394 reads body.workday_holiday at 1025746-1025749 and stores it as workdayHoliday; no response type or members are inspected."}
+      ],
+      "complete": false,
+      "limitations": [
+        "Only the listed root properties are direct body reads. Root/body completeness is unknown.",
+        "Raw days[] row keys, IDs, planned-versus-recorded attendance, status, arrival/pickup timestamps, and per-row last-updated/actor fields are not established by this service-to-consumer path. CalendarDay's date, attendance, entry, diary_status and dayStatus accesses are on calendar/UI values or a composed prop; do not project them into raw days[] without a proven origin trace.",
+        "The labels Absent and Present occur as calendar edit UI labels in #43023; they are not proven server enum values. The client status helper uses explicit diary_status/attendance/status values and has no branch that turns a missing arrival or missing log into absence.",
+        "access is an opaque value. No access.restrict or other nested access property was located in this attendance flow. Permission gating is separately client-side and does not define server authorization.",
+        "No response status, requiredness, nullability, default, enum or completeness claim."
+      ]
+    },
+    {
+      "operationId": "GetStatusLogs",
+      "sourceFunctionId": 25650,
+      "kind": "array",
+      "evidence": "Service #25650 calls Axios GET and #25651 returns response.data. The exact status-log action success callback #26405 forwards that body unchanged to the reducer. CalendarDayLogScreen selects that exact state field and calls map; each raw iterated log object is passed unchanged to #43079, which reads the listed fields directly.",
+      "trace": [
+        {"functionId": 25650, "line": 1003674, "evidence": "Builds /api/kindergartens/{kindergartenId}/children/{childId}/status-log and Axios config.params={date: parameter 3}."},
+        {"functionId": 25651, "line": 1003706, "evidence": "Reads resolved Axios response.data and returns it unchanged."},
+        {"functionId": 26404, "line": 1026004, "evidence": "Calendar-log thunk calls imported getStatusLogs with selectedKindergartenId, childId and the selected date, then attaches #26405."},
+        {"functionId": 26405, "line": 1026039, "evidence": "Dispatches resolved response body unchanged as SET_CHILD_CALENDAR_LOG.data."},
+        {"functionId": 26394, "line": 1025591, "evidence": "Reducer stores SET_CHILD_CALENDAR_LOG.data directly as calendarDayLog at 1025712-1025720."},
+        {"functionId": 43072, "line": 1753513, "evidence": "CalendarDayLogScreen selects childCalendar.calendarDayLog and calls its map method at 1753588-1753590."},
+        {"functionId": 43077, "line": 1753705, "evidence": "History screen sends childId and the selected day's dateString formatted YYYY-MM-DD to getChildCalendarLog; no write/seen action follows in this flow."},
+        {"functionId": 43073, "line": 1753638, "evidence": "History screen timezone selector reads user.timezone, which is supplied to the created_at display conversion."},
+        {"functionId": 43079, "line": 1753764, "evidence": "Receives each mapped log item directly. Reads diary_status and its color/icon/name, identifiable.name, created_at, type, status, comment, start_time and end_time."}
+      ],
+      "fields": [],
+      "items": {
+        "kind": "object",
+        "evidence": "The raw response root is iterated with map, and each item is used directly by #43079. This is only the client-observed item view.",
+        "fields": [
+          {"name": "diary_status", "type": "object", "evidence": "#43079 checks diary_status for null and reads it directly for icon/color/name display at 1753795-1753808 and 1753963-1753966.", "fields": [
+            {"name": "name", "type": "unknown", "evidence": "#43079 reads diary_status.name for displayed status text at 1753963-1753966."},
+            {"name": "color", "type": "unknown", "evidence": "#43079 reads diary_status.color at 1753801-1753802."},
+            {"name": "icon", "type": "unknown", "evidence": "#43079 reads diary_status.icon at 1753803-1753808."}
+          ]},
+          {"name": "identifiable", "type": "object", "evidence": "#43079 reads identifiable.name for a display label at 1753854-1753857.", "fields": [
+            {"name": "name", "type": "unknown", "evidence": "#43079 reads identifiable.name at 1753854-1753857; client use does not establish that this is necessarily an actor identity."}
+          ]},
+          {"name": "created_at", "type": "unknown", "evidence": "#43079 reads created_at and passes it through utc(...).tz(user.timezone).format('L LT') at 1753865-1753876. No transport representation is asserted."},
+          {"name": "type", "type": "unknown", "evidence": "#43079 reads type, translates/displays it, and compares it with the literal 'Child calendar' in the comment/status/time rendering branches at 1753890-1753897 and 1753972-1753984."},
+          {"name": "status", "type": "unknown", "evidence": "#43079 reads status for truthiness and branching at 1753908-1753909 and 1753972-1753978; this does not establish a status enum or the meaning of a status-log event."},
+          {"name": "comment", "type": "unknown", "evidence": "#43079 reads comment and displays it in the comment branch at 1753979-1753984 and 1754046-1754105."},
+          {"name": "start_time", "type": "unknown", "evidence": "#43079 reads start_time at 1753982-1753984 and 1754110-1754113; it is an attendance time read, not a status-log event timestamp."},
+          {"name": "end_time", "type": "unknown", "evidence": "#43079 reads end_time at 1754110-1754113; it is an attendance time read, not a status-log event timestamp."}
+        ]
+      },
+      "complete": false,
+      "limitations": [
+        "Only the direct display reads above are listed; response array item completeness, field types, IDs, actor identifiers and additional timestamps are unknown.",
+        "identifiable.name is a displayed name, not proof of a specific author/actor model. created_at is the only log timestamp observed; no updated_at/last-updated field or event start/end timestamp is read. start_time/end_time are displayed as attendance hours and must not be relabeled as log timestamps.",
+        "created_at display explicitly applies UTC parsing then user.timezone conversion, but does not prove the server's timezone convention or raw timestamp format. No range-inclusivity claim.",
+        "No status enum meanings are proved by the type/status UI branches. A missing item, status or arrival does not imply absence.",
+        "No response status, requiredness, nullability, default, enum or completeness claim."
+      ]
+    },
+    {
+      "operationId": "GetAbsenceModalData",
+      "sourceFunctionId": 25652,
+      "kind": "object",
+      "evidence": "Service #25652 calls Axios GET and #25653 returns response.data. The exact absence-modal action callback #26415 reads body.min_date and dispatches that value; no other response property is observed.",
+      "trace": [
+        {"functionId": 25652, "line": 1003717, "evidence": "Builds /api/kindergartens/{kindergartenId}/children/{childId}/absences/modal and Axios config.params={form: parameter 3}."},
+        {"functionId": 25653, "line": 1003749, "evidence": "Reads resolved Axios response.data and returns it unchanged."},
+        {"functionId": 26414, "line": 1026207, "evidence": "Modal thunk builds form argument {user_id: current user.id} and invokes imported getAbsenceModalData."},
+        {"functionId": 26415, "line": 1026238, "evidence": "Reads response-body min_date at 1026248 and dispatches it as SET_CHILD_CALENDAR_MODAL_MIN_DATE.date."},
+        {"functionId": 26394, "line": 1025591, "evidence": "Reducer stores the action's date unchanged as calendarMinDate at 1025685-1025693."},
+        {"functionId": 43025, "line": 1750874, "evidence": "Calendar edit form selects childCalendar.calendarMinDate."},
+        {"functionId": 43040, "line": 1751412, "evidence": "Date-picker props use the selected minimum date as minimumDate; this is client use and does not establish server date semantics."}
+      ],
+      "fields": [
+        {"name": "min_date", "type": "unknown", "evidence": "#26415 reads min_date directly from the raw response body at 1026248, then stores the unchanged value as calendarMinDate. No type/format or server meaning is proved."}
+      ],
+      "complete": false,
+      "limitations": [
+        "Only top-level min_date is observed; the remainder of the body is unknown/open.",
+        "The date picker consumes min_date as a minimumDate input, but no timezone, inclusivity, lock/restrict rule or server-side permission implication is established.",
+        "No access.restrict field or other permission flag was found in this modal response flow.",
+        "No response status, requiredness, nullability, default, enum or completeness claim."
+      ]
+    }
+  ],
+  "requestCandidates": [
+    {
+      "operationId": "GetChildCalendar",
+      "sourceFunctionId": 25644,
+      "placement": "query",
+      "fields": [
+        {"name": "start_date", "type": "string", "evidence": "Calendar caller #44368 computes selected month start with startOf('month').format('Y-MM-DD') and inserts it into the action argument at 1812017-1812023; the same query/config object reaches helper parameter 3."},
+        {"name": "end_date", "type": "string", "evidence": "Calendar caller #44368 computes selected month end with endOf('month').format('Y-MM-DD') and inserts it into the action argument at 1812024-1812031; the same query/config object reaches helper parameter 3."}
+      ],
+      "evidence": "Helper #25644 passes input parameter 3 unchanged as Axios config.params. Calendar caller #44368 constructs the date argument with childId, start_date and end_date around 1812010-1812032 and invokes getChildAbsenceCalendar. The evidence supports these date query keys and client formatting only; it does not prove API acceptance, inclusion boundaries or exact transport serialization beyond Axios params.",
+      "trace": [
+        {"functionId": 25644, "line": 1003566, "evidence": "URL path construction ends at /calendar; no query literal is concatenated into the URL."},
+        {"functionId": 25644, "line": 1003572, "evidence": "Builds Axios config object whose params property is input parameter 3."},
+        {"functionId": 26401, "line": 1025917, "evidence": "Thunk calls imported getChildCalendar with child/path context and the forwarded request/config argument."},
+        {"functionId": 44368, "line": 1811993, "evidence": "Constructs start_date/end_date from month start/end and formats both as Y-MM-DD before the calendar action call."}
+      ],
+      "limitations": ["Do not call this a server dateRange contract: the client object keys are start_date/end_date.", "The format and startOf/endOf caller indicate a month-shaped client range but do not prove server range inclusivity, timezone, or accepted date syntax.", "longPeriod is a navigation/form mode used by edit/save UI; this GET caller does not send a longPeriod query field."]
+    },
+    {
+      "operationId": "GetStatusLogs",
+      "sourceFunctionId": 25650,
+      "placement": "query",
+      "fields": [
+        {"name": "date", "type": "string", "evidence": "Status history screen #43077 reads selected dayData.date.dateString and formats it as YYYY-MM-DD before passing it to the getChildCalendarLog action at 1753728-1753738; helper #25650 constructs params.date from parameter 3."}
+      ],
+      "evidence": "#25650 constructs Axios config.params as a local object with only date set to parameter 3. Caller #43077 passes one selected day formatted YYYY-MM-DD. This is a single-date client query, not an arbitrary date-range object.",
+      "trace": [
+        {"functionId": 25650, "line": 1003685, "evidence": "Builds /status-log path."},
+        {"functionId": 25650, "line": 1003691, "evidence": "Constructs params={date: input parameter 3} and passes it as Axios GET config."},
+        {"functionId": 26404, "line": 1026004, "evidence": "Status-log action passes selected childId and selected date to imported getStatusLogs."},
+        {"functionId": 43077, "line": 1753705, "evidence": "Uses selected dayData.date.dateString formatted YYYY-MM-DD as the date argument."}
+      ],
+      "limitations": ["No range, server boundary inclusivity, timezone or status-filter semantics are proved.", "Formatting establishes a client-produced string, not server validation or a guaranteed accepted format."]
+    },
+    {
+      "operationId": "GetAbsenceModalData",
+      "sourceFunctionId": 25652,
+      "placement": "query",
+      "fields": [
+        {"name": "form", "type": "unknown", "fields": [
+          {"name": "user_id", "type": "unknown", "evidence": "Modal thunk #26414 constructs an object with user_id equal to current user.id at 1026225-1026229; no identifier primitive type is established."}
+        ], "evidence": "#25652 wraps input parameter 3 as params.form; thunk #26414 locally constructs the forwarded object {user_id: user.id}."}
+      ],
+      "evidence": "The helper's params object contains form=input parameter 3. The exact caller builds that argument as {user_id: current user.id}. Nested Axios query serialization is not derived here.",
+      "trace": [
+        {"functionId": 25652, "line": 1003733, "evidence": "Builds /absences/modal path."},
+        {"functionId": 25652, "line": 1003734, "evidence": "Constructs Axios config.params={form: input parameter 3}."},
+        {"functionId": 26414, "line": 1026207, "evidence": "Modal thunk reads current user.id, constructs {user_id: ...}, and passes it as the helper's third argument."}
+      ],
+      "limitations": ["Do not expand form.user_id into a serialized bracket/dotted query-key claim; Axios encoding is not directly traced here.", "No date, range, status, or permission fields are passed by this caller."]
+    }
+  ],
+  "capabilities": [
+    {
+      "operationId": "GetChildCalendar",
+      "sourceFunctionId": 25644,
+      "establishedFields": ["Root response reads: access (unknown), days (collection of unknown raw items), child_data (unknown), lock_date (unknown), comment_date (unknown), holidays (unknown), default_status (unknown), workday_weekend (unknown), workday_holiday (unknown).", "Month caller query keys start_date and end_date; both are formatted Y-MM-DD from start/end of selected month."],
+      "unresolvedFields": ["Raw days[] row shape including ID/date/status/planned-versus-recorded attendance and start_time/end_time.", "Access subfields such as restrict and any per-child writable/access flag.", "Raw root/row completeness and primitive types."],
+      "querySemantics": [
+        {"claim": "The endpoint helper forwards parameter 3 unchanged as Axios config.params.", "evidence": "#25644 lines 1003572-1003575 create {params: p3} and call Axios get.", "established": true},
+        {"claim": "Calendar caller sends start_date/end_date formatted from startOf('month')/endOf('month').", "evidence": "#44368 lines 1812017-1812031; object is passed through the getChildAbsenceCalendar thunk at 1812032.", "established": true},
+        {"claim": "The server treats those dates as inclusive or applies a particular timezone/dateRange convention.", "evidence": "No server response or validation is available; caller formatting and client boundary methods do not prove server interpretation.", "established": false}
+      ],
+      "permissions": [
+        {"claim": "The response body has a top-level access value used by the calendar action.", "evidence": "#26402 reads result.access at 1025977 and then dispatches the whole raw response body.", "established": true},
+        {"claim": "Guardian edit UI checks local canEdit state, guardian account type and user.permissions.diary_edit_attendance.", "evidence": "#44363 lines 1811888-1811904 and #44361 lines 1811819-1811837 show the client-side guards; edit form/save path is separate from the GET.", "established": true},
+        {"claim": "The access value or client permission proves that the server authorizes guardian writes, or that access.restrict exists.", "evidence": "No nested access property or server authorization behavior is established by this read-only client trace.", "established": false}
+      ],
+      "dateTimeSemantics": [
+        {"claim": "Caller derives month endpoints locally and formats Y-MM-DD; date boundary/server timezone semantics remain unknown.", "evidence": "#44368 lines 1812017-1812031; no explicit UTC conversion occurs in the shown query construction.", "established": true},
+        {"claim": "The local calendar's selected-date helper later calls toISOString for local callback/state handling.", "evidence": "#44369 lines 1812043-1812060; this is not evidence of query timezone or server interpretation.", "established": true}
+      ],
+      "pagination": [{"claim": "No pagination fields or continuation handling are established for this helper/caller path.", "evidence": "#25644 and #44368 only show one GET and one forwarded params object; the raw response completeness is unknown.", "established": false}],
+      "readSideEffects": [
+        {"claim": "The GET action resets local calendar state, then stores access and the raw response body; this is a client state effect, not a second server request.", "evidence": "#26401 lines 1025921-1025959 and #26402 lines 1025977-1025985.", "established": true},
+        {"claim": "No write is performed by this static analysis; calendar POST helpers are separate form-submit paths.", "evidence": "#25646/#25648 are POST helpers at lines 1003596/1003635; #43031 invokes them from form submit. No live request was made.", "established": true}
+      ],
+      "trace": [
+        {"functionId": 25644, "line": 1003555, "evidence": "Service operation identity and helper body."},
+        {"functionId": 26401, "line": 1025917, "evidence": "Action calls calendar helper using selected child context."},
+        {"functionId": 26402, "line": 1025968, "evidence": "Raw response access read and whole-body action dispatch."},
+        {"functionId": 26394, "line": 1025591, "evidence": "Raw response root projection into calendar state."},
+        {"functionId": 44368, "line": 1811993, "evidence": "Month query caller construction."},
+        {"functionId": 44382, "line": 1812441, "evidence": "Calendar cell UI consumer boundary."}
+      ],
+      "blockers": ["No established raw per-day record schema (IDs, dates, status meanings, actual attendance versus plan, arrival/pickup timestamps or update actor).", "No nested access.restrict or equivalent writable-availability contract; client permission checks are not server guarantees."]
+    },
+    {
+      "operationId": "GetStatusLogs",
+      "sourceFunctionId": 25650,
+      "establishedFields": ["Root response is consumed as an array; raw log items are passed unchanged to the history-row component.", "Observed item paths: diary_status.name/color/icon; identifiable.name; created_at; type; status; comment; start_time; end_time. All scalar/nested leaf types remain unknown."],
+      "unresolvedFields": ["Log item IDs, actor identity IDs, event transition enum/meaning, updated_at/last-update fields, and event-specific start/end timestamps.", "Whether identifiable.name denotes the actor rather than another display identity."],
+      "querySemantics": [
+        {"claim": "Helper constructs params={date: p3}; history screen supplies one selected date formatted YYYY-MM-DD.", "evidence": "#25650 lines 1003691-1003696; #43077 lines 1753728-1753738.", "established": true},
+        {"claim": "Query is a server date range or has a proved inclusive boundary.", "evidence": "Only one date is supplied and no server semantics are observed.", "established": false}
+      ],
+      "permissions": [{"claim": "The endpoint is called from the guardian calendar history view with the currently selected child context.", "evidence": "#26404 reads selectedKindergartenId and childId and invokes getStatusLogs; #43072 obtains dayData from route params.", "established": true}],
+      "dateTimeSemantics": [
+        {"claim": "The request date is a selected day string formatted YYYY-MM-DD; inclusivity/timezone is unresolved.", "evidence": "#43077 lines 1753728-1753738; #25650 lines 1003691-1003696.", "established": true},
+        {"claim": "Log created_at is displayed with UTC parsing then conversion to current user's timezone.", "evidence": "#43079 lines 1753865-1753876 reads created_at and applies utc(...).tz(user.timezone).format('L LT').", "established": true}
+      ],
+      "pagination": [{"claim": "No pagination or continuation fields/behavior are established.", "evidence": "The action stores the raw body unchanged and the history screen maps it directly; no pagination branch is observed.", "established": false}],
+      "readSideEffects": [
+        {"claim": "The history screen issues the GET on focus and stores the raw result in state; no follow-up seen/read mutation is observed in this exact flow.", "evidence": "#43077 lines 1753705-1753745 and #26404/#26405 lines 1026004-1026052.", "established": true},
+        {"claim": "Missing status/arrival/log rows must not be interpreted as absence.", "evidence": "The response is raw passthrough; UI only renders properties when values are present, and no absence inference is made in the history item component.", "established": true}
+      ],
+      "trace": [
+        {"functionId": 25650, "line": 1003674, "evidence": "GET service operation and date config."},
+        {"functionId": 26404, "line": 1026004, "evidence": "Action thunk and exact helper call."},
+        {"functionId": 26405, "line": 1026039, "evidence": "Raw body action dispatch."},
+        {"functionId": 26394, "line": 1025591, "evidence": "Raw body stored as calendarDayLog."},
+        {"functionId": 43072, "line": 1753513, "evidence": "History consumer selects log state and maps rows."},
+        {"functionId": 43073, "line": 1753638, "evidence": "Reads user.timezone for history display."},
+        {"functionId": 43079, "line": 1753764, "evidence": "Direct raw log item property reads."}
+      ],
+      "blockers": ["No server status-transition dictionary or meaning for status/type values.", "No proof of an actor ID or last-update field; only identifiable.name and created_at are displayed.", "No write request or live status-log response was used."]
+    },
+    {
+      "operationId": "GetAbsenceModalData",
+      "sourceFunctionId": 25652,
+      "establishedFields": ["Raw response top-level min_date is read and stored unchanged for the edit date picker's minimumDate."],
+      "unresolvedFields": ["Any other modal response property, min_date type/format/boundary, access/restrict flag, and whether editing is available server-side."],
+      "querySemantics": [
+        {"claim": "Helper constructs params={form: p3}; caller passes {user_id: current user.id}.", "evidence": "#25652 lines 1003734-1003739; #26414 lines 1026225-1026229.", "established": true},
+        {"claim": "Nested form serialization into a particular wire key syntax is known.", "evidence": "Axios params wrapper is visible, but nested serializer behavior is not resolved from this trace.", "established": false}
+      ],
+      "permissions": [
+        {"claim": "The caller supplies the signed-in user ID in form.user_id; this is context, not proof of permission.", "evidence": "#26414 lines 1026217-1026229.", "established": true},
+        {"claim": "min_date or any unseen response field establishes write access/restriction.", "evidence": "Only min_date is read and no access/restrict field is read in this flow.", "established": false}
+      ],
+      "dateTimeSemantics": [{"claim": "min_date is consumed by UI as a date picker minimum; its format, timezone and inclusive interpretation are unknown.", "evidence": "#26415 lines 1026242-1026251; #43040 lines 1751412-1751467.", "established": true}],
+      "pagination": [{"claim": "No pagination behavior is observed.", "evidence": "The modal helper/action only read the response and dispatch min_date.", "established": false}],
+      "readSideEffects": [
+        {"claim": "Modal-data GET is used before navigation to the edit screen; success only stores min_date locally.", "evidence": "#34561 lines 1355578-1355634 and #26413-#26415 lines 1026194-1026252.", "established": true},
+        {"claim": "Calendar writes are separate explicit form-submit POSTs and were not invoked in this static-only research.", "evidence": "#43031 lines 1751064-1751230 selects the save helper on submit; #25646/#25648 are separate POST services.", "established": true}
+      ],
+      "trace": [
+        {"functionId": 25652, "line": 1003717, "evidence": "GET service and form params wrapper."},
+        {"functionId": 26414, "line": 1026207, "evidence": "Constructs form.user_id from current user.id."},
+        {"functionId": 26415, "line": 1026238, "evidence": "Reads min_date and dispatches it."},
+        {"functionId": 26394, "line": 1025591, "evidence": "Stores modal min date in calendar state."},
+        {"functionId": 43040, "line": 1751412, "evidence": "Uses minimum date in date picker."},
+        {"functionId": 34561, "line": 1355578, "evidence": "Fetch precedes edit-modal navigation; navigation carries local date range and mode."}
+      ],
+      "blockers": ["No complete modal payload, access/restrict flag or server write permission evidence.", "No date timezone/inclusivity interpretation is established for min_date."]
+    }
+  ]
+}

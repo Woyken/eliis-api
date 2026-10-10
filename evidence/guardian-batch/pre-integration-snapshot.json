@@ -1,0 +1,14 @@
+{
+  "baseRequestResponseFiles": {
+    "evidence/research/admin-shop.json": "1139610321041a9c2f42a9a4ff9df0502ba18be96dbba421ddddeeee55f45630",
+    "evidence/research/auth-common.json": "22d763e8917eb4c440942742b8af070e6ae1d006ded74e7602f26d3a617c3d45",
+    "evidence/research/children-diary-files.json": "cb7dcd90a75a86ffaf1d4b2c3460a4418d24bd9670fda82230e31d9b1a77dc28",
+    "evidence/research/communications.json": "6f262453b2d6de637fecbeb2ece7f73ef0d3248b207e968753f472980d2a67ba",
+    "evidence/research/coverage-extra.json": "32328a6a4deeb36b180cf32494c172de1621ed959f372cf53bd6493fbe45b5e4",
+    "evidence/responses/admin-shop.json": "15a48799cc9b6b7b677319d6ce8011c48b53ce7c8a33f1ae02994d1be1762bec",
+    "evidence/responses/auth-common.json": "ea3ef506ce8c59e5aee6babb2aea92fd02f4dde1ce4083b8bc890af5f52c2f36",
+    "evidence/responses/children-diary-files.json": "d9b56a8d98629df940bc4c63aab36c4ac9b0070d6c8b2f6960f387cc3ab6a572",
+    "evidence/responses/communications.json": "3acce754d21d25177c8b9e907d2914d762728e05c3b3db3fe6c302cb7ab03948",
+    "evidence/responses/coverage-extra.json": "ef4cdfa5e1e8442a84932e9862e89df377c9ba6a903018b52e47e0b3ed0b0c9b"
+  }
+}

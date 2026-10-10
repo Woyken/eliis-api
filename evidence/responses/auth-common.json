@@ -36,42 +36,251 @@
     "operationId": "Login",
     "sourceFunctionId": 16308,
     "kind": "object",
-    "evidence": "The login service returns the isolated auth Axios promise unchanged. The exact password-login Metro caller passes its result to handleLoginResponse, which reads Axios response.data.type; only type belongs in this HTTP body model. Axios response.status is transport metadata and is excluded.",
+    "evidence": "The login service returns the isolated auth Axios promise unchanged. The exact password-login Metro caller passes its result to handleLoginResponse, which reads Axios response.data.type; only type belongs in this HTTP body model. Axios response.status is transport metadata and is excluded. #16308 returns the auth Axios promise without projecting response.data. The password-login consumer reads response.data.type and passes the complete response.data object as route param provider when type is truthy. The two-factor screen reads provider.identifier and provider.locked_out; the submit handler copies provider.identifier to request login_identifier. The rejection handler separately reads error.response.data.message.",
     "trace": [
-      {"functionId": 16308, "line": 648612, "evidence": "POST /api/auth/login through the separately created auth Axios client; promise is returned without a service response.data projection."},
-      {"functionId": 16306, "line": 648505, "evidence": "Installs the auth service methods, including login, on the service object; this binding is not a response-body transformation."},
-      {"functionId": 16244, "line": 647225, "evidence": "Metro userLogin action returns wrapper #16245."},
-      {"functionId": 16245, "line": 647238, "evidence": "Calls login service and returns its raw Axios promise."},
-      {"functionId": 13512, "line": 543678, "evidence": "Password login UI handler calls userLogin and attaches response continuation #13513."},
-      {"functionId": 13513, "line": 543736, "evidence": "Wraps the login success handler in async response-processing callback #13515."},
-      {"functionId": 13515, "line": 543765, "evidence": "Invokes the captured handleLoginResponse callback with the resolved login result."},
-      {"functionId": 13511, "line": 543661, "evidence": "Login response callback wrapper forwards its arguments to the response processor."},
-      {"functionId": 13510, "line": 543554, "evidence": "Reads response.data.type for login branching and response.status for client flow control; status is the Axios transport status, not a body field."}
+      {
+        "functionId": 16308,
+        "line": 648612,
+        "evidence": "POST /api/auth/login through the separately created auth Axios client; promise is returned without a service response.data projection."
+      },
+      {
+        "functionId": 16306,
+        "line": 648505,
+        "evidence": "Installs the auth service methods, including login, on the service object; this binding is not a response-body transformation."
+      },
+      {
+        "functionId": 16244,
+        "line": 647225,
+        "evidence": "Metro userLogin action returns wrapper #16245."
+      },
+      {
+        "functionId": 16245,
+        "line": 647238,
+        "evidence": "Calls login service and returns its raw Axios promise."
+      },
+      {
+        "functionId": 13512,
+        "line": 543678,
+        "evidence": "Password login UI handler calls userLogin and attaches response continuation #13513."
+      },
+      {
+        "functionId": 13513,
+        "line": 543736,
+        "evidence": "Wraps the login success handler in async response-processing callback #13515."
+      },
+      {
+        "functionId": 13515,
+        "line": 543765,
+        "evidence": "Invokes the captured handleLoginResponse callback with the resolved login result."
+      },
+      {
+        "functionId": 13511,
+        "line": 543661,
+        "evidence": "Login response callback wrapper forwards its arguments to the response processor."
+      },
+      {
+        "functionId": 13510,
+        "line": 543554,
+        "evidence": "Reads response.data.type for login branching and response.status for client flow control; status is the Axios transport status, not a body field."
+      },
+      {
+        "functionId": 16308,
+        "line": 648612,
+        "evidence": "POST /api/auth/login via auth.post; returns the Axios promise unchanged."
+      },
+      {
+        "functionId": 16306,
+        "line": 648505,
+        "evidence": "Installs login=#16308 on AuthService."
+      },
+      {
+        "functionId": 16244,
+        "line": 647225,
+        "evidence": "Exports the userLogin action wrapper."
+      },
+      {
+        "functionId": 16245,
+        "line": 647238,
+        "evidence": "Invokes the login service and returns its raw Axios result."
+      },
+      {
+        "functionId": 13512,
+        "line": 543678,
+        "evidence": "Password screen submits username/password through userLogin and attaches fulfillment/rejection/finally continuations."
+      },
+      {
+        "functionId": 13513,
+        "line": 543736,
+        "evidence": "The fulfillment callback attached by #13512 creates the generator continuation #13514 and response callback closure; the callback registration is at #13512 lines 543721-543723 and closure setup at #13513 lines 543745-543749 (header offset 0x004aed63)."
+      },
+      {
+        "functionId": 13514,
+        "line": 543754,
+        "evidence": "Generator-closure bridge creates async fulfillment continuation #13515 (header offset 0x004aed88; creation at lines 543758-543760)."
+      },
+      {
+        "functionId": 13515,
+        "line": 543765,
+        "evidence": "Fulfillment continuation invokes its captured response callback with the resolved value at lines 543772-543779 (header offset 0x004aed91); this callback path reaches the response processor #13511."
+      },
+      {
+        "functionId": 13511,
+        "line": 543661,
+        "evidence": "Response processor applies its captured handler and arguments at lines 543665-543673 (header offset 0x003365b2), forwarding the fulfilled Axios value to #13510."
+      },
+      {
+        "functionId": 13510,
+        "line": 543554,
+        "evidence": "Reads Axios result.data.type; truthy type branch navigates to the 2FA screen and places the whole data object at route params.provider. Separately compares Axios result.status to client constants 200 and 202."
+      },
+      {
+        "functionId": 13517,
+        "line": 543810,
+        "evidence": "On rejection, reads error.response.data.message when response/data/message are present and displays that message; this is an error-body branch."
+      },
+      {
+        "functionId": 27139,
+        "line": 1048081,
+        "evidence": "Reads route.params.provider, then reads provider.locked_out for local screen state and provider.type to select the displayed challenge instructions."
+      },
+      {
+        "functionId": 27140,
+        "line": 1048334,
+        "evidence": "Reads provider.identifier and copies that value to request body key login_identifier before calling Login2FA."
+      }
     ],
     "fields": [
-      {"name": "type", "type": "unknown", "evidence": "#13510 lines 543564-543567 reads type from the raw Axios fulfillment's data property. Since #16308 returns the raw Axios promise, this is HTTP body path type, not an HTTP-body field named data. No type value domain is modeled."}
+      {
+        "name": "type",
+        "type": "unknown",
+        "evidence": "#13510 lines 543564-543567 reads type from the raw Axios fulfillment's data property. Since #16308 returns the raw Axios promise, this is HTTP body path type, not an HTTP-body field named data. No type value domain is modeled. #13510 lines 543564-543567 reads response.data.type. A truthy value selects the challenge navigation branch; #27139 lines 1048186-1048200 reads provider.type and compares it to the client literal 'email' only to choose local instructions. No server enum or value domain is established."
+      },
+      {
+        "name": "identifier",
+        "type": "unknown",
+        "evidence": "#13510 lines 543645-543652 passes the exact response.data object as route param provider. #27139 lines 1048116-1048118 stores route.params.provider; #27140 lines 1048351-1048354 reads provider.identifier and assigns that value to request login_identifier. This is challenge response data, not a cookie or keychain value."
+      },
+      {
+        "name": "locked_out",
+        "type": "unknown",
+        "evidence": "#13510 lines 543645-543652 passes response.data unchanged as provider. #27139 lines 1048133-1048141 reads provider.locked_out as the initializer for local state. This is a client read only; no type, semantics, or server lockout rule is established."
+      }
     ],
     "complete": false,
-    "limitations": ["The separately-read Axios response.status is transport metadata and is not modeled as body content.", "Only the type property is observed; no enum, presence guarantee, or other body field is established."]
+    "limitations": [
+      "The separately-read Axios response.status is transport metadata and is not modeled as body content.",
+      "Only the type property is observed; no enum, presence guarantee, or other body field is established.",
+      "Only these client-read paths are modeled; the HTTP body is not complete and field presence/types are not guaranteed.",
+      "The truthy type challenge branch forwards the entire response.data value as provider; it does not prove a specific challenge schema or map any other field.",
+      "Axios response.status is transport metadata, not an HTTP-body field. #13510 locally compares it with 200 and 202; those UI branches do not establish universal server statuses.",
+      "The rejection-only message read is kept separately as a client response observation and is not a fulfillment-body field; error status/body variants remain unresolved.",
+      "The isolated auth Axios client has no configured request-cookie attachment interceptor, but its success response interceptor can capture a cookie; this does not prove absence of native cookies or server authentication requirements."
+    ]
   },
   {
     "operationId": "Login2FA",
     "sourceFunctionId": 16309,
     "kind": "object",
-    "evidence": "The service returns response.data unchanged and the exact Metro two-factor login caller reads status and, on its valid branch, locked_at from that returned value. These are partial client-observed fields without enum/type or presence guarantees.",
+    "evidence": "The service returns response.data unchanged and the exact Metro two-factor login caller reads status and, only on its non-'valid' branch, locked_at from that returned value. These are partial client-observed fields without enum/type or presence guarantees. #16310 returns the Axios fulfillment's data unchanged. #27143 reads result.status and compares it with the client literal 'valid'; the non-valid branch reads result.locked_at and passes that value to invalidCodeHandler. The rejection handler separately reads error.response.data.message.",
     "trace": [
-      {"functionId": 16309, "line": 648644, "evidence": "POST /api/auth/login-2fa and forwards fulfillment to #16310."},
-      {"functionId": 16310, "line": 648673, "evidence": "Returns the Axios fulfillment's data property unchanged."},
-      {"functionId": 27140, "line": 1048334, "evidence": "Two-factor login screen handler calls login2FA and connects fulfillment to #27141."},
-      {"functionId": 27141, "line": 1048370, "evidence": "Passes fulfillment to async response processor #27143."},
-      {"functionId": 27143, "line": 1048399, "evidence": "Reads status from service result; on the valid branch also reads locked_at, then drives local handlers/first-load flow."}
+      {
+        "functionId": 16309,
+        "line": 648644,
+        "evidence": "POST /api/auth/login-2fa and forwards fulfillment to #16310."
+      },
+      {
+        "functionId": 16310,
+        "line": 648673,
+        "evidence": "Returns the Axios fulfillment's data property unchanged."
+      },
+      {
+        "functionId": 27140,
+        "line": 1048334,
+        "evidence": "Two-factor login screen handler calls login2FA and connects fulfillment to #27141."
+      },
+      {
+        "functionId": 27141,
+        "line": 1048370,
+        "evidence": "Passes fulfillment to async response processor #27143."
+      },
+      {
+        "functionId": 27143,
+        "line": 1048399,
+        "evidence": "Reads status from service result; the non-'valid' branch reads locked_at, then drives local handlers/first-load flow."
+      },
+      {
+        "functionId": 16309,
+        "line": 648644,
+        "evidence": "POST /api/auth/login-2fa through the default Axios client; attaches #16310 fulfillment projection."
+      },
+      {
+        "functionId": 16310,
+        "line": 648673,
+        "evidence": "Returns Axios fulfillment response.data unchanged; the screen receives the HTTP body, not the Axios wrapper."
+      },
+      {
+        "functionId": 27139,
+        "line": 1048081,
+        "evidence": "The 2FA screen stores route.params.provider and creates the submit handler."
+      },
+      {
+        "functionId": 27140,
+        "line": 1048334,
+        "evidence": "Builds {code, login_identifier: provider.identifier}, invokes the Login2FA service and attaches fulfillment, rejection and finally handlers."
+      },
+      {
+        "functionId": 27141,
+        "line": 1048370,
+        "evidence": "Fulfillment callback attached by #27140 creates the generator continuation #27142 and response callback closure; registration is at #27140 lines 1048355-1048358 and closure setup at #27141 lines 1048379-1048383 (header offset 0x0061407f)."
+      },
+      {
+        "functionId": 27142,
+        "line": 1048388,
+        "evidence": "Generator-closure bridge creates async fulfillment continuation #27143 (header offset 0x006140a4; creation at lines 1048392-1048394)."
+      },
+      {
+        "functionId": 27143,
+        "line": 1048399,
+        "evidence": "Reads result.status. If equal to 'valid', invokes validCodeHandler and first-load/authenticated UI flow. Otherwise reads result.locked_at and invokes invalidCodeHandler with it."
+      },
+      {
+        "functionId": 27156,
+        "line": 1049116,
+        "evidence": "invalidCodeHandler performs local UI state actions; its body does not load/read its explicit argument, so no further meaning or type is attributed to locked_at."
+      },
+      {
+        "functionId": 27157,
+        "line": 1049149,
+        "evidence": "validCodeHandler resets local invalid-code state and marks the verification state valid."
+      },
+      {
+        "functionId": 27145,
+        "line": 1048490,
+        "evidence": "On rejection, reads error.response.data.message under response/data/message guards and displays an ErrorToast."
+      }
     ],
     "fields": [
-      {"name": "status", "type": "unknown", "evidence": "#27143 line 1048407 reads status from the value returned by #16310 (response.data) and compares it to a client string literal; this does not establish an enum or a server value domain."},
-      {"name": "locked_at", "type": "unknown", "evidence": "#27143 lines 1048410-1048414 reads locked_at from that same service result on one client branch and passes the value to a local handler; no value type is established."}
+      {
+        "name": "status",
+        "type": "unknown",
+        "evidence": "#27143 line 1048407 reads status from the value returned by #16310 (response.data) and compares it to a client string literal; this does not establish an enum or a server value domain. #16310 returns response.data unchanged (#16310 lines 648673-648679). #27143 lines 1048407-1048409 reads result.status and compares it to client literal 'valid'. This is a body property; no enum, requiredness, or additional values are inferred."
+      },
+      {
+        "name": "locked_at",
+        "type": "unknown",
+        "evidence": "#27143 lines 1048410-1048414 reads locked_at from that same service result on one client branch and passes the value to a local handler; no value type is established. #27143 lines 1048410-1048423 reads result.locked_at only after status is not equal to 'valid', passes it to invalidCodeHandler, and then takes the non-valid path. This field is not read on the valid branch; its type and lockout semantics remain unknown."
+      }
     ],
     "complete": false,
-    "limitations": ["The valid/status comparisons are client branches, not server enum/requiredness claims.", "locked_at is only read on one branch; all other body fields and nested shapes remain unknown."]
+    "limitations": [
+      "The valid/status comparisons are client branches, not server enum/requiredness claims.",
+      "locked_at is only read on one branch; all other body fields and nested shapes remain unknown.",
+      "Only client-read body paths are modeled; no complete response schema, property guarantees, or server status domain is established.",
+      "The body status comparison to 'valid' is separate from Axios response.status and from HTTP status codes. The non-valid branch is a UI branch, not a server error classification.",
+      "locked_at is read only in the non-valid branch; the screen's initial provider.locked_out state comes from the earlier Login challenge response and is a different property/path.",
+      "The rejection-only message read is kept separately as a client response observation and is not a fulfillment-body field; error shapes remain unresolved.",
+      "The code/login_identifier request is an app caller variant, and the forwarded service input remains open. No mapping to account recovery or other 2FA operations is implied."
+    ]
   },
   {
     "operationId": "SocialLogin",
@@ -202,32 +411,221 @@
     "operationId": "GetUserData",
     "sourceFunctionId": 16344,
     "kind": "object",
-    "evidence": "The service projects response.data. Its exact Metro thunk #16201 calls this service and passes the fulfillment to #16202, which reads the listed top-level properties and nested user.privacy_confirmed before dispatching state actions. This is a partial static-derived view, not a complete response contract.",
+    "evidence": "The service projects response.data. Its exact Metro thunk #16201 calls this service and passes the fulfillment to #16202, which reads the listed top-level properties and nested user.privacy_confirmed before dispatching state actions. This is a partial static-derived view, not a complete response contract. #16344 GETs /api/common/init and #16345 returns response.data unchanged. The exact Metro thunk #16201 passes that body to #16202. #16202 reads the listed root keys, dispatches the corresponding values, and reads user.privacy_confirmed. This is a partial static client-observed body, not a complete server contract.",
     "trace": [
-      {"functionId": 16344, "line": 649457, "evidence": "GET /api/common/init and chains fulfillment to #16345."},
-      {"functionId": 16345, "line": 649497, "evidence": "Returns response.data unchanged."},
-      {"functionId": 16201, "line": 646074, "evidence": "Metro getUserData thunk calls the service with notification token and login method, then passes the result to #16202."},
-      {"functionId": 16202, "line": 646106, "evidence": "Reads kindergartens, organizations, employees, guardians, children, officials and user directly from the service fulfillment; dispatches those values. Its kindergartens and organizations find callbacks read each tested item.id at lines 646288 and 646303. Reads user.privacy_confirmed and dispatches it as local privacy status."},
-      {"functionId": 16203, "line": 646283, "evidence": "The kindergartens find callback reads item.id at line 646288 and compares it with selectedKindergartenId; the read is from an item of the exact response-derived collection."},
-      {"functionId": 16204, "line": 646298, "evidence": "The organizations find callback reads item.id at line 646303 and compares it with selectedOrganizationId; the read is from an item of the exact response-derived collection."}
+      {
+        "functionId": 16344,
+        "line": 649457,
+        "evidence": "GET /api/common/init and chains fulfillment to #16345."
+      },
+      {
+        "functionId": 16345,
+        "line": 649497,
+        "evidence": "Returns response.data unchanged."
+      },
+      {
+        "functionId": 16201,
+        "line": 646074,
+        "evidence": "Metro getUserData thunk calls the service with notification token and login method, then passes the result to #16202."
+      },
+      {
+        "functionId": 16202,
+        "line": 646106,
+        "evidence": "Reads kindergartens, organizations, employees, guardians, children, officials and user directly from the service fulfillment; dispatches those values. Its kindergartens and organizations find callbacks read each tested item.id at lines 646288 and 646303. Reads user.privacy_confirmed and dispatches it as local privacy status."
+      },
+      {
+        "functionId": 16203,
+        "line": 646283,
+        "evidence": "The kindergartens find callback reads item.id at line 646288 and compares it with selectedKindergartenId; the read is from an item of the exact response-derived collection."
+      },
+      {
+        "functionId": 16204,
+        "line": 646298,
+        "evidence": "The organizations find callback reads item.id at line 646303 and compares it with selectedOrganizationId; the read is from an item of the exact response-derived collection."
+      },
+      {
+        "functionId": 16344,
+        "line": 649457,
+        "evidence": "Service constructs GET /api/common/init and attaches fulfillment #16345."
+      },
+      {
+        "functionId": 16345,
+        "line": 649497,
+        "evidence": "Returns Axios response.data unchanged."
+      },
+      {
+        "functionId": 16201,
+        "line": 646074,
+        "evidence": "Metro init thunk calls getUserData with push/notification token and login-method arguments, then passes the service result to #16202."
+      },
+      {
+        "functionId": 16202,
+        "line": 646106,
+        "evidence": "Reads root kindergartens, organizations, employees, guardians, children, officials, and user from the exact service result. Dispatches collection values; initially reads children.length. Reads user.privacy_confirmed. For nonempty kindergarten/organization collections it calls find callbacks #16203/#16204, which read item.id and compare to locally selected IDs."
+      },
+      {
+        "functionId": 16203,
+        "line": 646283,
+        "evidence": "Callback reads kindergartens collection item.id and compares it strictly to locally held selectedKindergartenId at lines 646287-646292."
+      },
+      {
+        "functionId": 16204,
+        "line": 646298,
+        "evidence": "Callback reads organizations collection item.id and compares it strictly to locally held selectedOrganizationId at lines 646302-646307."
+      },
+      {
+        "functionId": 25102,
+        "line": 986102,
+        "evidence": "userReducer handles SET_USER_CHILDREN and stores action.data unchanged at state.user.children (branch lines 986164-986169); #16202 supplied that action.data directly from init response.data.children."
+      },
+      {
+        "functionId": 34531,
+        "line": 1354516,
+        "evidence": "DashboardScreen calls useSelector with selector #34536, which returns state.user.children; the component calls map on that selected value to render the child-selection list."
+      },
+      {
+        "functionId": 34536,
+        "line": 1355093,
+        "evidence": "Selector returns state.user.children."
+      },
+      {
+        "functionId": 34568,
+        "line": 1355924,
+        "evidence": "The DashboardScreen map callback consumes an item of the state.user.children collection and reads item.id, item.name, and item.profile_picture to build a child row; these are downstream reads of the exact init value while stored by the traced reducer."
+      },
+      {
+        "functionId": 34569,
+        "line": 1356091,
+        "evidence": "Child-row onPress calls DashboardScreen's selectChildHandler with the row item's id; callback #34563 forwards its argument to a captured selection callback and closes the modal when present."
+      },
+      {
+        "functionId": 34583,
+        "line": 1356546,
+        "evidence": "Selector reads state.user.guardians and invokes .find; predicate #34584 reads each candidate kindergarten_id and compares it with the selected kindergarten ID."
+      },
+      {
+        "functionId": 34584,
+        "line": 1356562,
+        "evidence": "Find predicate reads candidate.kindergarten_id and strictly compares it with the selected-kindergarten value captured by the selector; it does not read a guardian ID or child relationship."
+      },
+      {
+        "functionId": 44019,
+        "line": 1795664,
+        "evidence": "Separate MyChildStack consumes route.params.childId; it constructs child-facing screen routes, including employeeView=false on Child dashboard and Child diary screens. The bytecode inspected here does not show DashboardScreen's selected id being passed into this stack's route.params.childId."
+      }
     ],
     "fields": [
-      {"name": "kindergartens", "type": "array", "evidence": "#16202 reads kindergartens from #16345 response.data (lines 646112-646114); it calls find on that value at 646130-646139, and #16203 reads item.id at 646288. This is a partial static client array/item view, not a server guarantee or complete item schema.", "items": {"kind": "object", "evidence": "#16203 is the find callback for the response-derived kindergartens value and reads the callback item's id at line 646288; no other item fields or item type are established.", "fields": [
-        {"name": "id", "type": "unknown", "evidence": "#16203 line 646288 reads id from the item supplied by #16202's kindergartens.find at lines 646130-646139, whose collection is the #16345 response.data.kindergartens value."}
-      ]}},
-      {"name": "organizations", "type": "array", "evidence": "#16202 reads organizations from #16345 response.data (lines 646165-646167); it calls find on that value at 646183-646192, and #16204 reads item.id at 646303. This is a partial static client array/item view, not a server guarantee or complete item schema.", "items": {"kind": "object", "evidence": "#16204 is the find callback for the response-derived organizations value and reads the callback item's id at line 646303; no other item fields or item type are established.", "fields": [
-        {"name": "id", "type": "unknown", "evidence": "#16204 line 646303 reads id from the item supplied by #16202's organizations.find at lines 646183-646192, whose collection is the #16345 response.data.organizations value."}
-      ]}},
-      {"name": "employees", "type": "unknown", "evidence": "#16202 lines 646208-646216 reads employees from response.data and dispatches that exact value as SET_USER_EMPLOYEES.data."},
-      {"name": "guardians", "type": "unknown", "evidence": "#16202 lines 646219-646227 reads guardians from response.data and dispatches that exact value as SET_USER_GUARDIANS.data."},
-      {"name": "children", "type": "unknown", "evidence": "#16202 lines 646230-646239 reads children from response.data, checks its length, and dispatches the same value; this does not establish an array type or item shape."},
-      {"name": "officials", "type": "unknown", "evidence": "#16202 lines 646242-646250 reads officials from response.data and dispatches that exact value as SET_USER_OFFICIALS.data."},
-      {"name": "user", "type": "object", "evidence": "#16202 lines 646253-646263 reads user from response.data and dispatches the same value as SET_USER.data; nested access at lines 646266-646267 proves a read of user.privacy_confirmed.", "fields": [
-        {"name": "privacy_confirmed", "type": "unknown", "evidence": "#16202 lines 646266-646267 reads privacy_confirmed on the user value obtained from response.data.user; no value type is established."}
-      ]}
+      {
+        "name": "kindergartens",
+        "type": "array",
+        "evidence": "#16202 reads kindergartens from #16345 response.data (lines 646112-646114); it calls find on that value at 646130-646139, and #16203 reads item.id at 646288. This is a partial static client array/item view, not a server guarantee or complete item schema. #16202 reads response-body kindergartens and calls find; #16203 reads item.id. Partial client-observed collection only.",
+        "items": {
+          "kind": "object",
+          "evidence": "#16203 is the find callback for the response-derived kindergartens value and reads the callback item's id at line 646288; no other item fields or item type are established. Exact find callback #16203 reads only id from an item of the response-derived kindergartens value.",
+          "fields": [
+            {
+              "name": "id",
+              "type": "unknown",
+              "evidence": "#16203 line 646288 reads id from the item supplied by #16202's kindergartens.find at lines 646130-646139, whose collection is the #16345 response.data.kindergartens value. #16203 line 646288 reads item.id from #16202's kindergartens.find callback, then compares it with local selectedKindergartenId. No identifier type, uniqueness, or stability guarantee is established."
+            }
+          ]
+        }
+      },
+      {
+        "name": "organizations",
+        "type": "array",
+        "evidence": "#16202 reads organizations from #16345 response.data (lines 646165-646167); it calls find on that value at 646183-646192, and #16204 reads item.id at 646303. This is a partial static client array/item view, not a server guarantee or complete item schema. #16202 reads response-body organizations and calls find; #16204 reads item.id. Partial client-observed collection only.",
+        "items": {
+          "kind": "object",
+          "evidence": "#16204 is the find callback for the response-derived organizations value and reads the callback item's id at line 646303; no other item fields or item type are established. Exact find callback #16204 reads only id from an item of the response-derived organizations value.",
+          "fields": [
+            {
+              "name": "id",
+              "type": "unknown",
+              "evidence": "#16204 line 646303 reads id from the item supplied by #16202's organizations.find at lines 646183-646192, whose collection is the #16345 response.data.organizations value. #16204 line 646303 reads item.id from #16202's organizations.find callback, then compares it with local selectedOrganizationId. No identifier type, uniqueness, or stability guarantee is established."
+            }
+          ]
+        }
+      },
+      {
+        "name": "employees",
+        "type": "unknown",
+        "evidence": "#16202 lines 646208-646216 reads employees from response.data and dispatches that exact value as SET_USER_EMPLOYEES.data. #16202 lines 646208-646218 reads response-body employees and dispatches that value unchanged as SET_USER_EMPLOYEES.data; no member fields or item type are read here."
+      },
+      {
+        "name": "guardians",
+        "type": "array",
+        "evidence": "#16202 lines 646219-646227 reads guardians from response.data and dispatches that exact value as SET_USER_GUARDIANS.data. #16202 lines 646219-646229 dispatches response.data.guardians unchanged as SET_USER_GUARDIANS.data; reducer #25102 stores the value as user.guardians (986152-986157 and branch 986521-986529); selector #34583 applies .find to state.user.guardians, and predicate #34584 reads a candidate's kindergarten_id. This is a partial client collection use, not a server shape guarantee.",
+        "items": {
+          "kind": "object",
+          "evidence": "The exact init-derived guardians state value is passed to .find by selector #34583; its predicate #34584 reads only candidate.kindergarten_id. No complete item shape is established.",
+          "fields": [
+            {
+              "name": "kindergarten_id",
+              "type": "unknown",
+              "evidence": "Predicate #34584 line 1356567 reads candidate.kindergarten_id and strictly compares it with the selected-kindergarten value at 1356568-1356570. This proves a client-side kindergarten match only; it does not establish a guardian ID, child join, or identifier type/stability."
+            }
+          ]
+        }
+      },
+      {
+        "name": "children",
+        "type": "array",
+        "evidence": "#16202 lines 646230-646239 reads children from response.data, checks its length, and dispatches the same value; this does not establish an array type or item shape. #16202 dispatches response.data.children unchanged as SET_USER_CHILDREN.data (lines 646230-646241); userReducer #25102 stores that exact action value as user.children (986164-986169). DashboardScreen #34531 selects state.user.children through #34536, calls .map on it (1354747-1354749), and #34568 consumes each mapped item. This is the observed client collection use, not a guarantee of all accepted server representations.",
+        "items": {
+          "kind": "object",
+          "evidence": "The exact init-derived state.user.children collection is mapped by DashboardScreen #34531; its row callback #34568 reads id, name, and profile_picture from each mapped item (1355973, 1356011-1356014, 1356026, 1356041-1356043). Partial UI-consumed item view only.",
+          "fields": [
+            {
+              "name": "id",
+              "type": "unknown",
+              "evidence": "DashboardScreen #34568 reads item.id at 1355973 and compares it with locally selected active-child id at 1355981-1355987 and 1355996-1356004. The row onPress #34569 passes the same item.id to #34563 at 1356110-1356116. It is used as a client child identifier, but global stability, uniqueness, and server domain type are not established."
+            },
+            {
+              "name": "name",
+              "type": "unknown",
+              "evidence": "DashboardScreen #34568 reads item.name at 1356011 and again at 1356041, using it as rendered child-row text. This is an exact response-derived client read; no primitive wire type or completeness is established."
+            },
+            {
+              "name": "profile_picture",
+              "type": "unknown",
+              "evidence": "DashboardScreen #34568 reads item.profile_picture at 1356013 and passes it as a UI imageUrl prop. The read is from an item of the exact init-derived user.children collection; no value type or URL contract is established."
+            }
+          ]
+        }
+      },
+      {
+        "name": "officials",
+        "type": "unknown",
+        "evidence": "#16202 lines 646242-646250 reads officials from response.data and dispatches that exact value as SET_USER_OFFICIALS.data. #16202 lines 646242-646252 reads response-body officials and dispatches that value unchanged; no member fields are read here."
+      },
+      {
+        "name": "user",
+        "type": "object",
+        "evidence": "#16202 lines 646253-646263 reads user from response.data and dispatches the same value as SET_USER.data; nested access at lines 646266-646267 proves a read of user.privacy_confirmed. #16202 lines 646253-646263 reads response-body user and dispatches it unchanged; nested access below is direct.",
+        "fields": [
+          {
+            "name": "privacy_confirmed",
+            "type": "unknown",
+            "evidence": "#16202 lines 646266-646267 reads privacy_confirmed on the user value obtained from response.data.user; no value type is established. #16202 lines 646266-646267 reads response.data.user.privacy_confirmed. Its value is compared with locally held privacy state at 646264-646275; no value type or authorization meaning is established."
+          }
+        ]
+      }
     ],
     "complete": false,
-    "limitations": ["The find callbacks establish only a partial client-side array/item view for kindergartens and organizations; they do not guarantee server array types, item presence, or item completeness.", "Dispatch action objects and Redux state are not HTTP response fields; only values read from the response.data argument are represented.", "The handler also compares local privacy state and emits a local TOGGLE_APP_PRIVACY action; that local status is not modeled as an HTTP response property.", "Other collection element shapes, response keys, missing/error branches, and completeness are unknown."]
+    "limitations": [
+      "The find callbacks establish only a partial client-side array/item view for kindergartens and organizations; they do not guarantee server array types, item presence, or item completeness.",
+      "Dispatch action objects and Redux state are not HTTP response fields; only values read from the response.data argument are represented.",
+      "The handler also compares local privacy state and emits a local TOGGLE_APP_PRIVACY action; that local status is not modeled as an HTTP response property.",
+      "Other collection element shapes, response keys, missing/error branches, and completeness are unknown.",
+      "The response has separate guardians, children, and employees keys, but this handler proves no identity or parent/guardian relationship among those values and the user object. Do not assert that the signed-in account is a guardian of each returned child.",
+      "The guardians collection is used by .find and each candidate's kindergarten_id is compared with local selected-kindergarten state. This is only a client-side kindergarten match: no guardian item ID or join to child items is read, and no signed-in guardian-to-child relationship or server authorization rule is established.",
+      "The child-row selector passes an init-derived item.id into its captured select callback. The inspected chain stops there: no evidence shows that this particular callback value is copied into MyChildStack route.params.childId. MyChildStack's childId route input and child-facing request flow are evidenced separately; route provenance is the causal break.",
+      "No field in this init-derived child-list path establishes a child kindergarten_id. Do not supply one from a separate child-profile response or conflate profile UI state with the init collection.",
+      "The observed kindergarten and organization item id reads establish only equality comparisons against local selection state; IDs remain unknown and no stable-ID guarantee follows.",
+      "The init handler's privacy_confirmed comparison dispatches a local privacy-status action; it is not a role or permission gate.",
+      "The array/item models are limited to the client .map/.find and property reads above; all other child/guardian/employee/item fields remain unknown. Redux actions/state are local wrappers, not response fields. Other root keys, error branches, role fields, and response completeness remain unknown."
+    ]
   },
   {
     "operationId": "GetUserProfile",
@@ -249,22 +647,171 @@
     "operationId": "GetUserPermissions",
     "sourceFunctionId": 16348,
     "kind": "object",
-    "evidence": "The service returns response.data. Its exact thunk passes that value unchanged through setUserPermissions and userReducer into user.permissions; the menu selector subsequently reads applications_access_manage. This partial client-observed read does not establish its value type, presence, or a complete permission schema.",
+    "evidence": "The service returns response.data. Its exact thunk passes that value unchanged through setUserPermissions and userReducer into user.permissions; the menu selector subsequently reads applications_access_manage. This partial client-observed read does not establish its value type, presence, or a complete permission schema. Service #16348/#16349 returns response.data. Exact thunk #16210 passes it through #16211 and action creator #16195; userReducer #25102 stores action.data unchanged as user.permissions. Static selectors then read permission keys; this is a partial client-observed body view only.",
     "trace": [
-      {"functionId": 16348, "line": 649538, "evidence": "GET /api/kindergartens/{kindergartenId}/user/permissions; fulfillment projects data in #16349."},
-      {"functionId": 16349, "line": 649566, "evidence": "Returns response.data unchanged."},
-      {"functionId": 16209, "line": 646412, "evidence": "Metro getUserPermissions action creator returns thunk #16210."},
-      {"functionId": 16210, "line": 646425, "evidence": "Calls getUserPermissions and connects fulfillment to #16211."},
-      {"functionId": 16211, "line": 646450, "evidence": "Passes the service fulfillment to setUserPermissions (#16195); the rejection branch is separate in #16212."},
-      {"functionId": 16195, "line": 645993, "evidence": "setUserPermissions constructs SET_PERMISSIONS with its input unchanged as action.data (lines 645997-646002)."},
-      {"functionId": 25102, "line": 986102, "evidence": "userReducer stores SET_PERMISSIONS action.data unchanged as user.permissions (lines 986450-986458)."},
-      {"functionId": 32321, "line": 1265046, "evidence": "The selector reads applications_access_manage from user.permissions (line 1265057); its conditional comparison does not establish a server Boolean type or requiredness."}
+      {
+        "functionId": 16348,
+        "line": 649538,
+        "evidence": "GET /api/kindergartens/{kindergartenId}/user/permissions; fulfillment projects data in #16349."
+      },
+      {
+        "functionId": 16349,
+        "line": 649566,
+        "evidence": "Returns response.data unchanged."
+      },
+      {
+        "functionId": 16209,
+        "line": 646412,
+        "evidence": "Metro getUserPermissions action creator returns thunk #16210."
+      },
+      {
+        "functionId": 16210,
+        "line": 646425,
+        "evidence": "Calls getUserPermissions and connects fulfillment to #16211."
+      },
+      {
+        "functionId": 16211,
+        "line": 646450,
+        "evidence": "Passes the service fulfillment to setUserPermissions (#16195); the rejection branch is separate in #16212."
+      },
+      {
+        "functionId": 16195,
+        "line": 645993,
+        "evidence": "setUserPermissions constructs SET_PERMISSIONS with its input unchanged as action.data (lines 645997-646002)."
+      },
+      {
+        "functionId": 25102,
+        "line": 986102,
+        "evidence": "userReducer stores SET_PERMISSIONS action.data unchanged as user.permissions (lines 986450-986458)."
+      },
+      {
+        "functionId": 32321,
+        "line": 1265046,
+        "evidence": "The selector reads applications_access_manage from user.permissions (line 1265057); its conditional comparison does not establish a server Boolean type or requiredness."
+      },
+      {
+        "functionId": 16348,
+        "line": 649538,
+        "evidence": "GET /api/kindergartens/{kindergartenId}/user/permissions; path uses explicit argument 1."
+      },
+      {
+        "functionId": 16349,
+        "line": 649566,
+        "evidence": "Returns Axios response.data unchanged."
+      },
+      {
+        "functionId": 16210,
+        "line": 646425,
+        "evidence": "Metro thunk invokes imported getUserPermissions with its explicit kindergarten ID and attaches fulfillment #16211."
+      },
+      {
+        "functionId": 16211,
+        "line": 646450,
+        "evidence": "Passes fulfillment unchanged to setUserPermissions #16195."
+      },
+      {
+        "functionId": 16195,
+        "line": 645993,
+        "evidence": "Constructs SET_PERMISSIONS with the input unchanged as action.data."
+      },
+      {
+        "functionId": 25102,
+        "line": 986102,
+        "evidence": "userReducer stores SET_PERMISSIONS action.data unchanged under user.permissions at lines 986450-986458."
+      },
+      {
+        "functionId": 34544,
+        "line": 1355193,
+        "evidence": "Selector checks user and user.permissions are non-null, then branches on the truthiness of diary_access_course (lines 1355197-1355211)."
+      },
+      {
+        "functionId": 34545,
+        "line": 1355216,
+        "evidence": "Selector checks user and user.permissions are non-null, then branches on the truthiness of diary_access_manager (lines 1355220-1355234)."
+      },
+      {
+        "functionId": 34546,
+        "line": 1355239,
+        "evidence": "Selector checks user and user.permissions are non-null, then branches on the truthiness of surveys_access_index (lines 1355243-1355257)."
+      },
+      {
+        "functionId": 34547,
+        "line": 1355262,
+        "evidence": "Selector checks user and user.permissions are non-null, then branches on the truthiness of surveys_access_questionnaires (lines 1355266-1355280)."
+      },
+      {
+        "functionId": 34548,
+        "line": 1355285,
+        "evidence": "Selector checks user and user.permissions are non-null, then branches on the truthiness of surveys_access_polls (lines 1355289-1355303)."
+      },
+      {
+        "functionId": 34549,
+        "line": 1355308,
+        "evidence": "Selector checks user and user.permissions are non-null, then branches on the truthiness of applications_access_manage (lines 1355312-1355326)."
+      },
+      {
+        "functionId": 34550,
+        "line": 1355331,
+        "evidence": "Selector checks user and user.permissions are non-null, then branches on the truthiness of workschedule_access_index (lines 1355335-1355349)."
+      },
+      {
+        "functionId": 44676,
+        "line": 1827991,
+        "evidence": "ChildInfoScreen selector checks user.permissions and branches on the truthiness of child_access_managerfields (lines 1827995-1828006)."
+      }
     ],
     "fields": [
-      {"name": "applications_access_manage", "type": "unknown", "evidence": "#32321 line 1265057 reads applications_access_manage from user.permissions; #25102 stores the unchanged #16195 action.data as user.permissions at lines 986453-986458, and #16195 receives the #16349 projection of this operation's response.data through #16211. The selector's condition does not establish field type or presence."}
+      {
+        "name": "applications_access_manage",
+        "type": "unknown",
+        "evidence": "#32321 line 1265057 reads applications_access_manage from user.permissions; #25102 stores the unchanged #16195 action.data as user.permissions at lines 986453-986458, and #16195 receives the #16349 projection of this operation's response.data through #16211. The selector's condition does not establish field type or presence. Selector #34549 reads user.permissions.applications_access_manage and takes its true branch when the value is truthy. It does not compare to a Boolean literal or establish response presence/type."
+      },
+      {
+        "name": "diary_access_course",
+        "type": "unknown",
+        "evidence": "Selector #34544 reads user.permissions.diary_access_course and takes its true branch when the value is truthy. It does not compare to a Boolean literal or establish response presence/type."
+      },
+      {
+        "name": "diary_access_manager",
+        "type": "unknown",
+        "evidence": "Selector #34545 reads user.permissions.diary_access_manager and takes its true branch when the value is truthy. It does not compare to a Boolean literal or establish response presence/type."
+      },
+      {
+        "name": "surveys_access_index",
+        "type": "unknown",
+        "evidence": "Selector #34546 reads user.permissions.surveys_access_index and takes its true branch when the value is truthy (1355253-1355257). It does not compare to a Boolean literal or establish response presence/type."
+      },
+      {
+        "name": "surveys_access_questionnaires",
+        "type": "unknown",
+        "evidence": "Selector #34547 reads user.permissions.surveys_access_questionnaires and takes its true branch when the value is truthy (1355276-1355280). It does not compare to a Boolean literal or establish response presence/type."
+      },
+      {
+        "name": "surveys_access_polls",
+        "type": "unknown",
+        "evidence": "Selector #34548 reads user.permissions.surveys_access_polls and takes its true branch when the value is truthy (1355299-1355303). It does not compare to a Boolean literal or establish response presence/type."
+      },
+      {
+        "name": "workschedule_access_index",
+        "type": "unknown",
+        "evidence": "Selector #34550 reads user.permissions.workschedule_access_index and takes its true branch when the value is truthy (1355345-1355349). It does not compare to a Boolean literal or establish response presence/type."
+      },
+      {
+        "name": "child_access_managerfields",
+        "type": "unknown",
+        "evidence": "ChildInfoScreen selector #44676 reads user.permissions.child_access_managerfields and takes its true branch when the value is truthy (1827995-1828006). It does not compare to a Boolean literal or establish response presence/type."
+      }
     ],
     "complete": false,
-    "limitations": ["Only applications_access_manage is a traced client read; its value type, presence, and other permission fields remain unknown.", "The selector's conditional behavior is not a server type, requiredness, or permission-domain assertion; response completeness is unknown."]
+    "limitations": [
+      "Only applications_access_manage is a traced client read; its value type, presence, and other permission fields remain unknown.",
+      "The selector's conditional behavior is not a server type, requiredness, or permission-domain assertion; response completeness is unknown.",
+      "The listed selector conditions are client feature/access gates over the permissions state; JavaScript truthiness does not prove Boolean wire types, requiredness, server authorization semantics, or enforcement on the server.",
+      "These eight selector reads are a partial inventory only. Other permissions and exact feature/UI consumers are outside this bounded trace; no full permission schema is established.",
+      "The collection relationship or identity represented by kindergartenId is not proved by this endpoint. The path transport values are not evidence of a guardian-child relationship.",
+      "Role-view comparisons or staff/guardian mode state are not derived from these permission fields. No response role value was read in this chain.",
+      "The reducer's direct assignment is the observed success path; no optimistic permission mutation is used to construct these response fields. Other state writers/initialization and response completeness remain unresolved."
+    ]
   },
   {
     "operationId": "GetUserMenu",

@@ -41,10 +41,15 @@ per-operation evidence as well: a coverage entry records analysis status, not
 proof that a server schema is complete.
 
 The current static pass covers all **298 research observations / 296 canonical
-operations**: **87 partial response models**, **194 unresolved/opaque response
-schemas**, and **15 native-download bodies**. Those 194 unknowns include ignored
+operations**: **92 partial response models**, **189 unresolved/opaque response
+schemas**, and **15 native-download bodies**. Those 189 unknowns include ignored
 results, incomplete consumer traces, and conflicting alias/branch evidence;
-they are not 194 proven empty responses. This is not a fully modeled server API.
+they are not 189 proven empty responses. This is not a fully modeled server API.
+
+The focused [guardian capability table](docs/GUARDIAN-CAPABILITIES.md) and
+[HA blockers](docs/GUARDIAN-HA-BLOCKERS.md) cover the requested 17-endpoint batch.
+They distinguish client paths and observed fields from unproved server
+authorization, date/transition semantics, and visibility/read-side-effect rules.
 
 Some nested reads remain in evidence descriptions when the container's value
 type is unresolved. A field converted or concatenated into a local value does

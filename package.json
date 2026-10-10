@@ -8,6 +8,8 @@
     "generate": "node scripts/generate.mjs",
     "build": "npm run generate && tsp compile . && node scripts/normalize-openapi.mjs",
     "check": "npm run build && node scripts/check.mjs",
+    "check:guardian": "node scripts/check-guardian-batch.mjs",
+    "render:guardian": "node scripts/render-guardian-capabilities.mjs",
     "test": "node --test tests/*.test.mjs"
   },
   "overrides": {

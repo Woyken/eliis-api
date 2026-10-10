@@ -579,7 +579,13 @@
         "evidence": "Input parameter 2 is concatenated into the URL at this path position."
       }
     ],
-    "query": [],
+    "query": [
+      {
+        "name": "date",
+        "type": "unknown",
+        "evidence": "Thunk #25515 constructs params={date:value} and passes it to #25632 (1000457-1000465). At 1000445-1000446, a falsy diaryNextDate jumps to the formatter at 1000450-1000456; for a truthy value, JStrictNotEqual at 1000447-1000449 jumps directly to 1000457 when captured page is not 1, preserving the selected value and skipping formatting. Otherwise (falsy value on any page, or truthy value on page 1), it invokes the imported default formatter with no explicit argument (Call1 has an undefined receiver, not an undefined argument), then calls .format('YYYY-MM-DD'). The resulting value is assigned to params.date in either branch at 1000457-1000458; formatter output is not inferred. Page is separate action state, not a query field; arbitrary params passthrough remains open."
+      }
+    ],
     "queryPassthrough": true,
     "body": null,
     "response": {
@@ -840,7 +846,18 @@
         "evidence": "Input parameter 2 is concatenated into the URL at this path position."
       }
     ],
-    "query": [],
+    "query": [
+      {
+        "name": "start_date",
+        "type": "string",
+        "evidence": "Calendar caller #44368 computes selected-month start with startOf(\"month\").format(\"Y-MM-DD\") and inserts start_date in the action/query object (1812017-1812023); #25644 forwards parameter 3 as Axios config.params. Client-produced string only; no server date-range/inclusion contract."
+      },
+      {
+        "name": "end_date",
+        "type": "string",
+        "evidence": "Calendar caller #44368 computes selected-month end with endOf(\"month\").format(\"Y-MM-DD\") and inserts end_date in the action/query object (1812024-1812031); #25644 forwards parameter 3 as Axios config.params. Client-produced string only; no server date-range/inclusion contract."
+      }
+    ],
     "queryPassthrough": true,
     "body": null,
     "response": {
@@ -977,7 +994,7 @@
       {
         "name": "date",
         "type": "unknown",
-        "evidence": "Constructs params object with date set to parameter 3."
+        "evidence": "Constructs params object with date set to parameter 3. Caller #43077 supplies selected date formatted YYYY-MM-DD (1753728-1753738); #25650 assigns parameter 3 to params.date (1003691-1003696). Enriches the existing unknown query type; no server validation, timezone, range, or inclusivity is inferred."
       }
     ],
     "queryPassthrough": false,
@@ -1017,7 +1034,14 @@
       {
         "name": "form",
         "type": "unknown",
-        "evidence": "Constructs params object with form set to parameter 3."
+        "evidence": "Constructs params object with form set to parameter 3. #25652 wraps parameter 3 in params.form (1003734-1003739), and #26414 passes its local {user_id: currentUser.id}. Nested Axios query serialization is unresolved; no bracket/dotted wire syntax is asserted.",
+        "fields": [
+          {
+            "name": "user_id",
+            "type": "unknown",
+            "evidence": "Modal thunk #26414 constructs {user_id: currentUser.id} at 1026225-1026229; no identifier primitive type is established."
+          }
+        ]
       }
     ],
     "queryPassthrough": false,
@@ -1027,7 +1051,9 @@
       "evidence": "Promise continuation returns response.data; complete response shape is unestablished."
     },
     "auth": "cookie",
-    "notes": []
+    "notes": [
+      "The caller constructs params.form={user_id: currentUser.id}; nested Axios query encoding is unresolved and no bracket/dotted wire-key syntax is asserted."
+    ]
   },
   {
     "operationId": "UploadChildProfilePicture",

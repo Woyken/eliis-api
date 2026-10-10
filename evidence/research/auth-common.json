@@ -132,9 +132,24 @@
       "kind": "unknown",
       "evidence": "Returns the Axios auth.post promise directly; no response.data transformation in function #16308."
     },
+    "clientResponseObservations": [
+      {
+        "evidence": "Password-login rejection handler #13517 conditionally reads message from error.response.data; this rejection-branch observation is not a fulfillment-body field.",
+        "source": 13517,
+        "propertyReads": [
+          {
+            "path": "message",
+            "type": "unknown",
+            "evidence": "#13517 rejection branch reads error.response.data.message only after response/data checks and a truthy message test (543815-543830); this is rejection-only, not a fulfillment-body read."
+          }
+        ],
+        "coverage": "rejection branch partial, not fulfillment"
+      }
+    ],
     "auth": "none",
     "notes": [
-      "Uses the separately created auth Axios client: #5603 +0x13e/+0x143 creates/exports auth, while +0x169–+0x189 installs the cookie-attaching request interceptor only on default. Auth does have response interception (#5603 +0x1be–+0x1da): #5621 +0x03/+0x0c invokes the shared setCookie helper, whose #5617 +0x3b–+0x58 extracts/serializes eliis_csrf and +0x91/+0x97 saves it. auth:none describes configured request behavior, not native networking cookie absence or inability to capture a response cookie."
+      "Uses the separately created auth Axios client: #5603 +0x13e/+0x143 creates/exports auth, while +0x169–+0x189 installs the cookie-attaching request interceptor only on default. Auth does have response interception (#5603 +0x1be–+0x1da): #5621 +0x03/+0x0c invokes the shared setCookie helper, whose #5617 +0x3b–+0x58 extracts/serializes eliis_csrf and +0x91/+0x97 saves it. auth:none describes configured request behavior, not native networking cookie absence or inability to capture a response cookie.",
+      "Successful-response cookie persistence inspects response headers[\"set-cookie\"] for eliis_csrf; it is not a response-body field. Login uses the isolated auth client whose rejection handler passes errors through. Default-client 401 cleanup applies to Login2FA/default-client calls and does not prove server 401 meaning or expiry semantics."
     ]
   },
   {
@@ -183,9 +198,24 @@
       "kind": "unknown",
       "evidence": "Function #16310 returns response.data."
     },
+    "clientResponseObservations": [
+      {
+        "evidence": "Two-factor rejection handler #27145 conditionally reads message from error.response.data; this rejection-branch observation is not a fulfillment-body field.",
+        "source": 27145,
+        "propertyReads": [
+          {
+            "path": "message",
+            "type": "unknown",
+            "evidence": "#27145 rejection branch reads error.response.data.message only after response/data checks and a truthy message test (1048494-1048512); this is rejection-only, not a fulfillment-body read."
+          }
+        ],
+        "coverage": "rejection branch partial, not fulfillment"
+      }
+    ],
     "auth": "cookie",
     "notes": [
-      "The request body is a caller-provided object with a client-added platform property; remaining body fields are unresolved."
+      "The request body is a caller-provided object with a client-added platform property; remaining body fields are unresolved.",
+      "Successful-response cookie handling is header-driven (set-cookie/eliis_csrf), not a response-body field. This operation uses the default client; its 401 cleanup is local behavior and does not prove server expiry semantics. Keep distinct from Login, whose isolated auth-client rejection handler is pass-through."
     ]
   },
   {

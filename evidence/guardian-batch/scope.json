@@ -1,0 +1,22 @@
+{
+  "operationCount": 17,
+  "operations": [
+    {"domain":"auth","operationId":"Login","sourceFunctionId":16308},
+    {"domain":"auth","operationId":"Login2FA","sourceFunctionId":16309},
+    {"domain":"discovery","operationId":"GetUserData","sourceFunctionId":16344},
+    {"domain":"discovery","operationId":"GetUserPermissions","sourceFunctionId":16348},
+    {"domain":"discovery","operationId":"GetChildProfile","sourceFunctionId":25634},
+    {"domain":"discovery","operationId":"GetChildCourses","sourceFunctionId":25624},
+    {"domain":"events","operationId":"GetEvents","sourceFunctionId":25403},
+    {"domain":"events","operationId":"GetRecentEvents","sourceFunctionId":25401},
+    {"domain":"attendance","operationId":"GetChildCalendar","sourceFunctionId":25644},
+    {"domain":"attendance","operationId":"GetStatusLogs","sourceFunctionId":25650},
+    {"domain":"attendance","operationId":"GetAbsenceModalData","sourceFunctionId":25652},
+    {"domain":"diary","operationId":"GetGuardianFeed","sourceFunctionId":25632},
+    {"domain":"diary","operationId":"GetGuardianDiary","sourceFunctionId":25630},
+    {"domain":"diary","operationId":"GetDiaryData","sourceFunctionId":25935},
+    {"domain":"food","operationId":"GetDayMenu","sourceFunctionId":26007},
+    {"domain":"food","operationId":"GetWeekMenu","sourceFunctionId":26009},
+    {"domain":"food","operationId":"DownloadFoodmenuFile","sourceFunctionId":37318}
+  ]
+}

@@ -1,0 +1,561 @@
+{
+  "domain": "food",
+  "responseCandidates": [
+    {
+      "operationId": "GetDayMenu",
+      "sourceFunctionId": 26007,
+      "kind": "unknown",
+      "evidence": "#26007 returns the Axios response.data unchanged through #26008. The GET_DAY_MENU thunk dispatches the whole body to SET_DAY_MENU and the reducer stores it at state.foodmenu.day_menu. No consumer of day_menu was found. The similarly named DayMenu component is passed an item from the weekly response's days array, not state.foodmenu.day_menu; its fields are not evidence for this operation's body.",
+      "trace": [
+        {
+          "functionId": 26007,
+          "line": 1014569,
+          "evidence": "Builds the day-menu URL and invokes the shared Axios get method; attaches continuation #26008."
+        },
+        {
+          "functionId": 26008,
+          "line": 1014595,
+          "evidence": "Reads response.data and returns it unchanged."
+        },
+        {
+          "functionId": 25992,
+          "line": 1014212,
+          "evidence": "The thunk calls getDayMenu with the selected kindergarten id and its captured date argument."
+        },
+        {
+          "functionId": 25993,
+          "line": 1014239,
+          "evidence": "Forwards the returned body unchanged as SET_DAY_MENU.data."
+        },
+        {
+          "functionId": 25989,
+          "line": 1014050,
+          "evidence": "The reducer handles SET_DAY_MENU and stores action.data as state.foodmenu.day_menu."
+        }
+      ],
+      "fields": [],
+      "complete": false,
+      "limitations": [
+        "No UI read of state.foodmenu.day_menu was found in the disassembly; body fields and shape therefore remain unknown.",
+        "Do not transfer the DayMenu component's reads from weekly-response day items to this operation merely because the component and operation have similar names.",
+        "No response status, media type, server-required fields, or body completeness is established."
+      ]
+    },
+    {
+      "operationId": "GetWeekMenu",
+      "sourceFunctionId": 26009,
+      "kind": "object",
+      "evidence": "#26009 returns response.data unchanged through #26010; its success action and reducer preserve that body at state.foodmenu.week_menu. In the guardian FoodMenuScreen, #35898 selects that exact property; #35897 reads root id, info, and uploaded_files, maps body.days into #35903, which passes each original item as the dayMenu prop to #37310. The day and file components read the listed properties. This is a partial UI-observed body view only.",
+      "trace": [
+        {
+          "functionId": 26009,
+          "line": 1014606,
+          "evidence": "Builds the week-menu URL and invokes shared Axios get; attaches continuation #26010."
+        },
+        {
+          "functionId": 26010,
+          "line": 1014632,
+          "evidence": "Reads response.data and returns it unchanged."
+        },
+        {
+          "functionId": 25995,
+          "line": 1014270,
+          "evidence": "The thunk calls getWeekMenu with selectedKindergartenId and the action's captured date."
+        },
+        {
+          "functionId": 25996,
+          "line": 1014297,
+          "evidence": "Forwards the returned body unchanged as SET_WEEK_MENU.data."
+        },
+        {
+          "functionId": 25989,
+          "line": 1014050,
+          "evidence": "The reducer stores SET_WEEK_MENU.data directly as state.foodmenu.week_menu."
+        },
+        {
+          "functionId": 35898,
+          "line": 1432657,
+          "evidence": "The selector returns state.foodmenu.week_menu unchanged to the weekly screen."
+        },
+        {
+          "functionId": 35897,
+          "line": 1432449,
+          "evidence": "Guardian FoodMenuScreen initializes a date, selects weekly menu state through #35898, and renders the selected weekly value. It reads root week_menu.id for a render-branch truthiness check, week_menu.days and maps the entries, and separately reads root week_menu.info and week_menu.uploaded_files."
+        },
+        {
+          "functionId": 35901,
+          "line": 1432712,
+          "evidence": "The screen effect invokes getWeekMenu using its current date value; the endpoint receives one date argument, not a start/end pair."
+        },
+        {
+          "functionId": 35903,
+          "line": 1432742,
+          "evidence": "The days.map callback constructs a dayMenu prop from the original item and uses its id as the rendered item key; #37310 consumes dayMenu."
+        },
+        {
+          "functionId": 37310,
+          "line": 1489047,
+          "evidence": "Reads dayMenu.date, .breakfast, .lunch, .supper, and .dinner for display. Meal values are passed to the UI without a proved primitive or nested structure."
+        },
+        {
+          "functionId": 35905,
+          "line": 1432776,
+          "evidence": "The uploaded_files.map callback constructs a file prop from each original item; #37314 consumes file."
+        },
+        {
+          "functionId": 37314,
+          "line": 1489553,
+          "evidence": "Reads file.name for display and passes the file to the download callback; #37318 later reads file.id for the URL and file.filename for the local destination."
+        }
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "unknown",
+          "evidence": "The guardian FoodMenuScreen reads selected week_menu.id at 1432605-1432608 for a truthiness check; #35898 returns state.foodmenu.week_menu unchanged, and #26010/#25996/#25989 preserve the Axios response.data body into that state. This establishes only a client read of a root response-body property, not its type, requiredness, identity meaning, or publication status."
+        },
+        {
+          "name": "info",
+          "type": "unknown",
+          "evidence": "FoodMenuScreen reads the weekly body value's info at 1432558-1432575 and renders it under the local 'Additional information' heading; the value type is not established."
+        },
+        {
+          "name": "uploaded_files",
+          "type": "array",
+          "evidence": "FoodMenuScreen reads root body.uploaded_files, checks its length, and maps it at 1432617-1432635; #35905 passes each original mapped item as a file prop.",
+          "items": {
+            "kind": "object",
+            "evidence": "Each root uploaded_files item is passed as #37314's file prop by #35905; that component and its download callback read the fields below.",
+            "fields": [
+              {
+                "name": "id",
+                "type": "unknown",
+                "evidence": "#37318 reads the selected file object's id when building /foodmenu/{id}/download at 1489781-1489790; this value is used only as the route path component."
+              },
+              {
+                "name": "filename",
+                "type": "unknown",
+                "evidence": "#37318 reads file.filename at 1489765-1489776 to sanitize and construct the local toFile path, not to form the URL."
+              },
+              {
+                "name": "name",
+                "type": "unknown",
+                "evidence": "#37314 reads file.name at 1489637-1489653 for display and calls slice on it; this does not prove a server-side string type or other file metadata."
+              }
+            ]
+          }
+        },
+        {
+          "name": "days",
+          "type": "array",
+          "evidence": "FoodMenuScreen reads body.days and calls map on it at 1432524-1432531; the reducer stores the HTTP body unchanged, so the nesting is response.days.",
+          "items": {
+            "kind": "object",
+            "evidence": "Each mapped item is passed unchanged as #37310's dayMenu prop by #35903 at 1432742-1432757.",
+            "fields": [
+              {
+                "name": "id",
+                "type": "unknown",
+                "evidence": "The map callback reads the item.id for the rendered key at 1432753-1432757; no type assertion/conversion establishes its type."
+              },
+              {
+                "name": "date",
+                "type": "unknown",
+                "evidence": "#37310 reads dayMenu.date at 1489092-1489095 and passes it to a display formatter; no response-value type is established."
+              },
+              {
+                "name": "breakfast",
+                "type": "unknown",
+                "evidence": "#37310 reads dayMenu.breakfast at 1489142-1489158 and passes the value to rendered content; no type or nested shape is established."
+              },
+              {
+                "name": "lunch",
+                "type": "unknown",
+                "evidence": "#37310 reads dayMenu.lunch at 1489188-1489204 and passes the value to rendered content; no type or nested shape is established."
+              },
+              {
+                "name": "supper",
+                "type": "unknown",
+                "evidence": "#37310 reads dayMenu.supper at 1489234-1489250 and passes the value to rendered content; no type or nested shape is established."
+              },
+              {
+                "name": "dinner",
+                "type": "unknown",
+                "evidence": "#37310 reads dayMenu.dinner at 1489280-1489296 and passes the value to rendered content; no type or nested shape is established."
+              }
+            ]
+          }
+        }
+      ],
+      "complete": false,
+      "limitations": [
+        "This records only properties read through the guardian weekly-menu UI; it is not a complete accepted server schema.",
+        "No evidence establishes meal values as dishes, arrays, groups, menu variants, course structures, substitutions, or a staff meal-report shape; all such structures remain unknown.",
+        "No client read of a last-update timestamp, menu origin, or course/filter applicability was found in this screen path.",
+        "The UI's 'The menu has not been published yet' text is local fallback copy rendered when week_menu is falsy, its root id is falsy, or local loading state is truthy; it is not a response field or server publication-status value.",
+        "No response status, media type, requiredness, nullability, enum, or server completeness is established."
+      ]
+    },
+    {
+      "operationId": "DownloadFoodmenuFile",
+      "sourceFunctionId": 37318,
+      "kind": "binary",
+      "evidence": "#37318 passes an API URL and local destination to RNFS.downloadFile; #37319 supplies the cookie header and calls the native downloader. RNFSManager maps fromUrl to a URL and toFile to a destination, and Downloader streams the HTTP input bytes to that local file. The transport body is therefore opaque downloaded content; native promise/event metadata is not the HTTP body. The UI's PDF icon/type text and local filename do not establish actual response media type.",
+      "trace": [
+        {
+          "functionId": 37314,
+          "line": 1489553,
+          "evidence": "The menu-file UI component invokes the file-download flow with a response-derived file object."
+        },
+        {
+          "functionId": 37318,
+          "line": 1489745,
+          "evidence": "Builds fromUrl using the selected file object's id; constructs toFile from file.filename after sanitization; initializes headers.cookie empty and awaits getAccessToken."
+        },
+        {
+          "functionId": 37319,
+          "line": 1489815,
+          "evidence": "Writes the saved access-cookie into download options and calls RNFS.downloadFile."
+        }
+      ],
+      "fields": [],
+      "complete": false,
+      "limitations": [
+        "Downloaded server bytes are opaque; no JSON fields or payload structure are evidenced.",
+        "Actual media type, HTTP status, and response headers are not established; UI PDF labeling and the local filename are not evidence of server MIME type.",
+        "RNFS jobId, statusCode, bytesWritten, contentLength, and headers are native download result/event metadata, not modeled HTTP response-body properties.",
+        "No server-side effect beyond the GET is known."
+      ]
+    }
+  ],
+  "requestCandidates": [],
+  "capabilities": [
+    {
+      "operationId": "GetDayMenu",
+      "sourceFunctionId": 26007,
+      "establishedFields": [],
+      "unresolvedFields": [
+        {
+          "claim": "All response-body fields and nesting, including menu content, attachments, publication state, course/filter metadata, and timestamps.",
+          "evidence": "The service body is passed unchanged through the thunk/reducer into state.foodmenu.day_menu, and no consumer read was found. Do not substitute weekly day-item reads.",
+          "established": false
+        }
+      ],
+      "querySemantics": [
+        {
+          "claim": "A single value is appended after literal '?date=' via direct string concatenation. The call supplies no params object; bundled Axios's URL builder returns the original URL when params is falsy, so its params serializer does not encode/rebuild this query.",
+          "evidence": "#26007 lines 1014579-1014585 constructs the URL with HermesInternal.concat and calls Axios get with only that URL. Bundled Axios #5683 buildURL returns its input URL immediately when params is falsy at 257758-257766. Later platform/network URL normalization is not established.",
+          "established": true
+        },
+        {
+          "claim": "The date argument format, interpretation, timezone, and any server-side interval/inclusivity semantics.",
+          "evidence": "No guardian UI consumer/date formatter for GetDayMenu was found; the service treats its argument as an opaque value.",
+          "established": false
+        }
+      ],
+      "permissions": [
+        {
+          "claim": "The GET handler invokes the shared Axios client with a URL only and no per-request Authorization/header config; it inherits the app's main API cookie-auth context rather than adding Bearer auth.",
+          "evidence": "#26007 calls the shared client's get method with only its concatenated URL at 1014579-1014585. The main API uses cookie authentication under the repository's existing global API evidence; this handler constructs no Authorization header.",
+          "established": true
+        },
+        {
+          "claim": "The navigation menu conditionally exposes the food-menu item when user_menu contains an entry whose root_name is 'foodmenu'.",
+          "evidence": "MenuItems checks 'foodmenu' at 1264530-1264544; #32329 searches user_menu by root_name (1265164-1265192), selected by #32319 (1265022-1265029).",
+          "established": true
+        },
+        {
+          "claim": "The role/ACL source and whether this menu item is specifically granted to every guardian/parent role.",
+          "evidence": "The UI reads an effective user_menu entry but this trace does not establish its origin, role mapping, or server authorization policy.",
+          "established": false
+        }
+      ],
+      "dateTimeSemantics": [
+        {
+          "claim": "No date formatting or calendar-window construction is performed in the traced GetDayMenu service/action path.",
+          "evidence": "#25992 forwards its captured date into #26007; #26007 concatenates it directly into the URL.",
+          "established": true
+        },
+        {
+          "claim": "Server timezone, date interpretation, and range inclusivity.",
+          "evidence": "No UI consumer or server response evidence establishes these semantics.",
+          "established": false
+        }
+      ],
+      "pagination": [
+        {
+          "claim": "The client sends no pagination query fields for this operation.",
+          "evidence": "The constructed URL contains only the path and '?date=' argument; no additional query object is supplied.",
+          "established": true
+        },
+        {
+          "claim": "Whether the server paginates the response.",
+          "evidence": "No response consumer or server evidence establishes server pagination behavior.",
+          "established": false
+        }
+      ],
+      "readSideEffects": [
+        {
+          "claim": "The traced success path stores the response body in local Redux state; no follow-up API request or write appears in this thunk/reducer path.",
+          "evidence": "#25993 dispatches SET_DAY_MENU and #25989 stores data. No consumer of day_menu was located, and the traced success path contains no subsequent service call.",
+          "established": true
+        },
+        {
+          "claim": "Any server-side logging, cache update, or other read side effect.",
+          "evidence": "Static client flow does not establish server behavior.",
+          "established": false
+        }
+      ],
+      "trace": [
+        {
+          "functionId": 26007,
+          "line": 1014569,
+          "evidence": "Service request builder."
+        },
+        {
+          "functionId": 5683,
+          "line": 257758,
+          "evidence": "Bundled Axios buildURL returns the passed URL unchanged when the params argument is falsy."
+        },
+        {
+          "functionId": 25992,
+          "line": 1014212,
+          "evidence": "Action thunk service call."
+        },
+        {
+          "functionId": 25989,
+          "line": 1014050,
+          "evidence": "Reducer stores body under day_menu."
+        }
+      ],
+      "blockers": [
+        "No reachable UI consumer of state.foodmenu.day_menu was found, so no operation-specific response fields can be justified.",
+        "Guardian/parent role authorization and server date semantics remain unproved."
+      ]
+    },
+    {
+      "operationId": "GetWeekMenu",
+      "sourceFunctionId": 26009,
+      "establishedFields": [
+        {
+          "claim": "Response body has root info and uploaded_files properties plus a days array consumed by the guardian weekly-menu screen; mapped day items are read for id, date, breakfast, lunch, supper, and dinner.",
+          "evidence": "Body passthrough is established by #26010/#25996/#25989. The screen reads root info at 1432558-1432575 and root uploaded_files at 1432617-1432635, and maps days at 1432524-1432531; #35903 passes original day items to #37310, which reads day fields at 1489052-1489095 and 1489142-1489296. Root uploaded_files items are passed to #37314/#37318.",
+          "established": true
+        },
+        {
+          "claim": "File-item id is used in the download URL, filename is used only for local destination construction, and name is used for display.",
+          "evidence": "#37318 uses file.id in fromUrl at 1489781-1489790 and file.filename for local path at 1489765-1489776; #37314 reads file.name at 1489637-1489653.",
+          "established": true
+        },
+        {
+          "claim": "The guardian screen reads root week_menu.id for a render-branch truthiness check.",
+          "evidence": "#35898 returns state.foodmenu.week_menu unchanged at 1432657-1432664; #35897 reads the selected body's root id at 1432605-1432608. This is only a client read and establishes no type, requiredness, identity meaning, or publication status.",
+          "established": true
+        }
+      ],
+      "unresolvedFields": [
+        {
+          "claim": "Types and full structures of meal values, info, identifiers and file metadata; dish/group/variant/course structures; substitutions; last-update timestamps; menu origin; course/filter applicability.",
+          "evidence": "The UI reads/passes meal values without discriminating their runtime shapes and does not read the listed metadata. No complete server response is observed.",
+          "established": false
+        }
+      ],
+      "querySemantics": [
+        {
+          "claim": "One date value is appended literally after '?date='; the call supplies no params object, and bundled Axios's URL builder returns the original URL when params is falsy, so its params serializer does not encode/rebuild this query.",
+          "evidence": "#26009 lines 1014616-1014622 concatenate parameter 2 into the URL and call Axios get with only that URL. Bundled Axios #5683 buildURL returns its input URL immediately when params is falsy at 257758-257766. Later platform/network URL normalization is not established.",
+          "established": true
+        },
+        {
+          "claim": "The screen's initial date formatting call uses exactly 'Y-MM-DD'; its picker is configured with dateRange='weeks'.",
+          "evidence": "#35897 calls date.format('Y-MM-DD') at 1432471-1432478 and sets dateRange='weeks' at 1432595-1432602.",
+          "established": true
+        },
+        {
+          "claim": "The server interprets the date as the start or end of a week, or applies an inclusive/exclusive date window.",
+          "evidence": "The UI passes one current date value; it does not compute or send range endpoints, and no server-side semantics are available.",
+          "established": false
+        }
+      ],
+      "permissions": [
+        {
+          "claim": "The GET handler invokes the shared Axios client with a URL only and no per-request Authorization/header config; it inherits the app's main API cookie-auth context rather than adding Bearer auth.",
+          "evidence": "#26009 calls the shared client's get method with only its concatenated URL at 1014616-1014622. The main API uses cookie authentication under the repository's existing global API evidence; this handler constructs no Authorization header.",
+          "established": true
+        },
+        {
+          "claim": "The guardian navigation item is gated by a user_menu entry with root_name 'foodmenu'.",
+          "evidence": "MenuItems checks 'foodmenu' at 1264530-1264544; #32329 searches user_menu by root_name (1265164-1265192), selected by #32319 (1265022-1265029).",
+          "established": true
+        },
+        {
+          "claim": "Which parent/guardian roles receive that effective menu entry, and backend authorization rules.",
+          "evidence": "The origin and role mapping of user_menu and the server authorization policy are not traced by this UI path.",
+          "established": false
+        }
+      ],
+      "dateTimeSemantics": [
+        {
+          "claim": "A week-range date selector supplies a single date argument; the initial state is formatted with 'Y-MM-DD'.",
+          "evidence": "#35897 initial state/date selector lines 1432471-1432478 and 1432595-1432602; #35901 invokes getWeekMenu with that current value at 1432679-1432688.",
+          "established": true
+        },
+        {
+          "claim": "Week start/end, timezone, server interval inclusivity, and selected-date formatting after picker changes.",
+          "evidence": "No start/end values are built; date selection updates local state and no subsequent formatting is shown in this trace.",
+          "established": false
+        }
+      ],
+      "pagination": [
+        {
+          "claim": "No pagination fields or pagination UI are used by the traced weekly-menu request/screen.",
+          "evidence": "#26009 constructs only the date query; #35897 maps the returned days without requesting a page.",
+          "established": true
+        },
+        {
+          "claim": "Server-side pagination or truncation behavior.",
+          "evidence": "No complete response/server evidence establishes it.",
+          "established": false
+        }
+      ],
+      "readSideEffects": [
+        {
+          "claim": "The request success stores the body in local weekly-menu Redux state. The file tap downloads bytes to a local path and then attempts to open the local file; no additional API write is traced from this flow.",
+          "evidence": "#25996/#25989 store the body. #37318/#37319 call RNFS.downloadFile; #37320 opens the local file and #37321 clears local loading state. The FoodMenuScreen has no call to saveEmployeeMeal. The separate staff meal API is not evidence of a guardian screen write.",
+          "established": true
+        },
+        {
+          "claim": "Whether viewing/downloading creates server-side logs or other server effects.",
+          "evidence": "The static client flow cannot establish server-side behavior.",
+          "established": false
+        }
+      ],
+      "trace": [
+        {
+          "functionId": 26009,
+          "line": 1014606,
+          "evidence": "Week service request builder."
+        },
+        {
+          "functionId": 5683,
+          "line": 257758,
+          "evidence": "Bundled Axios buildURL returns the passed URL unchanged when the params argument is falsy."
+        },
+        {
+          "functionId": 25995,
+          "line": 1014270,
+          "evidence": "Week-menu action thunk."
+        },
+        {
+          "functionId": 25989,
+          "line": 1014050,
+          "evidence": "Reducer stores response body as week_menu."
+        },
+        {
+          "functionId": 35897,
+          "line": 1432449,
+          "evidence": "Guardian weekly-menu screen reads body.days and root body.uploaded_files."
+        },
+        {
+          "functionId": 35898,
+          "line": 1432657,
+          "evidence": "Selector returns state.foodmenu.week_menu unchanged to FoodMenuScreen."
+        },
+        {
+          "functionId": 37310,
+          "line": 1489047,
+          "evidence": "Day-item component reads displayed day and meal properties."
+        }
+      ],
+      "blockers": [
+        "All nested meal, dish, grouping, variant, course, substitution, timestamp, origin and applicability shapes remain unproved.",
+        "The 'menu has not been published yet' text is local fallback copy when week_menu is falsy, its root id is falsy, or local loading state is truthy; it is not a response status or response field.",
+        "Parent-role mapping, server date-window semantics and server read effects remain unresolved."
+      ]
+    },
+    {
+      "operationId": "DownloadFoodmenuFile",
+      "sourceFunctionId": 37318,
+      "establishedFields": [
+        {
+          "claim": "Selected response-derived file.id is inserted into the food-menu download URL path; file.filename is used only to create the local destination path.",
+          "evidence": "#37318 reads file.id and concatenates it between '/foodmenu/' and '/download' at 1489781-1489790. It independently reads file.filename for sanitizeFileName/local toFile at 1489765-1489776.",
+          "established": true
+        },
+        {
+          "claim": "The client uses RNFS to stream the response bytes into a local file, with a saved cookie supplied in the download headers.",
+          "evidence": "#37318 calls getAccessToken; #37319 puts the token into headers.cookie and calls RNFS.downloadFile. RNFSManager.java:779-792 maps fromUrl/toFile/headers; Downloader.java:64-74 connects and 131-203 copies input bytes to a file.",
+          "established": true
+        }
+      ],
+      "unresolvedFields": [
+        {
+          "claim": "Actual response media/MIME type, status, headers and any content structure.",
+          "evidence": "Native code streams bytes to file; the UI PDF icon/type and local filename do not prove the response's actual content type. No runtime response was captured.",
+          "established": false
+        }
+      ],
+      "querySemantics": [
+        {
+          "claim": "No query parameters are constructed for this download URL.",
+          "evidence": "#37318 builds fromUrl from API base, selected kindergarten id, file.id, and literal path segments at 1489780-1489790; there is no query concatenation.",
+          "established": true
+        }
+      ],
+      "permissions": [
+        {
+          "claim": "The file is reached through a file item in the weekly-menu UI, itself shown under the user_menu foodmenu entry gate.",
+          "evidence": "#35905 passes uploaded_files items to #37314; MenuItems gates the foodmenu item on user_menu.root_name as recorded above.",
+          "established": true
+        },
+        {
+          "claim": "Guardian/parent role authorization at the server for a given file id.",
+          "evidence": "No role policy or server response is available in this static client trace.",
+          "established": false
+        }
+      ],
+      "dateTimeSemantics": [
+        {
+          "claim": "No date or time parameter is used by the file-download request.",
+          "evidence": "The URL is assembled only from kindergarten id, file.id, and fixed path segments.",
+          "established": true
+        }
+      ],
+      "pagination": [
+        {
+          "claim": "Pagination is not applicable to the single-file download request; no pagination parameters are sent.",
+          "evidence": "#37318 constructs a single file URL and invokes RNFS downloadFile.",
+          "established": true
+        }
+      ],
+      "readSideEffects": [
+        {
+          "claim": "The client downloads bytes to a sanitized local filename and opens the local file; the traced flow contains no subsequent API write.",
+          "evidence": "#37318 constructs toFile from filename and fromUrl from id; #37319 calls RNFS; #37320 opens the local file. Native job metadata is local downloader output.",
+          "established": true
+        },
+        {
+          "claim": "Any server-side audit, logging, or other effect of the GET.",
+          "evidence": "Not established by the static client code.",
+          "established": false
+        }
+      ],
+      "trace": [
+        {
+          "functionId": 37318,
+          "line": 1489745,
+          "evidence": "Constructs URL, destination and initial cookie header."
+        },
+        {
+          "functionId": 37319,
+          "line": 1489815,
+          "evidence": "Sets cookie and invokes RNFS downloadFile."
+        }
+      ],
+      "blockers": [
+        "Downloaded content is opaque; MIME/status/body schema are unknown.",
+        "Server-side download effects and role-specific authorization are unresolved."
+      ]
+    }
+  ]
+}

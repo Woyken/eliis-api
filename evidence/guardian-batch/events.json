@@ -1,0 +1,553 @@
+{
+  "domain": "events",
+  "responseCandidates": [
+    {
+      "operationId": "GetEvents",
+      "sourceFunctionId": 25403,
+      "kind": "object",
+      "evidence": "Original Hermes bytecode: service #25403 attaches fulfillment handler #25404, which returns Axios response.data. Saga #25374/#25375 dispatches that body, and reducer #25344 iterates body.items. The event records are copied and date/time-transformed before calendar consumers read them, so only traced original item-property reads are listed; this is a partial client-observed model.",
+      "trace": [
+        {
+          "functionId": 25403,
+          "line": 995342,
+          "evidence": "Service #25403 calls Axios GET with the events URL and config.params, then attaches fulfillment handler #25404."
+        },
+        {
+          "functionId": 25404,
+          "line": 995383,
+          "evidence": "Fulfillment handler reads the Axios result's data property and returns it as the HTTP body."
+        },
+        {
+          "functionId": 25374,
+          "line": 994668,
+          "evidence": "Calendar action thunk calls #25403 with the selected kindergarten and captured date-range query object."
+        },
+        {
+          "functionId": 25375,
+          "line": 994704,
+          "evidence": "Success continuation dispatches SET_EVENTS with items copied from the resolved body at 994715-994729; it separately supplies kindergartenId, locally selected date, and user.timezone."
+        },
+        {
+          "functionId": 25344,
+          "line": 993275,
+          "evidence": "SET_EVENTS branch reads action.data.items at 993583-993589 and iterates it; it also derives separate calendar dot records from those events."
+        },
+        {
+          "functionId": 25345,
+          "line": 993640,
+          "evidence": "For each body.items entry, the reducer calls convertFromToUtc with the entry and action.data.tz, then pushes the returned copy into the Redux events array."
+        },
+        {
+          "functionId": 25423,
+          "line": 995958,
+          "evidence": "Conversion helper Object.assigns the input entry into a new object, reads start_time/start_date/repeat_start and end_time/end_date, and rewrites date/time fields on that local copy. Other enumerable input fields are carried by the shallow copy."
+        },
+        {
+          "functionId": 42292,
+          "line": 1715258,
+          "evidence": "Calendar EventsList selects state.events.events and supplies matching event records to its list renderer."
+        },
+        {
+          "functionId": 42311,
+          "line": 1715940,
+          "evidence": "Rendered event item reads event.event_type, event.start_date, event.end_date, event.title, event.start_time, and event.end_time. Its row action/key path reads the event's unique_id and access."
+        },
+        {
+          "functionId": 25347,
+          "line": 993693,
+          "evidence": "Calendar-date marker reducer loop reads event.duration at 993743 from the converted event records; comparison/use does not establish a wire value type."
+        },
+        {
+          "functionId": 42306,
+          "line": 1715754,
+          "evidence": "Event-list row callback passes the selected row event to setSelectedEvent and navigates to Event at 1715767-1715782."
+        },
+        {
+          "functionId": 25388,
+          "line": 995036,
+          "evidence": "setSelectedEvent action creator carries the supplied row event as action.data."
+        },
+        {
+          "functionId": 25344,
+          "line": 993275,
+          "evidence": "Reducer stores action.data as events.selectedEvent at 993578-993581; this is the same selected event originating from the list row."
+        },
+        {
+          "functionId": 42355,
+          "line": 1718822,
+          "evidence": "SingleEventScreen selects state.events.selectedEvent and reads event properties for detail, export, and edit actions."
+        },
+        {
+          "functionId": 42356,
+          "line": 1719519,
+          "evidence": "Detail-screen selector returns state.events.selectedEvent at 1719523-1719526."
+        },
+        {
+          "functionId": 42359,
+          "line": 1719562,
+          "evidence": "Mapper called for acl_groups.view.map reads each displayed item.name, item.id, and item.type at 1719573-1719605."
+        },
+        {
+          "functionId": 42360,
+          "line": 1719611,
+          "evidence": "ICS export helper consumes the selected event and reads title/description at 1719625-1719634; event values here are downstream of the selected body.items entry."
+        },
+        {
+          "functionId": 42363,
+          "line": 1719711,
+          "evidence": "Google Calendar export reads description and recurrence-related values from the selected event at 1719820-1719824."
+        },
+        {
+          "functionId": 42366,
+          "line": 1719876,
+          "evidence": "Apple calendar-export generator reads is_recurring, repeat_end, and rrule at 1719893-1719905, then branches on null start_time/end_time at 1719907-1719914."
+        },
+        {
+          "functionId": 42368,
+          "line": 1719994,
+          "evidence": "Outlook export reads start_time/end_time and branches on their nullness at 1720008-1720015; it reads description for export details at 1720077-1720082."
+        },
+        {
+          "functionId": 42554,
+          "line": 1729015,
+          "evidence": "Edit form reads selectedEvent recurrence, description, and acl_groups fields at 1729198, 1729215, 1729395-1729402, 1729582, 1729606, and 1729626-1729628."
+        },
+        {
+          "functionId": 42555,
+          "line": 1729670,
+          "evidence": "Edit-form selector returns state.events.selectedEvent at 1729674-1729677."
+        }
+      ],
+      "fields": [
+        {
+          "name": "items",
+          "type": "array",
+          "evidence": "Reducer #25344 reads body.items and invokes its forEach method at 993585-993589; each entry is passed to #25345 and retained as a converted copy in state. This establishes the client-used collection shape, not server completeness.",
+          "items": {
+            "kind": "object",
+            "evidence": "Each iterated entry is passed to #25423, which reads entry properties and shallow-copies it with Object.assign({}, entry) at 995962-995969.",
+            "fields": [
+              {
+                "name": "start_date",
+                "type": "unknown",
+                "evidence": "Conversion helper #25423 reads the source entry's start_date at 995973 and UI EventListItem #42311 reads event.start_date at 1715998; the helper may replace the value in its local copy."
+              },
+              {
+                "name": "end_date",
+                "type": "unknown",
+                "evidence": "Conversion helper #25423 reads the source entry's end_date at 995987 and UI EventListItem #42311 reads event.end_date at 1716000."
+              },
+              {
+                "name": "start_time",
+                "type": "unknown",
+                "evidence": "Conversion helper #25423 reads the source entry's start_time at 995969-995980 and UI EventListItem #42311 reads event.start_time at 1716110-1716141. The helper may replace the value in its local copy."
+              },
+              {
+                "name": "end_time",
+                "type": "unknown",
+                "evidence": "Conversion helper #25423 reads the source entry's end_time at 995983-995994 and UI EventListItem #42311 reads event.end_time at 1716147-1716162. The helper may replace the value in its local copy."
+              },
+              {
+                "name": "repeat_start",
+                "type": "unknown",
+                "evidence": "Conversion helper #25423 reads the source entry's repeat_start while preparing its start-date/time conversion at 995975; this is a property read, not evidence of a recurrence contract."
+              },
+              {
+                "name": "title",
+                "type": "unknown",
+                "evidence": "EventListItem #42311 reads event.title at 1716068-1716069 from the Redux event record, which descends from body.items through the shallow-copy conversion path."
+              },
+              {
+                "name": "event_type",
+                "type": "unknown",
+                "evidence": "EventListItem #42311 reads event.event_type at 1715977-1715990 and compares it with local event-type presentation records."
+              },
+              {
+                "name": "id",
+                "type": "unknown",
+                "evidence": "Reducer date-dot generation #25347 reads each retained event's id at 993765-993769 and compares it with selectedEvent.id."
+              },
+              {
+                "name": "unique_id",
+                "type": "unknown",
+                "evidence": "Calendar event-list path #42305 uses item.unique_id for row key extraction at 1715802-1715808 and forwards the same item to EventListItem #42311."
+              },
+              {
+                "name": "access",
+                "type": "unknown",
+                "evidence": "Calendar row action #42306 reads event.access and compares it with the literal 'manage' at 1715773-1715782; that client branch does not establish API permission semantics."
+              },
+              {
+                "name": "duration",
+                "type": "unknown",
+                "evidence": "After reducer #25345 passes the body.items entry through #25423's Object.assign shallow copy (#25423 header 995958; Object.assign instruction offset 00000015, 995962-995969), calendar marker loop #25347 (#25347 header 993693) reads event.duration at instruction offset 000000cb (993743). Its comparison does not prove a source scalar type."
+              },
+              {
+                "name": "description",
+                "type": "unknown",
+                "evidence": "After the #25423 shallow-copy path, SingleEventScreen #42355 (#42355 header 1718822) reads selectedEvent.description at instruction offsets 000007e8 and 0000089f (1719291, 1719333) and passes the value as content to the detail HTML-rendering path; export helpers #42363/#42368 also read it at offsets 000001ee (1719820-1719824) and 00000169 (1720077-1720082). This observes a rendering path only; it does not establish a scalar type, HTTP media type, or guaranteed MIME string."
+              },
+              {
+                "name": "creator",
+                "type": "object",
+                "evidence": "SingleEventScreen #42355 (#42355 header 1718822) reads selectedEvent.creator at instruction offset 000008cb (1719342) and then creator.name at offset 0000098b-00000991 (1719386-1719388); selectedEvent is sourced from body.items through #25423's shallow-copy path. Only this observed nested path is represented.",
+                "fields": [
+                  {
+                    "name": "name",
+                    "type": "unknown",
+                    "evidence": "Detail consumer #42355 (#42355 header 1718822) reads selectedEvent.creator.name at instruction offsets 0000098b-00000991 (1719386-1719388) after the row event has passed through #25423's shallow copy; the value type is not established."
+                  }
+                ]
+              },
+              {
+                "name": "is_recurring",
+                "type": "unknown",
+                "evidence": "Detail screen #42355 (#42355 header 1718822) reads selectedEvent.is_recurring at instruction offset 00000137 (1718900); edit form #42554 (#42554 header 1729015) reads it at offsets 0000033f and 000008e2 (1729215, 1729557); Apple export #42366 (#42366 header 1719876) reads it at offset 00000032 (1719893). These are client property reads only and establish no recurrence meaning or scalar type."
+              },
+              {
+                "name": "rrule",
+                "type": "unknown",
+                "evidence": "Edit form #42554 (#42554 header 1729015) reads selectedEvent.rrule at instruction offset 000002fb (1729198); Apple export #42366 (#42366 header 1719876) reads it at offset 00000065 (1719902). The export transforms/concatenates the value client-side; no server recurrence semantics or value type is inferred."
+              },
+              {
+                "name": "repeat_end",
+                "type": "unknown",
+                "evidence": "Edit form #42554 (#42554 header 1729015) reads selectedEvent.repeat_end at instruction offset 00000945 (1729582); Apple export #42366 (#42366 header 1719876) reads it at offset 00000046 (1719898) and applies a local replacement before appending an UNTIL value at offsets 0000004c-00000074 (1719899-1719905). This does not prove server recurrence semantics or type."
+              },
+              {
+                "name": "acl_groups",
+                "type": "object",
+                "evidence": "SingleEventScreen #42355 (#42355 header 1718822) reads selectedEvent.acl_groups.view and invokes .map at instruction offsets 00000081-000000b1 (1718858-1718869); edit form #42554 (#42554 header 1729015) reads acl_groups.view at offsets 0000064f-00000670 (1729395-1729402) and acl_groups.manage at offsets 000009fe-00000a04 (1729626-1729628). These are observed UI paths, not an authorization contract.",
+                "fields": [
+                  {
+                    "name": "view",
+                    "type": "array",
+                    "evidence": "Detail screen #42355 invokes .map on selectedEvent.acl_groups.view at instruction offsets 00000090-000000b1 (1718862-1718869); this records the client's array use while leaving the contents open.",
+                    "items": {
+                      "kind": "object",
+                      "evidence": "Mapper #42359 (#42359 header 1719562) is called for view.map items and reads item.name, item.id, and item.type at instruction offsets 0000001a, 00000084, and 00000091-0000009c (1719573-1719605); unobserved group-item properties remain open.",
+                      "fields": [
+                        {
+                          "name": "name",
+                          "type": "unknown",
+                          "evidence": "Mapper #42359 (#42359 header 1719562) reads each view-group item's name at instruction offset 0000001a (1719573); the value type is not established."
+                        },
+                        {
+                          "name": "id",
+                          "type": "unknown",
+                          "evidence": "Mapper #42359 (#42359 header 1719562) reads each view-group item's id at instruction offsets 00000084-0000008d (1719599-1719601); the value type is not established."
+                        },
+                        {
+                          "name": "type",
+                          "type": "unknown",
+                          "evidence": "Mapper #42359 (#42359 header 1719562) reads each view-group item's type at instruction offsets 00000091-0000009c (1719602-1719605); the value type is not established."
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "manage",
+                    "type": "unknown",
+                    "evidence": "Edit form #42554 (#42554 header 1729015) reads selectedEvent.acl_groups.manage at instruction offsets 000009fe-00000a04 (1729626-1729628). No manage-group item fields or value type are inferred."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "complete": false,
+      "limitations": [
+        "The model preserves the HTTP body's items nesting. Only client-read item properties are listed; other body fields and item properties are unknown.",
+        "All listed event property types remain unknown. Date construction, Moment formatting, comparison, and UI display do not prove source wire types or server constraints.",
+        "The reducer shallow-copies each item and rewrites date/time values using a timezone supplied from local user state. Those transformed Redux values are not new HTTP fields and do not establish a server timezone convention.",
+        "No response-origin read was established for root name, location, audience/course/child applicability, full_day, cancellation state, published state, or change_mode. A selected-event UI path does read description, creator.name, duration, is_recurring, rrule, repeat_end, and acl_groups.view/manage; their presence is not guaranteed and their server semantics remain unknown.",
+        "Calendar export branches on null start_time/end_time for an all-day-style path; this is not evidence for a full_day response property. Recurrence-related fields are read/transformed by client branches only, which do not establish server recurrence semantics.",
+        "No complete response schema, item requiredness, statuses, nullability, defaults, enum meanings, or date-range inclusivity is established."
+      ]
+    },
+    {
+      "operationId": "GetRecentEvents",
+      "sourceFunctionId": 25401,
+      "kind": "object",
+      "evidence": "Original Hermes bytecode: service #25401 attaches fulfillment handler #25402, which returns Axios response.data. Saga #25371/#25372 reads only body-root events and count and dispatches them separately; the full body and nested event-entry shape remain unknown.",
+      "trace": [
+        {
+          "functionId": 25401,
+          "line": 995306,
+          "evidence": "Service #25401 constructs GET /api/kindergartens/{kindergartenId}/events/recent and attaches fulfillment handler #25402."
+        },
+        {
+          "functionId": 25402,
+          "line": 995331,
+          "evidence": "Fulfillment handler reads the Axios result's data property and returns it as the HTTP body."
+        },
+        {
+          "functionId": 25371,
+          "line": 994605,
+          "evidence": "Saga calls #25401 for the selected kindergarten and attaches success continuation #25372."
+        },
+        {
+          "functionId": 25372,
+          "line": 994630,
+          "evidence": "Success continuation reads body.events at 994640-994643 and body.count at 994647-994649, then dispatches them as separate action payloads."
+        },
+        {
+          "functionId": 25344,
+          "line": 993275,
+          "evidence": "Reducer stores the two dispatched values separately as newEvents and newEventsCount at 993545-993561; no nested event-item property reads were found in this flow."
+        },
+        {
+          "functionId": 32426,
+          "line": 1269479,
+          "evidence": "A tab selector reads state.events.newEventsCount at 1269483-1269486; this is a Redux state read, not another HTTP-body property."
+        }
+      ],
+      "fields": [
+        {
+          "name": "events",
+          "type": "unknown",
+          "evidence": "Saga #25372 reads response-body property events at 994640-994643 and passes the value to SET_RECENT_EVENTS. No array operation or nested field read attributable to this endpoint was established."
+        },
+        {
+          "name": "count",
+          "type": "unknown",
+          "evidence": "Saga #25372 reads response-body property count at 994647-994649 and passes the value to SET_RECENT_EVENTS_COUNT; its value is stored as Redux newEventsCount."
+        }
+      ],
+      "complete": false,
+      "limitations": [
+        "These are body-root properties after Axios response.data unwrapping. Their types, nested shape, and completeness are not established.",
+        "No nested item shape is attributed: the traced GetRecentEvents success/reducer path does not inspect event entries. The newEventsCount tab selector reads Redux state only.",
+        "No generic pagination/error wrapper, status, media type, nullability, defaults, or event-item model is inferred."
+      ]
+    }
+  ],
+  "requestCandidates": [],
+  "capabilities": [
+    {
+      "operationId": "GetEvents",
+      "sourceFunctionId": 25403,
+      "establishedFields": [
+        "GET /api/kindergartens/{kindergartenId}/events",
+        "Calendar-generated query dateFrom and dateTo strings",
+        "HTTP body-root items collection; traced item reads include start/end date/time, repeat_start, title, event_type, id, unique_id, access, duration, description, creator.name, is_recurring, rrule, repeat_end, and acl_groups.view/manage (with view-group item name/id/type reads)"
+      ],
+      "unresolvedFields": [
+        "Additional forwarded query keys and other response members",
+        "Root event name/location, audience/course/child applicability, full_day, cancellation/publication status, and change_mode; meanings/types/presence of observed recurrence and acl_groups paths also remain unknown",
+        "Server validation, event visibility/permission semantics, and completeness of calendar records"
+      ],
+      "querySemantics": [
+        {
+          "claim": "The two traced calendar callers derive dateFrom from month start and dateTo from month end, each using Moment format('Y-MM-DD').",
+          "evidence": "#42300 lines 1715580-1715596 and #42323 lines 1716928-1716944; values are assigned to the fresh query object before calling getEvents.",
+          "established": true
+        },
+        {
+          "claim": "The values are passed through Axios config.params as query parameters.",
+          "evidence": "#25373 captures the caller object, #25374 forwards it as service argument 2, and #25403 assigns the shallow copy to config.params at lines 994660, 994695, and 995371-995373.",
+          "established": true
+        },
+        {
+          "claim": "The server applies an inclusive dateTo boundary (or any particular date-range interpretation).",
+          "evidence": "Client code computes endOf('month') and serializes a Y-MM-DD string, but no server validation/filtering evidence is present.",
+          "established": false
+        },
+        {
+          "claim": "The two date parameters are the complete query schema for every caller.",
+          "evidence": "The service shallow-copies and forwards arbitrary enumerable keys from argument 2; only the two identified calendar constructors were traced.",
+          "established": false
+        }
+      ],
+      "permissions": [
+        {
+          "claim": "Calendar create UI is gated by the signed-in client state field user.permissions.events_can_add.",
+          "evidence": "Selector/helper #42298 reads user.permissions.events_can_add at 1715528-1715536; this is a client UI capability check, not a read-access contract.",
+          "established": true
+        },
+        {
+          "claim": "An event row's edit action is gated when event.access equals the literal 'manage'.",
+          "evidence": "Row callback #42306 reads event.access and compares it to 'manage' at 1715773-1715782.",
+          "established": true
+        },
+        {
+          "claim": "The meanings or server authorization effects of events_can_add/access='manage', or the event-read visibility scope, are established.",
+          "evidence": "Only client-side selectors/branches were traced; no server authorization contract or read-scope response was established.",
+          "established": false
+        }
+      ],
+      "dateTimeSemantics": [
+        {
+          "claim": "The calendar creates month-bound date strings with Moment and uses the exact format token Y-MM-DD.",
+          "evidence": "#42300/#42323 call startOf/endOf('month') followed by format('Y-MM-DD') before creating dateFrom/dateTo.",
+          "established": true
+        },
+        {
+          "claim": "Fetched event date/time values are locally copied and transformed with the user.timezone value before storage/rendering.",
+          "evidence": "#25375 builds action.data.tz from user.timezone at 994725-994728; #25345 passes it with each body.items event to #25423; #25423 rewrites start_date/start_time/end_time on an Object.assign copy at 995962-995994.",
+          "established": true
+        },
+        {
+          "claim": "The server's timezone convention, dateTo boundary, or relationship to the device's local offset is established.",
+          "evidence": "Only client formatting and a local user.timezone-based conversion are observed; there is no server-side or device-offset contract evidence.",
+          "established": false
+        },
+        {
+          "claim": "Selected-event detail/edit/export consumers read is_recurring, rrule, and repeat_end, with client-side branches/transforms.",
+          "evidence": "#42355 reads is_recurring at 1718900; #42554 reads rrule/is_recurring/repeat_end at 1729198/1729215/1729582; #42366 reads is_recurring/repeat_end/rrule at 1719893-1719905.",
+          "established": true
+        },
+        {
+          "claim": "These client recurrence reads establish the server meanings or validation semantics of recurrence fields.",
+          "evidence": "Only selected-event property reads and local UI/export transformations are traced; no server recurrence contract is established.",
+          "established": false
+        }
+      ],
+      "pagination": [
+        {
+          "claim": "No page/limit/cursor parameter or pagination loop is present in the traced calendar request path.",
+          "evidence": "#42300/#42323 create only dateFrom/dateTo and #25403 forwards its params object to Axios; no pagination control is traced in this path.",
+          "established": true
+        },
+        {
+          "claim": "The endpoint is globally unpaginated or returns all matching events.",
+          "evidence": "The client call path does not prove server pagination behavior or response completeness.",
+          "established": false
+        }
+      ],
+      "readSideEffects": [
+        {
+          "claim": "The traced success flow updates local calendar Redux state and calendar-date markers; no server write follows in this flow.",
+          "evidence": "#25375 dispatches SET_EVENTS; reducer #25344 builds event/calendarEvents state and fetch bookkeeping. No mutation service call is attached in the traced success path.",
+          "established": true
+        },
+        {
+          "claim": "No server-side read/seen effect can ever occur for this endpoint.",
+          "evidence": "The assigned calendar success path contains no follow-up read/seen request, but this does not prove behavior in untraced app/server paths.",
+          "established": false
+        }
+      ],
+      "trace": [
+        {
+          "functionId": 25403,
+          "line": 995342,
+          "evidence": "Metro EventsServices module #2227 exports the getEvents method through #25400; #25403 is the GET service operation."
+        },
+        {
+          "functionId": 25374,
+          "line": 994668,
+          "evidence": "Calendar action thunk forwards the selected kindergarten and query to the service."
+        },
+        {
+          "functionId": 25375,
+          "line": 994704,
+          "evidence": "Success action includes returned body.items and separately supplied local timezone/date context."
+        },
+        {
+          "functionId": 25344,
+          "line": 993275,
+          "evidence": "Reducer stores converted events and locally generated calendar dot records."
+        },
+        {
+          "functionId": 42292,
+          "line": 1715258,
+          "evidence": "EventsList selects Redux events and supplies matching records to the event row renderer."
+        }
+      ],
+      "blockers": [
+        "Server date-range inclusivity, timezone interpretation, and all event status/recurrence/cancellation meanings remain unproved, including semantics of the observed is_recurring/rrule/repeat_end paths.",
+        "No evidence establishes event list visibility for guardian versus staff or child/course-specific applicability; do not substitute a staff roster or infer a universal calendar capability.",
+        "No required event fields, server response completeness, or server permission semantics are established."
+      ]
+    },
+    {
+      "operationId": "GetRecentEvents",
+      "sourceFunctionId": 25401,
+      "establishedFields": [
+        "GET /api/kindergartens/{kindergartenId}/events/recent",
+        "HTTP body-root properties events and count are read by the saga and stored separately in Redux"
+      ],
+      "unresolvedFields": [
+        "Types/shapes of events and count, nested event fields, completeness, pagination, and exact use of the stored recent-events value"
+      ],
+      "querySemantics": [
+        {
+          "claim": "The service constructs the recent-events URL from kindergartenId and adds no query object or request body.",
+          "evidence": "#25401 concatenates '/api/kindergartens/' + parameter 1 + '/events/recent' and calls Axios get with only the URL at 995317-995321.",
+          "established": true
+        }
+      ],
+      "permissions": [
+        {
+          "claim": "A response read of events/count establishes who may see the recent events or the scope represented by events.",
+          "evidence": "Saga #25372 only dispatches body.events and body.count; no server permission or guardian visibility semantics are read here.",
+          "established": false
+        }
+      ],
+      "dateTimeSemantics": [
+        {
+          "claim": "A date/time range or timezone parameter is sent by GetRecentEvents.",
+          "evidence": "Service #25401 passes only the URL to Axios GET and does not construct query params or a body.",
+          "established": false
+        }
+      ],
+      "pagination": [
+        {
+          "claim": "No pagination parameter or loop appears in the traced GetRecentEvents service/saga flow.",
+          "evidence": "#25401 has only a path argument and #25371/#25372 make one call and dispatch events/count.",
+          "established": true
+        },
+        {
+          "claim": "The endpoint is globally unpaginated or its events value is a complete list.",
+          "evidence": "No server response completeness or pagination semantics are established by the client reads.",
+          "established": false
+        }
+      ],
+      "readSideEffects": [
+        {
+          "claim": "The traced success flow dispatches local recent-events and count state; no server write follows in that flow.",
+          "evidence": "#25372 dispatches SET_RECENT_EVENTS and SET_RECENT_EVENTS_COUNT at 994634-994650; reducer #25344 stores the values, and #32426 reads the resulting Redux count for a tab badge.",
+          "established": true
+        },
+        {
+          "claim": "No read/seen request can follow this endpoint anywhere in the app.",
+          "evidence": "No follow-up write is present in the traced saga/reducer flow; app-wide absence is not established.",
+          "established": false
+        }
+      ],
+      "trace": [
+        {
+          "functionId": 25401,
+          "line": 995306,
+          "evidence": "Metro EventsServices module #2227 binds this GET method through service class #25400."
+        },
+        {
+          "functionId": 25371,
+          "line": 994605,
+          "evidence": "Recent-events saga invokes #25401 with the selected kindergarten."
+        },
+        {
+          "functionId": 25372,
+          "line": 994630,
+          "evidence": "Success continuation reads events/count body properties."
+        },
+        {
+          "functionId": 25344,
+          "line": 993275,
+          "evidence": "Reducer stores values as newEvents/newEventsCount."
+        },
+        {
+          "functionId": 32426,
+          "line": 1269479,
+          "evidence": "A tab badge selector reads the Redux newEventsCount value."
+        }
+      ],
+      "blockers": [
+        "No nested event-item renderer/read path was traced for this endpoint, so its event entries remain unknown.",
+        "The meanings of count, event visibility scope, completeness, and pagination are unproved.",
+        "No server read/seen effect or permission contract is established."
+      ]
+    }
+  ]
+}

@@ -338,8 +338,8 @@
   {
     "operationId": "GetChildCourses",
     "sourceFunctionId": 25624,
-    "kind": "unknown",
-    "evidence": "Service returns response.data; the actual course success callback forwards the body unchanged to the child reducer. No response properties are read in this path.",
+    "kind": "array",
+    "evidence": "Service returns response.data; the actual course success callback forwards the body unchanged to the child reducer. No response properties are read in this path. Service #25624/#25625 returns response.data. The exact thunk #25522 forwards the body unchanged through #25523; myChild reducer #25496 stores the action value as myChild.plansCourses. ChildPlansScreens #44258 selects that value and maps it; callback #44274 reads each response-derived item's name and id. This is a partial observed array/item view only.",
     "trace": [
       {
         "functionId": 25624,
@@ -370,6 +370,61 @@
         "functionId": 25684,
         "line": 1004424,
         "evidence": "childReducer handles the course action and consumes action.data."
+      },
+      {
+        "functionId": 25624,
+        "line": 1003154,
+        "evidence": "GET /api/kindergartens/{kindergartenId}/children/{childId}/courses; explicit arguments 1 and 2 form the path."
+      },
+      {
+        "functionId": 25625,
+        "line": 1003181,
+        "evidence": "Returns Axios response.data unchanged."
+      },
+      {
+        "functionId": 25521,
+        "line": 1000614,
+        "evidence": "Child module exports getChildCourses thunk."
+      },
+      {
+        "functionId": 25522,
+        "line": 1000629,
+        "evidence": "Invokes imported GetChildCourses service with its passed arguments and attaches callback #25523."
+      },
+      {
+        "functionId": 25523,
+        "line": 1000652,
+        "evidence": "Forwards the resolved body unchanged as SET_MY_CHILD_PLANS_COURSES.data."
+      },
+      {
+        "functionId": 25496,
+        "line": 999272,
+        "evidence": "The exact myChild childReducer handles SET_MY_CHILD_PLANS_COURSES and stores action.data directly as myChild.plansCourses (case and object copy at lines 999335-999340 and 999652-999660)."
+      },
+      {
+        "functionId": 44258,
+        "line": 1806407,
+        "evidence": "ChildPlansScreens obtains route.params.childId and selects myChild.plansCourses via #44259; it invokes a loading effect #44264 with childId and the selected myChild.child.kindergarten_id."
+      },
+      {
+        "functionId": 44264,
+        "line": 1806681,
+        "evidence": "Screen effect calls its imported getChildCourses thunk with selected myChild.child.kindergarten_id and route childId (lines 1806691-1806706), producing this operation's service response in the ChildPlansScreens flow."
+      },
+      {
+        "functionId": 44259,
+        "line": 1806615,
+        "evidence": "Selector returns myChild.plansCourses unchanged."
+      },
+      {
+        "functionId": 44274,
+        "line": 1806928,
+        "evidence": "ChildPlansScreens maps the selected response-derived plansCourses value; its item callback reads item.name for the rendered selector title and item.id to construct a local courseId navigation param (1806941-1806977)."
+      },
+      {
+        "functionId": 44275,
+        "line": 1806956,
+        "evidence": "Course selector press handler uses the selected item id as local route param courseId to Child plans list; this local param is not an HTTP response field."
       }
     ],
     "fields": [],
@@ -377,8 +432,29 @@
     "limitations": [
       "Verified action/reducer consumer is raw body passthrough; no body field/item structure is established.",
       "Do not infer course object shape from UI labels or request parameters.",
-      "Body completeness and server contract remain unknown."
-    ]
+      "Body completeness and server contract remain unknown.",
+      "The UI expects/method-calls a mapped collection and directly reads only item.id and item.name. This partial observed collection/item view does not prove server array guarantees, item completeness, or that these are enrollment records.",
+      "No causal ID match between this endpoint's course items and GetChildProfile.active_courses is present. Do not claim the two collections describe the same enrollment records or assert active/enrolled status.",
+      "The item id is reused as a local courseId navigation parameter. This proves the client uses that value as an identifier in its route flow, not that it is globally stable or server-defined as a course primary key.",
+      "The route childId and selected myChild.child.kindergarten_id are the service arguments, but the inspected parent flow does not prove the route childId was selected from GetUserData.children. Do not claim guardian authorization from this screen route or the MyChild label.",
+      "No query, date, page, pagination, or body parameters are constructed by #25624. Response completeness remains unknown."
+    ],
+    "items": {
+      "kind": "object",
+      "evidence": "The operation body is returned unchanged, stored as myChild.plansCourses, and that exact state value is mapped by the child plans selector UI. The map callback reads two properties from each response-derived item; no complete item schema is established.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "unknown",
+          "evidence": "ChildPlansScreen callback #44274 reads item.id at 1806973-1806975 and puts the unchanged value into local navigation param courseId; no scalar type, uniqueness, global stability, or server identifier guarantee is established."
+        },
+        {
+          "name": "name",
+          "type": "unknown",
+          "evidence": "ChildPlansScreen callback #44274 reads item.name at 1806943-1806946 and supplies it as the selector title. No primitive type or server naming contract is established."
+        }
+      ]
+    }
   },
   {
     "operationId": "GetChildCoursePlanTypes",
@@ -474,7 +550,7 @@
     "operationId": "GetGuardianDiary",
     "sourceFunctionId": 25630,
     "kind": "unknown",
-    "evidence": "The helper returns response.data, but the inspected full disassembly contains only the ChildServices registration for getGuardianDiary; no callsite/action callback consuming this export was established. No response fields are attributed.",
+    "evidence": "The helper returns response.data, but the inspected full disassembly contains only the ChildServices registration for getGuardianDiary; no callsite/action callback consuming this export was established. No response fields are attributed. Service #25630 returns Axios response.data unchanged via #25631. ChildServices registers the method, but a full literal/member-reference search in the original disassembly finds no caller beyond that registration; no downstream body consumer is established.",
     "trace": [
       {
         "functionId": 25630,
@@ -490,6 +566,21 @@
         "functionId": 25620,
         "line": 1002896,
         "evidence": "ChildServices registers getGuardianDiary (#25630) in its exported service table at full-disassembly lines 1002932–1002935."
+      },
+      {
+        "functionId": 25630,
+        "line": 1003280,
+        "evidence": "Constructs GET /api/kindergartens/{kindergartenId}/children/{childId}/diary with no Axios params config."
+      },
+      {
+        "functionId": 25631,
+        "line": 1003307,
+        "evidence": "Returns resolved Axios response.data unchanged."
+      },
+      {
+        "functionId": 25620,
+        "line": 1002896,
+        "evidence": "ChildServices export table registers getGuardianDiary at 1002932-1002936; the registration is the only active reference found, with no action, reducer, or UI consumer tied to its result."
       }
     ],
     "fields": [],
@@ -497,14 +588,17 @@
     "limitations": [
       "Exported service has no located import/action/saga/reducer consumer in the inspected full disassembly; this is an explicit unconsumed unknown disposition.",
       "No response fields or collection shape are inferred from the diary path or UI.",
-      "Body completeness and server contract remain unknown."
+      "Body completeness and server contract remain unknown.",
+      "No action, reducer, saga, screen, or body-property read was tied to this helper; retain an opaque response disposition rather than inferring from /diary or the method name.",
+      "No guardian-authorized screen/call path, own-child permission condition, group/class visibility, or feedback visibility is established.",
+      "No status code, media type, or server contract is established."
     ]
   },
   {
     "operationId": "GetGuardianFeed",
     "sourceFunctionId": 25632,
-    "kind": "unknown",
-    "evidence": "The service returns response.data and the action callback forwards that body unchanged into the guardian-feed reducer path. Callback page bookkeeping is local state, not an HTTP body field. No body property read is established.",
+    "kind": "object",
+    "evidence": "The service returns response.data and the action callback forwards that body unchanged into the guardian-feed reducer path. Callback page bookkeeping is local state, not an HTTP body field. Reducer #26862 reads body-root data and sibling next_date; resulting diary entries reach #34949, which reads the partial item fields modeled below. These are partial client-observed HTTP-body fields, not a complete response schema.",
     "trace": [
       {
         "functionId": 25632,
@@ -535,21 +629,301 @@
         "functionId": 25684,
         "line": 1004424,
         "evidence": "childReducer handles SET_GUARDIAN_DIARY_FEED / SET_MY_CHILD_GUARDIAN_DIARY_FEED and consumes action.data."
+      },
+      {
+        "functionId": 25632,
+        "line": 1003318,
+        "evidence": "Constructs GET /api/kindergartens/{kindergartenId}/children/{childId}/guardian-feed; Axios config.params is input 3."
+      },
+      {
+        "functionId": 25633,
+        "line": 1003348,
+        "evidence": "Returns resolved Axios response.data unchanged."
+      },
+      {
+        "functionId": 25514,
+        "line": 1000403,
+        "evidence": "Guardian-feed action creator returns thunk #25515, which closes over child/view/page arguments."
+      },
+      {
+        "functionId": 25515,
+        "line": 1000422,
+        "evidence": "Calls exact service #25632; constructs the params object with date and selects the current diaryNextDate from dashboard/child state."
+      },
+      {
+        "functionId": 25516,
+        "line": 1000474,
+        "evidence": "Success callback forwards response body unchanged as action data; page is a separate captured client value."
+      },
+      {
+        "functionId": 26862,
+        "line": 1039666,
+        "evidence": "dashboardReducer handles SET_DASHBOARD_GUARDIAN_FEED; at 1039789-1039812 reads action.data.data and action.data.next_date. Since #25516 places the unchanged HTTP body on action.data, these are HTTP-body root properties data and next_date; data is mapped into local diary summary rows."
+      },
+      {
+        "functionId": 26865,
+        "line": 1039971,
+        "evidence": "Maps one HTTP-body data array item; reads its date and diaries, maps diaries unchanged except for locally added displayType, and checks evaluations.length before placing evaluations into a local summary row."
+      },
+      {
+        "functionId": 34923,
+        "line": 1391460,
+        "evidence": "GuardianFeed screen selects dashboard diary/currentPage/diaryNextDate and supplies diary entries to a FlatList; its refresh and load-more callbacks invoke the client fetch flow."
+      },
+      {
+        "functionId": 34944,
+        "line": 1392374,
+        "evidence": "FlatList renderer reads the locally prepared item's displayType and passes the same entry to its diary branch."
+      },
+      {
+        "functionId": 34941,
+        "line": 1392217,
+        "evidence": "For the diary displayType branch, passes the entry as ChildDiaryEntryItem's data prop; date/evaluation branches instead make local display rows."
+      },
+      {
+        "functionId": 34949,
+        "line": 1392765,
+        "evidence": "ChildDiaryEntryItem reads course, texts, status, meals, total_time, summaries, images, documents, feedback, likes, and id directly from its data prop, which is the unchanged diary entry from the feed list."
+      },
+      {
+        "functionId": 34952,
+        "line": 1393114,
+        "evidence": "Maps diary summaries; its callback #34953 reads each summary item's comment property."
+      },
+      {
+        "functionId": 34953,
+        "line": 1393166,
+        "evidence": "Reads summary.comment and returns it for display; no type or further summary-item fields are established."
+      },
+      {
+        "functionId": 34958,
+        "line": 1393505,
+        "evidence": "Feedback renderer reads each feedback item's comment and owner properties; owner is passed through as a display value and no nested owner fields are read."
+      },
+      {
+        "functionId": 35160,
+        "line": 1402712,
+        "evidence": "ChildDiaryImages receives entry.images and maps that collection; image-item fields are not inspected here."
+      },
+      {
+        "functionId": 35406,
+        "line": 1413278,
+        "evidence": "ChildDiaryDocuments receives entry.documents and maps that collection; document-item fields are not inspected here."
+      },
+      {
+        "functionId": 44110,
+        "line": 1799541,
+        "evidence": "ChildDiaryScreen reads route childId and employeeView and selects the client screen state."
+      },
+      {
+        "functionId": 44111,
+        "line": 1799603,
+        "evidence": "When employeeView is false selects state.myChild.child.kindergarten_id; the employee branch selects state.child.child.kindergarten_id."
+      },
+      {
+        "functionId": 44112,
+        "line": 1799623,
+        "evidence": "When employeeView is false selects state.myChild.diaryCurrentPage; the employee branch selects state.child.diaryCurrentPage."
+      },
+      {
+        "functionId": 44113,
+        "line": 1799641,
+        "evidence": "When employeeView is false selects state.myChild.diaryNextDate; the employee branch selects state.child.diaryNextDate."
+      },
+      {
+        "functionId": 44114,
+        "line": 1799659,
+        "evidence": "When employeeView is false selects state.myChild.diary; the employee branch selects state.child.diary."
+      },
+      {
+        "functionId": 44115,
+        "line": 1799677,
+        "evidence": "Reads the imported getGuardianFeed action from the screen module's dependency object and invokes it; no server permission semantics are inferred from this client call."
+      },
+      {
+        "functionId": 44116,
+        "line": 1799703,
+        "evidence": "Invokes the getEntries fetch closure from ChildDiaryScreen."
+      },
+      {
+        "functionId": 25496,
+        "line": 999272,
+        "evidence": "Child reducer handles SET_MY_CHILD_GUARDIAN_DIARY_FEED; the action's body remains the raw body assigned by #25516."
+      },
+      {
+        "functionId": 25497,
+        "line": 999741,
+        "evidence": "Reads raw action.data.data and maps each date-group item; each local group receives a synthetic displayType and date."
+      },
+      {
+        "functionId": 25498,
+        "line": 999779,
+        "evidence": "Forwards each raw group.diaries entry, adding only local displayType='diary'; this independently confirms the child reducer consumes the same body.data[].diaries[] path."
       }
     ],
-    "fields": [],
+    "fields": [
+      {
+        "name": "data",
+        "type": "array",
+        "evidence": "Reducer #26862 reads action.data.data at 1039798-1039802 and invokes .map. Callback #25516 sets action.data to the unchanged HTTP body at 1000478-1000498, so this is the HTTP-body root property data; client collection use does not establish item completeness or server guarantees.",
+        "items": {
+          "kind": "object",
+          "evidence": "#26865 directly reads date and diaries and checks evaluations.length on each value passed from the root body.data collection; only these paths are observed.",
+          "fields": [
+            {
+              "name": "date",
+              "type": "unknown",
+              "evidence": "#26865 reads group.date at 1039979-1039980 and copies it into a locally created date-summary row and evaluation-summary row."
+            },
+            {
+              "name": "diaries",
+              "type": "array",
+              "evidence": "#26865 invokes .map on group.diaries at 1039985-1039989; #26866 adds local displayType='diary' to each entry and otherwise returns it unchanged at 1040009-1040019. The entry is passed to #34941/#34949, which reads the fields listed below.",
+              "items": {
+                "kind": "object",
+                "evidence": "#34949 reads the listed properties directly from its data prop; #34941 passes the same feed diary entry as that prop, and #26866 only adds local displayType before forwarding it.",
+                "fields": [
+                  {
+                    "name": "course",
+                    "type": "unknown",
+                    "evidence": "#34949 reads data.course at 1392839-1392841; no value type or nested fields are established."
+                  },
+                  {
+                    "name": "texts",
+                    "type": "unknown",
+                    "evidence": "#34949 checks typeof data.texts against 'object' and calls Object.keys(data.texts) at 1392814-1392827. Arrays also satisfy this check; no Array.isArray discriminator or fixed dictionary shape is established, so the object-or-array boundary remains unknown."
+                  },
+                  {
+                    "name": "status",
+                    "type": "object",
+                    "evidence": "#34949 reads data.status and, when truthy, reads status.color, status.icon, and status.name at 1392848-1392898; nested value types and any further status shape are unknown.",
+                    "fields": [
+                      {
+                        "name": "color",
+                        "type": "unknown",
+                        "evidence": "#34949 reads data.status.color at 1392868-1392870; no value type is proved."
+                      },
+                      {
+                        "name": "icon",
+                        "type": "unknown",
+                        "evidence": "#34949 reads data.status.icon at 1392871-1392874; no value type is proved."
+                      },
+                      {
+                        "name": "name",
+                        "type": "unknown",
+                        "evidence": "#34949 reads data.status.name at 1392896-1392898; no value type is proved."
+                      }
+                    ]
+                  },
+                  {
+                    "name": "meals",
+                    "type": "unknown",
+                    "evidence": "#34949 reads data.meals and applies Object.keys then maps its keys at 1392907-1392935; #34957 indexes meals by a key at 1393419-1393423. The complete value shape is not established."
+                  },
+                  {
+                    "name": "total_time",
+                    "type": "unknown",
+                    "evidence": "#34949 reads data.total_time at 1392939-1392941 and 1392983-1392985; no value type is proved."
+                  },
+                  {
+                    "name": "summaries",
+                    "type": "array",
+                    "evidence": "#34949 passes data.summaries to #34952 when present at 1392998-1393001; #34952 maps it at 1393124-1393127.",
+                    "items": {
+                      "kind": "object",
+                      "evidence": "#34952 maps each summary and #34953 reads its comment property at 1393124-1393172; no other item fields or value types are established.",
+                      "fields": [
+                        {
+                          "name": "comment",
+                          "type": "unknown",
+                          "evidence": "#34953 reads summary.comment at 1393170-1393172; no value type is proved."
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "images",
+                    "type": "array",
+                    "evidence": "#34949 checks data.images.length and passes images to #35160 at 1393302-1393327; #35160 maps its images prop at 1402829-1402832.",
+                    "items": {
+                      "kind": "unknown",
+                      "evidence": "#35160 maps image items, but their properties and value types are not established."
+                    }
+                  },
+                  {
+                    "name": "documents",
+                    "type": "array",
+                    "evidence": "#34949 checks data.documents.length and passes documents to #35406 at 1393329-1393345; #35406 maps its documents prop at 1413316-1413318.",
+                    "items": {
+                      "kind": "unknown",
+                      "evidence": "#35406 maps document items, but their properties and value types are not established."
+                    }
+                  },
+                  {
+                    "name": "feedback",
+                    "type": "array",
+                    "evidence": "#34949 checks data.feedback.length and maps the feedback collection at 1393035-1393053.",
+                    "items": {
+                      "kind": "object",
+                      "evidence": "#34958 receives each mapped item and reads its comment and owner properties at 1393537 and 1393717; no nested owner fields or value types are established.",
+                      "fields": [
+                        {
+                          "name": "comment",
+                          "type": "unknown",
+                          "evidence": "#34958 reads feedbackItem.comment at 1393537; no value type is proved."
+                        },
+                        {
+                          "name": "owner",
+                          "type": "unknown",
+                          "evidence": "#34958 reads feedbackItem.owner at 1393717 and passes that value to the display component; it does not read owner.name or another nested property."
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "likes",
+                    "type": "unknown",
+                    "evidence": "#34949 reads data.likes and passes it unchanged as a child component prop at 1393347-1393366; its shape is not inspected."
+                  },
+                  {
+                    "name": "id",
+                    "type": "unknown",
+                    "evidence": "#34949 reads data.id at 1393369-1393370; no value type is proved."
+                  }
+                ]
+              }
+            },
+            {
+              "name": "evaluations",
+              "type": "unknown",
+              "evidence": "#26865 reads group.evaluations and its length at 1039990-1039995, then copies the value into a client-created summary item; no item fields or precise value type are established."
+            }
+          ]
+        }
+      },
+      {
+        "name": "next_date",
+        "type": "unknown",
+        "evidence": "Reducer #26862 reads action.data.next_date at 1039808-1039810. Callback #25516 sets action.data to the unchanged HTTP body, so this is the HTTP-body root property next_date; its server meaning, inclusivity, timezone, and value type are not established."
+      }
+    ],
     "complete": false,
     "limitations": [
-      "Verified consumer path is raw body passthrough; no field/item shape is established.",
-      "Page metadata in the action is local state and is excluded from the body model.",
-      "Body completeness and server contract remain unknown."
+    "Page metadata in the action is local state and is excluded from the body model.",
+      "Body completeness and server contract remain unknown.",
+      "Client-created displayType/date-header/evaluation summary objects, Redux state keys, and action wrapper page are not HTTP-body properties. In particular, the source reads body.data and body.next_date at the body root; it does not establish a body.data.data or body.data.next_date wrapper.",
+    "The display component reads only the modeled diary-item fields; client-side reads do not establish guaranteed presence or server completeness. The texts check accepts an object or array and does not establish a fixed dictionary. Do not infer title, description/HTML, contentDate, created_at, published_at, updated_at, generic media, attachment fields, filetype, URL, filename, thumbnail, fixed texts dictionary keys, meal item shape, image/document item fields, feedback owner subfields, or likes shape.",
+      "The feed list's displayType is synthesized locally by #26866/#25498 and is not a response field. Group date and local date/evaluation summary rows are not diary-entry fields.",
+      "ChildDiaryScreen's employeeView=false branch selects state.myChild and calls the imported getGuardianFeed action, but this UI/state label and route childId do not establish server-verified guardian permission or visibility of other-child feedback.",
+      "The screen's empty-state text mentions published entries, but this is UI copy, not a response visibility field or server guarantee.",
+      "No status code, media type, item completeness, or complete body shape is established."
     ]
   },
   {
     "operationId": "GetChildProfile",
     "sourceFunctionId": 25634,
     "kind": "object",
-    "evidence": "The helper returns response.data. In the traced child-profile success path #25519 reads top-level active_courses from that body, dispatches it separately, then locally copies/deletes that property and dispatches the remainder as child data. This is a partial observed body view.",
+    "evidence": "The helper returns response.data. In the traced child-profile success path #25519 reads top-level active_courses from that body, dispatches it separately, then locally copies/deletes that property and dispatches the remainder as child data. This is a partial observed body view. Service #25634/#25635 returns response.data unchanged. MyChildInfoScreen #44124 invokes the profile thunk with route childId and false local thunk context. Selector #44121 returns the whole state.myChild.child object, while selector #44122 returns that child's kindergarten_id; #44124 passes the #44122 value as argument 1 (environment slot 5), not the whole object. This false branch dispatches SET_CHILD. A separate ChildInfoScreen caller #44673/#44679 uses the true MyChild thunk-context branch: #25519 dispatches the body remainder as SET_MY_CHILD, #25496 stores it under myChild.child, and MyChildInfoScreen selector #44121 / component #44120 reads name and profile_picture. The profile fields are supported by this exact true-context response-to-consumer path, not by attributing the false-context call to SET_MY_CHILD.",
     "trace": [
       {
         "functionId": 25634,
@@ -580,20 +954,100 @@
         "functionId": 25684,
         "line": 1004424,
         "evidence": "childReducer consumes SET_CHILD_COURSES and SET_CHILD actions; the latter stores callback data as child state."
+      },
+      {
+        "functionId": 25634,
+        "line": 1003359,
+        "evidence": "GET /api/kindergartens/{kindergartenId}/children/{childId}/profile; explicit arguments 1 and 2 form the path."
+      },
+      {
+        "functionId": 25635,
+        "line": 1003386,
+        "evidence": "Returns Axios response.data unchanged."
+      },
+      {
+        "functionId": 25517,
+        "line": 1000508,
+        "evidence": "Named child-profile action creator returns async thunk #25518."
+      },
+      {
+        "functionId": 25518,
+        "line": 1000525,
+        "evidence": "Calls imported getChildProfile with forwarded kindergarten/child arguments and attaches success callback #25519."
+      },
+      {
+        "functionId": 25519,
+        "line": 1000548,
+        "evidence": "Callback parameter r4 is the response body (1000552). It reads r4.active_courses and dispatches the value; if truthy/non-null it calls .find with #25520, then directly deletes active_courses from r4 at 1000578. Only afterward it uses Object.assign to construct a separate local state object containing a course wrapper and the remaining body (1000581-1000586), then dispatches SET_CHILD or SET_MY_CHILD according to thunk context."
+      },
+      {
+        "functionId": 25520,
+        "line": 1000601,
+        "evidence": "The find callback reads candidate.type and strictly compares it to numeric literal 1; this proves a nested client read only, not the candidate's full type/schema or a server enum."
+      },
+      {
+        "functionId": 25496,
+        "line": 999272,
+        "evidence": "The true-context #25519 SET_MY_CHILD action reaches this reducer, which stores action.data as myChild.child (case #25496 and child assignment around line 999720)."
+      },
+      {
+        "functionId": 44673,
+        "line": 1826294,
+        "evidence": "ChildInfoScreen creates the separate profile caller #44679 and renders its selected child state; the caller invokes the same getChildProfile thunk with its captured true MyChild context (closure creation at 1826589; call and context argument at 1828061-1828066). This is a client UI/caller path, not server guardian authority."
+      },
+      {
+        "functionId": 44679,
+        "line": 1828043,
+        "evidence": "Separate ChildInfoScreen callback calls the imported getChildProfile thunk with literal true as its third/context argument: #44679 loads true at 1828051-1828052 and passes that register in Call4 at 1828065. That selects #25519's SET_MY_CHILD branch. This is local client context, not proof of guardian authorization."
+      },
+      {
+        "functionId": 44120,
+        "line": 1800078,
+        "evidence": "MyChildInfoScreen reads route.params.childId and renders selected myChild.child.name and profile_picture at lines 1800140-1800142 and 1800250-1800253; these reads consume the state populated by the true-context SET_MY_CHILD path, though its own #44124 call uses the other branch."
+      },
+      {
+        "functionId": 44121,
+        "line": 1800687,
+        "evidence": "Selector #44121 returns state.myChild.child (1800691-1800694); it is the whole-child selector. #44122 returns that child's kindergarten_id, and #44123 returns deleted_at."
+      },
+      {
+        "functionId": 44122,
+        "line": 1800699,
+        "evidence": "Selector #44122 reads state.myChild.child and returns its kindergarten_id when the child is non-null (1800703-1800711)."
+      },
+      {
+        "functionId": 44124,
+        "line": 1800733,
+        "evidence": "At 1800742-1800754 MyChildInfoScreen loads environment slot 5, populated by selector #44122 with the selected child's kindergarten_id; it then loads route.params.childId from slot 7 and literal false. #25519 consequently dispatches SET_CHILD, not SET_MY_CHILD. This callsite does not prove route childId provenance or server authorization."
       }
     ],
     "fields": [
       {
         "name": "active_courses",
         "type": "unknown",
-        "evidence": "In #25519, response-body parameter p1 is read at full-disassembly line 1000562 (offset +0x22) and again at 1000566 (+0x33), then dispatched as SET_CHILD_COURSES.data. No item or primitive type is established."
+        "evidence": "In #25519, response-body parameter p1 is read at full-disassembly line 1000562 (offset +0x22) and again at 1000566 (+0x33), then dispatched as SET_CHILD_COURSES.data. No item or primitive type is established. #25519 reads response-body root active_courses, dispatches its value, and invokes .find on it when truthy/non-null. Callback #25520 reads candidate.type at full-disassembly line 1000606 and strictly compares it to literal 1 at 1000607-1000609. Keep the container unknown and retain the nested client observation candidate.type; these instructions do not prove a complete array/item schema or server enum."
+      },
+      {
+        "name": "name",
+        "type": "unknown",
+        "evidence": "On the separate true-context ChildInfoScreen #44679 call, #25519 removes active_courses from the response object and dispatches the remaining body as SET_MY_CHILD; #25496 stores action.data as myChild.child. MyChildInfoScreen selector #44121 returns that state, and #44120 reads myChild.child.name at line 1800250. The #44124 false-context call instead dispatches SET_CHILD; no presence or primitive-type guarantee is established."
+      },
+      {
+        "name": "profile_picture",
+        "type": "unknown",
+        "evidence": "On the separate true-context ChildInfoScreen #44679 call, #25519 removes active_courses from the response object and dispatches the remaining body as SET_MY_CHILD; #25496 stores action.data as myChild.child. MyChildInfoScreen selector #44121 returns that state, and #44120 reads myChild.child.profile_picture at line 1800252 for the image view. The #44124 false-context call instead dispatches SET_CHILD; no URL/type or presence guarantee is established."
       }
     ],
     "complete": false,
     "limitations": [
       "The remainder is copied and locally mutated (active_courses removed) before SET_CHILD; it is not modeled as additional named fields.",
       "No type or nested shape is established for active_courses.",
-      "Partial/open client view; body completeness and server contract remain unknown."
+      "Partial/open client view; body completeness and server contract remain unknown.",
+      "In #25519, r4 is the response object supplied to the callback; active_courses is deleted directly from r4 before Object.assign constructs a separate local state wrapper. This client-side in-memory mutation and wrapper are not server writes or HTTP-body fields. The remaining body is not modeled as named response properties.",
+      "No active-course id, course name, or enrollment identifier is read from active_courses in the profile callback. The find predicate reads only candidate.type and compares against 1; the separate root name read belongs to myChild.child UI, not an active-course item.",
+      "MyChildInfoScreen #44124 forwards route.params.childId and passes the result of selector #44122 (state.myChild.child.kindergarten_id) as argument 1; selector #44121 returns the whole child object and is a different value. The false context selects SET_CHILD. The ChildInfoScreen true-context path is a client state branch, not guardian/server authorization evidence. There is no proven handoff from the init-derived DashboardScreen row id into this route.params.childId.",
+      "The screen's pre-request selected myChild.child.kindergarten_id read is not used to claim that the profile response contains kindergarten_id. Other state writers can update the selected child; this candidate models only fields causally observed from the profile fulfillment copy.",
+      "Profile requests have no observed query/body date or pagination parameters. Body completeness and all other fields remain unknown."
     ]
   },
   {
@@ -766,7 +1220,7 @@
     "operationId": "GetChildCalendar",
     "sourceFunctionId": 25644,
     "kind": "object",
-    "evidence": "The helper returns response.data. The traced absence-calendar action callback reads top-level access and forwards the entire body to the calendar reducer. No other named response properties are attributed.",
+    "evidence": "Service #25644 returns response.data. The exact calendar action #26402 reads top-level response-body access and dispatches the unchanged whole body; reducer #26394 reads the eight additional listed body-root properties directly from action.data. Together the traced client reads support nine direct roots: access, days, child_data, lock_date, comment_date, holidays, default_status, workday_weekend, and workday_holiday. days is used as a collection downstream, but its raw item shape remains unknown. This is a partial raw HTTP-body view, not the calendar UI's composed per-cell model.",
     "trace": [
       {
         "functionId": 25644,
@@ -792,20 +1246,114 @@
         "functionId": 26394,
         "line": 1025591,
         "evidence": "Calendar childReducer includes SET_CHILD_ABSENCE_CALENDAR_DATA and consumes action.data."
+      },
+      {
+        "functionId": 25644,
+        "line": 1003555,
+        "evidence": "Builds /api/kindergartens/{kindergartenId}/children/{childId}/calendar, passes input parameter 3 as Axios config.params, and attaches a response continuation."
+      },
+      {
+        "functionId": 25645,
+        "line": 1003585,
+        "evidence": "Reads resolved Axios response.data and returns it unchanged."
+      },
+      {
+        "functionId": 26401,
+        "line": 1025917,
+        "evidence": "Calendar thunk invokes imported getChildCalendar with selectedKindergartenId, childId and its query/config argument."
+      },
+      {
+        "functionId": 26402,
+        "line": 1025968,
+        "evidence": "Success continuation reads response-body access at 1025977 and dispatches the full unchanged response body as SET_CHILD_ABSENCE_CALENDAR_DATA at 1025982-1025985."
+      },
+      {
+        "functionId": 26394,
+        "line": 1025591,
+        "evidence": "Reducer reads action.data.days, child_data, lock_date, comment_date, holidays, default_status, workday_weekend and workday_holiday; separate SET_CHILD_CALENDAR_ACCESS stores action.data directly as childCalendarAccess."
+      },
+      {
+        "functionId": 44368,
+        "line": 1811993,
+        "evidence": "Calendar caller builds an action argument containing childId plus start_date/end_date; it computes startOf('month') and endOf('month'), formats both with Y-MM-DD, invokes getChildAbsenceCalendar, then dispatches the thunk."
+      },
+      {
+        "functionId": 44369,
+        "line": 1812043,
+        "evidence": "Calendar finally callback converts the selected date toISOString for local callback/state handling; this does not establish server timezone or range inclusivity."
+      },
+      {
+        "functionId": 44382,
+        "line": 1812441,
+        "evidence": "CalendarDay consumes a data prop and locally selected calendar state. Its composed day model is not shown to be a direct HTTP days[] item."
+      },
+      {
+        "functionId": 44393,
+        "line": 1812857,
+        "evidence": "Client dayStatus uses a diary_status value when present, otherwise performs date/current-day and explicit attendance/status lookups; it does not infer absence from a missing arrival/log."
       }
     ],
     "fields": [
       {
         "name": "access",
         "type": "unknown",
-        "evidence": "Success callback #26402 reads `access` from its resolved service result at full-disassembly line 1025977 (offset +0x11); it then dispatches the unchanged whole result at 1025982–1025985. Value type is unknown."
+        "evidence": "Success callback #26402 reads `access` from its resolved service result at full-disassembly line 1025977 (offset +0x11); it then dispatches the unchanged whole result at 1025982–1025985. Value type is unknown. #26402 reads response-body access directly at 1025977 and forwards the complete body unchanged; no access value type or nested fields are inspected."
+      },
+      {
+        "name": "days",
+        "type": "array",
+        "items": {
+          "kind": "unknown",
+          "evidence": "Reducer #26394 reads body.days directly into absenceCalendarData at 1025725-1025728; its calendar state collection is mapped/searched. No raw item property is tied conclusively to this response array."
+        },
+        "evidence": "#26394 reads body.days at 1025725-1025728 and assigns it to absenceCalendarData. Consumer #44366 searches the calendar data by date, but its date-keyed UI/calendar objects do not prove a field of each raw HTTP item."
+      },
+      {
+        "name": "child_data",
+        "type": "unknown",
+        "evidence": "#26394 reads body.child_data at 1025728-1025731 and stores the value unchanged as absenceChildData; no nested field is read here."
+      },
+      {
+        "name": "lock_date",
+        "type": "unknown",
+        "evidence": "#26394 reads body.lock_date at 1025731-1025734 and stores it as absenceLockDate; no type or format is asserted."
+      },
+      {
+        "name": "comment_date",
+        "type": "unknown",
+        "evidence": "#26394 reads body.comment_date at 1025734-1025737 and stores it as absenceCommentLockDate; no type or format is asserted."
+      },
+      {
+        "name": "holidays",
+        "type": "unknown",
+        "evidence": "#26394 reads body.holidays at 1025737-1025740 and stores it as absenceCalendarHolidays; a calendar holiday lookup calls find on a collection supplied to the UI, but its origin is not conclusively tied to this raw response property. No item fields or response type are established."
+      },
+      {
+        "name": "default_status",
+        "type": "unknown",
+        "evidence": "#26394 reads body.default_status at 1025740-1025743 and stores it as defaultStatus. UI references a defaultStatus value but does not prove its HTTP type or enum."
+      },
+      {
+        "name": "workday_weekend",
+        "type": "unknown",
+        "evidence": "#26394 reads body.workday_weekend at 1025743-1025746 and stores it as workdayWeekend; #44396 invokes includes on the stored value, which does not distinguish an array from another includes-capable value."
+      },
+      {
+        "name": "workday_holiday",
+        "type": "unknown",
+        "evidence": "#26394 reads body.workday_holiday at 1025746-1025749 and stores it as workdayHoliday; no response type or members are inspected."
       }
     ],
     "complete": false,
     "limitations": [
-      "Only top-level access is observed; its type/nesting is unknown.",
+      "The access property is observed at the body root; its value type and any nested shape remain unknown.",
       "Whole body dispatch does not establish any additional field names.",
-      "Partial/open client view; body completeness and server contract remain unknown."
+      "Partial/open client view; body completeness and server contract remain unknown.",
+      "Only the listed root properties are direct body reads. Root/body completeness is unknown.",
+      "Raw days[] row keys, IDs, planned-versus-recorded attendance, status, arrival/pickup timestamps, and per-row last-updated/actor fields are not established by this service-to-consumer path. CalendarDay's date, attendance, entry, diary_status and dayStatus accesses are on calendar/UI values or a composed prop; do not project them into raw days[] without a proven origin trace.",
+      "The labels Absent and Present occur as calendar edit UI labels in #43023; they are not proven server enum values. The client status helper uses explicit diary_status/attendance/status values and has no branch that turns a missing arrival or missing log into absence.",
+      "access is an opaque value. No access.restrict or other nested access property was located in this attendance flow. Permission gating is separately client-side and does not define server authorization.",
+      "No response status, requiredness, nullability, default, enum or completeness claim."
     ]
   },
   {
@@ -890,8 +1438,8 @@
   {
     "operationId": "GetStatusLogs",
     "sourceFunctionId": 25650,
-    "kind": "unknown",
-    "evidence": "The GET helper returns response.data; the status-log success callback passes that body unchanged into calendar state and inspects no response properties.",
+    "kind": "array",
+    "evidence": "The GET helper returns response.data; callback #26405 forwards that body unchanged into calendar state. CalendarDayLogScreen calls map on that exact value and passes each raw log object unchanged to #43079, which reads the listed fields directly. This is a partial item view, not a complete response schema.",
     "trace": [
       {
         "functionId": 25650,
@@ -922,21 +1470,140 @@
         "functionId": 26394,
         "line": 1025591,
         "evidence": "Calendar childReducer handles SET_CHILD_CALENDAR_LOG and consumes action.data."
+      },
+      {
+        "functionId": 25650,
+        "line": 1003674,
+        "evidence": "Builds /api/kindergartens/{kindergartenId}/children/{childId}/status-log and Axios config.params={date: parameter 3}."
+      },
+      {
+        "functionId": 25651,
+        "line": 1003706,
+        "evidence": "Reads resolved Axios response.data and returns it unchanged."
+      },
+      {
+        "functionId": 26404,
+        "line": 1026004,
+        "evidence": "Calendar-log thunk calls imported getStatusLogs with selectedKindergartenId, childId and the selected date, then attaches #26405."
+      },
+      {
+        "functionId": 26405,
+        "line": 1026039,
+        "evidence": "Dispatches resolved response body unchanged as SET_CHILD_CALENDAR_LOG.data."
+      },
+      {
+        "functionId": 26394,
+        "line": 1025591,
+        "evidence": "Reducer stores SET_CHILD_CALENDAR_LOG.data directly as calendarDayLog at 1025712-1025720."
+      },
+      {
+        "functionId": 43072,
+        "line": 1753513,
+        "evidence": "CalendarDayLogScreen selects childCalendar.calendarDayLog and calls its map method at 1753588-1753590."
+      },
+      {
+        "functionId": 43077,
+        "line": 1753705,
+        "evidence": "History screen sends childId and the selected day's dateString formatted YYYY-MM-DD to getChildCalendarLog; no write/seen action follows in this flow."
+      },
+      {
+        "functionId": 43073,
+        "line": 1753638,
+        "evidence": "History screen timezone selector reads user.timezone, which is supplied to the created_at display conversion."
+      },
+      {
+        "functionId": 43079,
+        "line": 1753764,
+        "evidence": "Receives each mapped log item directly. Reads diary_status and its color/icon/name, identifiable.name, created_at, type, status, comment, start_time and end_time."
       }
     ],
     "fields": [],
     "complete": false,
     "limitations": [
-      "Verified action/reducer path is raw body passthrough; no log row fields or array shape are established.",
-      "Do not infer a response array from the operation name or local reset-to-empty action.",
-      "Body completeness and server contract remain unknown."
-    ]
+      "The client consumes the body as an array and reads the listed row paths; this does not establish server completeness, row guarantees, or additional fields.",
+      "Body completeness and server contract remain unknown.",
+      "Only the direct display reads above are listed; response array item completeness, field types, IDs, actor identifiers and additional timestamps are unknown.",
+      "identifiable.name is a displayed name, not proof of a specific author/actor model. created_at is the only log timestamp observed; no updated_at/last-updated field or event start/end timestamp is read. start_time/end_time are displayed as attendance hours and must not be relabeled as log timestamps.",
+      "created_at display explicitly applies UTC parsing then user.timezone conversion, but does not prove the server's timezone convention or raw timestamp format. No range-inclusivity claim.",
+      "No status enum meanings are proved by the type/status UI branches. A missing item, status or arrival does not imply absence.",
+      "No response status, requiredness, nullability, default, enum or completeness claim."
+    ],
+    "items": {
+      "kind": "object",
+      "evidence": "The raw response root is iterated with map, and each item is used directly by #43079. This is only the client-observed item view.",
+      "fields": [
+        {
+          "name": "diary_status",
+          "type": "object",
+          "evidence": "#43079 checks diary_status for null and reads it directly for icon/color/name display at 1753795-1753808 and 1753963-1753966.",
+          "fields": [
+            {
+              "name": "name",
+              "type": "unknown",
+              "evidence": "#43079 reads diary_status.name for displayed status text at 1753963-1753966."
+            },
+            {
+              "name": "color",
+              "type": "unknown",
+              "evidence": "#43079 reads diary_status.color at 1753801-1753802."
+            },
+            {
+              "name": "icon",
+              "type": "unknown",
+              "evidence": "#43079 reads diary_status.icon at 1753803-1753808."
+            }
+          ]
+        },
+        {
+          "name": "identifiable",
+          "type": "object",
+          "evidence": "#43079 reads identifiable.name for a display label at 1753854-1753857.",
+          "fields": [
+            {
+              "name": "name",
+              "type": "unknown",
+              "evidence": "#43079 reads identifiable.name at 1753854-1753857; client use does not establish that this is necessarily an actor identity."
+            }
+          ]
+        },
+        {
+          "name": "created_at",
+          "type": "unknown",
+          "evidence": "#43079 reads created_at and passes it through utc(...).tz(user.timezone).format('L LT') at 1753865-1753876. No transport representation is asserted."
+        },
+        {
+          "name": "type",
+          "type": "unknown",
+          "evidence": "#43079 reads type, translates/displays it, and compares it with the literal 'Child calendar' in the comment/status/time rendering branches at 1753890-1753897 and 1753972-1753984."
+        },
+        {
+          "name": "status",
+          "type": "unknown",
+          "evidence": "#43079 reads status for truthiness and branching at 1753908-1753909 and 1753972-1753978; this does not establish a status enum or the meaning of a status-log event."
+        },
+        {
+          "name": "comment",
+          "type": "unknown",
+          "evidence": "#43079 reads comment and displays it in the comment branch at 1753979-1753984 and 1754046-1754105."
+        },
+        {
+          "name": "start_time",
+          "type": "unknown",
+          "evidence": "#43079 reads start_time at 1753982-1753984 and 1754110-1754113; it is an attendance time read, not a status-log event timestamp."
+        },
+        {
+          "name": "end_time",
+          "type": "unknown",
+          "evidence": "#43079 reads end_time at 1754110-1754113; it is an attendance time read, not a status-log event timestamp."
+        }
+      ]
+    }
   },
   {
     "operationId": "GetAbsenceModalData",
     "sourceFunctionId": 25652,
     "kind": "object",
-    "evidence": "The helper returns response.data. The absence-modal success callback reads top-level min_date from that body and dispatches it to the calendar reducer; no other body properties are observed.",
+    "evidence": "The helper returns response.data. The absence-modal success callback reads top-level min_date from that body and dispatches it to the calendar reducer; no other body properties are observed. Service #25652 calls Axios GET and #25653 returns response.data. The exact absence-modal action callback #26415 reads body.min_date and dispatches that value; no other response property is observed.",
     "trace": [
       {
         "functionId": 25652,
@@ -967,20 +1634,59 @@
         "functionId": 26394,
         "line": 1025591,
         "evidence": "Calendar childReducer handles SET_CHILD_CALENDAR_MODAL_MIN_DATE and consumes action.data."
+      },
+      {
+        "functionId": 25652,
+        "line": 1003717,
+        "evidence": "Builds /api/kindergartens/{kindergartenId}/children/{childId}/absences/modal and Axios config.params={form: parameter 3}."
+      },
+      {
+        "functionId": 25653,
+        "line": 1003749,
+        "evidence": "Reads resolved Axios response.data and returns it unchanged."
+      },
+      {
+        "functionId": 26414,
+        "line": 1026207,
+        "evidence": "Modal thunk builds form argument {user_id: current user.id} and invokes imported getAbsenceModalData."
+      },
+      {
+        "functionId": 26415,
+        "line": 1026238,
+        "evidence": "Reads response-body min_date at 1026248 and dispatches it as SET_CHILD_CALENDAR_MODAL_MIN_DATE.date."
+      },
+      {
+        "functionId": 26394,
+        "line": 1025591,
+        "evidence": "Reducer stores the action's date unchanged as calendarMinDate at 1025685-1025693."
+      },
+      {
+        "functionId": 43025,
+        "line": 1750874,
+        "evidence": "Calendar edit form selects childCalendar.calendarMinDate."
+      },
+      {
+        "functionId": 43040,
+        "line": 1751412,
+        "evidence": "Date-picker props use the selected minimum date as minimumDate; this is client use and does not establish server date semantics."
       }
     ],
     "fields": [
       {
         "name": "min_date",
         "type": "unknown",
-        "evidence": "Callback #26415 reads response-body p1.min_date at full-disassembly line 1026248 (offset +0x11), renames the value to Redux action data.date, and dispatches it. The source property is min_date; its value type is unknown."
+        "evidence": "Callback #26415 reads response-body p1.min_date at full-disassembly line 1026248 (offset +0x11), renames the value to Redux action data.date, and dispatches it. The source property is min_date; its value type is unknown. #26415 reads min_date directly from the raw response body at 1026248, then stores the unchanged value as calendarMinDate. No type/format or server meaning is proved."
       }
     ],
     "complete": false,
     "limitations": [
       "Only the top-level min_date read is modeled; Redux rename date is not an HTTP field.",
       "No primitive/date serialization type is established.",
-      "Partial/open client view; body completeness and server contract remain unknown."
+      "Partial/open client view; body completeness and server contract remain unknown.",
+      "Only top-level min_date is observed; the remainder of the body is unknown/open.",
+      "The date picker consumes min_date as a minimumDate input, but no timezone, inclusivity, lock/restrict rule or server-side permission implication is established.",
+      "No access.restrict field or other permission flag was found in this modal response flow.",
+      "No response status, requiredness, nullability, default, enum or completeness claim."
     ]
   },
   {
@@ -1761,7 +2467,7 @@
     "operationId": "GetDiaryData",
     "sourceFunctionId": 25935,
     "kind": "object",
-    "evidence": "The getDiaryData service returns response.data. In the traced employee diary thunk #25783 directly reads these top-level properties from that HTTP body and dispatches them; statuses items are accessed by #25784. Root nesting is preserved: these are body-level properties, not Axios/Redux wrapper keys.",
+    "evidence": "The getDiaryData service returns response.data. In the traced employee diary thunk #25783 directly reads these top-level properties from that HTTP body and dispatches them; statuses items are accessed by #25784. Root nesting is preserved: these are body-level properties, not Axios/Redux wrapper keys. Service #25935 returns Axios response.data unchanged via #25936. Employee diary action #25781/#25782 calls the service and #25783 reads the listed root body properties; #25784 reads two properties from status items. A separate caller #43846 calls the action but does not inspect its resolved body. This is an employee-client observation only and does not establish guardian access.",
     "trace": [
       {
         "functionId": 25935,
@@ -1797,46 +2503,86 @@
         "functionId": 25735,
         "line": 1006419,
         "evidence": "diaryReducer handles SET_DIARY and SET_DIARY_ENTRIES (case tests at 1006463/1006481) and consumes the action data in state; other listed values flow through corresponding action cases."
+      },
+      {
+        "functionId": 25935,
+        "line": 1012899,
+        "evidence": "Builds GET /api/kindergartens/{kindergartenId}/diary and params {course: input.course_id, date: input.date}."
+      },
+      {
+        "functionId": 25936,
+        "line": 1012932,
+        "evidence": "Returns resolved Axios response.data unchanged."
+      },
+      {
+        "functionId": 25781,
+        "line": 1008600,
+        "evidence": "Diary action reads its query selector and returns thunk #25782."
+      },
+      {
+        "functionId": 25782,
+        "line": 1008630,
+        "evidence": "Reads state.user.employee and employee.selected_course_id, plus diary.selected_date, and calls getDiaryData; if an explicit query course/date is supplied it is used instead of the corresponding state value."
+      },
+      {
+        "functionId": 25783,
+        "line": 1008685,
+        "evidence": "Exact success callback reads the listed HTTP-body root properties and dispatches selected values into diary state."
+      },
+      {
+        "functionId": 25784,
+        "line": 1008861,
+        "evidence": "Iterates body.statuses and reads item.used_in_course and item.type; it does not establish other status-item properties."
+      },
+      {
+        "functionId": 25735,
+        "line": 1006419,
+        "evidence": "diaryReducer consumes the dispatched diary fields; reducer/local state names are not additional HTTP-body properties."
+      },
+      {
+        "functionId": 43846,
+        "line": 1787831,
+        "evidence": "Separate action caller sets local loading state, flushes diary auto-saves, calls getDiaryData with resetFirst, then only performs modal cleanup; it never reads the resolved response body. This path is not guardian-access proof."
       }
     ],
     "fields": [
       {
         "name": "diary",
         "type": "unknown",
-        "evidence": "#25783 reads response-body p1.diary and dispatches it unchanged as SET_DIARY.data. Original bytecode line 1008696; other types/nesting remain unknown."
+        "evidence": "#25783 reads response-body p1.diary and dispatches it unchanged as SET_DIARY.data. Original bytecode line 1008696; other types/nesting remain unknown. #25783 reads response-body p1.diary at 1008696-1008699 and dispatches it unchanged."
       },
       {
         "name": "entries",
         "type": "unknown",
-        "evidence": "#25783 reads response-body p1.entries and dispatches it unchanged as SET_DIARY_ENTRIES.data. Original bytecode line 1008703; other types/nesting remain unknown."
+        "evidence": "#25783 reads response-body p1.entries and dispatches it unchanged as SET_DIARY_ENTRIES.data. Original bytecode line 1008703; other types/nesting remain unknown. #25783 reads response-body p1.entries at 1008703-1008705 and dispatches it unchanged."
       },
       {
         "name": "feedback_type_options",
         "type": "unknown",
-        "evidence": "#25783 reads p1.feedback_type_options and, when truthy, dispatches it as SET_FEEDBACK_TYPE_OPTIONS.data. Original bytecode line 1008706; other types/nesting remain unknown."
+        "evidence": "#25783 reads p1.feedback_type_options and, when truthy, dispatches it as SET_FEEDBACK_TYPE_OPTIONS.data. Original bytecode line 1008706; other types/nesting remain unknown. #25783 reads p1.feedback_type_options at 1008706-1008714 and dispatches it only when truthy."
       },
       {
         "name": "leave_type_option",
         "type": "unknown",
-        "evidence": "#25783 reads p1.leave_type_option and, when truthy, dispatches it as SET_LEAVE_TYPE_OPTION.data. Original bytecode line 1008715; other types/nesting remain unknown."
+        "evidence": "#25783 reads p1.leave_type_option and, when truthy, dispatches it as SET_LEAVE_TYPE_OPTION.data. Original bytecode line 1008715; other types/nesting remain unknown. #25783 reads p1.leave_type_option at 1008715-1008723 and dispatches it only when truthy."
       },
       {
         "name": "statuses",
         "type": "array",
-        "evidence": "#25783 reads p1.statuses and invokes its forEach; #25784 reads item.used_in_course and item.type before putting original items in local arrays. Original bytecode line 1008728; other types/nesting remain unknown.",
+        "evidence": "#25783 reads p1.statuses and invokes its forEach; #25784 reads item.used_in_course and item.type before putting original items in local arrays. Original bytecode line 1008728; other types/nesting remain unknown. #25783 invokes .forEach on response-body p1.statuses at 1008728-1008731.",
         "items": {
           "kind": "object",
-          "evidence": "Callback #25783 invokes statuses.forEach and passes each iterated value to #25784, which reads its used_in_course and type properties (full-disassembly lines 1008866–1008875). This proves an object-like item with these client-read paths, not a complete item model.",
+          "evidence": "Callback #25783 invokes statuses.forEach and passes each iterated value to #25784, which reads its used_in_course and type properties (full-disassembly lines 1008866–1008875). This proves an object-like item with these client-read paths, not a complete item model. #25784 reads each item.used_in_course and item.type at 1008866-1008881; no complete status item shape is established.",
           "fields": [
             {
               "name": "used_in_course",
               "type": "unknown",
-              "evidence": "ForEach callback #25784 reads each statuses item property used_in_course at full-disassembly line 1008866 (offset +0x03) to select a local destination array."
+              "evidence": "ForEach callback #25784 reads each statuses item property used_in_course at full-disassembly line 1008866 (offset +0x03) to select a local destination array. #25784 reads the item property at 1008866 to select a local destination array."
             },
             {
               "name": "type",
               "type": "unknown",
-              "evidence": "ForEach callback #25784 reads each statuses item property type at full-disassembly lines 1008868/1008875 (offsets +0x0c/+0x29) and compares with local branch constants; no enum/type claim follows."
+              "evidence": "ForEach callback #25784 reads each statuses item property type at full-disassembly lines 1008868/1008875 (offsets +0x0c/+0x29) and compares with local branch constants; no enum/type claim follows. #25784 reads the item property at 1008868 and 1008875 and compares it with local branch constants; no enum or primitive type follows."
             }
           ]
         }
@@ -1844,52 +2590,52 @@
       {
         "name": "settings",
         "type": "unknown",
-        "evidence": "#25783 reads p1.settings and dispatches the value as SET_DIARY_SETTINGS.data. Original bytecode line 1008752; other types/nesting remain unknown."
+        "evidence": "#25783 reads p1.settings and dispatches the value as SET_DIARY_SETTINGS.data. Original bytecode line 1008752; other types/nesting remain unknown. #25783 reads response-body p1.settings at 1008752-1008755 and dispatches it."
       },
       {
         "name": "meals",
         "type": "unknown",
-        "evidence": "#25783 reads p1.meals and dispatches the value as SET_DIARY_MEALS.data. Original bytecode line 1008759; other types/nesting remain unknown."
+        "evidence": "#25783 reads p1.meals and dispatches the value as SET_DIARY_MEALS.data. Original bytecode line 1008759; other types/nesting remain unknown. #25783 reads response-body p1.meals at 1008759-1008761 and dispatches it."
       },
       {
         "name": "images",
         "type": "unknown",
-        "evidence": "#25783 reads p1.images and substitutes a local empty array if falsy before SET_DIARY_IMAGES. Original bytecode line 1008765; other types/nesting remain unknown."
+        "evidence": "#25783 reads p1.images and substitutes a local empty array if falsy before SET_DIARY_IMAGES. Original bytecode line 1008765; other types/nesting remain unknown. #25783 reads response-body p1.images at 1008765-1008769; its fallback empty array is local and is not modeled as a response value."
       },
       {
         "name": "documents",
         "type": "unknown",
-        "evidence": "#25783 reads p1.documents and substitutes a local empty array if falsy before SET_DIARY_DOCUMENTS. Original bytecode line 1008774; other types/nesting remain unknown."
+        "evidence": "#25783 reads p1.documents and substitutes a local empty array if falsy before SET_DIARY_DOCUMENTS. Original bytecode line 1008774; other types/nesting remain unknown. #25783 reads response-body p1.documents at 1008774-1008778; its fallback empty array is local and is not modeled as a response value."
       },
       {
         "name": "daily_comments",
         "type": "unknown",
-        "evidence": "#25783 reads p1.daily_comments and substitutes a local empty array if falsy. Original bytecode line 1008783; other types/nesting remain unknown."
+        "evidence": "#25783 reads p1.daily_comments and substitutes a local empty array if falsy. Original bytecode line 1008783; other types/nesting remain unknown. #25783 reads response-body p1.daily_comments at 1008783-1008787; its fallback empty array is local and is not modeled as a response value."
       },
       {
         "name": "analysis_comments",
         "type": "unknown",
-        "evidence": "#25783 reads p1.analysis_comments and substitutes a local empty array if falsy. Original bytecode line 1008792; other types/nesting remain unknown."
+        "evidence": "#25783 reads p1.analysis_comments and substitutes a local empty array if falsy. Original bytecode line 1008792; other types/nesting remain unknown. #25783 reads response-body p1.analysis_comments at 1008792-1008796; its fallback empty array is local and is not modeled as a response value."
       },
       {
         "name": "daily_notes",
         "type": "unknown",
-        "evidence": "#25783 reads p1.daily_notes and substitutes a local empty array if falsy. Original bytecode line 1008801; other types/nesting remain unknown."
+        "evidence": "#25783 reads p1.daily_notes and substitutes a local empty array if falsy. Original bytecode line 1008801; other types/nesting remain unknown. #25783 reads response-body p1.daily_notes at 1008801-1008805; its fallback empty array is local and is not modeled as a response value."
       },
       {
         "name": "holidays",
         "type": "unknown",
-        "evidence": "#25783 reads p1.holidays and dispatches it as SET_DIARY_HOLIDAYS.data. Original bytecode line 1008810; other types/nesting remain unknown."
+        "evidence": "#25783 reads p1.holidays and dispatches it as SET_DIARY_HOLIDAYS.data. Original bytecode line 1008810; other types/nesting remain unknown. #25783 reads response-body p1.holidays at 1008810-1008812 and dispatches it."
       },
       {
         "name": "likes",
         "type": "unknown",
-        "evidence": "#25783 reads p1.likes; undefined triggers a locally constructed {liked:false,users:[]} fallback, otherwise the observed value is dispatched. Original bytecode line 1008823; other types/nesting remain unknown."
+        "evidence": "#25783 reads p1.likes; undefined triggers a locally constructed {liked:false,users:[]} fallback, otherwise the observed value is dispatched. Original bytecode line 1008823; other types/nesting remain unknown. #25783 reads response-body p1.likes at 1008823-1008845; when undefined it dispatches a client-created {liked:false,users:[]} fallback, which is not a response field."
       },
       {
         "name": "integrations",
         "type": "unknown",
-        "evidence": "#25783 reads p1.integrations and dispatches it only when not undefined. Original bytecode line 1008846; other types/nesting remain unknown."
+        "evidence": "#25783 reads p1.integrations and dispatches it only when not undefined. Original bytecode line 1008846; other types/nesting remain unknown. #25783 reads response-body p1.integrations at 1008846-1008855 and dispatches it only when defined."
       }
     ],
     "complete": false,
@@ -1898,7 +2644,11 @@
       "Fallback [] values for falsy images/documents/comments/notes and the local likes object are not response fields.",
       "The callback derives selected_date/timestamps from local state; those are not attributed to this response.",
       "Only statuses iteration and the two listed item reads are established; no other item properties or value types are inferred.",
-      "No nested diary/entry/meal/image/document object shape is established."
+      "No nested diary/entry/meal/image/document object shape is established.",
+      "These root reads come from the employee diary client chain, including direct use of user.employee and selected_course_id. Do not transfer any of these fields to GetGuardianDiary or claim they are guardian-visible.",
+      "#43846's opaque caller establishes no body fields; its flushDiaryAutoSaves call is a separate possible write side effect, not a behavior of the GET itself.",
+      "Local selected_date, timestamps, fallback arrays and fallback likes object are not response fields. No nested diary, entry, feedback, media, attachment, thumbnail or filename schema is established.",
+      "No completeness, status code, media type, date inclusivity/timezone, or server permission guarantee is established."
     ]
   },
   {
@@ -2711,7 +3461,7 @@
     "operationId": "GetDayMenu",
     "sourceFunctionId": 26007,
     "kind": "unknown",
-    "evidence": "Service returns response.data; the verified food-menu callback forwards the body unchanged to SET_DAY_MENU and the reducer stores that payload. It reads no response fields, so the response remains unknown.",
+    "evidence": "Service returns response.data; the verified food-menu callback forwards the body unchanged to SET_DAY_MENU and the reducer stores that payload. It reads no response fields, so the response remains unknown. #26007 returns the Axios response.data unchanged through #26008. The GET_DAY_MENU thunk dispatches the whole body to SET_DAY_MENU and the reducer stores it at state.foodmenu.day_menu. No consumer of day_menu was found. The similarly named DayMenu component is passed an item from the weekly response's days array, not state.foodmenu.day_menu; its fields are not evidence for this operation's body.",
     "trace": [
       {
         "functionId": 26007,
@@ -2742,6 +3492,31 @@
         "functionId": 25989,
         "line": 1014050,
         "evidence": "foodmenuReducer handles SET_DAY_MENU and consumes action.data."
+      },
+      {
+        "functionId": 26007,
+        "line": 1014569,
+        "evidence": "Builds the day-menu URL and invokes the shared Axios get method; attaches continuation #26008."
+      },
+      {
+        "functionId": 26008,
+        "line": 1014595,
+        "evidence": "Reads response.data and returns it unchanged."
+      },
+      {
+        "functionId": 25992,
+        "line": 1014212,
+        "evidence": "The thunk calls getDayMenu with the selected kindergarten id and its captured date argument."
+      },
+      {
+        "functionId": 25993,
+        "line": 1014239,
+        "evidence": "Forwards the returned body unchanged as SET_DAY_MENU.data."
+      },
+      {
+        "functionId": 25989,
+        "line": 1014050,
+        "evidence": "The reducer handles SET_DAY_MENU and stores action.data as state.foodmenu.day_menu."
       }
     ],
     "fields": [],
@@ -2749,14 +3524,17 @@
     "limitations": [
       "Actual action/reducer path is body passthrough; no fields, array shape, or item properties are read.",
       "Do not infer menu response fields/arrays from operation names or UI state.",
-      "Body completeness and server contract remain unknown."
+      "Body completeness and server contract remain unknown.",
+      "No UI read of state.foodmenu.day_menu was found in the disassembly; body fields and shape therefore remain unknown.",
+      "Do not transfer the DayMenu component's reads from weekly-response day items to this operation merely because the component and operation have similar names.",
+      "No response status, media type, server-required fields, or body completeness is established."
     ]
   },
   {
     "operationId": "GetWeekMenu",
     "sourceFunctionId": 26009,
-    "kind": "unknown",
-    "evidence": "Service returns response.data; the verified food-menu callback forwards the body unchanged to SET_WEEK_MENU and the reducer stores that payload. It reads no response fields, so the response remains unknown.",
+    "kind": "object",
+    "evidence": "Service returns response.data; the verified food-menu callback forwards the body unchanged to SET_WEEK_MENU and the reducer stores that payload. It reads no response fields, so the response remains unknown. #26009 returns response.data unchanged through #26010; its success action and reducer preserve that body at state.foodmenu.week_menu. In the guardian FoodMenuScreen, #35898 selects that exact property; #35897 reads root id, info, and uploaded_files, maps body.days into #35903, which passes each original item as the dayMenu prop to #37310. The day and file components read the listed properties. This is a partial UI-observed body view only.",
     "trace": [
       {
         "functionId": 26009,
@@ -2787,14 +3565,157 @@
         "functionId": 25989,
         "line": 1014050,
         "evidence": "foodmenuReducer handles SET_WEEK_MENU and consumes action.data."
+      },
+      {
+        "functionId": 26009,
+        "line": 1014606,
+        "evidence": "Builds the week-menu URL and invokes shared Axios get; attaches continuation #26010."
+      },
+      {
+        "functionId": 26010,
+        "line": 1014632,
+        "evidence": "Reads response.data and returns it unchanged."
+      },
+      {
+        "functionId": 25995,
+        "line": 1014270,
+        "evidence": "The thunk calls getWeekMenu with selectedKindergartenId and the action's captured date."
+      },
+      {
+        "functionId": 25996,
+        "line": 1014297,
+        "evidence": "Forwards the returned body unchanged as SET_WEEK_MENU.data."
+      },
+      {
+        "functionId": 25989,
+        "line": 1014050,
+        "evidence": "The reducer stores SET_WEEK_MENU.data directly as state.foodmenu.week_menu."
+      },
+      {
+        "functionId": 35898,
+        "line": 1432657,
+        "evidence": "The selector returns state.foodmenu.week_menu unchanged to the weekly screen."
+      },
+      {
+        "functionId": 35897,
+        "line": 1432449,
+        "evidence": "Guardian FoodMenuScreen initializes a date, selects weekly menu state through #35898, and renders the selected weekly value. It reads root week_menu.id for a render-branch truthiness check, week_menu.days and maps the entries, and separately reads root week_menu.info and week_menu.uploaded_files."
+      },
+      {
+        "functionId": 35901,
+        "line": 1432712,
+        "evidence": "The screen effect invokes getWeekMenu using its current date value; the endpoint receives one date argument, not a start/end pair."
+      },
+      {
+        "functionId": 35903,
+        "line": 1432742,
+        "evidence": "The days.map callback constructs a dayMenu prop from the original item and uses its id as the rendered item key; #37310 consumes dayMenu."
+      },
+      {
+        "functionId": 37310,
+        "line": 1489047,
+        "evidence": "Reads dayMenu.date, .breakfast, .lunch, .supper, and .dinner for display. Meal values are passed to the UI without a proved primitive or nested structure."
+      },
+      {
+        "functionId": 35905,
+        "line": 1432776,
+        "evidence": "The uploaded_files.map callback constructs a file prop from each original item; #37314 consumes file."
+      },
+      {
+        "functionId": 37314,
+        "line": 1489553,
+        "evidence": "Reads file.name for display and passes the file to the download callback; #37318 later reads file.id for the URL and file.filename for the local destination."
       }
     ],
-    "fields": [],
+    "fields": [
+      {
+        "name": "id",
+        "type": "unknown",
+        "evidence": "The guardian FoodMenuScreen reads selected week_menu.id at 1432605-1432608 for a truthiness check; #35898 returns state.foodmenu.week_menu unchanged, and #26010/#25996/#25989 preserve the Axios response.data body into that state. This establishes only a client read of a root response-body property, not its type, requiredness, identity meaning, or publication status."
+      },
+      {
+        "name": "info",
+        "type": "unknown",
+        "evidence": "FoodMenuScreen reads the weekly body value's info at 1432558-1432575 and renders it under the local 'Additional information' heading; the value type is not established."
+      },
+      {
+        "name": "uploaded_files",
+        "type": "array",
+        "evidence": "FoodMenuScreen reads root body.uploaded_files, checks its length, and maps it at 1432617-1432635; #35905 passes each original mapped item as a file prop.",
+        "items": {
+          "kind": "object",
+          "evidence": "Each root uploaded_files item is passed as #37314's file prop by #35905; that component and its download callback read the fields below.",
+          "fields": [
+            {
+              "name": "id",
+              "type": "unknown",
+              "evidence": "#37318 reads the selected file object's id when building /foodmenu/{id}/download at 1489781-1489790; this value is used only as the route path component."
+            },
+            {
+              "name": "filename",
+              "type": "unknown",
+              "evidence": "#37318 reads file.filename at 1489765-1489776 to sanitize and construct the local toFile path, not to form the URL."
+            },
+            {
+              "name": "name",
+              "type": "unknown",
+              "evidence": "#37314 reads file.name at 1489637-1489653 for display and calls slice on it; this does not prove a server-side string type or other file metadata."
+            }
+          ]
+        }
+      },
+      {
+        "name": "days",
+        "type": "array",
+        "evidence": "FoodMenuScreen reads body.days and calls map on it at 1432524-1432531; the reducer stores the HTTP body unchanged, so the nesting is response.days.",
+        "items": {
+          "kind": "object",
+          "evidence": "Each mapped item is passed unchanged as #37310's dayMenu prop by #35903 at 1432742-1432757.",
+          "fields": [
+            {
+              "name": "id",
+              "type": "unknown",
+              "evidence": "The map callback reads the item.id for the rendered key at 1432753-1432757; no type assertion/conversion establishes its type."
+            },
+            {
+              "name": "date",
+              "type": "unknown",
+              "evidence": "#37310 reads dayMenu.date at 1489092-1489095 and passes it to a display formatter; no response-value type is established."
+            },
+            {
+              "name": "breakfast",
+              "type": "unknown",
+              "evidence": "#37310 reads dayMenu.breakfast at 1489142-1489158 and passes the value to rendered content; no type or nested shape is established."
+            },
+            {
+              "name": "lunch",
+              "type": "unknown",
+              "evidence": "#37310 reads dayMenu.lunch at 1489188-1489204 and passes the value to rendered content; no type or nested shape is established."
+            },
+            {
+              "name": "supper",
+              "type": "unknown",
+              "evidence": "#37310 reads dayMenu.supper at 1489234-1489250 and passes the value to rendered content; no type or nested shape is established."
+            },
+            {
+              "name": "dinner",
+              "type": "unknown",
+              "evidence": "#37310 reads dayMenu.dinner at 1489280-1489296 and passes the value to rendered content; no type or nested shape is established."
+            }
+          ]
+        }
+      }
+    ],
     "complete": false,
     "limitations": [
       "Actual action/reducer path is body passthrough; no fields, array shape, or item properties are read.",
       "Do not infer menu response fields/arrays from operation names or UI state.",
-      "Body completeness and server contract remain unknown."
+      "Body completeness and server contract remain unknown.",
+      "This records only properties read through the guardian weekly-menu UI; it is not a complete accepted server schema.",
+      "No evidence establishes meal values as dishes, arrays, groups, menu variants, course structures, substitutions, or a staff meal-report shape; all such structures remain unknown.",
+      "No client read of a last-update timestamp, menu origin, or course/filter applicability was found in this screen path.",
+      "The UI's 'The menu has not been published yet' text is local fallback copy rendered when week_menu is falsy, its root id is falsy, or local loading state is truthy; it is not a response field or server publication-status value.",
+      "No response status, media type, requiredness, nullability, enum, or server completeness is established."
     ]
   },
   {
